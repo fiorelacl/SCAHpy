@@ -1,2 +1,2 @@
 # SCAHpy
-Future Package to visualize COW, WRF, WRF-Hydro outputs
+Paquete para analizar y visualizar las Salidas de las Componentes Atmosférica e Hidrológica (SCAH) del modelo COW4, WRF y WRF-Hydro con python.
