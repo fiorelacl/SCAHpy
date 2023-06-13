@@ -1,8 +1,20 @@
 import pandas as pd
+import numpy as np
 import xarray as xr
 import wrf
+from functools import partial
 
 def _dict_metadata_wrf_vars(da):
+    """Append to a dictionary 4 metadata features like stagger, # of dimensions,
+       description and the units.
+    ES: En un diccionario, usar como llave el nombre de la variables y como items,
+    la información de la variables 'staggeada', # de dimensiones, descripción de la variable
+    y sus unidades.
+
+    Parameters/Parámetros:
+    ----------------------
+    da : wrfout dataset already loaded / dataset wrfout ya cargado y leido
+    """
     a=dict()
     for var in da:
         try:
@@ -18,6 +30,11 @@ def _dict_metadata_wrf_vars(da):
 def _list_all_WRFvars(file0,printall):
     """Read one wrfout file and list all the variables.
     ES: Lee un archivo wrfout y lista todas las variables.
+
+    Parameters/Parámetros:
+    ----------------------
+    file0 : Path to any wrfoutfile / Ruta a cualquier archivo wrfout
+    printall : True/False , Print variable's info/ Imprime la info de las variables
     """
     da=xr.open_dataset(file0)
     for var in da:
@@ -32,6 +49,14 @@ def _list_all_WRFvars(file0,printall):
 
 
 def _new_coords(file0,da):
+    """Unstag the stagged coordinates and also assign lat and lon coords.
+    ES: Destagea las variables y asigna latitudes y longitudes como coordenadas
+
+    Parameters/Parámetros:
+    ----------------------
+    file0 : Path to any wrfoutfile / Ruta a cualquier archivo wrfout
+    da : wrfout dataset already loaded / dataset wrfout ya cargado y leido
+    """
     # Get list of keys that contains the given value
     d0 = xr.open_dataset(file0)
     b = _dict_metadata_wrf_vars(da)
@@ -54,7 +79,7 @@ def _new_coords(file0,da):
     return da
 
 def _drop_wrf_vars(file0,sel_vars):
-    """Save in a list all the variables to ignore when reading wrfouts files.
+    """Save in a list all the variables to be ignored when reading wrfouts files.
     ES: Guarda en una lista todas las variables que no serán leidas.
 
     Parameters/Parametros:
@@ -70,43 +95,50 @@ def _drop_wrf_vars(file0,sel_vars):
             list_no_vars.append(vari)
     return list_no_vars
 
-def _select_time(x,yi,yf,mi,mf,difHor):
-    d = x.rename({'XTIME':'time'}).swap_dims({'Time':'time'})
-    time2=pd.to_datetime(d.time.values)-pd.Timedelta(difHor)
-    d=d.assign_coords({'time':time2})
-    return d.sel(time=slice(f'{yi}-{mi}',f'{yf}-{mf}'))
+def _select_time(x,difHor,sign):
+    """Change and assign the time as a coordinate, also it's possible to
+    change to local hour.
+    ES: Cambia y asigna el tiempo como una coordenada, asímismo es posible
+    cambiar a hora local.
 
-def ds_wrf(files,list_no_vars,var,yn):
-    d0 = xr.open_mfdataset(files, combine='nested', concat_dim='time', parallel= True ,engine='netcdf4',
-                                drop_variables=list_no_vars, preprocess = partial(_select_time, yi,yf,mi,mf,difHor))
-    d0.attrs = []
-    ntime = d0.time[0:-1]
-    # _, index = np.unique(d0['XTIME'], return_index=True)
-    # d = d0.isel(Time=index)
-    if var == 'PP':
-        d0 = d0.RAINC + d0.RAINSH + d0.RAINNC
-        d0['PP'] = d0
-        d0 = d0.PP.diff('time')
-        d0['time'] = ntime
-        # d0 = d0.resample(time='1D').sum()
-        d0 = d0.load()
-        dg = _new_coords(files[0],d0) # Decidir si va a guardar los archivos o si se usará el Dataset sin guardar.
-        time2=pd.to_datetime(dg.time.values)-pd.Timedelta('5 hours')
-        dg=dg.assign_coords({'time':time2})
-        dd=dg.resample(time='1D').sum()
-        print('La variable es Precipitación')
-    # elif var == 'T2':
-    #     d0=0.5*(d0.resample(time='1D').min() + d0.resample(time='1D').max()) #d.T2[3::8,:,:] + d.T2[6::8,:,:]
-    #     print('La variable es Temperatura del aire a 2m')
-    else:
-        print('Carga :D')
-        # d0 = d0.resample(time='1D').mean()
-        d0 = d0.load()
-        print('Variable general (no PP) Mensual')
-        dg = _new_coords(files[0],d0) # Decidir si va a guardar los archivos o si se usará el Dataset sin guardar.
-        time2=pd.to_datetime(dg.time.values)-pd.Timedelta('5 hours')
-        dg=dg.assign_coords({'time':time2})
-        dd=dg.resample(time='1D').mean()
-    print('guardando')    
+    Parameters/Parametros:
+    ----------------------
+    difHor : String with the hours t / Lista de variables a mantener
+    sign: -1 or 1 according to the difference / +1 o -1 dependiendo de
+    la diferencia horaria respecto a la UTC
+    """
+    d = x.rename({'XTIME':'time'}).swap_dims({'Time':'time'})
+    time2=pd.to_datetime(d.time.values) + (sign*pd.Timedelta(difHor))
+    d=d.assign_coords({'time':time2})
+    return d
+
+def ds_wrf(files,list_no_vars,var,yi,yf,mi,mf,difHor):
+    """Change and assign the time as a coordinate, also it's possible to
+    change to local hour.
+    ES: Cambia y asigna el tiempo como una coordenada, asímismo es posible
+    cambiar a hora local.
+
+    Parameters/Parametros:
+    ----------------------
+    difHor : String with the hours t / Lista de variables a mantener
+    sign: -1 or 1 according to the difference / +1 o -1 dependiendo de
+    la diferencia horaria respecto a la UTC
+    """
+    ds = xr.open_mfdataset(files, combine='nested', concat_dim='time', parallel= True ,engine='netcdf4',
+                                drop_variables=list_no_vars, preprocess = partial(_select_time,difHor)).sel(time=slice(f'{yi}-{mi}',f'{yf}-{mf}'))
+    ds.attrs = []
+    _, index = np.unique(ds['time'], return_index=True)
+    ds = ds.isel(time=index)
+    ds1 = _new_coords(files[0],ds)
     
-    return dd 
+    for var in ds1:
+        if var == 'RAINC'|'RAINSH'|'RAINNC':
+            print('la variable es acumulativa')
+            ntime = ds1.time[0:-1]
+            #ds1[var] = ds1 
+            ds1 = ds1[var].diff('time')
+            ds1['time'] = ntime
+        else:
+            print('variable no acumulativa')
+   
+    return ds1 
