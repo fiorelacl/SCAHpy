@@ -75,7 +75,14 @@ def _new_coords(file0,da):
             da[var] = wrf.destagger(da[var],stagger_dim=1,meta=True)
 
     da = da.assign_coords(south_north=('south_north',d0.XLAT[0,:,0].values))
-    da = da.assign_coords(west_east=('west_east',d0.XLONG[0,0,:].values))  
+    da = da.assign_coords(west_east=('west_east',d0.XLONG[0,0,:].values))
+    
+    for coords in ['XLAT','XLONG','XLAT_U','XLONG_U','XLAT_V','XLONG_V']:
+        try:
+            da = da.drop_vars(coords)
+        except:
+            pass
+    da = da.rename({'south_north':'lat','west_east':'lon'})
     return da
 
 def _drop_wrf_vars(file0,sel_vars):
@@ -87,7 +94,7 @@ def _drop_wrf_vars(file0,sel_vars):
     file0 : Path to any wrfoutfile / Ruta a cualquier archivo wrfout
     sel_vars : list of variables to keep / Lista de variables a mantener
     """
-    wrf_all_vars=_list_all_WRFvars(file0)
+    wrf_all_vars=_list_all_WRFvars(file0,False)
     
     list_no_vars = []
     for vari in wrf_all_vars:
@@ -112,33 +119,23 @@ def _select_time(x,difHor,sign):
     d=d.assign_coords({'time':time2})
     return d
 
-def ds_wrf(files,list_no_vars,var,yi,yf,mi,mf,difHor):
-    """Change and assign the time as a coordinate, also it's possible to
-    change to local hour.
-    ES: Cambia y asigna el tiempo como una coordenada, asímismo es posible
-    cambiar a hora local.
+def ds_wrf(files,list_no_vars,difHor,sign):
+    """Read a list of wrfout files for the variables selected.
+    ES: Lee una lista de archivos wrfout para las variables seleccionadas.
 
     Parameters/Parametros:
     ----------------------
+    files : List of wrfout files / Lista de archivos wrfout
+    list_no_vars : List of variables to be delated / Lista de variables a ignorar
     difHor : String with the hours t / Lista de variables a mantener
     sign: -1 or 1 according to the difference / +1 o -1 dependiendo de
     la diferencia horaria respecto a la UTC
     """
     ds = xr.open_mfdataset(files, combine='nested', concat_dim='time', parallel= True ,engine='netcdf4',
-                                drop_variables=list_no_vars, preprocess = partial(_select_time,difHor)).sel(time=slice(f'{yi}-{mi}',f'{yf}-{mf}'))
+                                drop_variables=list_no_vars, preprocess = partial(_select_time,difHor=difHor,sign=sign))
     ds.attrs = []
     _, index = np.unique(ds['time'], return_index=True)
     ds = ds.isel(time=index)
     ds1 = _new_coords(files[0],ds)
-    
-    for var in ds1:
-        if var == 'RAINC'|'RAINSH'|'RAINNC':
-            print('la variable es acumulativa')
-            ntime = ds1.time[0:-1]
-            #ds1[var] = ds1 
-            ds1 = ds1[var].diff('time')
-            ds1['time'] = ntime
-        else:
-            print('variable no acumulativa')
    
     return ds1 
