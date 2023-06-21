@@ -19,7 +19,6 @@ def calc_pp(ds):
 
     return dd
 
-def calc_t2(ds):
-    d0=0.5*(d0.resample(time='1D').min() + d0.resample(time='1D').max())
+#def calc_t2(ds):
+#    d0=0.5*(d0.resample(time='1D').min() + d0.resample(time='1D').max())
     
-dd=dg.resample(time='1D').sum()
