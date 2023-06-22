@@ -1,4 +1,5 @@
 import xarray as xr
+import numpy as np
 
 def dmy_var(ds,tiempo=None ,accum=None, avg=None, mediana=None):
     if accum is not None and avg is None and mediana is None:
@@ -14,9 +15,9 @@ def dmy_var(ds,tiempo=None ,accum=None, avg=None, mediana=None):
     return ds_D
 
 
-def monthly_clim(ds,stat=None):
+def monthly_clim(ds,stat=None,time_slice=None):
     # Falta agregar el periodo de tiempo como entrada
-    ds = ds.sel(time=slice('2000-01','2022-12'))
+    ds = ds.sel(time=time_slice)
     if stat == 'mean':
         da = ds.resample(time='1M').mean().groupby('time.month').mean('time')
     elif stat == 'median':
@@ -28,10 +29,7 @@ def monthly_clim(ds,stat=None):
 
 def daily_clim(file,var,out):
     
-    if var=='PP':
-        ds=xr.open_dataset(file,drop_variables=['PP']).rename({'__xarray_dataarray_variable__':'PP'})
-    else:    
-        ds=xr.open_dataset(file,chunks={})
+    ds=xr.open_dataset(file,chunks={})
     
     ds=ds.convert_calendar('365_day').groupby('time.dayofyear').median()
     
