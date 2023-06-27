@@ -1,6 +1,5 @@
 # Escalas y colores ya definidos para variables principales
 
-
 escalas = {'pp_d' : ['rain',[1,2,3,5,7,11,15,20,25,30,35,40,45,50,55,60],'max','mm/dia'],
            'pp_m' : ['rain',[0,25,50,100,200,400,600,800,1000,1200,1300,1500],'max','mm/mes'],
            'pp_y' : ['rain',[0,50,75,100,250,400,800,1200,1600,2000,2500,3000,3500,4000],'max','mm/año'],

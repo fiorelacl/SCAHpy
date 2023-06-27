@@ -36,7 +36,7 @@ def _list_all_WRFvars(file0,printall):
     file0 : Path to any wrfoutfile / Ruta a cualquier archivo wrfout
     printall : True/False , Print variable's info/ Imprime la info de las variables
     """
-    da=xr.open_dataset(file0)
+    da=xr.open_dataset(file0,engine='netcdf4')
     for var in da:
         try:
             if printall:
@@ -58,7 +58,7 @@ def _new_coords(file0,da):
     da : wrfout dataset already loaded / dataset wrfout ya cargado y leido
     """
     # Get list of keys that contains the given value
-    d0 = xr.open_dataset(file0)
+    d0 = xr.open_dataset(file0, engine='netcdf4')
     b = _dict_metadata_wrf_vars(da)
 
     list_X_keys = [key for key, list_of_values in b.items() if 'X' in list_of_values]
