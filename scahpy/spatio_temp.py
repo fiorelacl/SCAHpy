@@ -1,5 +1,7 @@
 import xarray as xr
 import numpy as np
+from wrf import (destagger,interplevel,get_cartopy, latlon_coords, to_np, cartopy_xlim, cartopy_ylim,
+                 getvar, ALL_TIMES,cloudfrac)
 
 def dmy_var(ds,tiempo=None ,accum=None, avg=None, mediana=None):
     """Convert hourly (default wrf out) time to any acceptable by resample function.
@@ -76,15 +78,28 @@ def daily_clim(ds,var):
 
     return mw
 
-def vert_levs(ds,lvls):
+def vert_levs(ds,vv,lvls):
+    """  Interpolate vertical levels to a pressure variable.
+    ES: Genera la interpolación vertical de las variables a nivel de presión
+
+    Parameters/Parametros:
+    ----------------------
+    ds : Dataset loaded / Dataset previamente guardado
+    wx : vertical variable dataset  / string con el nombre de la variable
+    """
+
     # Corregir aun el script y mejorar el mensaje.
     plevels=[1000,975,950,925,900,850,800,700,600,500,400,300,200,100,50] # Default
+    lvls=plevels
     lats=ds['Presion'].lat.values
     lons=ds['Presion'].lon.values
     timess = ds['Presion'].time.values
 
-    w_lvl=interplevel(wx,pres.Presion,plevels).assign_coords(lat=lats,lon=lons,time=timess).persist()
-    w_lvl=w_lvl.to_dataset().rename({'destag_W_interp':'W'})
+    vv_lvl=interplevel(vv,ds.Presion,lvls).assign_coords(lat=lats,lon=lons,time=timess).persist()
+    vv_lvl=vv_lvl.to_dataset()
 
-    dst.U.attrs['vert_units'] = ''
+    #vv_lvl.attrs['vert_units'] = ''
+
+    return vv_lvl
+
 
