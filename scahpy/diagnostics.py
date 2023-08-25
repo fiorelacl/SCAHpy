@@ -1,5 +1,6 @@
 import numpy as np
 import xarray as xr
+import metpy.calc as mpcalc
 
 def calc_pp(ds,elim):
     """ de-acumulate the rainfall and save it as PP.
@@ -89,4 +90,7 @@ def calc_qe(ds):
 
 #def calc_t2(ds):
 #    d0=0.5*(d0.resample(time='1D').min() + d0.resample(time='1D').max())
-    
+
+
+# Transporte de Humedad: Vertical Integration Moisture Divergence
+ 
