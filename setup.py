@@ -1,19 +1,28 @@
 from setuptools import setup
 
 setup(
-    # Needed to silence warnings (and to be a worthwhile package)
     name='SCAHpy',
-    url='https://github.com/fiorelacl/SCAHpy',
-    author='Fiorela Castillón',
-    author_email='fcastillon@igp.gob.pe',
-    # Needed to actually package something
-    packages=['scahpy'],
-    python_requires='>=3.8',
-    # *strongly* suggested for sharing
     version='0.1',
-    # The license can be anything you like
+    packages=['scahpy'], # find_packages()
+    python_requires='>=3.8',
+    install_requires=[
+        'numpy',
+        'pandas',
+        'matplotlib',
+        'xarray',
+        'wrf-python',
+        'metpy',
+        'cmocean',
+        'cmcrameri',
+        'cartopy',
+    ]
+
+    author='Fiorela Castillón',
+    author_email='fvcastillon@gmail.com',
+    url='https://github.com/fiorelacl/SCAHpy',
+
+    description='Paquete para visualizar salidas de \
+    modelos numéricos como WRF, CROCO, WRFHydro',
+
     license='Apache 2.0',
-    description='Paquete para visualizar salidas de modelos numéricos como WRF-WRFHydro',
-    # We will also need a readme eventually (there will be a warning)
-    # long_description=open('README.txt').read(),
 )
