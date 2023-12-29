@@ -26,5 +26,5 @@ setup(
     las componentes Atmosférica, Océanica e Hidrológica del modelo \
         IGP-RESM-COW',
 
-    license='MIT license',
+    license='MIT License',
 )
