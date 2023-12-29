@@ -4,7 +4,7 @@
 
 ***SCAHpy*** is an open-source Python package that facilitate the analysis and visualization of the ouputs from atmospheric, oceaninc and hydrological component from the Geophysical Institute of Peru Regional Earth System Model Croco-Oasis-WRF (IGP-RESM-COW)
 
-<img src="./docs/cow_model.jpg" height="100" width='80'>
+<img src="./docs/cow_model.jpg" height="120" width="100">
 
 ## **Why is SCAHpy?**
 
