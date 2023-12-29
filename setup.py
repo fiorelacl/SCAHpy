@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='SCAHpy',
-    version='0.1',
+    version='0.0.1',
     packages=['scahpy'], # find_packages()
     python_requires='>=3.8',
     install_requires=[
@@ -22,9 +22,8 @@ setup(
     author_email='fvcastillon@gmail.com',
     url='https://github.com/fiorelacl/SCAHpy',
 
-    description='Paquete para visualizar salidas de \
-    las componentes Atmosférica, Océanica e Hidrológica del modelo \
-        IGP-RESM-COW',
+    description='Package to process and analyze outputs from \
+    atmospheric, oceanic and Hydrological components from IGP-RESM-COW model',
 
     license='MIT License',
 )
