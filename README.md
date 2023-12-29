@@ -34,4 +34,4 @@ $ mamba create -n scahpy_env scahpy xarray wrf-python metpy
 
 The commands above install the latest stable release of SCAHpy.
 
-Checkout the contribution page if you want to get involved and help maintain or develop SCAHpy.
+> :bulb: **Note:** Checkout the contribution page if you want to get involved and help maintain or develop SCAHpy.
