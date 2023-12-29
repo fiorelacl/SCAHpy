@@ -1,4 +1,6 @@
-# SCAHpy
+# SCAHpy 
+
+![SCAHpy Package](./docs/cover.jpg)
 
 ## **What is SCAHpy?**
 
