@@ -8,7 +8,7 @@ def vert_levs(ds,varis,lvls):
     Parameters/Parametros:
     ----------------------
     ds : Dataset loaded / Dataset previamente guardado
-    wx : vertical variable dataset  / string con el nombre de la variable
+    varis : list of variables  / Lista de variables a ser interpoladas
     """
 
     plevels=[1000,975,950,925,900,850,800,700,600,500,400,300,200] # Default
