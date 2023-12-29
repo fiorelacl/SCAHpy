@@ -1,5 +1,6 @@
 project:
   type: book
+  output-dir: docs
 
 book:
   title: ""
@@ -14,7 +15,7 @@ book:
   search: true
   repo-url: https://github.com/fiorelacl/SCAHpy/docs
   repo-actions: [edit]
-  downloads: [pdf, epub]
+  downloads: [epub]
   sharing: [twitter, facebook, linkedin]
   chapters:
     - part: index.qmd
@@ -32,13 +33,9 @@ book:
 comments: 
   hypothesis: true
 
-bibliography: references.bib
-
 format:
   html:
     theme: lumen
-  pdf:
-    documentclass: scrreprt
 
 editor: visual
 

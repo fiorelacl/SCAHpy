@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>API reference</title>
+<title>Installation</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,8 +64,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./05_contrib.html" rel="next">
-<link href="./03_tutorial.html" rel="prev">
+<link href="./02_use.html" rel="next">
+<link href="./index.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -109,7 +109,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04_API.html">Help &amp; Reference</a></li><li class="breadcrumb-item"><a href="./04_API.html">API reference</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Getting Started</a></li><li class="breadcrumb-item"><a href="./01_install.html">Installation</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -130,26 +130,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <a href="./">Documentation</a> 
         <div class="sidebar-tools-main tools-wide">
     <a href="https://github.com/fiorelacl/SCAHpy/docs" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="./docs.epub" rel="" title="Download ePub" class="quarto-navigation-tool px-1" aria-label="Download ePub"><i class="bi bi-journal"></i></a>
     <div class="dropdown">
-      <a href="" title="Download" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download"><i class="bi bi-download"></i></a>
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Share"><i class="bi bi-share"></i></a>
       <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
-          <li>
-            <a class="dropdown-item sidebar-tools-main-item" href="./docs.pdf">
-              <i class="bi bi-bi-file-pdf pe-1"></i>
-            Download PDF
-            </a>
-          </li>
-          <li>
-            <a class="dropdown-item sidebar-tools-main-item" href="./docs.epub">
-              <i class="bi bi-bi-journal pe-1"></i>
-            Download ePub
-            </a>
-          </li>
-      </ul>
-    </div>
-    <div class="dropdown">
-      <a href="" title="Share" id="quarto-navigation-tool-dropdown-1" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Share"><i class="bi bi-share"></i></a>
-      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-1">
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
               <i class="bi bi-bi-twitter pe-1"></i>
@@ -191,7 +175,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./01_install.html" class="sidebar-item-text sidebar-link">
+  <a href="./01_install.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Installation</span></a>
   </div>
 </li>
@@ -231,7 +215,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04_API.html" class="sidebar-item-text sidebar-link active">
+  <a href="./04_API.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">API reference</span></a>
   </div>
 </li>
@@ -249,14 +233,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#required-dependencies" id="toc-required-dependencies" class="nav-link active" data-scroll-target="#required-dependencies">Required dependencies:</a></li>
+  <li><a href="#optional-dependencies" id="toc-optional-dependencies" class="nav-link" data-scroll-target="#optional-dependencies">Optional dependencies:</a></li>
+  <li><a href="#step-by-step-instructions" id="toc-step-by-step-instructions" class="nav-link" data-scroll-target="#step-by-step-instructions">Step-by-step instructions</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/fiorelacl/SCAHpy/docs/edit/main/01_install.qmd" class="toc-action">Edit this page</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">API reference</h1>
+<h1 class="title">Installation</h1>
 </div>
 
 
@@ -271,15 +263,56 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p>In summary, this book has no content whatsoever.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 2</code></pre>
+<p>If you would like to use <strong>SCAHpy</strong> for your own datasets and run it on a local machine or server, you will need to download and install it first.</p>
+<section id="required-dependencies" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="required-dependencies">Required dependencies:</h2>
+<ul>
+<li>Python &gt;= 3.9</li>
+<li><a href="http://xarray.pydata.org/">xarray</a></li>
+<li><a href="https://github.com/NCAR/wrf-python">wrf-python</a></li>
+<li><a href="https://github.com/Unidata/MetPy">metpy</a></li>
+</ul>
+</section>
+<section id="optional-dependencies" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="optional-dependencies">Optional dependencies:</h2>
+<p>For optimal performance, it is highly recommended that you install the following dependencies:</p>
+<ul>
+<li><a href="https://github.com/kwgoodman/bottleneck">bottleneck</a></li>
+<li><a href="https://scitools.org.uk/cartopy">Cartopy</a></li>
+<li><a href="http://distributed.dask.org/">Dask.distributed</a></li>
+<li><a href="https://ipython.org/">IPython</a></li>
+<li><a href="https://unidata.github.io/netcdf4-python">netCDF4</a></li>
+<li><a href="https://xesmf.readthedocs.io/">xESMF</a></li>
+<li><a href="https://github.com/xarray-contrib/xskillscore/tree/stable">xskillscore</a></li>
+</ul>
+</section>
+<section id="step-by-step-instructions" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="step-by-step-instructions">Step-by-step instructions</h2>
+<ol type="1">
+<li><p>First, download and install mamba or miniconda through <a href="https://github.com/conda-forge/miniforge">Miniforge</a> .</p></li>
+<li><p>The easiest way to install SCAHpy and the above mentioned dependencies is to use the conda-forge channel. Open a terminal, then run the following command:</p></li>
+</ol>
+<div class="sourceCode" id="cb1"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>$ mamba create -n scahpy_env scahpy xarray wrf-python metpy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The commands above install the latest stable release of SCAHpy.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
 </div>
 </div>
+<div class="callout-body-container callout-body">
+<p>For experts: Use the following command to Create an environment identical to the IGP environment used to test the package:</p>
+</div>
+</div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>$ conda env create -f LINK_TO_YAML_FILE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Then, activate the SCAHpy IGP environment:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>$ mamba activate scahpy_igp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -517,13 +550,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./03_tutorial.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Tutorials</span>
+      <a href="./index.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Getting Started</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./05_contrib.html" class="pagination-link">
-        <span class="nav-page-text">Contributing</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./02_use.html" class="pagination-link">
+        <span class="nav-page-text">Usage</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -531,4 +564,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/fiorelacl/SCAHpy/docs/edit/main/04_API.qmd" class="toc-action">Edit this page</a></p></div></div></div></div></footer></body></html>
+</body></html>

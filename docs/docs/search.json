@@ -1,10 +1,31 @@
 [
   {
-    "objectID": "02_use.html",
-    "href": "02_use.html",
-    "title": "Usage",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Getting Started",
     "section": "",
-    "text": "In summary, this book has no content whatsoever.\n\n1 + 1\n\n[1] 2"
+    "text": "Getting Started"
+  },
+  {
+    "objectID": "index.html#what-is-scahpy",
+    "href": "index.html#what-is-scahpy",
+    "title": "Getting Started",
+    "section": "What is SCAHpy?",
+    "text": "What is SCAHpy?\nSCAHpy is an open-source Python package that facilitate the analysis and visualization of the ouputs from atmospheric, oceaninc and hydrological component from the Geophysical Institute of Peru Regional Earth System Model Croco-Oasis-WRF (IGP-RESM-COW)\n\n\n\nCOW Model - Coupled Ocean-Atmosphere Model"
+  },
+  {
+    "objectID": "index.html#why-is-scahpy",
+    "href": "index.html#why-is-scahpy",
+    "title": "Getting Started",
+    "section": "Why is SCAHpy?",
+    "text": "Why is SCAHpy?\nAtmospheric component of the coupled model generate a large volumes of output data, making the analysis of model data harder. SCAHpy facilitates the manage of this volumes of data, also enables a manage of coordinates and times to local times."
+  },
+  {
+    "objectID": "index.html#how-to-use-scahpy",
+    "href": "index.html#how-to-use-scahpy",
+    "title": "Getting Started",
+    "section": "How to use SCAHpy?",
+    "text": "How to use SCAHpy?\nSCAHpy can be used as a standalone package or it can also be run on the HPC-IGP-Cluster, which has the diagnostic simulations of 22 years of runnings centered on Peru Region.\n\n\n\n\n\n\nNote\n\n\n\nSCAHpy has been developed and tested using IGP-RESM-COW model outputs. However, it is designed to work with any WRF outputs. We are open to contributions from users!\n\n\n\nGetting Started\n\nInstallation\nUsage\n\n\n\nTutorial & Use Cases\n\nTutorial\n\n\n\nHelp & Reference\n\nAPI References\nContributing"
   },
   {
     "objectID": "01_install.html#required-dependencies",

@@ -31,4 +31,3 @@ SCAHpy has been developed and tested using IGP-RESM-COW model outputs. However, 
 
 * [API References](04_API.qmd)
 * [Contributing](05_contrib.qmd)
-* [People](06_people.qmd)
