@@ -1,0 +1,8 @@
+# Contributing {.unnumbered}
+
+All types of crontributions, bugs, feedbacks are welcome!
+
+Report bugs and submit feedback at [Github Issues](https://github.com/fiorelacl/SCAHpy/issues).
+
+
+ESCRIBIR SOBRE COMO CONTRIBUIR AL SOFTWARE, REPORTAR ISSUES O PROBLEMAS CON EL SOFTWARE Y COMO SEEK SUPPORT

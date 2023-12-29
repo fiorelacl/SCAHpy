@@ -1,0 +1,52 @@
+# Installation {.unnumbered}
+
+If you would like to use **SCAHpy** for your own datasets and run it on a local machine or server, you will need to download and install it first.
+
+## Required dependencies: {.unnumbered}
+
+* Python >= 3.9
+* [xarray](http://xarray.pydata.org/)
+* [wrf-python](https://github.com/NCAR/wrf-python)
+* [metpy](https://github.com/Unidata/MetPy)
+
+## Optional dependencies: {.unnumbered}
+
+For optimal performance, it is highly recommended that you install the following dependencies:
+
+* [bottleneck](https://github.com/kwgoodman/bottleneck)
+* [Cartopy](https://scitools.org.uk/cartopy)
+* [Dask.distributed](http://distributed.dask.org/)
+* [IPython](https://ipython.org/)
+* [netCDF4](https://unidata.github.io/netcdf4-python)
+* [xESMF](https://xesmf.readthedocs.io/)
+* [xskillscore](https://github.com/xarray-contrib/xskillscore/tree/stable)
+
+
+## Step-by-step instructions {.unnumbered}
+
+1. First, download and install mamba or miniconda through [Miniforge](https://github.com/conda-forge/miniforge) .
+
+2. The easiest way to install SCAHpy and the above mentioned dependencies is to use the conda-forge channel. Open a terminal, then run the following command:
+
+```default
+$ mamba create -n scahpy_env scahpy xarray wrf-python metpy
+```
+
+The commands above install the latest stable release of SCAHpy.
+
+
+::: {.callout-note}
+For experts: Use the following command to Create an environment identical to the IGP environment used to test the package:
+:::
+
+```default
+$ conda env create -f LINK_TO_YAML_FILE
+```
+
+Then, activate the SCAHpy IGP environment:
+
+```default
+$ mamba activate scahpy_igp
+```
+
+

@@ -1,0 +1,44 @@
+[
+  {
+    "objectID": "02_use.html",
+    "href": "02_use.html",
+    "title": "Usage",
+    "section": "",
+    "text": "In summary, this book has no content whatsoever.\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "01_install.html#required-dependencies",
+    "href": "01_install.html#required-dependencies",
+    "title": "Installation",
+    "section": "Required dependencies:",
+    "text": "Required dependencies:\n\nPython &gt;= 3.9\nxarray\nwrf-python\nmetpy"
+  },
+  {
+    "objectID": "01_install.html#optional-dependencies",
+    "href": "01_install.html#optional-dependencies",
+    "title": "Installation",
+    "section": "Optional dependencies:",
+    "text": "Optional dependencies:\nFor optimal performance, it is highly recommended that you install the following dependencies:\n\nbottleneck\nCartopy\nDask.distributed\nIPython\nnetCDF4\nxESMF\nxskillscore"
+  },
+  {
+    "objectID": "01_install.html#step-by-step-instructions",
+    "href": "01_install.html#step-by-step-instructions",
+    "title": "Installation",
+    "section": "Step-by-step instructions",
+    "text": "Step-by-step instructions\n\nFirst, download and install mamba or miniconda through Miniforge .\nThe easiest way to install SCAHpy and the above mentioned dependencies is to use the conda-forge channel. Open a terminal, then run the following command:\n\n$ mamba create -n scahpy_env scahpy xarray wrf-python metpy\nThe commands above install the latest stable release of SCAHpy.\n\n\n\n\n\n\nNote\n\n\n\nFor experts: Use the following command to Create an environment identical to the IGP environment used to test the package:\n\n\n$ conda env create -f LINK_TO_YAML_FILE\nThen, activate the SCAHpy IGP environment:\n$ mamba activate scahpy_igp"
+  },
+  {
+    "objectID": "04_API.html",
+    "href": "04_API.html",
+    "title": "API reference",
+    "section": "",
+    "text": "In summary, this book has no content whatsoever.\n\n1 + 1\n\n[1] 2"
+  },
+  {
+    "objectID": "05_contrib.html",
+    "href": "05_contrib.html",
+    "title": "Contributing",
+    "section": "",
+    "text": "All types of crontributions, bugs, feedbacks are welcome!\nReport bugs and submit feedback at Github Issues.\nESCRIBIR SOBRE COMO CONTRIBUIR AL SOFTWARE, REPORTAR ISSUES O PROBLEMAS CON EL SOFTWARE Y COMO SEEK SUPPORT"
+  }
+]
