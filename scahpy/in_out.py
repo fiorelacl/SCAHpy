@@ -83,6 +83,13 @@ def _new_coords(file0,da):
         except:
             pass
     da = da.rename({'south_north':'lat','west_east':'lon'})
+
+    da['lat'].attrs = {"units": 'degrees_north', 'axis': 'Y','long_name':'Latitude','standard_name':'latitude'}
+    da['lon'].attrs = {"units": 'degrees_east', 'axis': 'X','long_name':'Longitude','standard_name':'longitude'}
+    
+    for var in da:
+        da[var].encoding['coordinates'] = 'time lat lon'
+
     return da
 
 def _drop_wrf_vars(file0,sel_vars):
@@ -137,6 +144,7 @@ def ds_wrf_multi(files,list_no_vars,difHor,sign):
     _, index = np.unique(ds['time'], return_index=True)
     ds = ds.isel(time=index)
     ds1 = _new_coords(files[0],ds)
+    ds1.encoding['unlimited_dims']=('time',)
    
     return ds1 
 
@@ -160,5 +168,6 @@ def ds_wrf_single(file,list_no_vars,difHor,sign):
     _, index = np.unique(ds1['time'], return_index=True)
     ds1 = ds1.isel(time=index)
     ds2 = _new_coords(file,ds1)
+    ds2.encoding['unlimited_dims']=('time',)
    
     return ds2
