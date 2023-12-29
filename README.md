@@ -14,9 +14,8 @@ Atmospheric component of the coupled model generate a large volumes of output da
 
 SCAHpy can be used as a standalone package or it can also be run on the HPC-IGP-Cluster, which has the diagnostic simulations of 22 years of runnings centered on Peru Region. 
 
-::: {.callout-note}
-SCAHpy has been developed and tested using IGP-RESM-COW model outputs. However, it is designed to work with any WRF outputs. We are open to contributions from users!
-:::
+> :memo: **Note:** SCAHpy has been developed and tested using IGP-RESM-COW model outputs. However, it is designed to work with any WRF outputs. We are open to contributions from users!
+
 
 
 # Documentation
