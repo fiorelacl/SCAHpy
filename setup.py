@@ -15,6 +15,7 @@ setup(
         'cmocean',
         'cmcrameri',
         'cartopy',
+        'geopandas'
     ]
 
     author='Fiorela Castillón',
@@ -22,7 +23,8 @@ setup(
     url='https://github.com/fiorelacl/SCAHpy',
 
     description='Paquete para visualizar salidas de \
-    modelos numéricos como WRF, CROCO, WRFHydro',
+    las componentes Atmosférica, Océanica e Hidrológica del modelo \
+        IGP-RESM-COW',
 
-    license='Apache 2.0',
+    license='MIT license',
 )
