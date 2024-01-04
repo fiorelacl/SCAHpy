@@ -1,3 +1,5 @@
+# __init__.py
+
 __all__ = [
     'in_out',
     'met_diag',
