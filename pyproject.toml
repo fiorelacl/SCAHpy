@@ -1,0 +1,36 @@
+[build-system]
+requires      = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "scahpy"
+version = "0.0.1"
+description = "Package to process and analyze outputs from \
+    atmospheric, oceanic and Hydrological components from IGP-RESM-COW model"
+readme = "README.md"
+authors = [{ name = "Fiorela Castillon", email = "fv.castillon@gmail.com" }]
+license = { file = "LICENSE" }
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+]
+keywords = ["scahpy"]
+dependencies = [
+        'numpy',
+        'pandas',
+        'matplotlib',
+        'xarray',
+        'wrf-python',
+        'cartopy',
+        'geopandas'
+]
+requires-python = ">=3.8"
+
+[project.urls]
+Homepage = "https://github.com/fiorelacl/SCAHpy"
+
+[project.scripts]
+realpython = "reader.__main__:main"
+
+
