@@ -4,62 +4,204 @@
     "href": "index.html",
     "title": "Getting Started",
     "section": "",
-    "text": "Getting Started"
+    "text": "Getting Started",
+    "crumbs": [
+      "Getting Started"
+    ]
   },
   {
     "objectID": "index.html#what-is-scahpy",
     "href": "index.html#what-is-scahpy",
     "title": "Getting Started",
     "section": "What is SCAHpy?",
-    "text": "What is SCAHpy?\nSCAHpy is an open-source Python package that facilitate the analysis and visualization of the ouputs from atmospheric, oceaninc and hydrological component from the Geophysical Institute of Peru Regional Earth System Model Croco-Oasis-WRF (IGP-RESM-COW)\n\n\n\nCOW Model - Coupled Ocean-Atmosphere Model"
+    "text": "What is SCAHpy?\nSCAHpy is an open-source Python package that facilitate the analysis and visualization of the ouputs from atmospheric, oceaninc and hydrological component from the Geophysical Institute of Peru Regional Earth System Model Croco-Oasis-WRF (IGP-RESM-COW)",
+    "crumbs": [
+      "Getting Started"
+    ]
   },
   {
     "objectID": "index.html#why-is-scahpy",
     "href": "index.html#why-is-scahpy",
     "title": "Getting Started",
     "section": "Why is SCAHpy?",
-    "text": "Why is SCAHpy?\nAtmospheric component of the coupled model generate a large volumes of output data, making the analysis of model data harder. SCAHpy facilitates the manage of this volumes of data, also enables a manage of coordinates and times to local times."
+    "text": "Why is SCAHpy?\nAtmospheric component of the coupled model generate a large volumes of output data, making the analysis of model data harder. SCAHpy facilitates the manage of this volumes of data, also enables a manage of coordinates and times to local times.",
+    "crumbs": [
+      "Getting Started"
+    ]
   },
   {
     "objectID": "index.html#how-to-use-scahpy",
     "href": "index.html#how-to-use-scahpy",
     "title": "Getting Started",
     "section": "How to use SCAHpy?",
-    "text": "How to use SCAHpy?\nSCAHpy can be used as a standalone package or it can also be run on the HPC-IGP-Cluster, which has the diagnostic simulations of 22 years of runnings centered on Peru Region.\n\n\n\n\n\n\nNote\n\n\n\nSCAHpy has been developed and tested using IGP-RESM-COW model outputs. However, it is designed to work with any WRF outputs. We are open to contributions from users!\n\n\n\nGetting Started\n\nInstallation\nUsage\n\n\n\nTutorial & Use Cases\n\nTutorial\n\n\n\nHelp & Reference\n\nAPI References\nContributing"
+    "text": "How to use SCAHpy?\nSCAHpy can be used as a standalone package or it can also be run on the HPC-IGP-Cluster, which has the diagnostic simulations of 22 years of runnings centered on Peru Region.\n\n\n\n\n\n\nNote\n\n\n\nSCAHpy has been developed and tested using IGP-RESM-COW model outputs. However, it is designed to work with any WRF outputs. We are open to contributions from users!\n\n\n\nGetting Started\n\nInstallation\nUsage\n\n\n\nTutorial & Use Cases\n\nTutorial\n\n\n\nHelp & Reference\n\nAPI References\nContributing",
+    "crumbs": [
+      "Getting Started"
+    ]
+  },
+  {
+    "objectID": "01_install.html",
+    "href": "01_install.html",
+    "title": "Installation",
+    "section": "",
+    "text": "Required dependencies:",
+    "crumbs": [
+      "Getting Started",
+      "Installation"
+    ]
   },
   {
     "objectID": "01_install.html#required-dependencies",
     "href": "01_install.html#required-dependencies",
     "title": "Installation",
-    "section": "Required dependencies:",
-    "text": "Required dependencies:\n\nPython &gt;= 3.9\nxarray\nwrf-python\nmetpy"
+    "section": "",
+    "text": "Python &gt;= 3.9\nxarray\nwrf-python\nmetpy",
+    "crumbs": [
+      "Getting Started",
+      "Installation"
+    ]
   },
   {
     "objectID": "01_install.html#optional-dependencies",
     "href": "01_install.html#optional-dependencies",
     "title": "Installation",
     "section": "Optional dependencies:",
-    "text": "Optional dependencies:\nFor optimal performance, it is highly recommended that you install the following dependencies:\n\nbottleneck\nCartopy\nDask.distributed\nIPython\nnetCDF4\nxESMF\nxskillscore"
+    "text": "Optional dependencies:\nFor optimal performance, it is highly recommended that you install the following dependencies:\n\nbottleneck\nCartopy\nDask.distributed\nIPython\nnetCDF4\nxESMF\nxskillscore\ngeopandas",
+    "crumbs": [
+      "Getting Started",
+      "Installation"
+    ]
   },
   {
     "objectID": "01_install.html#step-by-step-instructions",
     "href": "01_install.html#step-by-step-instructions",
     "title": "Installation",
     "section": "Step-by-step instructions",
-    "text": "Step-by-step instructions\n\nFirst, download and install mamba or miniconda through Miniforge .\nThe easiest way to install SCAHpy and the above mentioned dependencies is to use the conda-forge channel. Open a terminal, then run the following command:\n\n$ mamba create -n scahpy_env scahpy xarray wrf-python metpy\nThe commands above install the latest stable release of SCAHpy.\n\n\n\n\n\n\nNote\n\n\n\nFor experts: Use the following command to Create an environment identical to the IGP environment used to test the package:\n\n\n$ conda env create -f LINK_TO_YAML_FILE\nThen, activate the SCAHpy IGP environment:\n$ mamba activate scahpy_igp"
+    "text": "Step-by-step instructions\n\nUsing Mamba\n\nFirst, download and install mamba or miniconda through Miniforge .\nThe easiest way to install SCAHpy and the above mentioned dependencies is to use the environment.yml from the repository. Open a terminal, then run the following command:\n\n mamba env create --file environment.yml -n scahpy_env\n\n\nUsing pip\n\nTo install SCAHpy directly. Open a terminal, then run the following command:\n\n pip install scahpy\nThen, activate the environment:\n$ mamba activate scahpy_env",
+    "crumbs": [
+      "Getting Started",
+      "Installation"
+    ]
+  },
+  {
+    "objectID": "02_use.html",
+    "href": "02_use.html",
+    "title": "Usage",
+    "section": "",
+    "text": "Example Usage of scahpy Package",
+    "crumbs": [
+      "Getting Started",
+      "Usage"
+    ]
+  },
+  {
+    "objectID": "02_use.html#importing-the-package",
+    "href": "02_use.html#importing-the-package",
+    "title": "Usage",
+    "section": "Importing the Package",
+    "text": "Importing the Package\nfrom scahpy import in_out, diagnostics\nimport glob",
+    "crumbs": [
+      "Getting Started",
+      "Usage"
+    ]
+  },
+  {
+    "objectID": "02_use.html#reading-multiple-wrf-outs",
+    "href": "02_use.html#reading-multiple-wrf-outs",
+    "title": "Usage",
+    "section": "Reading Multiple WRF outs",
+    "text": "Reading Multiple WRF outs\n# Example: Reading and processing multiple WRF datasets\nsfc = in_out._drop_wrf_vars('/datos/wrfout_d01_2024-01-01_03:00:00',['RAINC', 'RAINNC', 'RAINSH', 'U10', 'V10', 'SSTSK'])\nfiles = sorted(glob.glob('/datos/wrfout_d01*'))\nds = in_out.ds_wrf_multi(files, sfc, '5 hours', -1)",
+    "crumbs": [
+      "Getting Started",
+      "Usage"
+    ]
+  },
+  {
+    "objectID": "02_use.html#calculating-precipitation",
+    "href": "02_use.html#calculating-precipitation",
+    "title": "Usage",
+    "section": "Calculating Precipitation",
+    "text": "Calculating Precipitation\n# Example: Calculating precipitation using diagnostics module\nds2 = met_diag.calc_pp(ds, True)",
+    "crumbs": [
+      "Getting Started",
+      "Usage"
+    ]
+  },
+  {
+    "objectID": "03_tutorial.html",
+    "href": "03_tutorial.html",
+    "title": "Tutorials",
+    "section": "",
+    "text": "Step 1: Reading WRF Data\nFirst, we need to read the WRF data using the in_out module in the scahpy package. We’ll drop unnecessary variables and select a single WRF dataset.",
+    "crumbs": [
+      "Tutorial & Use Cases",
+      "Tutorials"
+    ]
+  },
+  {
+    "objectID": "03_tutorial.html#step-1-reading-wrf-data",
+    "href": "03_tutorial.html#step-1-reading-wrf-data",
+    "title": "Tutorials",
+    "section": "",
+    "text": "sfc = in_out._drop_wrf_vars('/data/users/fcastillon/COW_outs/pronos/CFS_202312/MERCLIM_COA_LEADS/wrfout_d01_2024-01-01_03:00:00',\n                             ['RAINC', 'RAINNC', 'RAINSH', 'U10', 'V10', 'SSTSK'])\nfiles = sorted(glob.glob('/data/users/fcastillon/COW_outs/pronos/CFS_202312/MERCLIM_COA_LEADS/wrfout_d01*'))\nds = in_out.ds_wrf_multi(files, sfc, '5 hours', -1)",
+    "crumbs": [
+      "Tutorial & Use Cases",
+      "Tutorials"
+    ]
+  },
+  {
+    "objectID": "03_tutorial.html#step-2-calculating-precipitation",
+    "href": "03_tutorial.html#step-2-calculating-precipitation",
+    "title": "Tutorials",
+    "section": "Step 2: Calculating Precipitation",
+    "text": "Step 2: Calculating Precipitation\nNow, let’s calculate precipitation using the met_diag module.\nds2 = met_diag.calc_pp(ds, True)",
+    "crumbs": [
+      "Tutorial & Use Cases",
+      "Tutorials"
+    ]
+  },
+  {
+    "objectID": "03_tutorial.html#step-3-temporal-aggregation-and-conversion",
+    "href": "03_tutorial.html#step-3-temporal-aggregation-and-conversion",
+    "title": "Tutorials",
+    "section": "Step 3: Temporal Aggregation and Conversion",
+    "text": "Step 3: Temporal Aggregation and Conversion\nWe’ll perform temporal aggregation, including averaging and median calculations, on the calculated precipitation data. Additionally, we’ll convert temperature data from Kelvin to Celsius.\ndd = temp_scales.dmy_var(ds2, tiempo='1M', accum=['PP'], avg=['U10', 'V10', 'SSTSK'], mediana=None).sel(time=slice('2023-12', '2024-06'))\ndd['SSTSK'] = dd['SSTSK'] - 273.15",
+    "crumbs": [
+      "Tutorial & Use Cases",
+      "Tutorials"
+    ]
+  },
+  {
+    "objectID": "03_tutorial.html#step-4-plotting-precipitation-maps",
+    "href": "03_tutorial.html#step-4-plotting-precipitation-maps",
+    "title": "Tutorials",
+    "section": "Step 4: Plotting Precipitation Maps",
+    "text": "Step 4: Plotting Precipitation Maps\nNow, let’s create precipitation maps for selected months using the m_pp_uv10_sst function.\n# Example usage\nlevs = [0, 25, 50, 100, 200, 400, 600, 800, 1000, 1200, 1400, 1600]\nlevs2 = [26, 27, 28]\nsa_shapefile = '/datos/shapes/SA_paises.shp'\noutput_path = '/datos/outs/202312'\nmonth_list = [12, 1, 2, 3, 4, 5]\n\nmap_plots.m_pp_uv10_sst(dd, dd, levs, levs2, sa_shapefile, output_path, month_list,\n                       save_maps=True, quiverkey_speed=10)\nThis tutorial guides you through the steps of reading WRF data, calculating precipitation, performing temporal aggregation, and creating precipitation maps using the scahpy package.",
+    "crumbs": [
+      "Tutorial & Use Cases",
+      "Tutorials"
+    ]
   },
   {
     "objectID": "04_API.html",
     "href": "04_API.html",
     "title": "API reference",
     "section": "",
-    "text": "In summary, this book has no content whatsoever.\n\n1 + 1\n\n[1] 2"
+    "text": "Coming soon …",
+    "crumbs": [
+      "Help & Reference",
+      "API reference"
+    ]
   },
   {
     "objectID": "05_contrib.html",
     "href": "05_contrib.html",
     "title": "Contributing",
     "section": "",
-    "text": "All types of crontributions, bugs, feedbacks are welcome!\nReport bugs and submit feedback at Github Issues.\nESCRIBIR SOBRE COMO CONTRIBUIR AL SOFTWARE, REPORTAR ISSUES O PROBLEMAS CON EL SOFTWARE Y COMO SEEK SUPPORT"
+    "text": "All types of crontributions, bugs, feedbacks are welcome!\nReport bugs and submit feedback at Github Issues.",
+    "crumbs": [
+      "Help & Reference",
+      "Contributing"
+    ]
   }
 ]
