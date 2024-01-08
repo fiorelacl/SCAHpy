@@ -1,2 +1,27 @@
 # Usage {.unnumbered}
 
+# Example Usage of `scahpy` Package
+
+## Importing the Package
+
+```python
+from scahpy import in_out, diagnostics
+import glob
+```
+
+## Reading Multiple WRF outs
+
+```python
+# Example: Reading and processing multiple WRF datasets
+sfc = in_out._drop_wrf_vars('/datos/wrfout_d01_2024-01-01_03:00:00',['RAINC', 'RAINNC', 'RAINSH', 'U10', 'V10', 'SSTSK'])
+files = sorted(glob.glob('/datos/wrfout_d01*'))
+ds = in_out.ds_wrf_multi(files, sfc, '5 hours', -1)
+```
+
+## Calculating Precipitation
+
+```python
+# Example: Calculating precipitation using diagnostics module
+ds2 = met_diag.calc_pp(ds, True)
+```
+

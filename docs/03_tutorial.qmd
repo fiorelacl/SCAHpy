@@ -1,2 +1,53 @@
 # Tutorials {.unnumbered}
 
+In this tutorial, we'll go through the process of analyzing WRF (Weather Research and Forecasting) data and creating precipitation maps using the `scahpy` package.
+
+## Step 1: Reading WRF Data
+
+First, we need to read the WRF data using the `in_out` module in the `scahpy` package. We'll drop unnecessary variables and select a single WRF dataset.
+
+```python
+sfc = in_out._drop_wrf_vars('/data/users/fcastillon/COW_outs/pronos/CFS_202312/MERCLIM_COA_LEADS/wrfout_d01_2024-01-01_03:00:00',
+                             ['RAINC', 'RAINNC', 'RAINSH', 'U10', 'V10', 'SSTSK'])
+files = sorted(glob.glob('/data/users/fcastillon/COW_outs/pronos/CFS_202312/MERCLIM_COA_LEADS/wrfout_d01*'))
+ds = in_out.ds_wrf_multi(files, sfc, '5 hours', -1)
+```
+
+## Step 2: Calculating Precipitation
+
+Now, let's calculate precipitation using the `met_diag` module.
+
+```python
+ds2 = met_diag.calc_pp(ds, True)
+```
+
+## Step 3: Temporal Aggregation and Conversion
+
+We'll perform temporal aggregation, including averaging and median calculations, on the calculated precipitation data. Additionally, we'll convert temperature data from Kelvin to Celsius.
+
+```python
+dd = temp_scales.dmy_var(ds2, tiempo='1M', accum=['PP'], avg=['U10', 'V10', 'SSTSK'], mediana=None).sel(time=slice('2023-12', '2024-06'))
+dd['SSTSK'] = dd['SSTSK'] - 273.15
+```
+
+## Step 4: Plotting Precipitation Maps
+
+Now, let's create precipitation maps for selected months using the `m_pp_uv10_sst` function.
+
+```python
+# Example usage
+levs = [0, 25, 50, 100, 200, 400, 600, 800, 1000, 1200, 1400, 1600]
+levs2 = [26, 27, 28]
+sa_shapefile = '/datos/shapes/SA_paises.shp'
+output_path = '/datos/outs/202312'
+month_list = [12, 1, 2, 3, 4, 5]
+
+map_plots.m_pp_uv10_sst(dd, dd, levs, levs2, sa_shapefile, output_path, month_list,
+                       save_maps=True, quiverkey_speed=10)
+```
+
+This tutorial guides you through the steps of reading WRF data, calculating precipitation, performing temporal aggregation, and creating precipitation maps using the `scahpy` package.
+
+
+
+
