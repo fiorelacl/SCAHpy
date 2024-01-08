@@ -20,6 +20,7 @@ For optimal performance, it is highly recommended that you install the following
 * [netCDF4](https://unidata.github.io/netcdf4-python)
 * [xESMF](https://xesmf.readthedocs.io/)
 * [xskillscore](https://github.com/xarray-contrib/xskillscore/tree/stable)
+* [geopandas](https://geopandas.org/en/stable/)
 
 
 ## Step-by-step instructions {.unnumbered}

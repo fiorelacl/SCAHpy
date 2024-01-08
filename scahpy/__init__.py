@@ -2,6 +2,7 @@
 
 __all__ = [
     'in_out',
+    'map_plots',
     'met_diag',
     'spatial_scales',
     'temp_scales',

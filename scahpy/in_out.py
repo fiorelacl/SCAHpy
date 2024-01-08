@@ -3,6 +3,7 @@ import numpy as np
 import xarray as xr
 import wrf
 from functools import partial
+import geopandas as gpd
 
 def _dict_metadata_wrf_vars(da):
     """Append to a dictionary 4 metadata features like stagger, # of dimensions,
@@ -171,3 +172,47 @@ def ds_wrf_single(file,list_no_vars,difHor,sign):
     ds2.encoding['unlimited_dims']=('time',)
    
     return ds2
+
+
+def extract_station_wrf(wrfout, station, lon_col, lat_col, name_col, output_format='netcdf'):
+    """
+    Extracts data from a WRF output file using station coordinates provided in a CSV or shapefile.
+
+    Parameters:
+    - wrfout (nc): the wrfout file.
+    - station (str): Path to the CSV or shapefile containing station coordinates.
+    - lon_col (str): Name of the column containing longitude values.
+    - lat_col (str): Name of the column containing latitude values.
+    - name_col (str): Name of the column containing station names.
+    - output_format (str, optional): Output format ('netcdf' or 'dataframe'). Defaults to 'netcdf'.
+
+    Returns:
+    - Extracted data in the specified format.
+    """
+
+    # Read the NetCDF file
+    ds = xr.open_dataset(wrfout)
+
+    # Read station coordinates from CSV or shapefile
+    if station.lower().endswith('.csv'):
+        station_data = pd.read_csv(station)
+    elif station.lower().endswith('.shp'):
+        df = gpd.read_file(station)
+        station_data = df.drop('geometry', axis=1)
+    else:
+        raise ValueError("Unsupported station file format. Supported formats: .csv, .shp")
+
+    # Create xarray dataset with station coordinates
+    crd_ix = station_data.set_index(name_col).to_xarray()
+
+    # Select data at nearest grid points to station coordinates
+    extracted_data = ds.sel(lon=crd_ix[lon_col], lat=crd_ix[lat_col], method='nearest')
+
+    # Convert to DataFrame if the output format is specified as 'dataframe'
+    if output_format == 'dataframe':
+        extracted_data = extracted_data.to_dataframe().reset_index()
+
+    return extracted_data
+
+
+
