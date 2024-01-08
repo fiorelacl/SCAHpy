@@ -24,29 +24,28 @@ For optimal performance, it is highly recommended that you install the following
 
 ## Step-by-step instructions {.unnumbered}
 
+#### Using Mamba
+
 1. First, download and install mamba or miniconda through [Miniforge](https://github.com/conda-forge/miniforge) .
 
-2. The easiest way to install SCAHpy and the above mentioned dependencies is to use the conda-forge channel. Open a terminal, then run the following command:
+2. The easiest way to install SCAHpy and the above mentioned dependencies is to use the environment.yml from the [repository](https://fiorelacl.github.io/SCAHpy/). Open a terminal, then run the following command:
 
-```default
-$ mamba create -n scahpy_env scahpy xarray wrf-python metpy
+```bash
+ mamba env create --file environment.yml -n scahpy_env
 ```
 
-The commands above install the latest stable release of SCAHpy.
+#### Using pip
 
+1. To install SCAHpy directly. Open a terminal, then run the following command:
 
-::: {.callout-note}
-For experts: Use the following command to Create an environment identical to the IGP environment used to test the package:
-:::
-
-```default
-$ conda env create -f LINK_TO_YAML_FILE
+```bash
+ pip install scahpy
 ```
 
-Then, activate the SCAHpy IGP environment:
+Then, activate the environment:
 
 ```default
-$ mamba activate scahpy_igp
+$ mamba activate scahpy_env
 ```
 
 

@@ -1,0 +1,16 @@
+name: scahpy_env
+channels:
+  - conda-forge
+dependencies:
+  - xarray
+  - numpy
+  - pandas
+  - matplotlib
+  - wrf-python
+  - cartopy
+  - geopandas
+  - pip
+  - pip:
+     - datetime
+     - scahpy
+     
