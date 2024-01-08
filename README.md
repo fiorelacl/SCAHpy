@@ -37,7 +37,7 @@ The official documentation is hosted here: [Documentation](https://fiorelacl.git
 
 1. First, download and install mamba or miniconda through [Miniforge](https://github.com/conda-forge/miniforge) .
 
-2. The easiest way to install SCAHpy and the above mentioned dependencies is to use the environment.yml from the [repository](https://fiorelacl.github.io/SCAHpy/). Open a terminal, then run the following command:
+2. The easiest way to install SCAHpy and the above mentioned dependencies is to use the environment.yml from the [repository](https://github.com/fiorelacl/SCAHpy/). Open a terminal, then run the following command:
 
 ```bash
  mamba env create --file environment.yml -n scahpy_env
