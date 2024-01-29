@@ -5,7 +5,7 @@
 ## Importing the Package
 
 ```python
-from scahpy import in_out, diagnostics
+from scahpy import in_out, met_diag
 import glob
 ```
 
