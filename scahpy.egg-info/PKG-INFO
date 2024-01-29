@@ -1,0 +1,104 @@
+Metadata-Version: 2.1
+Name: scahpy
+Version: 0.0.1
+Summary: Package to process and analyze outputs from IGP-RESM-COW model
+Author-email: Fiorela Castillón <fv.castillon@gmail.com>
+License: MIT License
+        
+        Copyright (c) 2023 fiorelacl
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+        
+Project-URL: Homepage, https://github.com/fiorelacl/SCAHpy
+Keywords: scahpy
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: numpy
+Requires-Dist: pandas
+Requires-Dist: matplotlib
+Requires-Dist: xarray
+Requires-Dist: wrf-python
+Requires-Dist: cartopy
+Requires-Dist: cmocean
+Requires-Dist: geopandas
+
+<div style="text-align: center;">
+<img width="500" src="./docs/cover.jpg" >
+</div>
+
+## **What is SCAHpy?**
+
+***SCAHpy*** is an open-source Python package that facilitate the analysis and visualization of the ouputs from atmospheric, oceaninc and hydrological component from the Geophysical Institute of Peru Regional Earth System Model Croco-Oasis-WRF (IGP-RESM-COW)
+
+<div style="text-align: center;">
+<img width="450" src="./docs/cow_model.jpg" >
+</div>
+
+## **Why is SCAHpy?**
+
+Atmospheric component of the coupled model generate a large volumes of output data, making the analysis of model data harder. SCAHpy facilitates the manage of this volumes of data, also enables a manage of coordinates and times to local times. 
+
+## **How to use SCAHpy?**
+
+SCAHpy can be used as a standalone package or it can also be run on the HPC-IGP-Cluster, which has the diagnostic simulations of 22 years of runnings centered on Peru Region. 
+
+
+<div class="note" style='background-color:#e4f2f7; color: #1f2426; border-left: solid #add8e6 5px; border-radius: 2px; padding:0.3em;'>
+<span>
+<p style='margin-top:0.4em; text-align:left; margin-right:0.5em'>
+<b>Note:</b> <i>SCAHpy has been developed and tested using IGP-RESM-COW model outputs. However, it is designed to work with any WRF outputs. We are open to contributions from users!</i> </p>
+</span>
+</div>
+
+
+# Documentation
+
+The official documentation is hosted here: [Documentation](https://fiorelacl.github.io/SCAHpy/)
+
+## Installation
+
+#### Using Mamba
+
+1. First, download and install mamba or miniconda through [Miniforge](https://github.com/conda-forge/miniforge) .
+
+2. The easiest way to install SCAHpy and the above mentioned dependencies is to use the environment.yml from the [repository](https://github.com/fiorelacl/SCAHpy/). Open a terminal, then run the following command:
+
+```bash
+ mamba env create --file environment.yml -n scahpy_env
+```
+
+#### Using pip
+
+1. To install SCAHpy directly. Open a terminal, then run the following command:
+
+```bash
+ pip install scahpy
+```
+
+<div class="note" style='background-color:#e4f2f7; color: #1f2426; border-left: solid #add8e6 5px; border-radius: 2px; padding:0.3em;'>
+<span>
+<p style='margin-top:0.4em; text-align:left; margin-right:0.5em'>
+<b>Note:</b> <i> Checkout the contribution page if you want to get involved and help maintain or develop SCAHpy </i> </p>
+</span>
+</div>
+

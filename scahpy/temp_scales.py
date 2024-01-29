@@ -14,17 +14,21 @@ def dmy_var(ds,tiempo=None ,accum=None, avg=None, mediana=None):
     avg : if True use the mean function / Si es True, emplea la función promedio
     mediana : if True use the median function / Si es True, emplea la función mediana
     """
-    if accum is not None and avg is None and mediana is None:
-        ds_D = ds[accum].resample(time = tiempo).sum()
-    elif avg is not None and accum is None and mediana is None:
-        ds_D = ds[avg].resample(time = tiempo).mean()
-    elif mediana is not None and avg is None and accum is None:
-        ds_D = ds[mediana].resample(time = tiempo).median()
-    else:
-        print('Ingrese una lista de variables en solo uno de los\
-               parámetros (accum, avg o mediana) o coloque una\
-               escala temporal apropiada')
-    return ds_D
+
+    if accum is not None:
+        ds_ac = ds[accum].resample(time = tiempo).sum()
+    if avg is not None:
+        ds_avg = ds[avg].resample(time = tiempo).mean()
+    if mediana is not None:
+        ds_med = ds[mediana].resample(time = tiempo).median()
+
+    try:
+        datasets = {'ds_ac':ds_ac,'ds_avg':ds_avg,'ds_med':ds_med}
+        ds_all = xr.combine_nested(datasets, concat_dim=['lat','lon'])
+    except:
+
+        print('coloque una escala temporal apropiada')
+    return ds_all
 
 
 def monthly_clim(ds,stat=None,time_slice=None):

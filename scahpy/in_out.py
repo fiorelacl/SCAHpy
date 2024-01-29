@@ -127,7 +127,7 @@ def _select_time(x,difHor,sign):
     d=d.assign_coords({'time':time2})
     return d
 
-def ds_wrf_multi(files,list_no_vars,difHor,sign):
+def ds_wrf_multi(files,list_no_vars,difHor=0,sign=1):
     """Read a list of wrfout files for the variables selected.
     ES: Lee una lista de archivos wrfout para las variables seleccionadas.
 
@@ -149,7 +149,7 @@ def ds_wrf_multi(files,list_no_vars,difHor,sign):
    
     return ds1 
 
-def ds_wrf_single(file,list_no_vars,difHor,sign):
+def ds_wrf_single(file,list_no_vars,difHor=0,sign=1):
     """Read a list of wrfout files for the variables selected.
     ES: Lee una lista de archivos wrfout para las variables seleccionadas.
 
@@ -174,12 +174,12 @@ def ds_wrf_single(file,list_no_vars,difHor,sign):
     return ds2
 
 
-def extract_station_wrf(wrfout, station, lon_col, lat_col, name_col, output_format='netcdf'):
+def extract_station_wrf(out, station, lon_col, lat_col, name_col, output_format='netcdf'):
     """
     Extracts data from a WRF output file using station coordinates provided in a CSV or shapefile.
 
     Parameters:
-    - wrfout (nc): the wrfout file.
+    - out (nc): the wrf outfile already laoded.
     - station (str): Path to the CSV or shapefile containing station coordinates.
     - lon_col (str): Name of the column containing longitude values.
     - lat_col (str): Name of the column containing latitude values.
@@ -189,9 +189,6 @@ def extract_station_wrf(wrfout, station, lon_col, lat_col, name_col, output_form
     Returns:
     - Extracted data in the specified format.
     """
-
-    # Read the NetCDF file
-    ds = xr.open_dataset(wrfout)
 
     # Read station coordinates from CSV or shapefile
     if station.lower().endswith('.csv'):
@@ -206,7 +203,7 @@ def extract_station_wrf(wrfout, station, lon_col, lat_col, name_col, output_form
     crd_ix = station_data.set_index(name_col).to_xarray()
 
     # Select data at nearest grid points to station coordinates
-    extracted_data = ds.sel(lon=crd_ix[lon_col], lat=crd_ix[lat_col], method='nearest')
+    extracted_data = out.sel(lon=crd_ix[lon_col], lat=crd_ix[lat_col], method='nearest')
 
     # Convert to DataFrame if the output format is specified as 'dataframe'
     if output_format == 'dataframe':

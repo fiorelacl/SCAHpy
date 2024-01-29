@@ -8,7 +8,7 @@ import cmocean
 import matplotlib.colors
 
 def m_pp_uv10_sst(pp, sfc, levs, levs2, sa_shapefile, output_path=None, month_list=None,
-                           save_maps=True, quiverkey_speed=5):
+                           save_maps=True, quiverkey_speed=5,extent=None):
     """
     Plots precipitation maps for specified months.
 
@@ -22,6 +22,7 @@ def m_pp_uv10_sst(pp, sfc, levs, levs2, sa_shapefile, output_path=None, month_li
     - month_list (list, optional): List of months to plot. Defaults to None (all months).
     - save_maps (bool, optional): If True, saves the maps. If False, only displays them. Defaults to True.
     - quiverkey_speed (int, optional): Speed parameter for quiverkey. Defaults to 5.
+    - extent: [x1,x2,y1,y2] spatial extension
     """
     cmaps = cmocean.tools.lighten(cmocean.cm.rain, 0.85)
     norm = matplotlib.colors.BoundaryNorm(levs, cmaps.N)
@@ -56,16 +57,14 @@ def m_pp_uv10_sst(pp, sfc, levs, levs2, sa_shapefile, output_path=None, month_li
         lat_formatter = LatitudeFormatter()
         axs.yaxis.set_major_formatter(lat_formatter)
         axs.xaxis.set_major_formatter(lon_formatter)
-        axs.set_xticks(np.arange(-90, -60, 5), crs=ccrs.PlateCarree())
-        axs.set_yticks(np.arange(-20, 5, 5), crs=ccrs.PlateCarree())
-        axs.set_extent([-94, -68, -22, 4.2])
+        axs.set_extent(extent)
 
         plt.title(f'Map of Precipitation Month: {month:02d}')
 
         if save_maps:
             if output_path is None:
                 raise ValueError("Output path cannot be None when saving maps.")
-            plt.savefig(f'{output_path}/MERCLIM_COA_LEADS_m_TSM_UV_PP_{month}.png',
+            plt.savefig(f'{output_path}/m_TSM_UV_PP_{month}.png',
                         bbox_inches='tight', dpi=300, facecolor='white', transparent=False)
         else:
             plt.show()
