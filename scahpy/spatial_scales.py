@@ -1,7 +1,7 @@
 import xarray as xr
 from wrf import (interplevel)
 
-def vert_levs(ds,varis,lvls):
+def vert_levs(ds,varis,lvls=None):
     """  Interpolate vertical levels to a pressure variable.
     ES: Genera la interpolación vertical de las variables a nivel de presión
 
@@ -10,9 +10,9 @@ def vert_levs(ds,varis,lvls):
     ds : Dataset loaded / Dataset previamente guardado
     varis : list of variables  / Lista de variables a ser interpoladas
     """
-
-    plevels=[1000,975,950,925,900,850,800,700,600,500,400,300,200] # Default
-    lvls=plevels
+    if lvls is None:
+        plevels=[1000,975,950,925,900,850,800,700,600,500,400,300,200] # Default
+        lvls=plevels
 
     if 'Presion' not in ds:
         ds['Presion']= (ds['P']+ds['PB'])/100
@@ -28,7 +28,7 @@ def vert_levs(ds,varis,lvls):
         dlvl[var].attrs['vert_units'] = ''
         dlvl[var].encoding['coordinates'] = 'time lat lon'
         datasets.append(dlvl)
-    ds_lvl = xr.concat(datasets,dim='time')
+    ds_lvl = xr.merge(datasets,dim='time')
     ds_lvl.encoding['unlimited_dims']=('time',)
     ds_lvl['lat'].attrs = {"units": 'degrees_north', 'axis': 'Y','long_name':'Latitude','standard_name':'latitude'}
     ds_lvl['lon'].attrs = {"units": 'degrees_east', 'axis': 'X','long_name':'Longitude','standard_name':'longitude'}
