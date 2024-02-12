@@ -3,7 +3,8 @@ from wrf import (interplevel)
 
 def vert_levs(ds,varis,lvls=None):
     """  Interpolate vertical levels to a pressure variable.
-    ES: Genera la interpolación vertical de las variables a nivel de presión
+    ES: Genera la interpolación vertical de las variables a nivel de presión, considera
+    que la variable temporal se llama 'time', de no ser así, renombrar a 'time'
 
     Parameters/Parametros:
     ----------------------
