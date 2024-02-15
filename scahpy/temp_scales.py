@@ -23,8 +23,8 @@ def dmy_var(ds,tiempo=None ,accum=None, avg=None, mediana=None):
         ds_med = ds[mediana].resample(time = tiempo).median()
 
     try:
-        datasets = {'ds_ac':ds_ac,'ds_avg':ds_avg,'ds_med':ds_med}
-        ds_all = xr.combine_nested(datasets, concat_dim=['lat','lon'])
+        datasets = [ds_ac, ds_avg, ds_med]
+        ds_all = xr.concat(datasets, dim='time')
     except:
 
         print('coloque una escala temporal apropiada')
