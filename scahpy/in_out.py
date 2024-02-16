@@ -155,7 +155,7 @@ def ds_wrf_single(file,list_no_vars,difHor=0,sign=1):
 
     Parameters/Parametros:
     ----------------------
-    files : List of wrfout files / Lista de archivos wrfout
+    files : wrfout file / archivo wrfout
     list_no_vars : List of variables to be delated / Lista de variables a ignorar
     difHor : String with the hours t / Lista de variables a mantener
     sign: -1 or 1 according to the difference / +1 o -1 dependiendo de

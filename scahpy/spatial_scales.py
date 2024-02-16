@@ -29,7 +29,7 @@ def vert_levs(ds,varis,lvls=None):
         dlvl[var].attrs['vert_units'] = ''
         dlvl[var].encoding['coordinates'] = 'time lat lon'
         datasets.append(dlvl)
-    ds_lvl = xr.merge(datasets,dim='time')
+    ds_lvl = xr.concat(datasets,dim='time')
     ds_lvl.encoding['unlimited_dims']=('time',)
     ds_lvl['lat'].attrs = {"units": 'degrees_north', 'axis': 'Y','long_name':'Latitude','standard_name':'latitude'}
     ds_lvl['lon'].attrs = {"units": 'degrees_east', 'axis': 'X','long_name':'Longitude','standard_name':'longitude'}
