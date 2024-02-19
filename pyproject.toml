@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "scahpy"
-version = "0.0.2"
+version = "0.0.3"
 description = "Package to process and analyze outputs from IGP-RESM-COW model"
 readme = "README.md"
 authors = [{ name = "Fiorela Castillón", email = "fv.castillon@gmail.com" }]
@@ -19,12 +19,12 @@ classifiers = [
 
 keywords = ["scahpy"]
 dependencies = [
+        'wrf-python',
+        'netCDF4',
+        'xarray',
         'numpy',
         'pandas',
-        'matplotlib',
-        'xarray',
-        'netCDF4',
-        'wrf-python',
+        'matplotlib',      
         'cartopy',
         'cmocean',
         'geopandas'

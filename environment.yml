@@ -2,11 +2,12 @@ name: scahpy_env
 channels:
   - conda-forge
 dependencies:
+  - wrf-python
+  - netCDF4
   - xarray
   - numpy
   - pandas
   - matplotlib
-  - netCDF4
   - wrf-python
   - cartopy
   - geopandas
