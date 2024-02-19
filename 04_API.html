@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -199,7 +233,72 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#in_out.ds_wrf_multi" id="toc-in_out.ds_wrf_multi" class="nav-link active" data-scroll-target="#in_out.ds_wrf_multi"><strong><code>in_out.ds_wrf_multi</code></strong></a>
+  <ul class="collapse">
+  <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters">Parameters:</a></li>
+  <li><a href="#returns" id="toc-returns" class="nav-link" data-scroll-target="#returns">Returns</a></li>
+  </ul></li>
+  <li><a href="#in_out.ds_wrf_single" id="toc-in_out.ds_wrf_single" class="nav-link" data-scroll-target="#in_out.ds_wrf_single"><strong><code>in_out.ds_wrf_single</code></strong></a>
+  <ul class="collapse">
+  <li><a href="#parameters-1" id="toc-parameters-1" class="nav-link" data-scroll-target="#parameters-1">Parameters:</a></li>
+  <li><a href="#returns-1" id="toc-returns-1" class="nav-link" data-scroll-target="#returns-1">Returns</a></li>
+  </ul></li>
+  <li><a href="#in_out.extract_station_wrf" id="toc-in_out.extract_station_wrf" class="nav-link" data-scroll-target="#in_out.extract_station_wrf"><strong><code>in_out.extract_station_wrf</code></strong></a>
+  <ul class="collapse">
+  <li><a href="#parameters-2" id="toc-parameters-2" class="nav-link" data-scroll-target="#parameters-2">Parameters:</a></li>
+  <li><a href="#returns-2" id="toc-returns-2" class="nav-link" data-scroll-target="#returns-2">Returns</a></li>
+  </ul></li>
+  <li><a href="#met_diag.calc_pp" id="toc-met_diag.calc_pp" class="nav-link" data-scroll-target="#met_diag.calc_pp"><strong><code>met_diag.calc_pp</code></strong></a>
+  <ul class="collapse">
+  <li><a href="#parameters-3" id="toc-parameters-3" class="nav-link" data-scroll-target="#parameters-3">Parameters:</a></li>
+  <li><a href="#returns-3" id="toc-returns-3" class="nav-link" data-scroll-target="#returns-3">Returns</a></li>
+  </ul></li>
+  <li><a href="#met_diag.calc_wsp" id="toc-met_diag.calc_wsp" class="nav-link" data-scroll-target="#met_diag.calc_wsp"><strong><code>met_diag.calc_wsp</code></strong></a>
+  <ul class="collapse">
+  <li><a href="#parameters-4" id="toc-parameters-4" class="nav-link" data-scroll-target="#parameters-4">Parameters:</a></li>
+  <li><a href="#returns-4" id="toc-returns-4" class="nav-link" data-scroll-target="#returns-4">Returns</a></li>
+  </ul></li>
+  <li><a href="#met_diag.calc_pres" id="toc-met_diag.calc_pres" class="nav-link" data-scroll-target="#met_diag.calc_pres"><strong><code>met_diag.calc_pres</code></strong></a>
+  <ul class="collapse">
+  <li><a href="#parameters-5" id="toc-parameters-5" class="nav-link" data-scroll-target="#parameters-5">Parameters:</a></li>
+  <li><a href="#returns-5" id="toc-returns-5" class="nav-link" data-scroll-target="#returns-5">Returns</a></li>
+  </ul></li>
+  <li><a href="#met_diag.calc_tp" id="toc-met_diag.calc_tp" class="nav-link" data-scroll-target="#met_diag.calc_tp"><strong><code>met_diag.calc_tp</code></strong></a>
+  <ul class="collapse">
+  <li><a href="#parameters-6" id="toc-parameters-6" class="nav-link" data-scroll-target="#parameters-6">Parameters:</a></li>
+  <li><a href="#returns-6" id="toc-returns-6" class="nav-link" data-scroll-target="#returns-6">Returns</a></li>
+  </ul></li>
+  <li><a href="#met_diag.calc_qe" id="toc-met_diag.calc_qe" class="nav-link" data-scroll-target="#met_diag.calc_qe"><strong><code>met_diag.calc_qe</code></strong></a>
+  <ul class="collapse">
+  <li><a href="#parameters-7" id="toc-parameters-7" class="nav-link" data-scroll-target="#parameters-7">Parameters:</a></li>
+  <li><a href="#returns-7" id="toc-returns-7" class="nav-link" data-scroll-target="#returns-7">Returns</a></li>
+  </ul></li>
+  <li><a href="#spatial_scales.vert_levs" id="toc-spatial_scales.vert_levs" class="nav-link" data-scroll-target="#spatial_scales.vert_levs"><strong><code>spatial_scales.vert_levs</code></strong></a>
+  <ul class="collapse">
+  <li><a href="#parameters-8" id="toc-parameters-8" class="nav-link" data-scroll-target="#parameters-8">Parameters:</a></li>
+  <li><a href="#returns-8" id="toc-returns-8" class="nav-link" data-scroll-target="#returns-8">Returns</a></li>
+  </ul></li>
+  <li><a href="#temp_scales.dmy_var" id="toc-temp_scales.dmy_var" class="nav-link" data-scroll-target="#temp_scales.dmy_var"><strong><code>temp_scales.dmy_var</code></strong></a>
+  <ul class="collapse">
+  <li><a href="#parameters-9" id="toc-parameters-9" class="nav-link" data-scroll-target="#parameters-9">Parameters:</a></li>
+  <li><a href="#returns-9" id="toc-returns-9" class="nav-link" data-scroll-target="#returns-9">Returns</a></li>
+  </ul></li>
+  <li><a href="#temp_scales.monthly_clim" id="toc-temp_scales.monthly_clim" class="nav-link" data-scroll-target="#temp_scales.monthly_clim"><strong><code>temp_scales.monthly_clim</code></strong></a>
+  <ul class="collapse">
+  <li><a href="#parameters-10" id="toc-parameters-10" class="nav-link" data-scroll-target="#parameters-10">Parameters:</a></li>
+  <li><a href="#returns-10" id="toc-returns-10" class="nav-link" data-scroll-target="#returns-10">Returns</a></li>
+  </ul></li>
+  <li><a href="#temp_scales.daily_clim" id="toc-temp_scales.daily_clim" class="nav-link" data-scroll-target="#temp_scales.daily_clim"><strong><code>temp_scales.daily_clim</code></strong></a>
+  <ul class="collapse">
+  <li><a href="#parameters-11" id="toc-parameters-11" class="nav-link" data-scroll-target="#parameters-11">Parameters:</a></li>
+  <li><a href="#returns-11" id="toc-returns-11" class="nav-link" data-scroll-target="#returns-11">Returns</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/fiorelacl/SCAHpy/docs/edit/main/04_API.qmd" class="toc-action">Edit this page</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -221,9 +320,244 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>Coming soon …</p>
+<p>Here are the main functions of <strong>SCAHpy</strong>:</p>
+<section id="in_out.ds_wrf_multi" class="level2">
+<h2 class="anchored" data-anchor-id="in_out.ds_wrf_multi"><strong><code>in_out.ds_wrf_multi</code></strong></h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>in_out.ds_wrf_multi(files,list_no_vars,difHor<span class="op">=</span><span class="dv">0</span>,sign<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Read a list of wrfout files for the variables selected.</p>
+<section id="parameters" class="level3">
+<h3 class="anchored" data-anchor-id="parameters">Parameters:</h3>
+<ul>
+<li><code>files</code> : List of wrfout files</li>
+<li><code>list_no_vars</code> : List of variables to be delated</li>
+<li><code>difHor</code> : String with the hours t</li>
+<li><code>sign</code>: -1 or 1 according to the difference</li>
+</ul>
+</section>
+<section id="returns" class="level3">
+<h3 class="anchored" data-anchor-id="returns">Returns</h3>
+<ul>
+<li><code>fig</code> (matplotlib.figure.Figure)</li>
+<li><code>ax</code> (matplotlib.axes.Axes)</li>
+</ul>
+</section>
+</section>
+<section id="in_out.ds_wrf_single" class="level2">
+<h2 class="anchored" data-anchor-id="in_out.ds_wrf_single"><strong><code>in_out.ds_wrf_single</code></strong></h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>in_out.ds_wrf_single(<span class="bu">file</span>,list_no_vars,difHor<span class="op">=</span><span class="dv">0</span>,sign<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Read a list of wrfout files for the variables selected.</p>
+<section id="parameters-1" class="level3">
+<h3 class="anchored" data-anchor-id="parameters-1">Parameters:</h3>
+<ul>
+<li><code>file</code> : List of wrfout files</li>
+<li><code>list_no_vars</code> : List of variables to be delated</li>
+<li><code>difHor</code> : String with the hours t</li>
+<li><code>sign</code>: -1 or 1 according to the difference</li>
+</ul>
+</section>
+<section id="returns-1" class="level3">
+<h3 class="anchored" data-anchor-id="returns-1">Returns</h3>
+<ul>
+<li><code>fig</code> (matplotlib.figure.Figure)</li>
+<li><code>ax</code> (matplotlib.axes.Axes)</li>
+</ul>
+</section>
+</section>
+<section id="in_out.extract_station_wrf" class="level2">
+<h2 class="anchored" data-anchor-id="in_out.extract_station_wrf"><strong><code>in_out.extract_station_wrf</code></strong></h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>in_out.extract_station_wrf(out,station,lon_col, lat_col, name_col, output_format<span class="op">=</span><span class="st">'netcdf'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Extracts data from a WRF output file using station coordinates provided in a CSV or shapefile.</p>
+<section id="parameters-2" class="level3">
+<h3 class="anchored" data-anchor-id="parameters-2">Parameters:</h3>
+<ul>
+<li><code>out</code> (nc): the wrf outfile already laoded.</li>
+<li><code>station</code> (str): Path to the CSV or shapefile containing station coordinates.</li>
+<li><code>lon_col</code> (str): Name of the column containing longitude values.</li>
+<li><code>lat_col</code> (str): Name of the column containing latitude values.</li>
+<li><code>name_col</code> (str): Name of the column containing station names.</li>
+<li><code>output_format</code> (str, optional): Output format (‘netcdf’ or ‘dataframe’). Defaults to ‘netcdf’.</li>
+</ul>
+</section>
+<section id="returns-2" class="level3">
+<h3 class="anchored" data-anchor-id="returns-2">Returns</h3>
+<ul>
+<li><code>fig</code> (matplotlib.figure.Figure)</li>
+<li><code>ax</code> (matplotlib.axes.Axes)</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="met_diag.calc_pp" class="level2">
+<h2 class="anchored" data-anchor-id="met_diag.calc_pp"><strong><code>met_diag.calc_pp</code></strong></h2>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>met_diag.calc_pp(ds, elim<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>de-acumulate the rainfall and save it as PP.</p>
+<section id="parameters-3" class="level3">
+<h3 class="anchored" data-anchor-id="parameters-3">Parameters:</h3>
+<ul>
+<li><code>ds</code> (nc): dataset with the variables RAINC, RAINNC and RAINSH already loaded.</li>
+<li><code>elim</code> (bool): False (default) keep the old and new variables, True keep only the new variable.</li>
+</ul>
+</section>
+<section id="returns-3" class="level3">
+<h3 class="anchored" data-anchor-id="returns-3">Returns</h3>
+<ul>
+<li><code>netcdf</code> xarray.Dataset</li>
+</ul>
+</section>
+</section>
+<section id="met_diag.calc_wsp" class="level2">
+<h2 class="anchored" data-anchor-id="met_diag.calc_wsp"><strong><code>met_diag.calc_wsp</code></strong></h2>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>met_diag.calc_wsp(ds, elim<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>calculate the wind speed.</p>
+<section id="parameters-4" class="level3">
+<h3 class="anchored" data-anchor-id="parameters-4">Parameters:</h3>
+<ul>
+<li><code>ds</code> (nc): dataset with the variables U10 and V10 already loaded with coordinates already processed.</li>
+<li><code>elim</code> (bool): False (default) keep the old and new variables, True keep only the new variable.</li>
+</ul>
+</section>
+<section id="returns-4" class="level3">
+<h3 class="anchored" data-anchor-id="returns-4">Returns</h3>
+<ul>
+<li><code>netcdf</code> xarray.Dataset</li>
+</ul>
+</section>
+</section>
+<section id="met_diag.calc_pres" class="level2">
+<h2 class="anchored" data-anchor-id="met_diag.calc_pres"><strong><code>met_diag.calc_pres</code></strong></h2>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>met_diag.calc_pres(ds, elim<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>calculate the total atmospheric pressure and save it as Presion.</p>
+<section id="parameters-5" class="level3">
+<h3 class="anchored" data-anchor-id="parameters-5">Parameters:</h3>
+<ul>
+<li><code>ds</code> (nc): dataset with the variables P, PB already loaded with coordinates already processed.</li>
+<li><code>elim</code> (bool): False (default) keep the old and new variables, True keep only the new variable.</li>
+</ul>
+</section>
+<section id="returns-5" class="level3">
+<h3 class="anchored" data-anchor-id="returns-5">Returns</h3>
+<ul>
+<li><code>netcdf</code> xarray.Dataset</li>
+</ul>
+</section>
+</section>
+<section id="met_diag.calc_tp" class="level2">
+<h2 class="anchored" data-anchor-id="met_diag.calc_tp"><strong><code>met_diag.calc_tp</code></strong></h2>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>met_diag.calc_tp(ds, elim<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>calculate the potential temperature and save it as TPo.</p>
+<section id="parameters-6" class="level3">
+<h3 class="anchored" data-anchor-id="parameters-6">Parameters:</h3>
+<ul>
+<li><code>ds</code> (nc): dataset with the variable T already loaded with coordinates already processed.</li>
+<li><code>elim</code> (bool): False (default) keep the old and new variables, True keep only the new variable.</li>
+</ul>
+</section>
+<section id="returns-6" class="level3">
+<h3 class="anchored" data-anchor-id="returns-6">Returns</h3>
+<ul>
+<li><code>netcdf</code> xarray.Dataset</li>
+</ul>
+</section>
+</section>
+<section id="met_diag.calc_qe" class="level2">
+<h2 class="anchored" data-anchor-id="met_diag.calc_qe"><strong><code>met_diag.calc_qe</code></strong></h2>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>met_diag.calc_qe(ds, elim<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>calculate the specific humidity and save it as QE.</p>
+<section id="parameters-7" class="level3">
+<h3 class="anchored" data-anchor-id="parameters-7">Parameters:</h3>
+<ul>
+<li><code>ds</code> (nc): dataset with the variable QVAPOR already loaded with coordinates already processed.</li>
+<li><code>elim</code> (bool): False (default) keep the old and new variables, True keep only the new variable.</li>
+</ul>
+</section>
+<section id="returns-7" class="level3">
+<h3 class="anchored" data-anchor-id="returns-7">Returns</h3>
+<ul>
+<li><code>netcdf</code> xarray.Dataset</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="spatial_scales.vert_levs" class="level2">
+<h2 class="anchored" data-anchor-id="spatial_scales.vert_levs"><strong><code>spatial_scales.vert_levs</code></strong></h2>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>spatial_scales.vert_levs(ds,varis,lvls<span class="op">=</span><span class="va">None</span>):</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Interpolate vertical levels to a pressure variable</p>
+<section id="parameters-8" class="level3">
+<h3 class="anchored" data-anchor-id="parameters-8">Parameters:</h3>
+<ul>
+<li><code>ds</code> (nc): dataset already loaded.</li>
+<li><code>varis</code> (list): list of vertical variables to interpolate.</li>
+<li><code>lvls</code> (list): list of levels to be interpolated, if none provided, it will use [1000,975,950,925,900,850,800,700,600,500,400,300,200] as default.</li>
+</ul>
+</section>
+<section id="returns-8" class="level3">
+<h3 class="anchored" data-anchor-id="returns-8">Returns</h3>
+<ul>
+<li><code>netcdf</code> xarray.Dataset</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="temp_scales.dmy_var" class="level2">
+<h2 class="anchored" data-anchor-id="temp_scales.dmy_var"><strong><code>temp_scales.dmy_var</code></strong></h2>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>temp_scales.dmy_var(ds,tiempo<span class="op">=</span><span class="va">None</span> ,accum<span class="op">=</span><span class="va">None</span>, avg<span class="op">=</span><span class="va">None</span>, mediana<span class="op">=</span><span class="va">None</span>):</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Convert hourly (default wrf out) time to any acceptable by resample function.</p>
+<section id="parameters-9" class="level3">
+<h3 class="anchored" data-anchor-id="parameters-9">Parameters:</h3>
+<ul>
+<li><code>ds</code> : Dataset loaded</li>
+<li><code>tiempo</code> : Time accepted by resample</li>
+<li><code>accum</code> : List of variables who need sum</li>
+<li><code>avg</code> : if True use the mean function</li>
+<li><code>mediana</code> : if True use the median function</li>
+</ul>
+</section>
+<section id="returns-9" class="level3">
+<h3 class="anchored" data-anchor-id="returns-9">Returns</h3>
+<ul>
+<li><code>netcdf</code> xarray.Dataset</li>
+</ul>
+</section>
+</section>
+<section id="temp_scales.monthly_clim" class="level2">
+<h2 class="anchored" data-anchor-id="temp_scales.monthly_clim"><strong><code>temp_scales.monthly_clim</code></strong></h2>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>temp_scales.monthly_clim(ds, stat<span class="op">=</span><span class="va">None</span>, time_slice<span class="op">=</span><span class="va">None</span>):</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Convert a Dataset to monthly climatology.</p>
+<section id="parameters-10" class="level3">
+<h3 class="anchored" data-anchor-id="parameters-10">Parameters:</h3>
+<ul>
+<li><code>ds</code> : Dataset loaded</li>
+<li><code>stat</code> : Mean or median</li>
+<li><code>time_slice</code> : use the slice(ini,fin)</li>
+</ul>
+</section>
+<section id="returns-10" class="level3">
+<h3 class="anchored" data-anchor-id="returns-10">Returns</h3>
+<ul>
+<li><code>netcdf</code> xarray.Dataset</li>
+</ul>
+</section>
+</section>
+<section id="temp_scales.daily_clim" class="level2">
+<h2 class="anchored" data-anchor-id="temp_scales.daily_clim"><strong><code>temp_scales.daily_clim</code></strong></h2>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>temp_scales.daily_clim(ds, var):</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Generate daily climatology using moving window (mw) each 15 days.</p>
+<section id="parameters-11" class="level3">
+<h3 class="anchored" data-anchor-id="parameters-11">Parameters:</h3>
+<ul>
+<li><code>ds</code> : Dataset loaded</li>
+<li><code>var</code> : str with the variable’s name</li>
+</ul>
+</section>
+<section id="returns-11" class="level3">
+<h3 class="anchored" data-anchor-id="returns-11">Returns</h3>
+<ul>
+<li><code>netcdf</code> xarray.Dataset</li>
+</ul>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -475,4 +809,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/fiorelacl/SCAHpy/docs/edit/main/04_API.qmd" class="toc-action">Edit this page</a></p></div></div></div></div></footer></body></html>
+</body></html>

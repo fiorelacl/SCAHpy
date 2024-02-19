@@ -105,11 +105,88 @@
     "text": "Step 4: Plotting Precipitation Maps\nNow, let’s create precipitation maps for selected months using the m_pp_uv10_sst function.\n# Example usage\nlevs = [0, 25, 50, 100, 200, 400, 600, 800, 1000, 1200, 1400, 1600]\nlevs2 = [26, 27, 28]\nsa_shapefile = '/datos/shapes/SA_paises.shp'\noutput_path = '/datos/outs/202312'\nmonth_list = [12, 1, 2, 3, 4, 5]\n\nmap_plots.m_pp_uv10_sst(dd, dd, levs, levs2, sa_shapefile, output_path, month_list,\n                       save_maps=True, quiverkey_speed=10)\nThis tutorial guides you through the steps of reading WRF data, calculating precipitation, performing temporal aggregation, and creating precipitation maps using the scahpy package."
   },
   {
-    "objectID": "04_API.html",
-    "href": "04_API.html",
+    "objectID": "04_API.html#in_out.ds_wrf_multi",
+    "href": "04_API.html#in_out.ds_wrf_multi",
     "title": "API reference",
-    "section": "",
-    "text": "Coming soon …"
+    "section": "in_out.ds_wrf_multi",
+    "text": "in_out.ds_wrf_multi\nin_out.ds_wrf_multi(files,list_no_vars,difHor=0,sign=1)\nRead a list of wrfout files for the variables selected.\n\nParameters:\n\nfiles : List of wrfout files\nlist_no_vars : List of variables to be delated\ndifHor : String with the hours t\nsign: -1 or 1 according to the difference\n\n\n\nReturns\n\nfig (matplotlib.figure.Figure)\nax (matplotlib.axes.Axes)"
+  },
+  {
+    "objectID": "04_API.html#in_out.ds_wrf_single",
+    "href": "04_API.html#in_out.ds_wrf_single",
+    "title": "API reference",
+    "section": "in_out.ds_wrf_single",
+    "text": "in_out.ds_wrf_single\nin_out.ds_wrf_single(file,list_no_vars,difHor=0,sign=1)\nRead a list of wrfout files for the variables selected.\n\nParameters:\n\nfile : List of wrfout files\nlist_no_vars : List of variables to be delated\ndifHor : String with the hours t\nsign: -1 or 1 according to the difference\n\n\n\nReturns\n\nfig (matplotlib.figure.Figure)\nax (matplotlib.axes.Axes)"
+  },
+  {
+    "objectID": "04_API.html#in_out.extract_station_wrf",
+    "href": "04_API.html#in_out.extract_station_wrf",
+    "title": "API reference",
+    "section": "in_out.extract_station_wrf",
+    "text": "in_out.extract_station_wrf\nin_out.extract_station_wrf(out,station,lon_col, lat_col, name_col, output_format='netcdf')\nExtracts data from a WRF output file using station coordinates provided in a CSV or shapefile.\n\nParameters:\n\nout (nc): the wrf outfile already laoded.\nstation (str): Path to the CSV or shapefile containing station coordinates.\nlon_col (str): Name of the column containing longitude values.\nlat_col (str): Name of the column containing latitude values.\nname_col (str): Name of the column containing station names.\noutput_format (str, optional): Output format (‘netcdf’ or ‘dataframe’). Defaults to ‘netcdf’.\n\n\n\nReturns\n\nfig (matplotlib.figure.Figure)\nax (matplotlib.axes.Axes)"
+  },
+  {
+    "objectID": "04_API.html#met_diag.calc_pp",
+    "href": "04_API.html#met_diag.calc_pp",
+    "title": "API reference",
+    "section": "met_diag.calc_pp",
+    "text": "met_diag.calc_pp\nmet_diag.calc_pp(ds, elim=False)\nde-acumulate the rainfall and save it as PP.\n\nParameters:\n\nds (nc): dataset with the variables RAINC, RAINNC and RAINSH already loaded.\nelim (bool): False (default) keep the old and new variables, True keep only the new variable.\n\n\n\nReturns\n\nnetcdf xarray.Dataset"
+  },
+  {
+    "objectID": "04_API.html#met_diag.calc_wsp",
+    "href": "04_API.html#met_diag.calc_wsp",
+    "title": "API reference",
+    "section": "met_diag.calc_wsp",
+    "text": "met_diag.calc_wsp\nmet_diag.calc_wsp(ds, elim=False)\ncalculate the wind speed.\n\nParameters:\n\nds (nc): dataset with the variables U10 and V10 already loaded with coordinates already processed.\nelim (bool): False (default) keep the old and new variables, True keep only the new variable.\n\n\n\nReturns\n\nnetcdf xarray.Dataset"
+  },
+  {
+    "objectID": "04_API.html#met_diag.calc_pres",
+    "href": "04_API.html#met_diag.calc_pres",
+    "title": "API reference",
+    "section": "met_diag.calc_pres",
+    "text": "met_diag.calc_pres\nmet_diag.calc_pres(ds, elim=False)\ncalculate the total atmospheric pressure and save it as Presion.\n\nParameters:\n\nds (nc): dataset with the variables P, PB already loaded with coordinates already processed.\nelim (bool): False (default) keep the old and new variables, True keep only the new variable.\n\n\n\nReturns\n\nnetcdf xarray.Dataset"
+  },
+  {
+    "objectID": "04_API.html#met_diag.calc_tp",
+    "href": "04_API.html#met_diag.calc_tp",
+    "title": "API reference",
+    "section": "met_diag.calc_tp",
+    "text": "met_diag.calc_tp\nmet_diag.calc_tp(ds, elim=False)\ncalculate the potential temperature and save it as TPo.\n\nParameters:\n\nds (nc): dataset with the variable T already loaded with coordinates already processed.\nelim (bool): False (default) keep the old and new variables, True keep only the new variable.\n\n\n\nReturns\n\nnetcdf xarray.Dataset"
+  },
+  {
+    "objectID": "04_API.html#met_diag.calc_qe",
+    "href": "04_API.html#met_diag.calc_qe",
+    "title": "API reference",
+    "section": "met_diag.calc_qe",
+    "text": "met_diag.calc_qe\nmet_diag.calc_qe(ds, elim=False)\ncalculate the specific humidity and save it as QE.\n\nParameters:\n\nds (nc): dataset with the variable QVAPOR already loaded with coordinates already processed.\nelim (bool): False (default) keep the old and new variables, True keep only the new variable.\n\n\n\nReturns\n\nnetcdf xarray.Dataset"
+  },
+  {
+    "objectID": "04_API.html#spatial_scales.vert_levs",
+    "href": "04_API.html#spatial_scales.vert_levs",
+    "title": "API reference",
+    "section": "spatial_scales.vert_levs",
+    "text": "spatial_scales.vert_levs\nspatial_scales.vert_levs(ds,varis,lvls=None):\nInterpolate vertical levels to a pressure variable\n\nParameters:\n\nds (nc): dataset already loaded.\nvaris (list): list of vertical variables to interpolate.\nlvls (list): list of levels to be interpolated, if none provided, it will use [1000,975,950,925,900,850,800,700,600,500,400,300,200] as default.\n\n\n\nReturns\n\nnetcdf xarray.Dataset"
+  },
+  {
+    "objectID": "04_API.html#temp_scales.dmy_var",
+    "href": "04_API.html#temp_scales.dmy_var",
+    "title": "API reference",
+    "section": "temp_scales.dmy_var",
+    "text": "temp_scales.dmy_var\ntemp_scales.dmy_var(ds,tiempo=None ,accum=None, avg=None, mediana=None):\nConvert hourly (default wrf out) time to any acceptable by resample function.\n\nParameters:\n\nds : Dataset loaded\ntiempo : Time accepted by resample\naccum : List of variables who need sum\navg : if True use the mean function\nmediana : if True use the median function\n\n\n\nReturns\n\nnetcdf xarray.Dataset"
+  },
+  {
+    "objectID": "04_API.html#temp_scales.monthly_clim",
+    "href": "04_API.html#temp_scales.monthly_clim",
+    "title": "API reference",
+    "section": "temp_scales.monthly_clim",
+    "text": "temp_scales.monthly_clim\ntemp_scales.monthly_clim(ds, stat=None, time_slice=None):\nConvert a Dataset to monthly climatology.\n\nParameters:\n\nds : Dataset loaded\nstat : Mean or median\ntime_slice : use the slice(ini,fin)\n\n\n\nReturns\n\nnetcdf xarray.Dataset"
+  },
+  {
+    "objectID": "04_API.html#temp_scales.daily_clim",
+    "href": "04_API.html#temp_scales.daily_clim",
+    "title": "API reference",
+    "section": "temp_scales.daily_clim",
+    "text": "temp_scales.daily_clim\ntemp_scales.daily_clim(ds, var):\nGenerate daily climatology using moving window (mw) each 15 days.\n\nParameters:\n\nds : Dataset loaded\nvar : str with the variable’s name\n\n\n\nReturns\n\nnetcdf xarray.Dataset"
   },
   {
     "objectID": "05_contrib.html",
