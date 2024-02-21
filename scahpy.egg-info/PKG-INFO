@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: scahpy
-Version: 0.0.1
+Version: 0.0.3
 Summary: Package to process and analyze outputs from IGP-RESM-COW model
 Author-email: Fiorela Castillón <fv.castillon@gmail.com>
 License: MIT License
@@ -33,11 +33,12 @@ Classifier: Programming Language :: Python :: 3
 Requires-Python: >=3.8
 Description-Content-Type: text/markdown
 License-File: LICENSE
+Requires-Dist: wrf-python
+Requires-Dist: netCDF4
+Requires-Dist: xarray
 Requires-Dist: numpy
 Requires-Dist: pandas
 Requires-Dist: matplotlib
-Requires-Dist: xarray
-Requires-Dist: wrf-python
 Requires-Dist: cartopy
 Requires-Dist: cmocean
 Requires-Dist: geopandas

@@ -1,8 +1,9 @@
+wrf-python
+netCDF4
+xarray
 numpy
 pandas
 matplotlib
-xarray
-wrf-python
 cartopy
 cmocean
 geopandas
