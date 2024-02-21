@@ -1,9 +1,0 @@
-wrf-python
-netCDF4
-xarray
-numpy
-pandas
-matplotlib
-cartopy
-cmocean
-geopandas
