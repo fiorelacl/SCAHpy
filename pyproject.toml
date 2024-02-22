@@ -34,6 +34,8 @@ requires-python = ">=3.8"
 [project.urls]
 Homepage = "https://github.com/fiorelacl/SCAHpy"
 
+[project.scripts]
+scahpy-cli = "scahpy:main_cli"
 [tool.setuptools]
 # ...
 # By default, include-package-data is true in pyproject.toml, so you do
