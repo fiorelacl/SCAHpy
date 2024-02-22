@@ -8,5 +8,5 @@ __all__ = [
     'temp_scales',
 ]
 
-# Version of the realpython-reader package
-__version__ = "0.0.4"
+# Version of scahpy package
+__version__ = "0.0.5"
