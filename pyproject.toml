@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "scahpy"
-version = "0.0.5"
+version = "0.0.6"
 description = "Package to process and analyze outputs from IGP-RESM-COW model"
 readme = "README.md"
 authors = [{ name = "Fiorela Castillón", email = "fv.castillon@gmail.com" }]
