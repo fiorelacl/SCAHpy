@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "scahpy"
-version = "0.0.6"
+version = "0.0.7"
 description = "Package to process and analyze outputs from IGP-RESM-COW model"
 readme = "README.md"
 authors = [{ name = "Fiorela Castillón", email = "fv.castillon@gmail.com" }]
@@ -35,7 +35,8 @@ requires-python = ">=3.8"
 Homepage = "https://github.com/fiorelacl/SCAHpy"
 
 [project.scripts]
-scahpy-cli = "scahpy:main_cli"
+scahpy-cli = "scahpy.__main__:main"
+
 [tool.setuptools]
 # ...
 # By default, include-package-data is true in pyproject.toml, so you do
