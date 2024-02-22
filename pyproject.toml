@@ -34,5 +34,12 @@ requires-python = ">=3.8"
 [project.urls]
 Homepage = "https://github.com/fiorelacl/SCAHpy"
 
-[project.scripts]
-realpython = "reader.__main__:main"
+[tool.setuptools]
+# ...
+# By default, include-package-data is true in pyproject.toml, so you do
+# NOT have to specify this line.
+include-package-data = true
+
+[tool.setuptools.packages.find]
+namespaces = true
+where = ["scahpy"]

@@ -1,6 +1,8 @@
 include LICENSE
 include README.md
 include *.toml
+include scahpy/data/*.nc
+include scahpy/data/wrfout_*
 
 recursive-exclude * __pycache__
 recursive-exclude * *.py[co]
