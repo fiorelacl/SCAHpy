@@ -5,5 +5,5 @@ include *.toml
 recursive-exclude * __pycache__
 recursive-exclude * *.py[co]
 
-recursive-include scahpy/*.py
-recursive-include scahpy/data/*
+include scahpy/*.py
+include scahpy/data/*
