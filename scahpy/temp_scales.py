@@ -17,10 +17,18 @@ def dmy_var(ds,tiempo=None ,accum=None, avg=None, mediana=None):
 
     if accum is not None:
         ds_ac = ds[accum].resample(time = tiempo).sum()
+    else:
+        ds_ac = []
+
     if avg is not None:
         ds_avg = ds[avg].resample(time = tiempo).mean()
+    else:
+        ds_avg = []
+
     if mediana is not None:
         ds_med = ds[mediana].resample(time = tiempo).median()
+    else:
+        ds_med = []
 
     try:
         datasets = [ds_ac, ds_avg, ds_med]

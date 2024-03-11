@@ -1,0 +1,10 @@
+LICENSE
+MANIFEST.in
+README.md
+pyproject.toml
+scahpy/scahpy.egg-info/PKG-INFO
+scahpy/scahpy.egg-info/SOURCES.txt
+scahpy/scahpy.egg-info/dependency_links.txt
+scahpy/scahpy.egg-info/entry_points.txt
+scahpy/scahpy.egg-info/requires.txt
+scahpy/scahpy.egg-info/top_level.txt

@@ -27,7 +27,9 @@ book:
         - 02_use.qmd
     - part: 'Tutorial & Use Cases'
       chapters: 
-        - 03_tutorial.qmd
+        - 03_tutorial_01.qmd
+        - 03_tutorial_02.qmd
+        - 03_tutorial_03.qmd
     - part: 'Help & Reference'
       chapters: 
         - 04_API.qmd

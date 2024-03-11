@@ -27,7 +27,9 @@ SCAHpy has been developed and tested using IGP-RESM-COW model outputs. However, 
 
 ### **Tutorial & Use Cases**
 
-* [Tutorial](03_tutorial.qmd)
+* [Tutorial: Reading Single Files](03_tutorial_01.qmd)
+* [Tutorial: Reading Multiple Files](03_tutorial_02.qmd)
+* [Tutorial: Pressure Levels Variables](03_tutorial_03.qmd)
 
 ### **Help & Reference**
 

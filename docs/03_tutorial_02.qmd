@@ -1,0 +1,51 @@
+# Reading Multiple File {.unnumbered}
+
+In this tutorial, we'll go through the process of analyzing WRF (Weather Research and Forecasting) output data and creating 2D maps using the `scahpy` package.
+
+## Step 1: Reading WRF Data
+
+First, we need to read the WRF data using the `in_out` module in the `scahpy` package. We'll drop unnecessary variables and select a single WRF dataset.
+
+```python
+from scahpy import *
+import glob
+
+sfc = in_out._drop_wrf_vars('/data/datos/COW/OUT_DIAG_WRF/wrfouts/wrfout_d01_2023-03-10_03:00:00',['RAINC', 'RAINNC', 'RAINSH', 'U10', 'V10', 'SSTSK'])
+files = sorted(glob.glob('/data/datos/COW/OUT_DIAG_WRF/wrfouts/wrfout_d01_2023-03-1*'))
+ds = in_out.ds_wrf_multi(files, sfc, '5 hours', -1)
+```
+
+## Step 2: Calculating Precipitation and Wind Speed
+
+Now, let's calculate precipitation using the `met_diag` module.
+
+```python
+ds_sfc = met_diag.calc_pp(ds,elim=True)
+ds_sfc = met_diag.calc_wsp(ds_sfc,elim=False)
+ds_sfc = met_diag.calc_celsius(ds_sfc,'SSTSK')
+```
+## Step 3: Agregating the data
+
+```python
+dd = temp_scales.dmy_var(ds_sfc_, tiempo='1D', accum=['PP'], avg=['U10', 'V10'], mediana=['SSTSK'])
+```
+
+## Step 4: Plotting Precipitation Maps
+
+Now, let's create precipitation maps for selected times using the `map_pp_uv10_sst` function.
+
+```python
+# Example usage
+levs = [1,2,3,5,7,11,15,20,25,30,35,40,45,50,55,60]
+levs2 = [26, 27, 28]
+
+map_pp_uv10_sst(ds_sfc['PP'], ds_sfc, levs, levs2, shapefile=None, 
+                          output_path='.', freq = 'D',
+                          save_maps=True, quiverkey_speed=10, extent=None)
+```
+
+This tutorial guides you through the steps of reading WRF data, calculating precipitation, performing temporal aggregation, and creating precipitation maps using the `scahpy` package.
+
+
+
+

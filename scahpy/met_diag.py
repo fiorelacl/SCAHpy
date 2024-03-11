@@ -98,4 +98,19 @@ def calc_qe(ds,elim=False):
         ds=ds.drop_vars(['QVAPOR'])
 
     return ds
+
+def calc_celsius(ds,var):
+    """ Calculate de conversion from Kelvin to Celsius'
+
+                                K-273.15 = C
+
+    Parameters/Parámetros:
+    ----------------------
+    ds : dataset with the SSTSK variable/ dataset con las variables U10 and V10 
+    ya cargado con las coordenadas apropiadas.
+    """
+
+    ds[var]=ds[var]-273.15
+
+    return ds
  

@@ -1,0 +1,46 @@
+# Pressure levels variables {.unnumbered}
+
+In this tutorial, we'll go through the process of analyzing WRF (Weather Research and Forecasting) output data, specifically the pressure levels variables and creating cross-section maps using the `scahpy` package.
+
+## Step 1: Reading WRF Data
+
+First, we need to read the WRF data using the `in_out` module in the `scahpy` package. We'll drop unnecessary variables and select a single WRF dataset.
+
+```python
+from scahpy import *
+import glob
+
+sfc = in_out._drop_wrf_vars('/data/datos/COW/OUT_DIAG_WRF/wrfouts/wrfout_d01_2023-03-10_03:00:00',['U', 'W', 'P', 'PB', 'QVAPOR'])
+files = sorted(glob.glob('/data/datos/COW/OUT_DIAG_WRF/wrfouts/wrfout_d01_2023-03-1*'))
+ds = in_out.ds_wrf_multi(files, sfc, '5 hours', -1)
+```
+
+## Step 2: Calculating Precipitation and Wind Speed
+
+Now, let's calculate precipitation using the `met_diag` module.
+
+```python
+ds_vert = met_diag.calc_qe(ds, elim=True)
+ds_vert = met_diag.calc_pres(ds_vert, elim=True)
+```
+
+## Step 3: Agregating the data
+
+```python
+dd = temp_scales.dmy_var(ds_vert, tiempo='1D', avg=['Presion','U','W','QE'])
+```
+
+## Step 4: Plotting
+
+Now, let's create precipitation maps for selected months using the `cross_section_yz` function.
+
+```python
+# Example usage
+
+```
+
+This tutorial guides you through the steps of reading WRF data, calculating precipitation, performing temporal aggregation, and creating precipitation maps using the `scahpy` package.
+
+
+
+
