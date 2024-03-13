@@ -164,6 +164,19 @@ def map_clim_pp_uv10_sst(pp, sfc, levs, levs2, shapefile, output_path=None, mont
 
 def cross_section_yz(ds,vari,levs,cmaps,title,quiverkey_speed=5,
                      output_path=None, freq=None, save_maps=True):
+    """
+    Plots Cross Sections of Pressure level variables in YZ direction.
+
+    Parameters:
+    - ds (xarray.Dataset): wrfout data already interpolated to pressure levels (output from spatial_scales.vert_levs()).
+    - vari (list): List of variables to plot including V and W.
+    - levs (list): Contour levels for variable.
+    - title (str): Title to display in the graph.
+    - output_path (str, optional): Path to save the maps. If None, maps will be displayed but not saved. Defaults to None.
+    - freq (str): Could be 'H' , 'D', 'M', 'Y'. Defaults to Hourly ('H').
+    - save_maps (bool, optional): If True, saves the maps. If False, only displays them. Defaults to True.
+    - quiverkey_speed (int, optional): Speed parameter for quiverkey. Defaults to 5.
+    """
 
     lats = ds.lat.values
     times = np.datetime_as_string(ds.time.values,unit='m')
@@ -209,6 +222,19 @@ def cross_section_yz(ds,vari,levs,cmaps,title,quiverkey_speed=5,
 
 def cross_section_xz(ds,vari,levs,cmaps,title,quiverkey_speed=5,
                      output_path=None, freq=None, save_maps=True):
+    """
+    Plots Cross Sections of Pressure level variables in XZ direction.
+
+    Parameters:
+    - ds (xarray.Dataset): wrfout data already interpolated to pressure levels (output from spatial_scales.vert_levs()).
+    - vari (list): List of variables to plot including V and W.
+    - levs (list): Contour levels for variable.
+    - title (str): Title to display in the graph.
+    - output_path (str, optional): Path to save the maps. If None, maps will be displayed but not saved. Defaults to None.
+    - freq (str): Could be 'H' , 'D', 'M', 'Y'. Defaults to Hourly ('H').
+    - save_maps (bool, optional): If True, saves the maps. If False, only displays them. Defaults to True.
+    - quiverkey_speed (int, optional): Speed parameter for quiverkey. Defaults to 5.
+    """
 
     lons = ds.lon.values
     times = np.datetime_as_string(ds.time.values,unit='m')
