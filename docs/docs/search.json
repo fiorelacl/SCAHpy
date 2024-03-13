@@ -25,7 +25,7 @@
     "href": "index.html#how-to-use-scahpy",
     "title": "Getting Started",
     "section": "How to use SCAHpy?",
-    "text": "How to use SCAHpy?\nSCAHpy can be used as a standalone package or it can also be run on the HPC-IGP-Cluster, which has the diagnostic simulations of 22 years of runnings centered on Peru Region.\n\n\n\n\n\n\nNote\n\n\n\nSCAHpy has been developed and tested using IGP-RESM-COW model outputs. However, it is designed to work with any WRF outputs. We are open to contributions from users!\n\n\n\nGetting Started\n\nInstallation\nUsage\n\n\n\nTutorial & Use Cases\n\nTutorial\n\n\n\nHelp & Reference\n\nAPI References\nContributing"
+    "text": "How to use SCAHpy?\nSCAHpy can be used as a standalone package or it can also be run on the HPC-IGP-Cluster, which has the diagnostic simulations of 22 years of runnings centered on Peru Region.\n\n\n\n\n\n\nNote\n\n\n\nSCAHpy has been developed and tested using IGP-RESM-COW model outputs. However, it is designed to work with any WRF outputs. We are open to contributions from users!\n\n\n\nGetting Started\n\nInstallation\nUsage\n\n\n\nTutorial & Use Cases\n\nTutorial: Reading Single Files\nTutorial: Reading Multiple Files\nTutorial: Pressure Levels Variables\n\n\n\nHelp & Reference\n\nAPI References\nContributing"
   },
   {
     "objectID": "01_install.html#required-dependencies",
@@ -77,32 +77,81 @@
     "text": "Calculating Precipitation\n# Example: Calculating precipitation using diagnostics module\nds2 = met_diag.calc_pp(ds, True)"
   },
   {
-    "objectID": "03_tutorial.html#step-1-reading-wrf-data",
-    "href": "03_tutorial.html#step-1-reading-wrf-data",
-    "title": "Tutorials",
+    "objectID": "03_tutorial_01.html#step-1-reading-wrf-data",
+    "href": "03_tutorial_01.html#step-1-reading-wrf-data",
+    "title": "Reading a Single File",
     "section": "Step 1: Reading WRF Data",
-    "text": "Step 1: Reading WRF Data\nFirst, we need to read the WRF data using the in_out module in the scahpy package. We’ll drop unnecessary variables and select a single WRF dataset.\nsfc = in_out._drop_wrf_vars('/data/users/fcastillon/COW_outs/pronos/CFS_202312/MERCLIM_COA_LEADS/wrfout_d01_2024-01-01_03:00:00',\n                             ['RAINC', 'RAINNC', 'RAINSH', 'U10', 'V10', 'SSTSK'])\nfiles = sorted(glob.glob('/data/users/fcastillon/COW_outs/pronos/CFS_202312/MERCLIM_COA_LEADS/wrfout_d01*'))\nds = in_out.ds_wrf_multi(files, sfc, '5 hours', -1)"
+    "text": "Step 1: Reading WRF Data\nFirst, we need to read the WRF data using the in_out module in the scahpy package. We’ll drop unnecessary variables and select a single WRF dataset.\nfrom scahpy import *\nimport glob\n\nfile_name = '/data/datos/COW/OUT_DIAG_WRF/wrfouts/wrfout_d01_2023-03-10_03:00:00'\nvars = in_out._drop_wrf_vars(file_name,['RAINC', 'RAINNC', 'RAINSH', 'U10', 'V10', 'SSTSK'])\nds = in_out.ds_wrf_single(file_name, vars, '5 hours', -1)"
   },
   {
-    "objectID": "03_tutorial.html#step-2-calculating-precipitation",
-    "href": "03_tutorial.html#step-2-calculating-precipitation",
-    "title": "Tutorials",
-    "section": "Step 2: Calculating Precipitation",
-    "text": "Step 2: Calculating Precipitation\nNow, let’s calculate precipitation using the met_diag module.\nds2 = met_diag.calc_pp(ds, True)"
+    "objectID": "03_tutorial_01.html#step-2-calculating-precipitation-and-wind-speed",
+    "href": "03_tutorial_01.html#step-2-calculating-precipitation-and-wind-speed",
+    "title": "Reading a Single File",
+    "section": "Step 2: Calculating Precipitation and Wind Speed",
+    "text": "Step 2: Calculating Precipitation and Wind Speed\nNow, let’s calculate precipitation using the met_diag module.\nds_sfc = met_diag.calc_pp(ds,elim=True)\nds_sfc = met_diag.calc_wsp(ds_sfc,elim=False)\nds_sfc = met_diag.calc_celsius(ds_sfc,'SSTSK')"
   },
   {
-    "objectID": "03_tutorial.html#step-3-temporal-aggregation-and-conversion",
-    "href": "03_tutorial.html#step-3-temporal-aggregation-and-conversion",
-    "title": "Tutorials",
-    "section": "Step 3: Temporal Aggregation and Conversion",
-    "text": "Step 3: Temporal Aggregation and Conversion\nWe’ll perform temporal aggregation, including averaging and median calculations, on the calculated precipitation data. Additionally, we’ll convert temperature data from Kelvin to Celsius.\ndd = temp_scales.dmy_var(ds2, tiempo='1M', accum=['PP'], avg=['U10', 'V10', 'SSTSK'], mediana=None).sel(time=slice('2023-12', '2024-06'))\ndd['SSTSK'] = dd['SSTSK'] - 273.15"
+    "objectID": "03_tutorial_01.html#step-3-plotting-precipitation-maps",
+    "href": "03_tutorial_01.html#step-3-plotting-precipitation-maps",
+    "title": "Reading a Single File",
+    "section": "Step 3: Plotting Precipitation Maps",
+    "text": "Step 3: Plotting Precipitation Maps\nNow, let’s create precipitation maps for selected months using the map_pp_uv10_sst function.\n# Example usage\nlevs = [1,2,3,5,7,11,15,20,25,30,35,40,45,50,55,60]\nlevs2 = [26, 27, 28]\n\nmap_pp_uv10_sst(ds_sfc['PP'], ds_sfc, levs, levs2, shapefile=None, \n                          output_path='.', freq = 'H',\n                          save_maps=True, quiverkey_speed=10, extent=None)\nThis tutorial guides you through the steps of reading WRF data, calculating precipitation, performing temporal aggregation, and creating precipitation maps using the scahpy package."
   },
   {
-    "objectID": "03_tutorial.html#step-4-plotting-precipitation-maps",
-    "href": "03_tutorial.html#step-4-plotting-precipitation-maps",
-    "title": "Tutorials",
+    "objectID": "03_tutorial_02.html#step-1-reading-wrf-data",
+    "href": "03_tutorial_02.html#step-1-reading-wrf-data",
+    "title": "Reading Multiple File",
+    "section": "Step 1: Reading WRF Data",
+    "text": "Step 1: Reading WRF Data\nFirst, we need to read the WRF data using the in_out module in the scahpy package. We’ll drop unnecessary variables and select a single WRF dataset.\nfrom scahpy import *\nimport glob\n\nsfc = in_out._drop_wrf_vars('/data/datos/COW/OUT_DIAG_WRF/wrfouts/wrfout_d01_2023-03-10_03:00:00',['RAINC', 'RAINNC', 'RAINSH', 'U10', 'V10', 'SSTSK'])\nfiles = sorted(glob.glob('/data/datos/COW/OUT_DIAG_WRF/wrfouts/wrfout_d01_2023-03-1*'))\nds = in_out.ds_wrf_multi(files, sfc, '5 hours', -1)"
+  },
+  {
+    "objectID": "03_tutorial_02.html#step-2-calculating-precipitation-and-wind-speed",
+    "href": "03_tutorial_02.html#step-2-calculating-precipitation-and-wind-speed",
+    "title": "Reading Multiple File",
+    "section": "Step 2: Calculating Precipitation and Wind Speed",
+    "text": "Step 2: Calculating Precipitation and Wind Speed\nNow, let’s calculate precipitation using the met_diag module.\nds_sfc = met_diag.calc_pp(ds,elim=True)\nds_sfc = met_diag.calc_wsp(ds_sfc,elim=False)\nds_sfc = met_diag.calc_celsius(ds_sfc,'SSTSK')"
+  },
+  {
+    "objectID": "03_tutorial_02.html#step-3-agregating-the-data",
+    "href": "03_tutorial_02.html#step-3-agregating-the-data",
+    "title": "Reading Multiple File",
+    "section": "Step 3: Agregating the data",
+    "text": "Step 3: Agregating the data\ndd = temp_scales.dmy_var(ds_sfc_, tiempo='1D', accum=['PP'], avg=['U10', 'V10'], mediana=['SSTSK'])"
+  },
+  {
+    "objectID": "03_tutorial_02.html#step-4-plotting-precipitation-maps",
+    "href": "03_tutorial_02.html#step-4-plotting-precipitation-maps",
+    "title": "Reading Multiple File",
     "section": "Step 4: Plotting Precipitation Maps",
-    "text": "Step 4: Plotting Precipitation Maps\nNow, let’s create precipitation maps for selected months using the m_pp_uv10_sst function.\n# Example usage\nlevs = [0, 25, 50, 100, 200, 400, 600, 800, 1000, 1200, 1400, 1600]\nlevs2 = [26, 27, 28]\nsa_shapefile = '/datos/shapes/SA_paises.shp'\noutput_path = '/datos/outs/202312'\nmonth_list = [12, 1, 2, 3, 4, 5]\n\nmap_plots.m_pp_uv10_sst(dd, dd, levs, levs2, sa_shapefile, output_path, month_list,\n                       save_maps=True, quiverkey_speed=10)\nThis tutorial guides you through the steps of reading WRF data, calculating precipitation, performing temporal aggregation, and creating precipitation maps using the scahpy package."
+    "text": "Step 4: Plotting Precipitation Maps\nNow, let’s create precipitation maps for selected times using the map_pp_uv10_sst function.\n# Example usage\nlevs = [1,2,3,5,7,11,15,20,25,30,35,40,45,50,55,60]\nlevs2 = [26, 27, 28]\n\nmap_pp_uv10_sst(ds_sfc['PP'], ds_sfc, levs, levs2, shapefile=None, \n                          output_path='.', freq = 'D',\n                          save_maps=True, quiverkey_speed=10, extent=None)\nThis tutorial guides you through the steps of reading WRF data, calculating precipitation, performing temporal aggregation, and creating precipitation maps using the scahpy package."
+  },
+  {
+    "objectID": "03_tutorial_03.html#step-1-reading-wrf-data",
+    "href": "03_tutorial_03.html#step-1-reading-wrf-data",
+    "title": "Pressure levels variables",
+    "section": "Step 1: Reading WRF Data",
+    "text": "Step 1: Reading WRF Data\nFirst, we need to read the WRF data using the in_out module in the scahpy package. We’ll drop unnecessary variables and select a single WRF dataset.\nfrom scahpy import *\nimport glob\n\nsfc = in_out._drop_wrf_vars('/data/datos/COW/OUT_DIAG_WRF/wrfouts/wrfout_d01_2023-03-10_03:00:00',['U', 'W', 'P', 'PB', 'QVAPOR'])\nfiles = sorted(glob.glob('/data/datos/COW/OUT_DIAG_WRF/wrfouts/wrfout_d01_2023-03-1*'))\nds = in_out.ds_wrf_multi(files, sfc, '5 hours', -1)"
+  },
+  {
+    "objectID": "03_tutorial_03.html#step-2-calculating-precipitation-and-wind-speed",
+    "href": "03_tutorial_03.html#step-2-calculating-precipitation-and-wind-speed",
+    "title": "Pressure levels variables",
+    "section": "Step 2: Calculating Precipitation and Wind Speed",
+    "text": "Step 2: Calculating Precipitation and Wind Speed\nNow, let’s calculate precipitation using the met_diag module.\nds_vert = met_diag.calc_qe(ds, elim=True)\nds_vert = met_diag.calc_pres(ds_vert, elim=True)"
+  },
+  {
+    "objectID": "03_tutorial_03.html#step-3-agregating-the-data",
+    "href": "03_tutorial_03.html#step-3-agregating-the-data",
+    "title": "Pressure levels variables",
+    "section": "Step 3: Agregating the data",
+    "text": "Step 3: Agregating the data\ndd = temp_scales.dmy_var(ds_vert, tiempo='1D', avg=['Presion','U','W','QE'])"
+  },
+  {
+    "objectID": "03_tutorial_03.html#step-4-plotting",
+    "href": "03_tutorial_03.html#step-4-plotting",
+    "title": "Pressure levels variables",
+    "section": "Step 4: Plotting",
+    "text": "Step 4: Plotting\nNow, let’s create precipitation maps for selected months using the cross_section_yz function.\n# Example usage\nThis tutorial guides you through the steps of reading WRF data, calculating precipitation, performing temporal aggregation, and creating precipitation maps using the scahpy package."
   },
   {
     "objectID": "04_API.html#in_out.ds_wrf_multi",

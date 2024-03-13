@@ -88,7 +88,7 @@ def map_pp_uv10_sst(pp, sfc, levs, levs2, shapefile=None, output_path=None, freq
 
         plt.close()
 
-def map_clim_pp_uv10_sst(pp, sfc, levs, levs2, sa_shapefile, output_path=None, month_list=None,
+def map_clim_pp_uv10_sst(pp, sfc, levs, levs2, shapefile, output_path=None, month_list=None,
                            save_maps=True, quiverkey_speed=5,extent=None):
     """
     Plots precipitation maps for specified months.
@@ -98,20 +98,30 @@ def map_clim_pp_uv10_sst(pp, sfc, levs, levs2, sa_shapefile, output_path=None, m
     - sfc (xarray.Dataset): Surface data with SST and UV10 data.
     - levs (list): Contour levels for precipitation.
     - levs2 (list): Contour levels for SSTSK.
-    - sa_shapefile (str): Path to the shapefile for South America countries (could be any other).
+    - shapefile (str): Path to the shapefile for South America countries (could be any other).
     - output_path (str, optional): Path to save the maps. If None, maps will be displayed but not saved. Defaults to None.
     - month_list (list, optional): List of months to plot. Defaults to None (all months).
     - save_maps (bool, optional): If True, saves the maps. If False, only displays them. Defaults to True.
     - quiverkey_speed (int, optional): Speed parameter for quiverkey. Defaults to 5.
     - extent: [x1,x2,y1,y2] spatial extension
     """
+    if shapefile is None:
+        data_dir = importlib.resources.files('scahpy.data')
+        data_path = Path(data_dir , 'SA_paises.shp')
+        sa = cfe.ShapelyFeature(Reader(data_path).geometries(), ccrs.PlateCarree(), edgecolor='k', facecolor='none')
+    else:
+        sa = cfe.ShapelyFeature(Reader(shapefile).geometries(), ccrs.PlateCarree(), edgecolor='k', facecolor='none')
+
+    if extent is None:
+        extent = [-93.8, -68, -21.9, 4.1]
+
     cmaps = cmocean.tools.lighten(cmocean.cm.rain, 0.85)
     norm = matplotlib.colors.BoundaryNorm(levs, cmaps.N)
 
     lons = pp.lon.values
     lats = pp.lat.values
 
-    sa = cfe.ShapelyFeature(Reader(sa_shapefile).geometries(), ccrs.PlateCarree(), edgecolor='k', facecolor='none')
+
 
     if month_list is None:
         month_list = range(1, 13)
@@ -152,3 +162,92 @@ def map_clim_pp_uv10_sst(pp, sfc, levs, levs2, sa_shapefile, output_path=None, m
 
         plt.close()
 
+def cross_section_yz(ds,vari,levs,cmaps,title,quiverkey_speed=5,
+                     output_path=None, freq=None, save_maps=True):
+
+    lats = ds.lat.values
+    times = np.datetime_as_string(ds.time.values,unit='m')
+    Y=ds.level.values
+    
+    norms = matplotlib.colors.BoundaryNorm(levs, cmaps.N)
+    plt.rcParams['font.family'] = 'Monospace'
+
+    if freq == 'H' or freq is None:
+        j=13
+    elif freq == 'D':
+        j=10
+    elif freq == 'M':
+        j=7
+    elif freq == 'Y':
+        j=4   
+    
+    for i in range(len(times)):
+            
+        timess = times[i][0:j]
+        
+        vv=ds.get('V').sel(time=timess)
+        ww=ds.get('W').sel(time=timess)*1000
+        var=ds.get(vari).sel(time=timess) #(g/kg)
+        
+        fig,axs = plt.subplots(figsize=(6,10),ncols=1,nrows=1)
+        pcm=axs.contourf(lats, Y, var,levels=levs,cmap=cmaps,norm=norms,extend='both')
+        fig.colorbar(pcm,ax=axs,label='', orientation='horizontal', shrink=.9,pad=0.04,aspect=25,format='%3.1f')
+        Q=axs.quiver(lats[::4],Y,vv[::,::4],ww[::,::4],scale=170,headwidth=4,headlength=4)
+        axs.invert_yaxis()
+        axs.quiverkey(Q,0.87,0.98,quiverkey_speed, f'{quiverkey_speed} m/s',labelpos='E',coordinates='axes',labelsep=0.05) 
+        plt.title(f'{title} {timess}',loc='center')
+    
+        if save_maps:
+            if output_path is None:
+                raise ValueError("Output path cannot be None when saving maps.")
+            plt.savefig(f'{output_path}/Cross_Section_YZ_{var}_{timess}.png',
+                        bbox_inches='tight', dpi=300, facecolor='white', transparent=False)
+        else:
+            plt.show()
+
+        plt.close()
+
+def cross_section_xz(ds,vari,levs,cmaps,title,quiverkey_speed=5,
+                     output_path=None, freq=None, save_maps=True):
+
+    lons = ds.lon.values
+    times = np.datetime_as_string(ds.time.values,unit='m')
+    Y=ds.level.values
+    
+    norms = matplotlib.colors.BoundaryNorm(levs, cmaps.N)
+    plt.rcParams['font.family'] = 'Monospace'
+
+    if freq == 'H' or freq is None:
+        j=13
+    elif freq == 'D':
+        j=10
+    elif freq == 'M':
+        j=7
+    elif freq == 'Y':
+        j=4   
+    
+    for i in range(len(times)):
+            
+        timess = times[i][0:j]
+        
+        uu=ds.get('U').sel(time=timess)
+        ww=ds.get('W').sel(time=timess)*1000
+        var=ds.get(vari).sel(time=timess) #(g/kg)
+        
+        fig,axs = plt.subplots(figsize=(6,10),ncols=1,nrows=1)
+        pcm=axs.contourf(lons, Y, var,levels=levs,cmap=cmaps,norm=norms,extend='both')
+        fig.colorbar(pcm,ax=axs,label='', orientation='horizontal', shrink=.9,pad=0.04,aspect=25,format='%3.1f')
+        Q=axs.quiver(lons[::4],Y,uu[::,::4],ww[::,::4],scale=170,headwidth=4,headlength=4)
+        axs.invert_yaxis()
+        axs.quiverkey(Q,0.87,0.98,quiverkey_speed, f'{quiverkey_speed} m/s',labelpos='E',coordinates='axes',labelsep=0.05) 
+        plt.title(f'{title} {timess}',loc='center')
+    
+        if save_maps:
+            if output_path is None:
+                raise ValueError("Output path cannot be None when saving maps.")
+            plt.savefig(f'{output_path}/Cross_Section_XZ_{var}_{timess}.png',
+                        bbox_inches='tight', dpi=300, facecolor='white', transparent=False)
+        else:
+            plt.show()
+
+        plt.close()

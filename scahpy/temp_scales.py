@@ -1,7 +1,7 @@
 import xarray as xr
 import numpy as np
 
-def dmy_var(ds,tiempo=None ,accum=None, avg=None, mediana=None):
+def dmy_var(ds, tiempo=None, accum=None, avg=None, mediana=None):
     """Convert hourly (default wrf out) time to any acceptable by resample function.
     ES: Convierte los datos horarios (por defecto wrfout) a otra escala de tiempo 
     aceptada por la función resample (ejm. 'D' diario, 'M' mensual, etc)
@@ -15,27 +15,30 @@ def dmy_var(ds,tiempo=None ,accum=None, avg=None, mediana=None):
     mediana : if True use the median function / Si es True, emplea la función mediana
     """
 
+    datasets = []
+
     if accum is not None:
-        ds_ac = ds[accum].resample(time = tiempo).sum()
-    else:
-        ds_ac = []
+        ds_ac = ds[accum].resample(time=tiempo).sum()
+        datasets.append(ds_ac)
 
     if avg is not None:
-        ds_avg = ds[avg].resample(time = tiempo).mean()
-    else:
-        ds_avg = []
+        ds_avg = ds[avg].resample(time=tiempo).mean()
+        datasets.append(ds_avg)
 
     if mediana is not None:
-        ds_med = ds[mediana].resample(time = tiempo).median()
-    else:
-        ds_med = []
+        ds_med = ds[mediana].resample(time=tiempo).median()
+        datasets.append(ds_med)
+
+    if not datasets:  # If no datasets were created
+        print('Ingrese al menos una variable para operar.')
+        return None
 
     try:
-        datasets = [ds_ac, ds_avg, ds_med]
         ds_all = xr.concat(datasets, dim='time')
-    except:
+    except ValueError:
+        print('Coloque una escala temporal apropiada')
+        return None
 
-        print('coloque una escala temporal apropiada')
     return ds_all
 
 
