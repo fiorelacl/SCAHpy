@@ -109,7 +109,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03_tutorial_01.html">Tutorial &amp; Use Cases</a></li><li class="breadcrumb-item"><a href="./03_tutorial_01.html">Reading a Single File</a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03_tutorial_01.html">Tutorials</a></li><li class="breadcrumb-item"><a href="./03_tutorial_01.html">Reading a Single File</a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -190,7 +190,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
- <span class="menu-text">Tutorial &amp; Use Cases</span></a>
+ <span class="menu-text">Tutorials</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -275,34 +275,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<p>In this tutorial, we’ll go through the process of analyzing WRF (Weather Research and Forecasting) output data and creating 2D maps using the <code>scahpy</code> package.</p>
+<p>In this tutorial, we will guide you through the process of analyzing output data from the WRF (Weather Research and Forecasting) model and creating 2D maps featuring rainfall and wind variables using the <code>scahpy</code> package. To begin, let’s import the package.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scahpy <span class="im">import</span> in_out</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <section id="step-1-reading-wrf-data" class="level2">
 <h2 class="anchored" data-anchor-id="step-1-reading-wrf-data">Step 1: Reading WRF Data</h2>
-<p>First, we need to read the WRF data using the <code>in_out</code> module in the <code>scahpy</code> package. We’ll drop unnecessary variables and select a single WRF dataset.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scahpy <span class="im">import</span> <span class="op">*</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> glob</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>file_name <span class="op">=</span> <span class="st">'/data/datos/COW/OUT_DIAG_WRF/wrfouts/wrfout_d01_2023-03-10_03:00:00'</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="bu">vars</span> <span class="op">=</span> in_out._drop_wrf_vars(file_name,[<span class="st">'RAINC'</span>, <span class="st">'RAINNC'</span>, <span class="st">'RAINSH'</span>, <span class="st">'U10'</span>, <span class="st">'V10'</span>, <span class="st">'SSTSK'</span>])</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> in_out.ds_wrf_single(file_name, <span class="bu">vars</span>, <span class="st">'5 hours'</span>, <span class="op">-</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We start by assigning the absolute path of the output file we want to work with to a variable (in this case, <code>file_name</code>).</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>file_name <span class="op">=</span> <span class="st">'/data/datos/COW/OUT_DIAG_WRF/wrfouts/wrfout_d01_2023-03-10_03:00:00'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Since we can use the <code>drop_variables</code> argument when reading netCDF files, specifying the list of variables that will not be read, we utilize the <code>_drop_wrf_vars</code> function. This function generates a list containing all the variables present in the output file and removes the ones we are not interested in (in this case: ‘RAINC’, ‘RAINNC’, ‘RAINSH’, ‘U10’, ‘V10’, ‘SSTSK’). To use this we assign to the <code>vars</code> variable the list of variables we are interested in. We use the <code>ds_wrf_single</code> function to read only the variables of interest, which takes the file name as input, the list of variables to be removed, the time difference if necessary, and the sign of the time difference (-1 if negative, 1 if positive). The result is an <code>xarray.Dataset</code> containing longitude, latitude, time, and the selected variables. Additionally, if you wish to export the netCDF, you can specify the save path.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">vars</span> <span class="op">=</span> in_out._drop_wrf_vars(file_name, [<span class="st">'RAINC'</span>, <span class="st">'RAINNC'</span>, <span class="st">'RAINSH'</span>, <span class="st">'U10'</span>, <span class="st">'V10'</span>, <span class="st">'SSTSK'</span>])</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> in_out.ds_wrf_single(file_name, <span class="bu">vars</span>, <span class="st">'5 hours'</span>, <span class="op">-</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="step-2-calculating-precipitation-and-wind-speed" class="level2">
 <h2 class="anchored" data-anchor-id="step-2-calculating-precipitation-and-wind-speed">Step 2: Calculating Precipitation and Wind Speed</h2>
 <p>Now, let’s calculate precipitation using the <code>met_diag</code> module.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>ds_sfc <span class="op">=</span> met_diag.calc_pp(ds,elim<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>ds_sfc <span class="op">=</span> met_diag.calc_wsp(ds_sfc,elim<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>ds_sfc <span class="op">=</span> met_diag.calc_celsius(ds_sfc,<span class="st">'SSTSK'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ds_sfc <span class="op">=</span> met_diag.calc_pp(ds,elim<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>ds_sfc <span class="op">=</span> met_diag.calc_wsp(ds_sfc,elim<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>ds_sfc <span class="op">=</span> met_diag.calc_celsius(ds_sfc,<span class="st">'SSTSK'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="step-3-plotting-precipitation-maps" class="level2">
 <h2 class="anchored" data-anchor-id="step-3-plotting-precipitation-maps">Step 3: Plotting Precipitation Maps</h2>
 <p>Now, let’s create precipitation maps for selected months using the <code>map_pp_uv10_sst</code> function.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example usage</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>levs <span class="op">=</span> [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">7</span>,<span class="dv">11</span>,<span class="dv">15</span>,<span class="dv">20</span>,<span class="dv">25</span>,<span class="dv">30</span>,<span class="dv">35</span>,<span class="dv">40</span>,<span class="dv">45</span>,<span class="dv">50</span>,<span class="dv">55</span>,<span class="dv">60</span>]</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>levs2 <span class="op">=</span> [<span class="dv">26</span>, <span class="dv">27</span>, <span class="dv">28</span>]</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>map_pp_uv10_sst(ds_sfc[<span class="st">'PP'</span>], ds_sfc, levs, levs2, shapefile<span class="op">=</span><span class="va">None</span>, </span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>                          output_path<span class="op">=</span><span class="st">'.'</span>, freq <span class="op">=</span> <span class="st">'H'</span>,</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>                          save_maps<span class="op">=</span><span class="va">True</span>, quiverkey_speed<span class="op">=</span><span class="dv">10</span>, extent<span class="op">=</span><span class="va">None</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example usage</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>levs <span class="op">=</span> [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">5</span>,<span class="dv">7</span>,<span class="dv">11</span>,<span class="dv">15</span>,<span class="dv">20</span>,<span class="dv">25</span>,<span class="dv">30</span>,<span class="dv">35</span>,<span class="dv">40</span>,<span class="dv">45</span>,<span class="dv">50</span>,<span class="dv">55</span>,<span class="dv">60</span>]</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>levs2 <span class="op">=</span> [<span class="dv">26</span>, <span class="dv">27</span>, <span class="dv">28</span>]</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>map_pp_uv10_sst(ds_sfc[<span class="st">'PP'</span>], ds_sfc, levs, levs2, shapefile<span class="op">=</span><span class="va">None</span>, </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>                          output_path<span class="op">=</span><span class="st">'.'</span>, freq <span class="op">=</span> <span class="st">'H'</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>                          save_maps<span class="op">=</span><span class="va">True</span>, quiverkey_speed<span class="op">=</span><span class="dv">10</span>, extent<span class="op">=</span><span class="va">None</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This tutorial guides you through the steps of reading WRF data, calculating precipitation, performing temporal aggregation, and creating precipitation maps using the <code>scahpy</code> package.</p>
 
 

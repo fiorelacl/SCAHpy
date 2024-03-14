@@ -1,17 +1,24 @@
 # Reading a Single File {.unnumbered}
 
-In this tutorial, we'll go through the process of analyzing WRF (Weather Research and Forecasting) output data and creating 2D maps using the `scahpy` package.
+In this tutorial, we will guide you through the process of analyzing output data from the WRF (Weather Research and Forecasting) model and creating 2D maps featuring rainfall and wind variables using the `scahpy` package. To begin, let's import the package.
+
+```python
+from scahpy import in_out
+```
+
 
 ## Step 1: Reading WRF Data
 
-First, we need to read the WRF data using the `in_out` module in the `scahpy` package. We'll drop unnecessary variables and select a single WRF dataset.
+We start by assigning the absolute path of the output file we want to work with to a variable (in this case, `file_name`).
 
 ```python
-from scahpy import *
-import glob
-
 file_name = '/data/datos/COW/OUT_DIAG_WRF/wrfouts/wrfout_d01_2023-03-10_03:00:00'
-vars = in_out._drop_wrf_vars(file_name,['RAINC', 'RAINNC', 'RAINSH', 'U10', 'V10', 'SSTSK'])
+```
+
+ Since we can use the `drop_variables` argument when reading netCDF files, specifying the list of variables that will not be read, we utilize the `_drop_wrf_vars` function. This function generates a list containing all the variables present in the output file and removes the ones we are not interested in (in this case: 'RAINC', 'RAINNC', 'RAINSH', 'U10', 'V10', 'SSTSK'). To use this we assign to the `vars` variable the list of variables we are interested in. We use the `ds_wrf_single` function to read only the variables of interest, which takes the file name as input, the list of variables to be removed, the time difference if necessary, and the sign of the time difference (-1 if negative, 1 if positive). The result is an `xarray.Dataset` containing longitude, latitude, time, and the selected variables. Additionally, if you wish to export the netCDF, you can specify the save path.
+
+```python
+vars = in_out._drop_wrf_vars(file_name, ['RAINC', 'RAINNC', 'RAINSH', 'U10', 'V10', 'SSTSK'])
 ds = in_out.ds_wrf_single(file_name, vars, '5 hours', -1)
 ```
 

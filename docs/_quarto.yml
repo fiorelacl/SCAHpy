@@ -8,7 +8,7 @@ execute:
 book:
   title: ""
   author: "Fiorela Castillón"
-  date: "12/11/2023"
+  date: "14/03/2024"
   language: custom.yml
   sidebar: 
     title: 'Documentation'
@@ -25,7 +25,7 @@ book:
       chapters: 
         - 01_install.qmd
         - 02_use.qmd
-    - part: 'Tutorial & Use Cases'
+    - part: 'Tutorials'
       chapters: 
         - 03_tutorial_01.qmd
         - 03_tutorial_02.qmd

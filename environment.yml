@@ -5,12 +5,13 @@ dependencies:
   - wrf-python
   - netCDF4
   - xarray
+  - dask
+  - cartopy
+  - geopandas
   - numpy
   - pandas
   - matplotlib
-  - wrf-python
-  - cartopy
-  - geopandas
+  - jupyterlab
   - pip
   - pip:
      - datetime

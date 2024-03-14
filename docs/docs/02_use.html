@@ -249,12 +249,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#example-usage-of-scahpy-package" id="toc-example-usage-of-scahpy-package" class="nav-link active" data-scroll-target="#example-usage-of-scahpy-package">Example Usage of <code>scahpy</code> Package</a>
-  <ul class="collapse">
-  <li><a href="#importing-the-package" id="toc-importing-the-package" class="nav-link" data-scroll-target="#importing-the-package">Importing the Package</a></li>
-  <li><a href="#reading-multiple-wrf-outs" id="toc-reading-multiple-wrf-outs" class="nav-link" data-scroll-target="#reading-multiple-wrf-outs">Reading Multiple WRF outs</a></li>
+  <li><a href="#importing-the-package" id="toc-importing-the-package" class="nav-link active" data-scroll-target="#importing-the-package">Importing the Package</a></li>
+  <li><a href="#reading-wrf-outputs-files" id="toc-reading-wrf-outputs-files" class="nav-link" data-scroll-target="#reading-wrf-outputs-files">Reading WRF outputs files</a></li>
   <li><a href="#calculating-precipitation" id="toc-calculating-precipitation" class="nav-link" data-scroll-target="#calculating-precipitation">Calculating Precipitation</a></li>
-  </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/fiorelacl/SCAHpy/docs/edit/main/02_use.qmd" class="toc-action">Edit this page</a></p></div></div></nav>
     </div>
@@ -278,27 +275,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<section id="example-usage-of-scahpy-package" class="level1">
-<h1>Example Usage of <code>scahpy</code> Package</h1>
+<p>An overview of <code>scahpy</code> capabilities will be displayed.</p>
 <section id="importing-the-package" class="level2">
 <h2 class="anchored" data-anchor-id="importing-the-package">Importing the Package</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scahpy <span class="im">import</span> in_out, met_diag</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> glob</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>To import all the modules in <code>scahpy</code> we can use the <code>*</code> as for example:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scahpy <span class="im">import</span> <span class="op">*</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>To import specific modules from the package, we can specify their names:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scahpy <span class="im">import</span> in_out, met_diag</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="reading-multiple-wrf-outs" class="level2">
-<h2 class="anchored" data-anchor-id="reading-multiple-wrf-outs">Reading Multiple WRF outs</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example: Reading and processing multiple WRF datasets</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>sfc <span class="op">=</span> in_out._drop_wrf_vars(<span class="st">'/datos/wrfout_d01_2024-01-01_03:00:00'</span>,[<span class="st">'RAINC'</span>, <span class="st">'RAINNC'</span>, <span class="st">'RAINSH'</span>, <span class="st">'U10'</span>, <span class="st">'V10'</span>, <span class="st">'SSTSK'</span>])</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>files <span class="op">=</span> <span class="bu">sorted</span>(glob.glob(<span class="st">'/datos/wrfout_d01*'</span>))</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> in_out.ds_wrf_multi(files, sfc, <span class="st">'5 hours'</span>, <span class="op">-</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="reading-wrf-outputs-files" class="level2">
+<h2 class="anchored" data-anchor-id="reading-wrf-outputs-files">Reading WRF outputs files</h2>
+<p>The WRF model can generate outputs either with one time per file or multiple times in a single file. <code>scahpy</code> is capable of handling both scenarios. For reading multiple wrfout files, you can utilize the <code>ds_wrf_multi</code> function, while for reading a single file, you can use the <code>ds_wrf_single</code> function.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example: Reading and processing multiple WRF datasets</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>sfc <span class="op">=</span> in_out._drop_wrf_vars(<span class="st">'/datos/wrfout_d01_2024-01-01_03:00:00'</span>,[<span class="st">'RAINC'</span>, <span class="st">'RAINNC'</span>, <span class="st">'RAINSH'</span>, <span class="st">'U10'</span>, <span class="st">'V10'</span>, <span class="st">'SSTSK'</span>])</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>files <span class="op">=</span> <span class="bu">sorted</span>(glob.glob(<span class="st">'/datos/wrfout_d01*'</span>))</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> in_out.ds_wrf_multi(files, sfc, <span class="st">'5 hours'</span>, <span class="op">-</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="calculating-precipitation" class="level2">
 <h2 class="anchored" data-anchor-id="calculating-precipitation">Calculating Precipitation</h2>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example: Calculating precipitation using diagnostics module</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>ds2 <span class="op">=</span> met_diag.calc_pp(ds, <span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>scahpy</code> has a module called <code>met_diag</code> designed specifically for calculating various diagnostic variables, such as precipitation, using the <code>calc_pp</code> function.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example: Calculating precipitation using diagnostics module</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>ds2 <span class="op">=</span> met_diag.calc_pp(ds, <span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

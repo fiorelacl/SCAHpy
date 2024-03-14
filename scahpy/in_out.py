@@ -127,50 +127,90 @@ def _select_time(x,difHor,sign):
     d=d.assign_coords({'time':time2})
     return d
 
-def ds_wrf_multi(files,list_no_vars,difHor=0,sign=1):
-    """Read a list of wrfout files for the variables selected.
-    ES: Lee una lista de archivos wrfout para las variables seleccionadas.
-
-    Parameters/Parametros:
-    ----------------------
-    files : List of wrfout files / Lista de archivos wrfout
-    list_no_vars : List of variables to be delated / Lista de variables a ignorar
-    difHor : String with the hours t / Lista de variables a mantener
-    sign: -1 or 1 according to the difference / +1 o -1 dependiendo de
-    la diferencia horaria respecto a la UTC
+def ds_wrf_multi(files, list_no_vars, difHor=0, sign=1, save_path=None):
     """
-    ds = xr.open_mfdataset(files, combine='nested', concat_dim='time', parallel= True ,engine='netcdf4',
-                                drop_variables=list_no_vars, preprocess = partial(_select_time,difHor=difHor,sign=sign))
-    ds.attrs = []
+    Read a list of wrfout files for the selected variables and optionally save the resulting netCDF file.
+
+    Parameters:
+    -----------
+    files : list of str
+        List of paths to wrfout files.
+    list_no_vars : list
+        List of variables to be excluded.
+    difHor : str, optional
+        String with the hour difference.
+    sign : int, optional
+        -1 or 1 according to the difference.
+    save_path : str, optional
+        Path to save the resulting netCDF file.
+
+    Returns:
+    --------
+    ds1 : xarray.Dataset
+        Dataset containing the selected variables.
+    """
+    # Read the wrfout files and drop specified variables
+    ds = xr.open_mfdataset(files, combine='nested', concat_dim='time', parallel=True, engine='netcdf4',
+                            drop_variables=list_no_vars, preprocess=partial(_select_time, difHor=difHor, sign=sign))
+
+    # Remove duplicate times
     _, index = np.unique(ds['time'], return_index=True)
     ds = ds.isel(time=index)
-    ds1 = _new_coords(files[0],ds)
-    ds1.encoding['unlimited_dims']=('time',)
-   
-    return ds1 
 
-def ds_wrf_single(file,list_no_vars,difHor=0,sign=1):
-    """Read a list of wrfout files for the variables selected.
-    ES: Lee una lista de archivos wrfout para las variables seleccionadas.
+    # Update coordinates and encoding
+    ds1 = _new_coords(files[0], ds)
+    ds1.encoding['unlimited_dims'] = ('time',)
 
-    Parameters/Parametros:
-    ----------------------
-    files : wrfout file / archivo wrfout
-    list_no_vars : List of variables to be delated / Lista de variables a ignorar
-    difHor : String with the hours t / Lista de variables a mantener
-    sign: -1 or 1 according to the difference / +1 o -1 dependiendo de
-    la diferencia horaria respecto a la UTC
+    # Optionally save the resulting netCDF file
+    if save_path is not None:
+        ds1.to_netcdf(save_path)
+
+    return ds1
+
+
+def ds_wrf_single(file, list_no_vars, difHor=0, sign=1, save_path=None):
     """
-    ds = xr.open_dataset(file,engine='netcdf4', drop_variables=list_no_vars)
-    ds1 = ds.rename({'XTIME':'time'}).swap_dims({'Time':'time'})
-    time2=pd.to_datetime(ds1.time.values) + (sign*pd.Timedelta(difHor))
-    ds1=ds1.assign_coords({'time':time2})
+    Read a list of wrfout files for the selected variables and optionally save the resulting netCDF file.
+
+    Parameters:
+    -----------
+    file : str 
+        Path to the wrfout file.
+    list_no_vars : list
+        List of variables to be excluded.
+    difHor : str, optional
+        String with the hour difference.
+    sign : int, optional
+        -1 or 1 according to the difference.
+    save_path : str, optional
+        Path to save the resulting netCDF file.
+
+    Returns:
+    --------
+    ds2 : xarray.Dataset
+        Dataset containing the selected variables.
+    """
+    # Read the wrfout file(s) and drop specified variables
+    ds = xr.open_dataset(file, engine='netcdf4', drop_variables=list_no_vars)
+
+    # Rename and manipulate time coordinate
+    ds1 = ds.rename({'XTIME': 'time'}).swap_dims({'Time': 'time'})
+    time2 = pd.to_datetime(ds1.time.values) + (sign * pd.Timedelta(difHor))
+    ds1 = ds1.assign_coords({'time': time2})
     ds1.attrs = []
+
+    # Remove duplicate times
     _, index = np.unique(ds1['time'], return_index=True)
     ds1 = ds1.isel(time=index)
-    ds2 = _new_coords(file,ds1)
-    ds2.encoding['unlimited_dims']=('time',)
-   
+
+    # Update coordinates and encoding
+    ds2 = _new_coords(file, ds1)
+    ds2.encoding['unlimited_dims'] = ('time',)
+
+    # Optionally save the resulting netCDF file
+    if save_path is not None:
+        ds2.to_netcdf(save_path)
+
     return ds2
 
 
