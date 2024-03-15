@@ -9,8 +9,8 @@ import matplotlib.colors
 import importlib.resources
 from pathlib import Path
 
-def map_pp_uv10_sst(pp, sfc, levs, levs2, shapefile=None, output_path=None, freq=None,
-                           save_maps=True, quiverkey_speed=5,extent=None):
+def map_pp_uv10_sst(pp, sfc, levs, levs2, shapefile=None, output_path=None, save_maps=True, freq=None,
+                            quiverkey_speed=5,extent=None):
     """
     Plots precipitation maps for specified months.
 

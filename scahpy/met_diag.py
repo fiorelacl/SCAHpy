@@ -1,29 +1,47 @@
 import numpy as np
 import xarray as xr
 
-def calc_pp(ds,elim=False):
-    """ de-acumulate the rainfall and save it as PP.
-    ES: Calcula la precipitación nominal en el tiempo de salida (ej. 3hr, etc),
-    es decir desacumula la precipitación líquida y la guarda como 'PP'.
+def calc_pp(ds, vars_to_sum=['RAINC', 'RAINNC', 'RAINSH'], elim=False):
+    """Calculate precipitation nominal at the output time (e.g., 3hr, etc).
+    De-accumulate liquid precipitation and save it as 'PP'.
 
-    Parameters/Parámetros:
-    ----------------------
-    ds : dataset with the variables RAINC, RAINNC and RAINSH already loaded with 
-    coordinates already processed / dataset con las variables RAINC, RAINNC and RAINSH 
-    ya cargado con las coordenadas apropiadas.
+    Parameters:
+    -----------
+    ds : xarray.Dataset
+        Dataset with the variables RAINC, RAINNC, and RAINSH already loaded and processed coordinates.
+    
+    vars_to_sum : list of str, optional
+        List of variables to be summed for precipitation calculation (default is ['RAINC', 'RAINNC', 'RAINSH']).
+
+    elim : bool, optional
+        If True, eliminates intermediate variables after calculation (default is False).
+
+    Returns:
+    --------
+    ds : xarray.Dataset
+        Dataset with calculated precipitation 'PP'.
+
+    Example:
+    ---------
+    # Calculate precipitation with default settings (sum of RAINC, RAINNC, and RAINSH)
+    ds = calc_pp(ds)
+
+    # Calculate precipitation using only RAINC and RAINNC
+    ds = calc_pp(ds, vars_to_sum=['RAINC', 'RAINNC'])
     """
     ntime = ds.time[0:-1]
-    ds['PP2'] = ds['RAINC'] + ds['RAINNC'] + ds['RAINSH']
+    # Calculate precipitation based on the sum of specified variables
+    ds['PP2'] = sum(ds[var] for var in vars_to_sum)
 
-    dd=ds['PP2'].diff('time')
+    # De-accumulate precipitation and save it as 'PP'
+    dd = ds['PP2'].diff('time')
     dd['time'] = ntime
 
-    ds['PP'] = dd
-
-    if elim==True:
-        ds=ds.drop_vars(['PP2','RAINC','RAINNC','RAINSH'])
+    # Drop intermediate variables if elim is True
+    if elim:
+        ds = ds.drop_vars(['PP2'] + vars_to_sum)
     else:
-        ds=ds.drop_vars(['PP2'])
+        ds = ds.drop_vars(['PP2'])
 
     return ds
 

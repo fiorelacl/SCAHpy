@@ -31,6 +31,6 @@ ds = in_out.ds_wrf_multi(files, sfc, '5 hours', -1)
 
 ```python
 # Example: Calculating precipitation using diagnostics module
-ds2 = met_diag.calc_pp(ds, True)
+ds2 = met_diag.calc_pp(ds,vars_to_sum=['RAINC', 'RAINNC', 'RAINSH'],True)
 ```
 
