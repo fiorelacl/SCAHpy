@@ -49,13 +49,6 @@
     "text": "Step-by-step instructions\nThese instructions should function in most operating systems, including Windows, macOS, and Linux, as Conda and Miniforge are designed to be cross-platform. However, there might be slight differences in the installation process or command syntax depending on the operating system.\nTo ensure clarity and compatibility across all operating systems, consider the following:\n\nWindows:\n\nUsers might need to open the terminal or command prompt as an administrator to execute some commands.\nPaths in the terminal should use backslashes (\\) instead of forward slashes (/).\n\nmacOS:\n\nUsers may need to install command-line developer tools if they haven’t done so already. This can be done by running xcode-select --install in the terminal.\nEnsure that users have permission to execute scripts and install packages.\n\nLinux:\n\nSome Linux distributions might require additional dependencies or configurations for Conda or Miniforge to work properly. It’s advisable to consult the documentation specific to the Linux distribution being used.\n\n\n\nUsing Conda\n\nDownload and Install Miniforge:\n\nBefore installing scahpy, you need to ensure that you have Conda installed on your system. Miniforge is a minimal distribution of Conda that includes essential tools for package management.\nGo to the Miniforge GitHub page and follow the instructions to download and install Miniforge suitable for your operating system.\n\nCreate a New Conda Environment and Install SCAHpy:\n\nOnce Conda is installed, you can create a new Conda environment specifically for scahpy and its dependencies. To do this, you’ll use an environment file called environment.yml, which contains a list of packages and their versions required for scahpy to function properly.\nDownload the environment.yml file from the SCAHpy GitHub repository.\nOpen a terminal or command prompt and navigate to the directory where the environment.yml file is located.\nRun the following command to create a new Conda environment named scahpy_env and install all the packages listed in the environment.yml file:\nconda env create --file environment.yml -n scahpy_env\nThis command will create a new Conda environment named scahpy_env and install all the required dependencies listed in the environment.yml file into this environment.\nOnce the environment is created, activate it using the following command:\nconda activate scahpy_env\n\n\nBy following these steps, you’ll have scahpy and all its dependencies installed and ready to use in your Conda environment.\n\n\nUsing Mamba\n\nDownload and Install Mamba: Before installing scahpy, you need to ensure that you have Mamba installed on your system. Mamba is a package manager for Conda environments and can be installed via Miniforge, which is a minimal distribution of Conda that includes Mamba.\n\nGo to the Miniforge GitHub page and follow the instructions to download and install Miniforge suitable for your operating system.\n\nInstall SCAHpy and Dependencies:\n\nThe easiest and recommended way to install scahpy along with its required dependencies is by using an environment file called environment.yml. This file contains a list of packages and their versions that are needed for scahpy to function properly.\nDownload the environment.yml file from the SCAHpy GitHub repository.\nOpen a terminal or command prompt and navigate to the directory where the environment.yml file is located.\nRun the following command to create a new Conda environment named scahpy_env and install all the packages listed in the environment.yml file:\nmamba env create --file environment.yml -n scahpy_env\nThis command will create a new Conda environment named scahpy_env and install all the required dependencies listed in the environment.yml file into this environment.\n\n\nBy following these steps, you’ll have scahpy and all its dependencies installed and ready to use in your Python environment.\n\n\nUsing pip\n\nFirst, ensure you have Python and pip installed on your system. You can download and install Python from the official Python website, which usually includes pip by default.\nThe easiest way to install scahpy and its dependencies is by creating a virtual environment and installing from a requirements file. Open a terminal or command prompt, then run the following commands:\n\n# Create a virtual environment (optional but recommended)\npython -m venv scahpy_env\n# Activate the virtual environment\n\n# On Windows\nscahpy_env\\Scripts\\activate\n# On macOS/Linux\nsource scahpy_env/bin/activate\n\n# Install scahpy and dependencies from requirements.txt\npip install -r requirements.txt\nIn this example, requirements.txt is a file containing a list of dependencies including scahpy. You would need to provide or generate this file yourself, listing all necessary packages and their versions: wrf-python, netCDF4, xarray, numpy, pandas, matplotlib, cartopy, geopandas, datetime, scahpy."
   },
   {
-    "objectID": "02_use.html",
-    "href": "02_use.html",
-    "title": "Usage",
-    "section": "",
-    "text": "Example Usage of scahpy Package"
-  },
-  {
     "objectID": "02_use.html#importing-the-package",
     "href": "02_use.html#importing-the-package",
     "title": "Usage",
@@ -63,11 +56,11 @@
     "text": "Importing the Package\nTo import all the modules in scahpy we can use the * as for example:\nfrom scahpy import *\nTo import specific modules from the package, we can specify their names:\nfrom scahpy import in_out, met_diag"
   },
   {
-    "objectID": "02_use.html#reading-multiple-wrf-outs",
-    "href": "02_use.html#reading-multiple-wrf-outs",
+    "objectID": "02_use.html#reading-wrf-outputs-files",
+    "href": "02_use.html#reading-wrf-outputs-files",
     "title": "Usage",
-    "section": "Reading Multiple WRF outs",
-    "text": "Reading Multiple WRF outs\n# Example: Reading and processing multiple WRF datasets\nsfc = in_out._drop_wrf_vars('/datos/wrfout_d01_2024-01-01_03:00:00',['RAINC', 'RAINNC', 'RAINSH', 'U10', 'V10', 'SSTSK'])\nfiles = sorted(glob.glob('/datos/wrfout_d01*'))\nds = in_out.ds_wrf_multi(files, sfc, '5 hours', -1)"
+    "section": "Reading WRF outputs files",
+    "text": "Reading WRF outputs files\nThe WRF model can generate outputs either with one time per file or multiple times in a single file. scahpy is capable of handling both scenarios. For reading multiple wrfout files, you can utilize the ds_wrf_multi function, while for reading a single file, you can use the ds_wrf_single function.\n# Example: Reading and processing multiple WRF datasets\nsfc = in_out._drop_wrf_vars('/datos/wrfout_d01_2024-01-01_03:00:00',['RAINC', 'RAINNC', 'RAINSH', 'U10', 'V10', 'SSTSK'])\nfiles = sorted(glob.glob('/datos/wrfout_d01*'))\nds = in_out.ds_wrf_multi(files, sfc, '5 hours', -1)"
   },
   {
     "objectID": "02_use.html#calculating-precipitation",
@@ -81,7 +74,7 @@
     "href": "03_tutorial_01.html#step-1-reading-wrf-data",
     "title": "Reading a Single File",
     "section": "Step 1: Reading WRF Data",
-    "text": "Step 1: Reading WRF Data\nWe begin by setting the absolute path of the output file we intend to work with and assign it to a variable, in this case, file_name.\nfile_name = '/data/datos/COW/OUT_DIAG_WRF/wrfouts/wrfout_d01_2023-03-10_03:00:00'\nSince we have the flexibility to specify which variables to exclude when reading netCDF files using the drop_variables argument (see xarray functions open_dataset and open_mfdataset), we leverage the _drop_wrf_vars function. This function takes the list of variables we require and generates a list containing all variables present in the output file, subsequently removing those we are not interested in (such as ‘RAINC’, ‘RAINNC’, ‘RAINSH’, ‘U10’, ‘V10’, ‘SSTSK’).\nvars = in_out._drop_wrf_vars(file_name, ['RAINC', 'RAINNC', 'RAINSH', 'U10', 'V10', 'SSTSK'])\nSubsequently, we utilize the ds_wrf_single function to selectively read the variables of interest. This function accepts the input path (file_name in this case), the list of variables to be excluded (vars), any required time difference (e.g., '5 hours'), and the corresponding sign of the time difference (-1 for negative, 1 for positive). The outcome is an xarray.Dataset containing longitude, latitude, time, and the specified variables. Optionally, you can designate a save path to export the netCDF.\nds = in_out.ds_wrf_single(file_name, vars, '5 hours', -1)"
+    "text": "Step 1: Reading WRF Data\nWe begin by setting the absolute path of the output file we intend to work with and assign it to a variable, in this case, file_name.\nfile_name = '/data/datos/COW/OUT_DIAG_WRF/wrfouts/wrfout_d01_2023-03-10_03:00:00'\nSince we have the flexibility to specify which variables to exclude when reading netCDF files using the drop_variables argument (see xarray functions open_dataset and open_mfdataset), we leverage the _drop_wrf_vars function from the module in_out. This function takes the list of variables we require and generates a list containing all variables present in the output file, subsequently removing those we are not interested in (such as ‘RAINC’, ‘RAINNC’, ‘RAINSH’, ‘U10’, ‘V10’, ‘SSTSK’).\nvars = in_out._drop_wrf_vars(file_name, ['RAINC', 'RAINNC', 'RAINSH', 'U10', 'V10', 'SSTSK'])\nSubsequently, we utilize the ds_wrf_single function to selectively read the variables of interest. This function accepts the input path (file_name in this case), the list of variables to be excluded (vars), any required time difference (e.g., '5 hours'), and the corresponding sign of the time difference (-1 for negative, 1 for positive). The outcome is an xarray.Dataset containing longitude, latitude, time, and the specified variables. Optionally, you can designate a save path to export the netCDF.\nds = in_out.ds_wrf_single(file_name, vars, '5 hours', -1)"
   },
   {
     "objectID": "03_tutorial_01.html#step-2-calculating-precipitation-and-wind-speed",
@@ -112,11 +105,11 @@
     "text": "Step 2: Calculating Precipitation and Wind Speed\nIn this step, we will utilize the met_diag module to calculate precipitation (calc_pp), wind speed (calc_wsp), and convert sea surface temperature from Kelvin to Celsius (calc_celsius).\nThe calc_pp function has an optional argument vars_to_sum, allowing users to specify which variables to sum to obtain total precipitation. If no variables are provided, it will default to summing the three variables: RAINC, RAINNC, and RAINSH.\nds_sfc = met_diag.calc_pp(ds, vars_to_sum=['RAINC', 'RAINNC', 'RAINSH'], elim=True)\nds_sfc = met_diag.calc_wsp(ds_sfc, elim=False)\nds_sfc = met_diag.calc_celsius(ds_sfc, 'SSTSK')\nBy running these commands, we ensure that our dataset ds_sfc now contains calculated precipitation, wind speed, and sea surface temperature in Celsius, ready for further analysis or visualization."
   },
   {
-    "objectID": "03_tutorial_02.html#step-3-agregating-the-data",
-    "href": "03_tutorial_02.html#step-3-agregating-the-data",
+    "objectID": "03_tutorial_02.html#step-3-aggregating-the-data",
+    "href": "03_tutorial_02.html#step-3-aggregating-the-data",
     "title": "Reading Multiple File",
-    "section": "Step 3: Agregating the data",
-    "text": "Step 3: Agregating the data\ndd = temp_scales.dmy_var(ds_sfc_, tiempo='1D', accum=['PP'], avg=['U10', 'V10'], mediana=['SSTSK'])"
+    "section": "Step 3: Aggregating the Data",
+    "text": "Step 3: Aggregating the Data\nNow, we’ll aggregate the data to operate on a daily time scale instead of hourly. To achieve this, we’ll utilize the dmy_var function from the temp_scales module. This function takes an xarray.Dataset as input, where we specify the desired time scale (e.g., ‘1D’ for daily, ‘ME’ for monthly, ‘YE’ for yearly). Additionally, we can specify which variables should be aggregated by sum, average, or median by providing lists for each aggregation method.\ndd = temp_scales.dmy_var(ds_sfc, tiempo='1D', accum=['PP'], avg=['U10', 'V10'], mediana=['SSTSK'])\nBy executing this code, we’ll have our data aggregated to a daily time scale, with certain variables summed, averaged, or median-calculated according to our specifications."
   },
   {
     "objectID": "03_tutorial_02.html#step-4-plotting-precipitation-maps",
@@ -243,19 +236,5 @@
     "title": "Contributing",
     "section": "",
     "text": "All types of crontributions, bugs, feedbacks are welcome!\nReport bugs and submit feedback at Github Issues."
-  },
-  {
-    "objectID": "02_use.html#reading-wrf-outputs-files",
-    "href": "02_use.html#reading-wrf-outputs-files",
-    "title": "Usage",
-    "section": "Reading WRF outputs files",
-    "text": "Reading WRF outputs files\nThe WRF model can generate outputs either with one time per file or multiple times in a single file. scahpy is capable of handling both scenarios. For reading multiple wrfout files, you can utilize the ds_wrf_multi function, while for reading a single file, you can use the ds_wrf_single function.\n# Example: Reading and processing multiple WRF datasets\nsfc = in_out._drop_wrf_vars('/datos/wrfout_d01_2024-01-01_03:00:00',['RAINC', 'RAINNC', 'RAINSH', 'U10', 'V10', 'SSTSK'])\nfiles = sorted(glob.glob('/datos/wrfout_d01*'))\nds = in_out.ds_wrf_multi(files, sfc, '5 hours', -1)"
-  },
-  {
-    "objectID": "03_tutorial_02.html#step-3-aggregating-the-data",
-    "href": "03_tutorial_02.html#step-3-aggregating-the-data",
-    "title": "Reading Multiple File",
-    "section": "Step 3: Aggregating the Data",
-    "text": "Step 3: Aggregating the Data\nNow, we’ll aggregate the data to operate on a daily time scale instead of hourly. To achieve this, we’ll utilize the dmy_var function from the temp_scales module. This function takes an xarray.Dataset as input, where we specify the desired time scale (e.g., ‘1D’ for daily, ‘ME’ for monthly, ‘YE’ for yearly). Additionally, we can specify which variables should be aggregated by sum, average, or median by providing lists for each aggregation method.\ndd = temp_scales.dmy_var(ds_sfc, tiempo='1D', accum=['PP'], avg=['U10', 'V10'], mediana=['SSTSK'])\nBy executing this code, we’ll have our data aggregated to a daily time scale, with certain variables summed, averaged, or median-calculated according to our specifications."
   }
 ]
