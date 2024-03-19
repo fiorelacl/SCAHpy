@@ -12,6 +12,7 @@ dependencies:
   - pandas
   - matplotlib
   - jupyterlab
+  - cmcrameri
   - pip
   - pip:
      - datetime
