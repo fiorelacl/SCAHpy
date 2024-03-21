@@ -18,13 +18,13 @@ file_name = '/data/datos/COW/OUT_DIAG_WRF/wrfouts/wrfout_d01_2023-03-10_03:00:00
 Since we have the flexibility to specify which variables to exclude when reading netCDF files using the `drop_variables` argument (see xarray functions open_dataset and open_mfdataset), we leverage the `_drop_wrf_vars` function from the module `in_out`. This function takes the list of variables we require and generates a list containing all variables present in the output file, subsequently removing those we are not interested in (such as *'RAINC', 'RAINNC', 'RAINSH', 'U10', 'V10', 'SSTSK'*).
 
 ```python
-vars = in_out._drop_wrf_vars(file_name, ['RAINC', 'RAINNC', 'RAINSH', 'U10', 'V10', 'SSTSK'])
+dvars = in_out._drop_wrf_vars(file_name, ['RAINC', 'RAINNC', 'RAINSH', 'U10', 'V10', 'SSTSK'])
 ```
 
 Subsequently, we utilize the `ds_wrf_single` function to selectively read the variables of interest. This function accepts the input path (`file_name` in this case), the list of variables to be excluded (`vars`), any required time difference (e.g., `'5 hours'`), and the corresponding sign of the time difference (`-1` for negative, `1` for positive). The outcome is an `xarray.Dataset` containing longitude, latitude, time, and the specified variables. Optionally, you can designate a save path to export the netCDF.
 
 ```python
-ds = in_out.ds_wrf_single(file_name, vars, '5 hours', -1)
+ds = in_out.ds_wrf_single(file_name, dvars, '5 hours', -1)
 ```
 
 ## Step 2: Calculating Precipitation and Wind Speed

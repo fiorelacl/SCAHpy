@@ -15,16 +15,16 @@ We initiate the process by listing all the files we want to read using the `glob
 list_files = sorted(glob.glob('/data/datos/COW/OUT_DIAG_WRF/wrfouts/wrfout_d01_*'))
 ```
 
-Given the capability to specify excluded variables when reading netCDF files using the `drop_variables` argument (refer to xarray functions `open_dataset` and `open_mfdataset`), we utilize the `_drop_wrf_vars` function from the module `in_out`. This function takes the list of variables we require and generates a list containing all variables present in the output file, subsequently removing those we are not interested in (such as *'P', 'PB', 'U', 'W', 'QVAPOR'*). For this purpose, we use the first file from our list of files, assigning it to the variable `vars`.
+Given the capability to specify excluded variables when reading netCDF files using the `drop_variables` argument (refer to xarray functions `open_dataset` and `open_mfdataset`), we utilize the `_drop_wrf_vars` function from the module `in_out`. This function takes the list of variables we require and generates a list containing all variables present in the output file, subsequently removing those we are not interested in (such as *'P', 'PB', 'U', 'W', 'QVAPOR'*). For this purpose, we use the first file from our list of files, assigning it to the variable `dvars`.
 
 ```python
-vars = in_out._drop_wrf_vars(list_files[0], ['P', 'PB', 'U', 'W', 'QVAPOR'])
+dvars = in_out._drop_wrf_vars(list_files[0], ['P', 'PB', 'U', 'W', 'QVAPOR'])
 ```
 
-Subsequently, we utilize the `ds_wrf_multi` function to selectively read the variables of interest. This function accepts the input path (`file_name` in this case), the list of variables to be excluded (`vars`), any required time difference (e.g., `'5 hours'`), and the corresponding sign of the time difference (`-1` for negative, `1` for positive). The outcome is an `xarray.Dataset` containing longitude, latitude, bottom_top, time, and the specified variables. Optionally, you can designate a save path to export the netCDF.
+Subsequently, we utilize the `ds_wrf_multi` function to selectively read the variables of interest. This function accepts the input path (`file_name` in this case), the list of variables to be excluded (`dvars`), any required time difference (e.g., `'5 hours'`), and the corresponding sign of the time difference (`-1` for negative, `1` for positive). The outcome is an `xarray.Dataset` containing longitude, latitude, bottom_top, time, and the specified variables. Optionally, you can designate a save path to export the netCDF.
 
 ```python
-ds = in_out.ds_wrf_multi(list_files, vars, '5 hours', -1)
+ds = in_out.ds_wrf_multi(list_files, dvars, '5 hours', -1)
 ```
 
 ## Step 2: Calculating Specific Humidity and Total pressure
@@ -49,7 +49,7 @@ dd = temp_scales.dmy_var(ds_lvl, tiempo='1D', accum=None, avg=['Presion','U','W'
 By executing this code, we'll have our data aggregated to a daily time scale, with variables averaged according to our specifications.
 
 ## Step 4: Interpolation to vertical levels
-`vert_levs` from `spatial_scales`module
+We use the function`vert_levs` from `spatial_scales`module to interpolate the data to same pressure levels, when we do not specify the levels, by default the interpolation is to: 1000,975,950,925,900,850,800,700,600,500,400,300,200 hPa. The dataset `dd` should contain the total pressure and the variables we are interested in.
 
 ```python
 dd2=vert_levs(dd,['U','W','QE'],lvls=None)
@@ -57,7 +57,7 @@ dd2=vert_levs(dd,['U','W','QE'],lvls=None)
 
 ## Step 5: Plotting Precipitation Maps
 
-Next, we'll generate precipitation maps with SST contours and wind vectors using the `cross_section_xz` function from the `map_plots` module. This function takes the rainfall (PP) variable as input, followed by the dataset with SST and wind components, precipitation levels, SST contours, optional shapefile, exportation settings, output path, temporal scale ('H' for hourly, 'D' for daily, 'M' for monthly, 'Y' for yearly), vector speed, and plot extent ([x1, x2, y1, y2]).
+Next, we'll generate cross section plots with specific humidity contours and wind vectors using the `cross_section_xz` function from the `map_plots` module. This function takes the dataset with specific humidity, total pressure and wind components, humidity levels, exportation settings, output path, temporal scale ('H' for hourly, 'D' for daily, 'M' for monthly, 'Y' for yearly) and vector speed.
 
 ```python
 # Example usage
