@@ -34,7 +34,7 @@ def dmy_var(ds, tiempo=None, accum=None, avg=None, mediana=None):
         return None
 
     try:
-        ds_all = xr.concat(datasets, dim='time')
+        ds_all = xr.merge(datasets)
     except ValueError:
         print('Coloque una escala temporal apropiada')
         return None
