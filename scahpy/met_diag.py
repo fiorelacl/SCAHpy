@@ -34,10 +34,11 @@ def calc_pp(ds, vars_to_sum=['RAINC', 'RAINNC', 'RAINSH'], elim=False):
     ds['PP2'] = sum(ds[var] for var in vars_to_sum)
 
     # De-accumulate precipitation and save it as 'PP'
-    dd = ds['PP2'].diff('time').to_dataset().rename({'PP2':'PP'})
+    dd = ds['PP2'].diff('time')
     dd['time'] = ntime
 
-    ds=ds.merge(dd)
+    ds['PP'] = dd
+
         # Drop intermediate variables if elim is True
     if elim:
         df = ds.drop_vars(['PP2'] + vars_to_sum)
