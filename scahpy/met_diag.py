@@ -39,11 +39,11 @@ def calc_pp(ds, vars_to_sum=['RAINC', 'RAINNC', 'RAINSH'], elim=False):
 
     # Drop intermediate variables if elim is True
     if elim:
-        ds = ds.drop_vars(['PP2'] + vars_to_sum)
+        dd = dd.drop_vars(['PP2'] + vars_to_sum)
     else:
-        ds = ds.drop_vars(['PP2'])
+        dd = dd.drop_vars(['PP2'])
 
-    return ds
+    return dd
 
 def calc_wsp(ds,elim=False):
     """ Calculate de wind speed with zonal and meridional components (10m).
