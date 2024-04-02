@@ -34,16 +34,17 @@ def calc_pp(ds, vars_to_sum=['RAINC', 'RAINNC', 'RAINSH'], elim=False):
     ds['PP2'] = sum(ds[var] for var in vars_to_sum)
 
     # De-accumulate precipitation and save it as 'PP'
-    dd = ds['PP2'].diff('time')
+    dd = ds['PP2'].diff('time').to_dataset().rename({'PP2':'PP'})
     dd['time'] = ntime
 
-    # Drop intermediate variables if elim is True
+    ds=ds.merge(dd)
+        # Drop intermediate variables if elim is True
     if elim:
-        dd = dd.drop_vars(['PP2'] + vars_to_sum)
+        df = ds.drop_vars(['PP2'] + vars_to_sum)
     else:
-        dd = dd.drop_vars(['PP2'])
+        df = ds.drop_vars(['PP2'])
 
-    return dd
+    return df
 
 def calc_wsp(ds,elim=False):
     """ Calculate de wind speed with zonal and meridional components (10m).
