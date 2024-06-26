@@ -53,7 +53,7 @@
     "href": "02_use.html#importing-the-package",
     "title": "Usage",
     "section": "Importing the Package",
-    "text": "Importing the Package\nTo import all the modules in scahpy we can use the * as for example:\nfrom scahpy import *\nTo import specific modules from the package, we can specify their names:\nfrom scahpy import in_out, met_diag"
+    "text": "Importing the Package\nTo import all the modules in scahpy we can use the * cd as for example:\nfrom scahpy import *\nTo import specific modules from the package, we can specify their names:\nfrom scahpy import in_out, met_diag"
   },
   {
     "objectID": "02_use.html#reading-wrf-outputs-files",
