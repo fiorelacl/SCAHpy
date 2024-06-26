@@ -4,7 +4,7 @@ An overview of `scahpy` capabilities will be displayed.
 
 ## Importing the Package
 
-To import all the modules in `scahpy` we can use the `*` as for example:
+To import all the modules in `scahpy` we can use the `*` cd as for example:
 
 ```python
 from scahpy import *

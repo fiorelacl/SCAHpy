@@ -1,5 +1,5 @@
 <div style="text-align: center;">
-<img width="500" src="https://github.com/fiorelacl/SCAHpy/blob/main/docs/cover.jpg?raw=true" >
+<img width="500" src="https://github.com/fiorelacl/SCAHpy/blob/main/docs/cover.png?raw=true" >
 </div>
 
 ## **What is SCAHpy?**

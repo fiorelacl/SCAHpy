@@ -12,7 +12,7 @@ book:
   language: custom.yml
   sidebar: 
     title: 'Documentation'
-    logo: cover.jpg
+    logo: cover.png
     style: docked
     background: light
   search: true
