@@ -7,7 +7,7 @@ def dmy_var(ds, tiempo=None, accum=None, avg=None, mediana=None):
     aceptada por la función resample (ejm. 'D' diario, 'M' mensual, etc)
 
     Parameters/Parametros:
-    ----------------------
+    ----------------------------------------------------------------------------------
     ds : Dataset loaded / Dataset previamente guardado
     tiempo : Time accepted by resample / tiempo aceptado por la funcion resample
     accum : List of variables who need sum / Si es True, emplea la función suma
@@ -42,7 +42,7 @@ def dmy_var(ds, tiempo=None, accum=None, avg=None, mediana=None):
     return ds_all
 
 
-def monthly_clim(ds,stat=None,time_slice=None):
+def monthly_avg(ds,stat=None,time_slice=None):
     """Convert a Dataset to monthly climatology.
     ES: Convierte el dataset a una climatología mensualizada
 
@@ -59,7 +59,7 @@ def monthly_clim(ds,stat=None,time_slice=None):
     elif stat == 'median':
         da = ds.resample(time='1M').median().groupby('time.month').mean('time')
     else:
-        print('Coloque mean o median como estadístico para la climatología')
+        print('Coloque mean o median como estadístico para el cálculo')
     return(da)
 
 
