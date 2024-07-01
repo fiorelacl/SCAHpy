@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: scahpy
-Version: 0.0.10
+Version: 0.1.1
 Summary: Package to process and analyze outputs from IGP-RESM-COW model
 Author-email: Fiorela Castillón <fv.castillon@gmail.com>
 License:                     GNU GENERAL PUBLIC LICENSE
@@ -689,6 +689,7 @@ License-File: LICENSE
 Requires-Dist: wrf-python
 Requires-Dist: netCDF4
 Requires-Dist: xarray
+Requires-Dist: dask
 Requires-Dist: numpy
 Requires-Dist: pandas
 Requires-Dist: matplotlib
@@ -697,7 +698,7 @@ Requires-Dist: cmocean
 Requires-Dist: geopandas
 
 <div style="text-align: center;">
-<img width="500" src="https://github.com/fiorelacl/SCAHpy/blob/main/docs/cover.jpg?raw=true" >
+<img width="500" src="https://github.com/fiorelacl/SCAHpy/blob/main/docs/cover.png?raw=true" >
 </div>
 
 ## **What is SCAHpy?**

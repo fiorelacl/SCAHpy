@@ -7,6 +7,7 @@ scahpy/colors_scales.py
 scahpy/in_out.py
 scahpy/map_plots.py
 scahpy/met_diag.py
+scahpy/met_vars.py
 scahpy/spatial_scales.py
 scahpy/temp_scales.py
 scahpy.egg-info/PKG-INFO

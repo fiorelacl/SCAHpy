@@ -1,6 +1,7 @@
 wrf-python
 netCDF4
 xarray
+dask
 numpy
 pandas
 matplotlib
