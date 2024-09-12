@@ -1,2 +1,0 @@
-[console_scripts]
-scahpy-cli = scahpy.__main__:main
