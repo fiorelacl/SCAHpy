@@ -74,7 +74,7 @@ def _drop_vars(da, sel_vars, model='wrf'):
             list_no_vars.append(vari)
     return list_no_vars
 
-def _new_coords(file0,da):
+def _new_wrf_coords(file0,da):
     """Unstag the stagged coordinates and also assign lat and lon coords.
     ES: Destagea las variables y asigna latitudes y longitudes como coordenadas
 
@@ -239,7 +239,7 @@ def read_wrf_multi(files, list_no_vars, difHor=0, sign=1, save_path=None):
     ds = ds.isel(time=index)
 
     # Update coordinates and encoding
-    ds1 = _new_coords(files[0], ds)
+    ds1 = _new_wrf_coords(files[0], ds)
     ds1.encoding['unlimited_dims'] = ('time',)
 
     # Optionally save the resulting netCDF file
@@ -285,7 +285,7 @@ def read_wrf_single(file, list_no_vars, difHor=0, sign=1, save_path=None):
     ds1 = ds1.isel(time=index)
 
     # Update coordinates and encoding
-    ds2 = _new_coords(file, ds1)
+    ds2 = _new_wrf_coords(file, ds1)
     ds2.encoding['unlimited_dims'] = ('time',)
 
     # Optionally save the resulting netCDF file
