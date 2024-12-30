@@ -9,4 +9,4 @@ __all__ = [
 ]
 
 # Version of scahpy package
-__version__ = "0.1.3"
+__version__ = "0.1.4"
