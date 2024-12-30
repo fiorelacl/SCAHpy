@@ -6,7 +6,7 @@ import datetime
 import wrf
 from functools import partial
 
-def _dict_metadata_vars(da,model='wrf'):
+def _dict_metadata_vars(file0,model='wrf'):
     """Append to a dictionary 4 metadata features like stagger, # of dimensions,
        description and the units.
     ES: En un diccionario, usar como llave el nombre de la variables y como items,
@@ -18,6 +18,7 @@ def _dict_metadata_vars(da,model='wrf'):
     da : wrfout/crocoavg dataset already loaded / dataset wrfout o crocoavg ya cargado y leido
     model: 'croco' o 'wrf'
     """
+    da=xr.open_dataset(file0,engine='netcdf4')
     a=dict()
     for var in da:
         try:
@@ -55,7 +56,7 @@ def _list_all_WRFvars(file0,printall):
         except:
             pass
 
-def _drop_vars(da, sel_vars, model='wrf'):
+def _drop_vars(file0, sel_vars, model='wrf'):
     """Save in a list all the variables to be ignored when reading wrfouts files.
     ES: Guarda en una lista todas las variables que no serán leidas.
 
@@ -65,7 +66,7 @@ def _drop_vars(da, sel_vars, model='wrf'):
     sel_vars : list of variables to keep / Lista de variables a mantener
     """
 
-    ds_all_vars = list(_dict_metadata_vars(da,model).keys())
+    ds_all_vars = list(_dict_metadata_vars(file0,model).keys())
     
     list_no_vars = []
     for vari in ds_all_vars:

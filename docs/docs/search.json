@@ -25,7 +25,7 @@
     "href": "index.html#how-to-use-scahpy",
     "title": "Getting Started",
     "section": "How to use SCAHpy?",
-    "text": "How to use SCAHpy?\nSCAHpy can be used as a standalone package, to get more details go to Usage and tutorials.\n\n\n\n\n\n\nNote\n\n\n\nSCAHpy has been developed and tested using IGP-RESM-COW model outputs. However, it is designed to work with any WRF outputs. We are open to contributions from users!\n\n\n\nGetting Started\n\nInstallation\nUsage\n\n\n\nTutorials\n\nTutorial: Reading Single Files\nTutorial: Reading Multiple Files\nTutorial: Pressure Levels Variables\n\n\n\nHelp & Reference\n\nAPI References\nContributing"
+    "text": "How to use SCAHpy?\nSCAHpy can be used as a standalone package, to get more details go to Usage and tutorials.\n\n\n\n\n\n\nNote\n\n\n\nSCAHpy has been developed and tested using IGP-RESM-COWv1 model outputs. However, it is designed to work with any WRF outputs. We are open to contributions from users!\n\n\n\nGetting Started\n\nInstallation\nUsage\n\n\n\nTutorials\n\nTutorial: Reading Single Files\nTutorial: Reading Multiple Files\nTutorial: Pressure Levels Variables\n\n\n\nHelp & Reference\n\nAPI References\nContributing"
   },
   {
     "objectID": "01_install.html#required-dependencies",
@@ -39,7 +39,7 @@
     "href": "01_install.html#optional-dependencies",
     "title": "Installation",
     "section": "Optional dependencies:",
-    "text": "Optional dependencies:\nFor optimal performance, it is highly recommended that you install the following dependencies:\n\nbottleneck\nCartopy\nIPython\ngeopandas\nJupyterLab"
+    "text": "Optional dependencies:\nFor optimal performance, it is highly recommended that you install the following dependencies:\n\nbottleneck\nCartopy\nIPython\nJupyterLab"
   },
   {
     "objectID": "01_install.html#step-by-step-instructions",
@@ -53,35 +53,35 @@
     "href": "02_use.html#importing-the-package",
     "title": "Usage",
     "section": "Importing the Package",
-    "text": "Importing the Package\nTo import all the modules in scahpy we can use the * cd as for example:\nfrom scahpy import *\nTo import specific modules from the package, we can specify their names:\nfrom scahpy import in_out, met_diag"
+    "text": "Importing the Package\nTo import all the modules in scahpy we can use the * cd as for example:\nfrom scahpy import *\nTo import specific modules from the package, we can specify their names:\nfrom scahpy import in_out, met_vars"
   },
   {
     "objectID": "02_use.html#reading-wrf-outputs-files",
     "href": "02_use.html#reading-wrf-outputs-files",
     "title": "Usage",
     "section": "Reading WRF outputs files",
-    "text": "Reading WRF outputs files\nThe WRF model can generate outputs either with one time per file or multiple times in a single file. scahpy is capable of handling both scenarios. For reading multiple wrfout files, you can utilize the ds_wrf_multi function, while for reading a single file, you can use the ds_wrf_single function.\n# Example: Reading and processing multiple WRF datasets\nsfc = in_out._drop_wrf_vars('/datos/wrfout_d01_2024-01-01_03:00:00',['RAINC', 'RAINNC', 'RAINSH', 'U10', 'V10', 'SSTSK'])\nfiles = sorted(glob.glob('/datos/wrfout_d01*'))\nds = in_out.ds_wrf_multi(files, sfc, '5 hours', -1)"
+    "text": "Reading WRF outputs files\nThe WRF model can generate outputs either with one time per file or multiple times in a single file. scahpy is capable of handling both scenarios. For reading multiple wrfout files, you can utilize the read_wrf_multi function, while for reading a single file, you can use the read_wrf_single function.\n# Example: Reading and processing multiple WRF datasets\nsfc = in_out._drop_vars('/datos/wrfout_d01_2024-01-01_03:00:00',['RAINC', 'RAINNC', 'RAINSH', 'U10', 'V10', 'SSTSK'], model='wrf')\nfiles = sorted(glob.glob('/datos/wrfout_d01*'))\nds = in_out.read_wrf_multi(files, sfc, '5 hours', -1)"
   },
   {
     "objectID": "02_use.html#calculating-precipitation",
     "href": "02_use.html#calculating-precipitation",
     "title": "Usage",
     "section": "Calculating Precipitation",
-    "text": "Calculating Precipitation\nscahpy has a module called met_diag designed specifically for calculating various diagnostic variables, such as precipitation, using the calc_pp function.\n# Example: Calculating precipitation using diagnostics module\nds2 = met_diag.calc_pp(ds,vars_to_sum=['RAINC', 'RAINNC', 'RAINSH'],True)"
+    "text": "Calculating Precipitation\nscahpy has a module called met_vars designed specifically for calculating various diagnostic variables, such as precipitation, using the calc_pp function.\n# Example: Calculating precipitation using diagnostics module\nds2 = met_vars.calc_pp(ds,vars_to_sum=['RAINC', 'RAINNC', 'RAINSH'],True)"
   },
   {
     "objectID": "03_tutorial_01.html#step-1-reading-wrf-data",
     "href": "03_tutorial_01.html#step-1-reading-wrf-data",
     "title": "Reading a Single File",
     "section": "Step 1: Reading WRF Data",
-    "text": "Step 1: Reading WRF Data\nWe begin by setting the absolute path of the output file we intend to work with and assign it to a variable, in this case, file_name.\nfile_name = '/data/datos/COW/OUT_DIAG_WRF/wrfouts/wrfout_d01_2023-03-10_03:00:00'\nSince we have the flexibility to specify which variables to exclude when reading netCDF files using the drop_variables argument (see xarray functions open_dataset and open_mfdataset), we leverage the _drop_wrf_vars function from the module in_out. This function takes the list of variables we require and generates a list containing all variables present in the output file, subsequently removing those we are not interested in (such as ‘RAINC’, ‘RAINNC’, ‘RAINSH’, ‘U10’, ‘V10’, ‘SSTSK’).\ndvars = in_out._drop_wrf_vars(file_name, ['RAINC', 'RAINNC', 'RAINSH', 'U10', 'V10', 'SSTSK'])\nSubsequently, we utilize the ds_wrf_single function to selectively read the variables of interest. This function accepts the input path (file_name in this case), the list of variables to be excluded (vars), any required time difference (e.g., '5 hours'), and the corresponding sign of the time difference (-1 for negative, 1 for positive). The outcome is an xarray.Dataset containing longitude, latitude, time, and the specified variables. Optionally, you can designate a save path to export the netCDF.\nds = in_out.ds_wrf_single(file_name, dvars, '5 hours', -1)"
+    "text": "Step 1: Reading WRF Data\nWe begin by setting the absolute path of the output file we intend to work with and assign it to a variable, in this case, file_name.\nfile_name = '/data/datos/COW/OUT_DIAG_WRF/wrfouts/wrfout_d01_2023-03-10_03:00:00'\nSince we have the flexibility to specify which variables to exclude when reading netCDF files using the drop_variables argument (see xarray functions open_dataset and open_mfdataset), we leverage the _drop_wrf_vars function from the module in_out. This function takes the list of variables we require and generates a list containing all variables present in the output file, subsequently removing those we are not interested in (such as ‘RAINC’, ‘RAINNC’, ‘RAINSH’, ‘U10’, ‘V10’, ‘SSTSK’).\ndvars = in_out._drop_vars(file_name, ['RAINC', 'RAINNC', 'RAINSH', 'U10', 'V10', 'SSTSK'], model='wrf')\nSubsequently, we utilize the read_wrf_single function to selectively read the variables of interest. This function accepts the input path (file_name in this case), the list of variables to be excluded (vars), any required time difference (e.g., '5 hours'), and the corresponding sign of the time difference (-1 for negative, 1 for positive). The outcome is an xarray.Dataset containing longitude, latitude, time, and the specified variables. Optionally, you can designate a save path to export the netCDF.\nds = in_out.read_wrf_single(file_name, dvars, '5 hours', -1)"
   },
   {
     "objectID": "03_tutorial_01.html#step-2-calculating-precipitation-and-wind-speed",
     "href": "03_tutorial_01.html#step-2-calculating-precipitation-and-wind-speed",
     "title": "Reading a Single File",
     "section": "Step 2: Calculating Precipitation and Wind Speed",
-    "text": "Step 2: Calculating Precipitation and Wind Speed\nIn this step, we will utilize the met_diag module to calculate precipitation (calc_pp), wind speed (calc_wsp), and convert sea surface temperature from Kelvin to Celsius (calc_celsius).\nThe calc_pp function has an optional argument vars_to_sum, allowing users to specify which variables to sum to obtain total precipitation. If no variables are provided, it will default to summing the three variables: RAINC, RAINNC, and RAINSH.\nds_sfc = met_diag.calc_pp(ds, vars_to_sum=['RAINC', 'RAINNC', 'RAINSH'], elim=True)\nds_sfc = met_diag.calc_wsp(ds_sfc, elim=False)\nds_sfc = met_diag.calc_celsius(ds_sfc, 'SSTSK')\nBy running these commands, we ensure that our dataset ds_sfc now contains calculated precipitation, wind speed, and sea surface temperature in Celsius, ready for further analysis or visualization."
+    "text": "Step 2: Calculating Precipitation and Wind Speed\nIn this step, we will utilize the met_vars module to calculate precipitation (calc_pp), wind speed (calc_wsp), and convert sea surface temperature from Kelvin to Celsius (calc_celsius).\nThe calc_pp function has an optional argument vars_to_sum, allowing users to specify which variables to sum to obtain total precipitation. If no variables are provided, it will default to summing the three variables: RAINC, RAINNC, and RAINSH.\nds_sfc = met_vars.calc_pp(ds, vars_to_sum=['RAINC', 'RAINNC', 'RAINSH'], elim=True)\nds_sfc = met_vars.calc_wsp(ds_sfc, elim=False)\nds_sfc = met_vars.calc_celsius(ds_sfc, 'SSTSK')\nBy running these commands, we ensure that our dataset ds_sfc now contains calculated precipitation, wind speed, and sea surface temperature in Celsius, ready for further analysis or visualization."
   },
   {
     "objectID": "03_tutorial_01.html#step-3-plotting-precipitation-maps",
@@ -95,14 +95,14 @@
     "href": "03_tutorial_02.html#step-1-reading-wrf-data",
     "title": "Reading Multiple File",
     "section": "Step 1: Reading WRF Data",
-    "text": "Step 1: Reading WRF Data\nWe initiate the process by listing all the files we want to read using the glob package and assigning them to the variable list_files.\nlist_files = sorted(glob.glob('/data/datos/COW/OUT_DIAG_WRF/wrfouts/wrfout_d01_*'))\nGiven the capability to specify excluded variables when reading netCDF files using the drop_variables argument (refer to xarray functions open_dataset and open_mfdataset), we utilize the _drop_wrf_vars function from the module in_out. This function takes the list of variables we require and generates a list containing all variables present in the output file, subsequently removing those we are not interested in (such as ‘RAINC’, ‘RAINNC’, ‘RAINSH’, ‘U10’, ‘V10’, ‘SSTSK’). For this purpose, we use the first file from our list of files, assigning it to the variable dvars.\ndvars = in_out._drop_wrf_vars(list_files[0], ['RAINC', 'RAINNC', 'RAINSH', 'U10', 'V10', 'SSTSK'])\nSubsequently, we utilize the ds_wrf_multi function to selectively read the variables of interest. This function accepts the input path (file_name in this case), the list of variables to be excluded (vars), any required time difference (e.g., '5 hours'), and the corresponding sign of the time difference (-1 for negative, 1 for positive). The outcome is an xarray.Dataset containing longitude, latitude, time, and the specified variables. Optionally, you can designate a save path to export the netCDF.\nds = in_out.ds_wrf_multi(list_files, dvars, '5 hours', -1)"
+    "text": "Step 1: Reading WRF Data\nWe initiate the process by listing all the files we want to read using the glob package and assigning them to the variable list_files.\nlist_files = sorted(glob.glob('/data/datos/COW/OUT_DIAG_WRF/wrfouts/wrfout_d01_*'))\nGiven the capability to specify excluded variables when reading netCDF files using the drop_variables argument (refer to xarray functions open_dataset and open_mfdataset), we utilize the _drop_vars function from the module in_out. This function takes the list of variables we require and generates a list containing all variables present in the output file, subsequently removing those we are not interested in (such as ‘RAINC’, ‘RAINNC’, ‘RAINSH’, ‘U10’, ‘V10’, ‘SSTSK’). For this purpose, we use the first file from our list of files, assigning it to the variable dvars.\ndvars = in_out._drop_vars(list_files[0], ['RAINC', 'RAINNC', 'RAINSH', 'U10', 'V10', 'SSTSK'], model='wrf')\nSubsequently, we utilize the read_wrf_multi function to selectively read the variables of interest. This function accepts the input path (file_name in this case), the list of variables to be excluded (vars), any required time difference (e.g., '5 hours'), and the corresponding sign of the time difference (-1 for negative, 1 for positive). The outcome is an xarray.Dataset containing longitude, latitude, time, and the specified variables. Optionally, you can designate a save path to export the netCDF.\nds = in_out.read_wrf_multi(list_files, dvars, '5 hours', -1)"
   },
   {
     "objectID": "03_tutorial_02.html#step-2-calculating-precipitation-and-wind-speed",
     "href": "03_tutorial_02.html#step-2-calculating-precipitation-and-wind-speed",
     "title": "Reading Multiple File",
     "section": "Step 2: Calculating Precipitation and Wind Speed",
-    "text": "Step 2: Calculating Precipitation and Wind Speed\nIn this step, we will utilize the met_diag module to calculate precipitation (calc_pp), wind speed (calc_wsp), and convert sea surface temperature from Kelvin to Celsius (calc_celsius).\nThe calc_pp function has an optional argument vars_to_sum, allowing users to specify which variables to sum to obtain total precipitation. If no variables are provided, it will default to summing the three variables: RAINC, RAINNC, and RAINSH.\nds_sfc = met_diag.calc_pp(ds, vars_to_sum=['RAINC', 'RAINNC', 'RAINSH'], elim=True)\nds_sfc = met_diag.calc_wsp(ds_sfc, elim=False)\nds_sfc = met_diag.calc_celsius(ds_sfc, 'SSTSK')\nBy running these commands, we ensure that our dataset ds_sfc now contains calculated precipitation, wind speed, and sea surface temperature in Celsius, ready for further analysis or visualization."
+    "text": "Step 2: Calculating Precipitation and Wind Speed\nIn this step, we will utilize the met_vars module to calculate precipitation (calc_pp), wind speed (calc_wsp), and convert sea surface temperature from Kelvin to Celsius (calc_celsius).\nThe calc_pp function has an optional argument vars_to_sum, allowing users to specify which variables to sum to obtain total precipitation. If no variables are provided, it will default to summing the three variables: RAINC, RAINNC, and RAINSH.\nds_sfc = met_vars.calc_pp(ds, vars_to_sum=['RAINC', 'RAINNC', 'RAINSH'], elim=True)\nds_sfc = met_vars.calc_wsp(ds_sfc, elim=False)\nds_sfc = met_vars.calc_celsius(ds_sfc, 'SSTSK')\nBy running these commands, we ensure that our dataset ds_sfc now contains calculated precipitation, wind speed, and sea surface temperature in Celsius, ready for further analysis or visualization."
   },
   {
     "objectID": "03_tutorial_02.html#step-3-aggregating-the-data",
@@ -123,14 +123,14 @@
     "href": "03_tutorial_03.html#step-1-reading-wrf-data",
     "title": "Pressure levels variables",
     "section": "Step 1: Reading WRF Data",
-    "text": "Step 1: Reading WRF Data\nWe initiate the process by listing all the files we want to read using the glob package and assigning them to the variable list_files.\nlist_files = sorted(glob.glob('/data/datos/COW/OUT_DIAG_WRF/wrfouts/wrfout_d01_*'))\nGiven the capability to specify excluded variables when reading netCDF files using the drop_variables argument (refer to xarray functions open_dataset and open_mfdataset), we utilize the _drop_wrf_vars function from the module in_out. This function takes the list of variables we require and generates a list containing all variables present in the output file, subsequently removing those we are not interested in (such as ‘P’, ‘PB’, ‘U’, ‘W’, ‘QVAPOR’). For this purpose, we use the first file from our list of files, assigning it to the variable dvars.\ndvars = in_out._drop_wrf_vars(list_files[0], ['P', 'PB', 'U', 'W', 'QVAPOR'])\nSubsequently, we utilize the ds_wrf_multi function to selectively read the variables of interest. This function accepts the input path (file_name in this case), the list of variables to be excluded (dvars), any required time difference (e.g., '5 hours'), and the corresponding sign of the time difference (-1 for negative, 1 for positive). The outcome is an xarray.Dataset containing longitude, latitude, bottom_top, time, and the specified variables. Optionally, you can designate a save path to export the netCDF.\nds = in_out.ds_wrf_multi(list_files, dvars, '5 hours', -1)"
+    "text": "Step 1: Reading WRF Data\nWe initiate the process by listing all the files we want to read using the glob package and assigning them to the variable list_files.\nlist_files = sorted(glob.glob('/data/datos/COW/OUT_DIAG_WRF/wrfouts/wrfout_d01_*'))\nGiven the capability to specify excluded variables when reading netCDF files using the drop_variables argument (refer to xarray functions open_dataset and open_mfdataset), we utilize the _drop_vars function from the module in_out. This function takes the list of variables we require and generates a list containing all variables present in the output file, subsequently removing those we are not interested in (such as ‘P’, ‘PB’, ‘U’, ‘W’, ‘QVAPOR’). For this purpose, we use the first file from our list of files, assigning it to the variable dvars.\ndvars = in_out._drop_vars(list_files[0], ['P', 'PB', 'U', 'W', 'QVAPOR'], model='wrf')\nSubsequently, we utilize the read_wrf_multi function to selectively read the variables of interest. This function accepts the input path (file_name in this case), the list of variables to be excluded (dvars), any required time difference (e.g., '5 hours'), and the corresponding sign of the time difference (-1 for negative, 1 for positive). The outcome is an xarray.Dataset containing longitude, latitude, bottom_top, time, and the specified variables. Optionally, you can designate a save path to export the netCDF.\nds = in_out.read_wrf_multi(list_files, dvars, '5 hours', -1)"
   },
   {
     "objectID": "03_tutorial_03.html#step-2-calculating-specific-humidity-and-total-pressure",
     "href": "03_tutorial_03.html#step-2-calculating-specific-humidity-and-total-pressure",
     "title": "Pressure levels variables",
     "section": "Step 2: Calculating Specific Humidity and Total pressure",
-    "text": "Step 2: Calculating Specific Humidity and Total pressure\nIn this step, we will utilize the met_diag module to calculate specific humidity (calc_qe), and total pressure (calc_pres). Whe have the option of the parameter elimthat can be set to True or False in order to remove some variables used to calculate the final variable.\nds_lvl = met_diag.calc_qe(ds, elim=True)\nds_lvl = met_diag.calc_pres(ds_lvl, elim=True)\nBy running these commands, we ensure that our dataset ds_lvl now contains calculated specific humidity and total pressure, ready for further analysis or visualization."
+    "text": "Step 2: Calculating Specific Humidity and Total pressure\nIn this step, we will utilize the met_diag module to calculate specific humidity (calc_qe), and total pressure (calc_pres). Whe have the option of the parameter elimthat can be set to True or False in order to remove some variables used to calculate the final variable.\nds_lvl = met_vars.calc_qe(ds, elim=True)\nds_lvl = met_vars.calc_pres(ds_lvl, elim=True)\nBy running these commands, we ensure that our dataset ds_lvl now contains calculated specific humidity and total pressure, ready for further analysis or visualization."
   },
   {
     "objectID": "03_tutorial_03.html#step-3-aggregating-the-data",
@@ -154,18 +154,18 @@
     "text": "Step 5: Plotting Precipitation Maps\nNext, we’ll generate cross section plots with specific humidity contours and wind vectors using the cross_section_xz function from the map_plots module. This function takes the dataset with specific humidity, total pressure and wind components, humidity levels, exportation settings, output path, temporal scale (‘H’ for hourly, ‘D’ for daily, ‘M’ for monthly, ‘Y’ for yearly) and vector speed.\n# Example usage\nlevs=[0,0.2,0.4,0.6,0.8,1,1.5,2,2.5,5,7.5,10,12,15,18]\ncmaps=cmocean.tools.lighten(matplotlib.colormaps['rainbow'],0.90)# 1d\ndf=dd2.sel(lat=-5,method='nearest').sel(lon=slice(-90,-80),time=slice('2023-03-10','2023-03-13'))\ndf['QE']=df['QE']*1000\ncross_section_xz(df,'QE',levs,cmaps,'QE',quiverkey_speed=8, output_path=None, freq='D',\n                           save_maps=False)"
   },
   {
-    "objectID": "04_API.html#in_out.ds_wrf_multi",
-    "href": "04_API.html#in_out.ds_wrf_multi",
+    "objectID": "04_API.html#in_out.read_wrf_multi",
+    "href": "04_API.html#in_out.read_wrf_multi",
     "title": "API reference",
-    "section": "in_out.ds_wrf_multi",
-    "text": "in_out.ds_wrf_multi\nin_out.ds_wrf_multi(files,list_no_vars,difHor=0,sign=1)\nRead a list of wrfout files for the variables selected.\n\nParameters:\n\nfiles : List of wrfout files\nlist_no_vars : List of variables to be delated\ndifHor : String with the hours t\nsign: -1 or 1 according to the difference\n\n\n\nReturns\n\nfig (matplotlib.figure.Figure)\nax (matplotlib.axes.Axes)"
+    "section": "in_out.read_wrf_multi",
+    "text": "in_out.read_wrf_multi\nin_out.read_wrf_multi(files,list_no_vars,difHor=0,sign=1)\nRead a list of wrfout files for the variables selected.\n\nParameters:\n\nfiles : List of wrfout files\nlist_no_vars : List of variables to be delated\ndifHor : String with the hours t\nsign: -1 or 1 according to the difference\n\n\n\nReturns\n\nfig (matplotlib.figure.Figure)\nax (matplotlib.axes.Axes)"
   },
   {
-    "objectID": "04_API.html#in_out.ds_wrf_single",
-    "href": "04_API.html#in_out.ds_wrf_single",
+    "objectID": "04_API.html#in_out.read_wrf_single",
+    "href": "04_API.html#in_out.read_wrf_single",
     "title": "API reference",
-    "section": "in_out.ds_wrf_single",
-    "text": "in_out.ds_wrf_single\nin_out.ds_wrf_single(file,list_no_vars,difHor=0,sign=1)\nRead a list of wrfout files for the variables selected.\n\nParameters:\n\nfile : List of wrfout files\nlist_no_vars : List of variables to be delated\ndifHor : String with the hours t\nsign: -1 or 1 according to the difference\n\n\n\nReturns\n\nfig (matplotlib.figure.Figure)\nax (matplotlib.axes.Axes)"
+    "section": "in_out.read_wrf_single",
+    "text": "in_out.read_wrf_single\nin_out.ds_wrf_single(file,list_no_vars,difHor=0,sign=1)\nRead a list of wrfout files for the variables selected.\n\nParameters:\n\nfile : List of wrfout files\nlist_no_vars : List of variables to be delated\ndifHor : String with the hours t\nsign: -1 or 1 according to the difference\n\n\n\nReturns\n\nfig (matplotlib.figure.Figure)\nax (matplotlib.axes.Axes)"
   },
   {
     "objectID": "04_API.html#in_out.extract_station_wrf",
@@ -175,39 +175,39 @@
     "text": "in_out.extract_station_wrf\nin_out.extract_station_wrf(out,station,lon_col, lat_col, name_col, output_format='netcdf')\nExtracts data from a WRF output file using station coordinates provided in a CSV or shapefile.\n\nParameters:\n\nout (nc): the wrf outfile already laoded.\nstation (str): Path to the CSV or shapefile containing station coordinates.\nlon_col (str): Name of the column containing longitude values.\nlat_col (str): Name of the column containing latitude values.\nname_col (str): Name of the column containing station names.\noutput_format (str, optional): Output format (‘netcdf’ or ‘dataframe’). Defaults to ‘netcdf’.\n\n\n\nReturns\n\nfig (matplotlib.figure.Figure)\nax (matplotlib.axes.Axes)"
   },
   {
-    "objectID": "04_API.html#met_diag.calc_pp",
-    "href": "04_API.html#met_diag.calc_pp",
+    "objectID": "04_API.html#met_vars.calc_pp",
+    "href": "04_API.html#met_vars.calc_pp",
     "title": "API reference",
-    "section": "met_diag.calc_pp",
-    "text": "met_diag.calc_pp\nmet_diag.calc_pp(ds, elim=False)\nde-acumulate the rainfall and save it as PP.\n\nParameters:\n\nds (nc): dataset with the variables RAINC, RAINNC and RAINSH already loaded.\nelim (bool): False (default) keep the old and new variables, True keep only the new variable.\n\n\n\nReturns\n\nnetcdf xarray.Dataset"
+    "section": "met_vars.calc_pp",
+    "text": "met_vars.calc_pp\nmet_diag.calc_pp(ds, elim=False)\nde-acumulate the rainfall and save it as PP.\n\nParameters:\n\nds (nc): dataset with the variables RAINC, RAINNC and RAINSH already loaded.\nelim (bool): False (default) keep the old and new variables, True keep only the new variable.\n\n\n\nReturns\n\nnetcdf xarray.Dataset"
   },
   {
-    "objectID": "04_API.html#met_diag.calc_wsp",
-    "href": "04_API.html#met_diag.calc_wsp",
+    "objectID": "04_API.html#met_vars.calc_wsp",
+    "href": "04_API.html#met_vars.calc_wsp",
     "title": "API reference",
-    "section": "met_diag.calc_wsp",
-    "text": "met_diag.calc_wsp\nmet_diag.calc_wsp(ds, elim=False)\ncalculate the wind speed.\n\nParameters:\n\nds (nc): dataset with the variables U10 and V10 already loaded with coordinates already processed.\nelim (bool): False (default) keep the old and new variables, True keep only the new variable.\n\n\n\nReturns\n\nnetcdf xarray.Dataset"
+    "section": "met_vars.calc_wsp",
+    "text": "met_vars.calc_wsp\nmet_diag.calc_wsp(ds, elim=False)\ncalculate the wind speed.\n\nParameters:\n\nds (nc): dataset with the variables U10 and V10 already loaded with coordinates already processed.\nelim (bool): False (default) keep the old and new variables, True keep only the new variable.\n\n\n\nReturns\n\nnetcdf xarray.Dataset"
   },
   {
-    "objectID": "04_API.html#met_diag.calc_pres",
-    "href": "04_API.html#met_diag.calc_pres",
+    "objectID": "04_API.html#met_vars.calc_pres",
+    "href": "04_API.html#met_vars.calc_pres",
     "title": "API reference",
-    "section": "met_diag.calc_pres",
-    "text": "met_diag.calc_pres\nmet_diag.calc_pres(ds, elim=False)\ncalculate the total atmospheric pressure and save it as Presion.\n\nParameters:\n\nds (nc): dataset with the variables P, PB already loaded with coordinates already processed.\nelim (bool): False (default) keep the old and new variables, True keep only the new variable.\n\n\n\nReturns\n\nnetcdf xarray.Dataset"
+    "section": "met_vars.calc_pres",
+    "text": "met_vars.calc_pres\nmet_diag.calc_pres(ds, elim=False)\ncalculate the total atmospheric pressure and save it as Presion.\n\nParameters:\n\nds (nc): dataset with the variables P, PB already loaded with coordinates already processed.\nelim (bool): False (default) keep the old and new variables, True keep only the new variable.\n\n\n\nReturns\n\nnetcdf xarray.Dataset"
   },
   {
-    "objectID": "04_API.html#met_diag.calc_tp",
-    "href": "04_API.html#met_diag.calc_tp",
+    "objectID": "04_API.html#met_vars.calc_tp",
+    "href": "04_API.html#met_vars.calc_tp",
     "title": "API reference",
-    "section": "met_diag.calc_tp",
-    "text": "met_diag.calc_tp\nmet_diag.calc_tp(ds, elim=False)\ncalculate the potential temperature and save it as TPo.\n\nParameters:\n\nds (nc): dataset with the variable T already loaded with coordinates already processed.\nelim (bool): False (default) keep the old and new variables, True keep only the new variable.\n\n\n\nReturns\n\nnetcdf xarray.Dataset"
+    "section": "met_vars.calc_tp",
+    "text": "met_vars.calc_tp\nmet_diag.calc_tp(ds, elim=False)\ncalculate the potential temperature and save it as TPo.\n\nParameters:\n\nds (nc): dataset with the variable T already loaded with coordinates already processed.\nelim (bool): False (default) keep the old and new variables, True keep only the new variable.\n\n\n\nReturns\n\nnetcdf xarray.Dataset"
   },
   {
-    "objectID": "04_API.html#met_diag.calc_qe",
-    "href": "04_API.html#met_diag.calc_qe",
+    "objectID": "04_API.html#met_vars.calc_qe",
+    "href": "04_API.html#met_vars.calc_qe",
     "title": "API reference",
-    "section": "met_diag.calc_qe",
-    "text": "met_diag.calc_qe\nmet_diag.calc_qe(ds, elim=False)\ncalculate the specific humidity and save it as QE.\n\nParameters:\n\nds (nc): dataset with the variable QVAPOR already loaded with coordinates already processed.\nelim (bool): False (default) keep the old and new variables, True keep only the new variable.\n\n\n\nReturns\n\nnetcdf xarray.Dataset"
+    "section": "met_vars.calc_qe",
+    "text": "met_vars.calc_qe\nmet_diag.calc_qe(ds, elim=False)\ncalculate the specific humidity and save it as QE.\n\nParameters:\n\nds (nc): dataset with the variable QVAPOR already loaded with coordinates already processed.\nelim (bool): False (default) keep the old and new variables, True keep only the new variable.\n\n\n\nReturns\n\nnetcdf xarray.Dataset"
   },
   {
     "objectID": "04_API.html#spatial_scales.vert_levs",

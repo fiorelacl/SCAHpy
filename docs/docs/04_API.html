@@ -249,12 +249,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#in_out.ds_wrf_multi" id="toc-in_out.ds_wrf_multi" class="nav-link active" data-scroll-target="#in_out.ds_wrf_multi"><strong><code>in_out.ds_wrf_multi</code></strong></a>
+  <li><a href="#in_out.read_wrf_multi" id="toc-in_out.read_wrf_multi" class="nav-link active" data-scroll-target="#in_out.read_wrf_multi"><strong><code>in_out.read_wrf_multi</code></strong></a>
   <ul class="collapse">
   <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters">Parameters:</a></li>
   <li><a href="#returns" id="toc-returns" class="nav-link" data-scroll-target="#returns">Returns</a></li>
   </ul></li>
-  <li><a href="#in_out.ds_wrf_single" id="toc-in_out.ds_wrf_single" class="nav-link" data-scroll-target="#in_out.ds_wrf_single"><strong><code>in_out.ds_wrf_single</code></strong></a>
+  <li><a href="#in_out.read_wrf_single" id="toc-in_out.read_wrf_single" class="nav-link" data-scroll-target="#in_out.read_wrf_single"><strong><code>in_out.read_wrf_single</code></strong></a>
   <ul class="collapse">
   <li><a href="#parameters-1" id="toc-parameters-1" class="nav-link" data-scroll-target="#parameters-1">Parameters:</a></li>
   <li><a href="#returns-1" id="toc-returns-1" class="nav-link" data-scroll-target="#returns-1">Returns</a></li>
@@ -264,27 +264,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#parameters-2" id="toc-parameters-2" class="nav-link" data-scroll-target="#parameters-2">Parameters:</a></li>
   <li><a href="#returns-2" id="toc-returns-2" class="nav-link" data-scroll-target="#returns-2">Returns</a></li>
   </ul></li>
-  <li><a href="#met_diag.calc_pp" id="toc-met_diag.calc_pp" class="nav-link" data-scroll-target="#met_diag.calc_pp"><strong><code>met_diag.calc_pp</code></strong></a>
+  <li><a href="#met_vars.calc_pp" id="toc-met_vars.calc_pp" class="nav-link" data-scroll-target="#met_vars.calc_pp"><strong><code>met_vars.calc_pp</code></strong></a>
   <ul class="collapse">
   <li><a href="#parameters-3" id="toc-parameters-3" class="nav-link" data-scroll-target="#parameters-3">Parameters:</a></li>
   <li><a href="#returns-3" id="toc-returns-3" class="nav-link" data-scroll-target="#returns-3">Returns</a></li>
   </ul></li>
-  <li><a href="#met_diag.calc_wsp" id="toc-met_diag.calc_wsp" class="nav-link" data-scroll-target="#met_diag.calc_wsp"><strong><code>met_diag.calc_wsp</code></strong></a>
+  <li><a href="#met_vars.calc_wsp" id="toc-met_vars.calc_wsp" class="nav-link" data-scroll-target="#met_vars.calc_wsp"><strong><code>met_vars.calc_wsp</code></strong></a>
   <ul class="collapse">
   <li><a href="#parameters-4" id="toc-parameters-4" class="nav-link" data-scroll-target="#parameters-4">Parameters:</a></li>
   <li><a href="#returns-4" id="toc-returns-4" class="nav-link" data-scroll-target="#returns-4">Returns</a></li>
   </ul></li>
-  <li><a href="#met_diag.calc_pres" id="toc-met_diag.calc_pres" class="nav-link" data-scroll-target="#met_diag.calc_pres"><strong><code>met_diag.calc_pres</code></strong></a>
+  <li><a href="#met_vars.calc_pres" id="toc-met_vars.calc_pres" class="nav-link" data-scroll-target="#met_vars.calc_pres"><strong><code>met_vars.calc_pres</code></strong></a>
   <ul class="collapse">
   <li><a href="#parameters-5" id="toc-parameters-5" class="nav-link" data-scroll-target="#parameters-5">Parameters:</a></li>
   <li><a href="#returns-5" id="toc-returns-5" class="nav-link" data-scroll-target="#returns-5">Returns</a></li>
   </ul></li>
-  <li><a href="#met_diag.calc_tp" id="toc-met_diag.calc_tp" class="nav-link" data-scroll-target="#met_diag.calc_tp"><strong><code>met_diag.calc_tp</code></strong></a>
+  <li><a href="#met_vars.calc_tp" id="toc-met_vars.calc_tp" class="nav-link" data-scroll-target="#met_vars.calc_tp"><strong><code>met_vars.calc_tp</code></strong></a>
   <ul class="collapse">
   <li><a href="#parameters-6" id="toc-parameters-6" class="nav-link" data-scroll-target="#parameters-6">Parameters:</a></li>
   <li><a href="#returns-6" id="toc-returns-6" class="nav-link" data-scroll-target="#returns-6">Returns</a></li>
   </ul></li>
-  <li><a href="#met_diag.calc_qe" id="toc-met_diag.calc_qe" class="nav-link" data-scroll-target="#met_diag.calc_qe"><strong><code>met_diag.calc_qe</code></strong></a>
+  <li><a href="#met_vars.calc_qe" id="toc-met_vars.calc_qe" class="nav-link" data-scroll-target="#met_vars.calc_qe"><strong><code>met_vars.calc_qe</code></strong></a>
   <ul class="collapse">
   <li><a href="#parameters-7" id="toc-parameters-7" class="nav-link" data-scroll-target="#parameters-7">Parameters:</a></li>
   <li><a href="#returns-7" id="toc-returns-7" class="nav-link" data-scroll-target="#returns-7">Returns</a></li>
@@ -333,9 +333,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 <p>Here are the main functions of <strong>SCAHpy</strong>:</p>
-<section id="in_out.ds_wrf_multi" class="level2">
-<h2 class="anchored" data-anchor-id="in_out.ds_wrf_multi"><strong><code>in_out.ds_wrf_multi</code></strong></h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>in_out.ds_wrf_multi(files,list_no_vars,difHor<span class="op">=</span><span class="dv">0</span>,sign<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="in_out.read_wrf_multi" class="level2">
+<h2 class="anchored" data-anchor-id="in_out.read_wrf_multi"><strong><code>in_out.read_wrf_multi</code></strong></h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>in_out.read_wrf_multi(files,list_no_vars,difHor<span class="op">=</span><span class="dv">0</span>,sign<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Read a list of wrfout files for the variables selected.</p>
 <section id="parameters" class="level3">
 <h3 class="anchored" data-anchor-id="parameters">Parameters:</h3>
@@ -354,8 +354,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 </section>
 </section>
-<section id="in_out.ds_wrf_single" class="level2">
-<h2 class="anchored" data-anchor-id="in_out.ds_wrf_single"><strong><code>in_out.ds_wrf_single</code></strong></h2>
+<section id="in_out.read_wrf_single" class="level2">
+<h2 class="anchored" data-anchor-id="in_out.read_wrf_single"><strong><code>in_out.read_wrf_single</code></strong></h2>
 <div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>in_out.ds_wrf_single(<span class="bu">file</span>,list_no_vars,difHor<span class="op">=</span><span class="dv">0</span>,sign<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Read a list of wrfout files for the variables selected.</p>
 <section id="parameters-1" class="level3">
@@ -399,8 +399,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <hr>
 </section>
 </section>
-<section id="met_diag.calc_pp" class="level2">
-<h2 class="anchored" data-anchor-id="met_diag.calc_pp"><strong><code>met_diag.calc_pp</code></strong></h2>
+<section id="met_vars.calc_pp" class="level2">
+<h2 class="anchored" data-anchor-id="met_vars.calc_pp"><strong><code>met_vars.calc_pp</code></strong></h2>
 <div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>met_diag.calc_pp(ds, elim<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>de-acumulate the rainfall and save it as PP.</p>
 <section id="parameters-3" class="level3">
@@ -417,8 +417,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 </section>
 </section>
-<section id="met_diag.calc_wsp" class="level2">
-<h2 class="anchored" data-anchor-id="met_diag.calc_wsp"><strong><code>met_diag.calc_wsp</code></strong></h2>
+<section id="met_vars.calc_wsp" class="level2">
+<h2 class="anchored" data-anchor-id="met_vars.calc_wsp"><strong><code>met_vars.calc_wsp</code></strong></h2>
 <div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>met_diag.calc_wsp(ds, elim<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>calculate the wind speed.</p>
 <section id="parameters-4" class="level3">
@@ -435,8 +435,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 </section>
 </section>
-<section id="met_diag.calc_pres" class="level2">
-<h2 class="anchored" data-anchor-id="met_diag.calc_pres"><strong><code>met_diag.calc_pres</code></strong></h2>
+<section id="met_vars.calc_pres" class="level2">
+<h2 class="anchored" data-anchor-id="met_vars.calc_pres"><strong><code>met_vars.calc_pres</code></strong></h2>
 <div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>met_diag.calc_pres(ds, elim<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>calculate the total atmospheric pressure and save it as Presion.</p>
 <section id="parameters-5" class="level3">
@@ -453,8 +453,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 </section>
 </section>
-<section id="met_diag.calc_tp" class="level2">
-<h2 class="anchored" data-anchor-id="met_diag.calc_tp"><strong><code>met_diag.calc_tp</code></strong></h2>
+<section id="met_vars.calc_tp" class="level2">
+<h2 class="anchored" data-anchor-id="met_vars.calc_tp"><strong><code>met_vars.calc_tp</code></strong></h2>
 <div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>met_diag.calc_tp(ds, elim<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>calculate the potential temperature and save it as TPo.</p>
 <section id="parameters-6" class="level3">
@@ -471,8 +471,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 </section>
 </section>
-<section id="met_diag.calc_qe" class="level2">
-<h2 class="anchored" data-anchor-id="met_diag.calc_qe"><strong><code>met_diag.calc_qe</code></strong></h2>
+<section id="met_vars.calc_qe" class="level2">
+<h2 class="anchored" data-anchor-id="met_vars.calc_qe"><strong><code>met_vars.calc_qe</code></strong></h2>
 <div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>met_diag.calc_qe(ds, elim<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>calculate the specific humidity and save it as QE.</p>
 <section id="parameters-7" class="level3">
