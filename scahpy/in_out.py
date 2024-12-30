@@ -85,7 +85,7 @@ def _new_wrf_coords(file0,da):
     """
     # Get list of keys that contains the given value
     d0 = xr.open_dataset(file0, engine='netcdf4')
-    b = _dict_metadata_vars(da,'wrf')
+    b = _dict_metadata_vars(file0,'wrf')
 
     list_X_keys = [key for key, list_of_values in b.items() if 'X' in list_of_values]
     list_Y_keys = [key for key, list_of_values in b.items() if 'Y' in list_of_values]
