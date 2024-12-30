@@ -55,7 +55,6 @@ def _list_all_WRFvars(file0,printall):
         except:
             pass
 
-
 def _drop_vars(da, sel_vars, model='wrf'):
     """Save in a list all the variables to be ignored when reading wrfouts files.
     ES: Guarda en una lista todas las variables que no serán leidas.
@@ -248,7 +247,6 @@ def read_wrf_multi(files, list_no_vars, difHor=0, sign=1, save_path=None):
 
     return ds1
 
-
 def read_wrf_single(file, list_no_vars, difHor=0, sign=1, save_path=None):
     """
     Read a list of wrfout files for the selected variables and optionally save the resulting netCDF file.
@@ -337,7 +335,6 @@ def read_croco(files, list_no_vars, save_path=None):
         ds1.to_netcdf(save_path)
 
     return ds1
-
 
 def extract_station_wrf(out, station, lon_col, lat_col, name_col, output_format='netcdf', save_path=None):
     """

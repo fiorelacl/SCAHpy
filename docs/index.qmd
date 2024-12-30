@@ -4,9 +4,9 @@
 
 ***SCAHpy*** is an open-source Python package developed as a post-processing tool for the atmospheric, oceanic, and hydrological components of the regional Earth System Model covering the Peruvian territory and the Pacific Ocean. This model, named *IGP-RESM-COW v1*, was implemented by the *Geophysical Institute of Peru* (IGP) under the basis of the atmospheric *WRF* model, the oceanic *CROCO* model and the coupler *OASIS*.
 
-<div style="text-align: center;">
-<img width="450" src="https://github.com/fiorelacl/SCAHpy/blob/main/docs/cow_model.jpg?raw=true" >
-</div>
+::: {style="text-align: center;"}
+<img src="https://github.com/fiorelacl/SCAHpy/blob/main/docs/cow_model.jpg?raw=true" width="450"/>
+:::
 
 ## **Why is SCAHpy?**
 
@@ -14,24 +14,24 @@ The Python package SCAHpy was created to address the significant challenge posed
 
 ## **How to use SCAHpy?**
 
-SCAHpy can be used as a standalone package, to get more details go to [Usage](02_use.qmd) and tutorials. 
+SCAHpy can be used as a standalone package, to get more details go to [Usage](02_use.qmd) and tutorials.
 
-::: {.callout-note}
-SCAHpy has been developed and tested using IGP-RESM-COW model outputs. However, it is designed to work with any WRF outputs. We are open to contributions from users!
+::: callout-note
+SCAHpy has been developed and tested using IGP-RESM-COWv1 model outputs. However, it is designed to work with any WRF outputs. We are open to contributions from users!
 :::
 
 ### **Getting Started**
 
-* [Installation](01_install.qmd)
-* [Usage](02_use.qmd)
+-   [Installation](01_install.qmd)
+-   [Usage](02_use.qmd)
 
 ### **Tutorials**
 
-* [Tutorial: Reading Single Files](03_tutorial_01.qmd)
-* [Tutorial: Reading Multiple Files](03_tutorial_02.qmd)
-* [Tutorial: Pressure Levels Variables](03_tutorial_03.qmd)
+-   [Tutorial: Reading Single Files](03_tutorial_01.qmd)
+-   [Tutorial: Reading Multiple Files](03_tutorial_02.qmd)
+-   [Tutorial: Pressure Levels Variables](03_tutorial_03.qmd)
 
 ### **Help & Reference**
 
-* [API References](04_API.qmd)
-* [Contributing](05_contrib.qmd)
+-   [API References](04_API.qmd)
+-   [Contributing](05_contrib.qmd)
