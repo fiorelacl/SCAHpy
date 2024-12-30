@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "scahpy"
-version = "0.1.1"
+version = "0.1.2"
 description = "Package to process and analyze outputs from IGP-RESM-COW model"
 readme = "README.md"
 authors = [{ name = "Fiorela Castillón", email = "fv.castillon@gmail.com" }]
@@ -28,7 +28,7 @@ dependencies = [
         'matplotlib',      
         'cartopy',
         'cmocean',
-        'geopandas'
+        'pyshp'
 ]
 requires-python = ">=3.8"
 
