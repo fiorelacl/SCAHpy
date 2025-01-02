@@ -328,7 +328,7 @@ def read_croco(files, list_no_vars, save_path=None):
     ds = ds.isel(time=index)
 
     # Update coordinates and encoding
-    ds1 = _new_croco_coords(ds)
+    ds1 = _new_croco_coords(ds, files[0])
     ds1.encoding['unlimited_dims'] = ('time',)
 
     # Optionally save the resulting netCDF file
