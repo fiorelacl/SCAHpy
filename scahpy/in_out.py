@@ -118,7 +118,7 @@ def _new_wrf_coords(file0,da):
 
     return da
 
-def _new_croco_coords(da):
+def _new_croco_coords(da,file0):
     """Unstag the stagged coordinates and also assign lat and lon coords.
     ES: Destagea las variables y asigna latitudes y longitudes como coordenadas
 
@@ -127,7 +127,7 @@ def _new_croco_coords(da):
     da : croco output dataset already loaded / dataset output ya cargado y leido
     """
 
-    ds_meta = _dict_metadata_vars(da,'croco')
+    ds_meta = _dict_metadata_vars(file0,'croco')
     lats = da.lat_rho.isel(xi_rho=0).values
     lons = da.lon_rho.isel(eta_rho=0).values
     levs = da.s_rho.values
