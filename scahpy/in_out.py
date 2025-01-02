@@ -131,6 +131,7 @@ def _new_croco_coords(da,file0):
     lats = da.lat_rho.isel(xi_rho=0).values
     lons = da.lon_rho.isel(eta_rho=0).values
     levs = da.s_rho.values
+    vars_select = list(da.variables)
 
     list_X = [key for key, list_values in ds_meta.items() if 'xi_u' in list_values[0]]
     list_Y = [key for key, list_values in ds_meta.items() if 'eta_v' in list_values[0]]
@@ -138,10 +139,11 @@ def _new_croco_coords(da,file0):
     list_otros = [key for key, list_values in ds_meta.items() if 'xi_u' not in list_values[0] and
                       'eta_v' not in list_values[0] and
                       's_w' not in list_values[0]]
+    list_ot = list_otros + list_Z
 
-    da_nostagxy = da[list_otros+list_Z]
-    da_stagx = da[list_X]
-    da_stagy = da[list_Y]
+    da_nostagxy = da[[value for value in list_ot if value in vars_select]]
+    da_stagx = da[[value for value in list_X if value in vars_select]]
+    da_stagy = da[[value for value in list_Y if value in vars_select]]
 
     for var in da_nostagxy:
         if var in list_Z:
