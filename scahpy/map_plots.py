@@ -298,3 +298,196 @@ def series_obs_diag(obs, wrf, obs_var, wrf_var, lat_min, lat_max, lon_min, lon_m
         print(f"Image saved to {save_path}")
     
     plt.show()
+
+def plot_perfil_2vars(dataset, lat, lon, tiempo, var1, var2, guardar=False, nombre_archivo="perfil_combinado.png", titulo_personalizado=None):
+    """ Genera un gráfico combinado de dos variables seleccionadas en un mismo eje para un punto y tiempo específico.
+        Permite guardar el gráfico como archivo y define dinámicamente si los niveles son 'levels' o 'zlevels'.
+
+        Args:
+            dataset (xarray.Dataset): Dataset con las variables.
+            lat (float): Latitud del punto de interés.
+            lon (float): Longitud del punto de interés.
+            tiempo (str): Tiempo de interés (formato ISO 8601).
+            var1 (str): Primera variable para graficar.
+            var2 (str): Segunda variable para graficar.
+            guardar (bool): Si es True, guarda el gráfico en un archivo.
+            nombre_archivo (str): Nombre del archivo para guardar el gráfico.
+            titulo_personalizado (str): Título personalizado del gráfico.
+    """
+    # Verificar si el dataset tiene 'levels' o 'zlevels' como coordenada de profundidad
+    if 'levels' in dataset.coords:
+        niveles = dataset['levels']
+        etiqueta_niveles = 'Niveles Sigma'
+    elif 'zlevel' in dataset.coords:
+        niveles = dataset['zlevel']
+        etiqueta_niveles = 'Profundidad (m)'
+    else:
+        raise ValueError("El dataset no contiene coordenadas 'levels' ni 'zlevel'.")
+
+    # Extraer datos en el punto y tiempo seleccionados
+    datos_var1 = dataset[var1].sel(lat=lat, lon=lon, time=tiempo, method='nearest')
+    datos_var2 = dataset[var2].sel(lat=lat, lon=lon, time=tiempo, method='nearest')
+
+    # Crear el gráfico combinado
+    fig, ax1 = plt.subplots(figsize=(6, 8))
+
+    # Gráfico de la primera variable
+    ax1.plot(datos_var1, niveles, label=f'{var1}', color='red')
+    ax1.set_xlabel(f'{var1}', color='red')
+    ax1.set_ylabel(etiqueta_niveles)
+    ax1.tick_params(axis='x', colors='red')
+
+    # Crear un segundo eje para la segunda variable
+    ax2 = ax1.twiny()
+    ax2.plot(datos_var2, niveles, label=f'{var2}', color='blue')
+    ax2.set_xlabel(f'{var2}', color='blue')
+    ax2.tick_params(axis='x', colors='blue')
+
+    # Título del gráfico
+    if titulo_personalizado:
+        plt.title(titulo_personalizado)
+    else:
+        plt.title(f'Perfil Combinado de {var1} y {var2}\nLat: {lat}, Lon: {lon}, Tiempo: {str(tiempo)}')
+
+    plt.grid()
+
+    # Guardar el gráfico si se especifica
+    if guardar:
+        plt.savefig(nombre_archivo, dpi=300)
+        print(f"Gráfico guardado como: {nombre_archivo}")
+    
+    # Mostrar el gráfico
+    plt.show()   
+
+def plot_ts(dataset, lat, lon, tiempo, variable_color='levels', guardar=False, nombre_archivo="grafico_ts.png"):
+    """
+    Genera un gráfico T-S (Temperatura-Salinidad) donde los puntos se colorean según una variable definida.
+
+    Args:
+        dataset (xarray.Dataset): Dataset con las variables.
+        lat (float): Latitud del punto de interés.
+        lon (float): Longitud del punto de interés.
+        tiempo (str): Tiempo de interés (formato ISO 8601).
+        variable_color (str): Nombre de la variable para colorear los puntos (por defecto, 'levels').
+        guardar (bool): Si es True, guarda el gráfico en un archivo.
+        nombre_archivo (str): Nombre del archivo para guardar el gráfico.
+    """
+    # Verificar que las variables necesarias existan en el dataset
+    if 'temp' not in dataset.data_vars or 'salt' not in dataset.data_vars:
+        raise ValueError("El dataset debe contener las variables 'temp' y 'salt'.")
+    
+    if variable_color not in dataset:
+        raise ValueError(f"La variable '{variable_color}' no se encuentra en el dataset.")
+
+    # Extraer datos en el punto y tiempo seleccionados
+    temp = dataset['temp'].sel(lat=lat, lon=lon, time=tiempo, method='nearest')
+    salt = dataset['salt'].sel(lat=lat, lon=lon, time=tiempo, method='nearest')
+    color_data = dataset[variable_color].values
+
+    # Aplanar los datos para graficar
+    temp_flat = temp.values.flatten()
+    salt_flat = salt.values.flatten()
+    color_flat = color_data.flatten()
+
+    # Crear el gráfico T-S
+    plt.figure(figsize=(8, 6))
+    sc = plt.scatter(temp_flat, salt_flat, c=color_flat, cmap='viridis', edgecolor='k', s=50)
+    plt.colorbar(sc, label=variable_color.capitalize())
+    plt.xlabel('Temperatura (°C)')
+    plt.ylabel('Salinidad (PSU)')
+    plt.title(f'Gráfico T-S\nLat: {lat}, Lon: {lon}, Tiempo: {str(tiempo)}')
+    plt.grid()
+
+    # Guardar el gráfico si se especifica
+    if guardar:
+        plt.savefig(nombre_archivo, dpi=300)
+        print(f"Gráfico guardado como: {nombre_archivo}")
+    
+    # Mostrar el gráfico
+    plt.show()
+
+def plot_xz(dataset, lat, variable, tiempo, niveles_contorno=None, guardar=False, nombre_archivo="plot_xz.png"):
+    """
+    Genera una sección vertical (latitud fija) de una variable en el plano XZ con zona continental pintada en marrón.
+
+    Args:
+        dataset (xarray.Dataset): Dataset con las variables.
+        lat (float): Valor fijo de latitud para la sección.
+        variable (str): Nombre de la variable a graficar.
+        tiempo (str): Tiempo específico para seleccionar los datos (formato ISO 8601).
+        niveles_contorno (list): Lista de niveles para los contornos.
+        guardar (bool): Si es True, guarda el gráfico en un archivo.
+        nombre_archivo (str): Nombre del archivo para guardar el gráfico.
+    """
+    # Verificar que la variable exista en el dataset
+    if variable not in dataset.data_vars:
+        raise ValueError(f"La variable '{variable}' no se encuentra en el dataset.")
+    
+    # Seleccionar la sección (latitud fija y tiempo)
+    seccion = dataset[variable].sel(lat=lat, time=tiempo, method='nearest')
+    x = dataset['lon'].values  # Coordenadas de longitud
+    z = dataset['levels'].values if 'levels' in dataset.coords else dataset['zlevel'].values  # Coordenadas de profundidad
+
+    # Crear el gráfico
+    plt.figure(figsize=(10, 6))
+    contorno = plt.contourf(x, z, seccion, levels=niveles_contorno, cmap='viridis', extend='both')
+    plt.colorbar(contorno, label=f'{variable}')
+    contornos_linea = plt.contour(x, z, seccion, levels=niveles_contorno, colors='black', linewidths=0.5)
+    plt.clabel(contornos_linea, inline=True, fontsize=8)
+
+
+    # Configuración del gráfico
+    plt.xlabel('Longitud (°)')
+    plt.ylabel('Profundidad (m)')
+    plt.title(f'Sección {variable} a Latitud: {lat}, Tiempo: {tiempo}')
+
+    # Guardar el gráfico si se especifica
+    if guardar:
+        plt.savefig(nombre_archivo, dpi=300)
+        print(f"Gráfico guardado como: {nombre_archivo}")
+    
+    # Mostrar el gráfico
+    plt.show()
+
+
+def plot_yz(dataset, lon, variable, tiempo, niveles_contorno=None, guardar=False, nombre_archivo="plot_yz.png"):
+    """
+    Genera una sección vertical (longitud fija) de una variable en el plano YZ con zona continental pintada en marrón.
+
+    Args:
+        dataset (xarray.Dataset): Dataset con las variables.
+        lon (float): Valor fijo de longitud para la sección.
+        variable (str): Nombre de la variable a graficar.
+        tiempo (str): Tiempo específico para seleccionar los datos (formato ISO 8601).
+        niveles_contorno (list): Lista de niveles para los contornos.
+        guardar (bool): Si es True, guarda el gráfico en un archivo.
+        nombre_archivo (str): Nombre del archivo para guardar el gráfico.
+    """
+    # Verificar que la variable exista en el dataset
+    if variable not in dataset.data_vars:
+        raise ValueError(f"La variable '{variable}' no se encuentra en el dataset.")
+    
+    # Seleccionar la sección (longitud fija y tiempo)
+    seccion = dataset[variable].sel(lon=lon, time=tiempo, method='nearest')
+    y = dataset['lat'].values  # Coordenadas de latitud
+    z = dataset['levels'].values if 'levels' in dataset.coords else dataset['zlevel'].values  # Coordenadas de profundidad
+
+    # Crear el gráfico
+    plt.figure(figsize=(10, 6))
+    contorno = plt.contourf(y, z, seccion, levels=niveles_contorno, cmap='viridis', extend='both')
+    plt.colorbar(contorno, label=f'{variable}')
+    contornos_linea = plt.contour(y, z, seccion, levels=niveles_contorno, colors='black', linewidths=0.5)
+    plt.clabel(contornos_linea, inline=True, fontsize=8)
+
+    # Configuración del gráfico
+    plt.xlabel('Latitud (°)')
+    plt.ylabel('Profundidad (m)')
+    plt.title(f'Sección {variable} a Longitud: {lon}, Tiempo: {tiempo}')
+
+    # Guardar el gráfico si se especifica
+    if guardar:
+        plt.savefig(nombre_archivo, dpi=300)
+        print(f"Gráfico guardado como: {nombre_archivo}")
+    
+    # Mostrar el gráfico
+    plt.show()
