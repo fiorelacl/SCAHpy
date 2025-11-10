@@ -1,25 +1,32 @@
-# pyproject.toml
+# ===============================
+# pyproject.toml — SCAHpy v2.0.0
+# ===============================
 
 [build-system]
-requires      = ["setuptools>=61.0.0", "wheel"]
+requires      = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "scahpy"
-version = "1.0.0"
-description = "Package to process and analyze outputs from IGP-RESM-COW model"
+version = "2.0.0"
+description = "SCAHpy — System for Coupled Atmosphere–Hydrosphere Analysis in Python"
 readme = "README.md"
-authors = [{ name = "Fiorela Castillón", email = "fv.castillon@gmail.com" }]
+authors = [{ name = "Fiorela Castillón Lucas", email = "fv.castillon@gmail.com" }]
 license = { file = "LICENSE" }
+requires-python = ">=3.10"
+
 classifiers = [
-    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
-    "Programming Language :: Python",
-    "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Intended Audience :: Science/Research",
+  "Topic :: Scientific/Engineering :: Atmospheric Science",
+  "Topic :: Scientific/Engineering :: Oceanography",
 ]
 
-keywords = ["scahpy"]
+keywords = ["scahpy", "xarray", "climate", "WRF", "CROCO", "ocean-atmosphere"]
+
 dependencies = [
-        'wrf-python',
         'netCDF4',
         'xarray',
         'dask',
@@ -28,9 +35,28 @@ dependencies = [
         'matplotlib',      
         'cartopy',
         'cmocean',
+        'cmcrameri',
         'pyshp'
 ]
-requires-python = ">=3.8"
+
 
 [project.urls]
 Homepage = "https://github.com/fiorelacl/SCAHpy"
+Documentation = "https://fiorelacl.github.io/SCAHpy/"
+PyPI = "https://pypi.org/project/scahpy/"
+
+# =================================
+# setuptools configuration section
+# =================================
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["scahpy*"]
+
+[tool.setuptools.package-data]
+scahpy = [
+  "data/*.shp", "data/*.shx", "data/*.dbf", "data/*.prj", "data/*.cpg",
+  "data/*.xml", "data/*.qmd", "data/*.csv", "data/*.nc", "data/*.json"
+]

@@ -3,17 +3,17 @@ channels:
   - conda-forge
 dependencies:
   - python==3.11
-  - wrf-python
-  - netCDF4
   - xarray
   - dask
-  - cartopy
+  - netCDF4
   - numpy
   - pandas
   - matplotlib
+  - cartopy
+  - cmocean
   - cmcrameri
+  - pyshp
   - pip
   - pip:
-     - datetime
      - scahpy
      
