@@ -6,8 +6,11 @@ import datetime
 from ...core.io import get_metadata_vars
 from .croco_coords import _new_croco_coords
 
-def read_croco(file_paths: list[str], drop_vars: list[str],
-    destag: bool = True, save_path: str | None = None) -> xr.Dataset:
+def read_croco(file_paths: list[str], 
+               drop_vars: list[str],
+               destag: bool = True, 
+               cache: bool = False,
+               save_path: str | None = None) -> xr.Dataset:
     """
     Reads and processes multiple CROCO NetCDF output files as a merged dataset.
 
@@ -23,6 +26,10 @@ def read_croco(file_paths: list[str], drop_vars: list[str],
 
     destag : bool, default=True
         Whether to perform destaggering and coordinate re-alignment.
+    
+    cache : bool, optional
+        Whether to enable the netCDF4 backend cache.
+        Default is False for memory efficiency with large datasets.
 
     save_path : str or None, default=None
         Optional path to save the final dataset as NetCDF.
@@ -50,9 +57,12 @@ def read_croco(file_paths: list[str], drop_vars: list[str],
         lats_v = ds_sample.lat_v[:, 0].values if not destag and 'lat_v' in ds_sample else None
         lons_u = ds_sample.lon_u[0, :].values if not destag and 'lon_u' in ds_sample else None
 
-    ds = xr.open_mfdataset(file_paths, combine='nested', concat_dim='time',
-                           parallel=True, engine='netcdf4', drop_variables=drop_vars,
-                           data_vars="minimal", coords="minimal", compat="override", join="override")
+    ds = xr.open_mfdataset(file_paths, 
+                           combine='nested', concat_dim='time', parallel=True, 
+                           engine='netcdf4', backend_kwargs={"cache": cache},
+                           drop_variables=drop_vars,
+                           data_vars="minimal", coords="minimal", 
+                           compat="override", join="override")
 
     base_time = datetime.datetime(1900, 1, 1)
     time_values = [base_time + datetime.timedelta(seconds=int(s)) for s in ds.time.values]
