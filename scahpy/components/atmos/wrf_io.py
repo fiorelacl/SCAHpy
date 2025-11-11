@@ -53,7 +53,6 @@ def read_wrf(
     dif_hours: int = 0,
     sign: int = 1,
     destag: bool = True,
-    cache: bool = False,
     save_path: str | None = None,
 ) -> xr.Dataset:
     """
@@ -72,9 +71,6 @@ def read_wrf(
         Sign of the time offset (+1 add hours, -1 subtract hours).
     destag : bool, default True
         If True, destagger U, V, W, and other *_stag variables.
-    cache : bool, optional
-        Whether to enable the netCDF4 backend cache.
-        Default is False for memory efficiency with large datasets.
     save_path : str or None, default None
         If provided, writes the resulting dataset to NetCDF.
 
@@ -103,7 +99,6 @@ def read_wrf(
         coords="minimal",
         compat="override",
         join="override",
-        backend_kwargs={"cache": cache},
         drop_variables=drop_vars,
         preprocess=partial(_select_time, dif_hours=dif_hours, sign=sign),
     )

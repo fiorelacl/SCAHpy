@@ -9,7 +9,6 @@ from .croco_coords import _new_croco_coords
 def read_croco(file_paths: list[str], 
                drop_vars: list[str],
                destag: bool = True, 
-               cache: bool = False,
                save_path: str | None = None) -> xr.Dataset:
     """
     Reads and processes multiple CROCO NetCDF output files as a merged dataset.
@@ -26,10 +25,6 @@ def read_croco(file_paths: list[str],
 
     destag : bool, default=True
         Whether to perform destaggering and coordinate re-alignment.
-    
-    cache : bool, optional
-        Whether to enable the netCDF4 backend cache.
-        Default is False for memory efficiency with large datasets.
 
     save_path : str or None, default=None
         Optional path to save the final dataset as NetCDF.
@@ -59,7 +54,7 @@ def read_croco(file_paths: list[str],
 
     ds = xr.open_mfdataset(file_paths, 
                            combine='nested', concat_dim='time', parallel=True, 
-                           engine='netcdf4', backend_kwargs={"cache": cache},
+                           engine='netcdf4', 
                            drop_variables=drop_vars,
                            data_vars="minimal", coords="minimal", 
                            compat="override", join="override")
