@@ -7,3 +7,9 @@ recursive-exclude * *.py[co]
 
 recursive-include scahpy *.py
 recursive-include scahpy/data *
+exclude tests/*
+exclude docs/*
+exclude */__pycache__/*
+exclude *.pyc
+exclude .DS_Store
+exclude .gitignore
