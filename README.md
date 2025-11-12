@@ -1,5 +1,5 @@
 <div style="text-align: center;">
-<img width="500" src="https://github.com/fiorelacl/SCAHpy/blob/main/docs/cover.png?raw=true" >
+<img width="500" src="https://github.com/fiorelacl/SCAHpy/blob/main/docs/assets/cover.png?raw=true" >
 </div>
 
 ## **What is SCAHpy?**
@@ -9,7 +9,7 @@
 It provides tools for processing, diagnosing, and visualizing model results in a modular and reproducible way, enabling seamless workflows for multi-component climate simulations.
 
 <div style="text-align: center;">
-<img width="450" src="https://github.com/fiorelacl/SCAHpy/blob/main/docs/cow_model.jpg?raw=true" >
+<img width="450" src="https://github.com/fiorelacl/SCAHpy/blob/main/docs/assets/cow_model.jpg?raw=true" >
 </div>
 
 ## **Why SCAHpy?**
