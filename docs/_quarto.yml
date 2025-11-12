@@ -1,46 +1,29 @@
 project:
-  type: book
-  output-dir: docs
+  type: website
 
-execute: 
-  freeze: auto
+profiles: [es, en]
 
-book:
-  title: ""
-  author: "Fiorela Castillón"
-  date: "14/03/2024"
-  language: custom.yml
-  sidebar: 
-    title: 'Documentation'
-    logo: cover.png
-    style: docked
-    background: light
-  search: true
-  repo-url: https://github.com/fiorelacl/SCAHpy/docs
-  repo-actions: [edit]
-  downloads: [epub]
-  sharing: [twitter, facebook, linkedin]
-  chapters:
-    - part: index.qmd
-      chapters: 
-        - 01_install.qmd
-        - 02_use.qmd
-    - part: 'Tutorials'
-      chapters: 
-        - 03_tutorial_01.qmd
-        - 03_tutorial_02.qmd
-        - 03_tutorial_03.qmd
-    - part: 'Help & Reference'
-      chapters: 
-        - 04_API.qmd
-        - 05_contrib.qmd
-
-comments: 
-  hypothesis: true
+website:
+  title: "SCAHpy"
+  site-url: https://fiorelacl.github.io/SCAHpy
+  repo-url: https://github.com/fiorelacl/SCAHpy
+  repo-actions: [issue, source]
+  favicon: assets/cover.png
+  sidebar:
+    style: floating
+    search: true
 
 format:
   html:
-    theme: lumen
-
-editor: visual
-
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    code-copy: true
+    code-overflow: wrap
+    number-sections: true
+    df-print: paged
+execute:
+  freeze: auto
+  echo: true
+  warning: false
+  message: false

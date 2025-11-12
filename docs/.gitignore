@@ -1,1 +1,64 @@
-/.quarto/
+# ─────────────────────────────────────────────
+# ARCHIVOS GENERADOS POR QUARTO
+# ─────────────────────────────────────────────
+# Carpeta de metadatos y configuración de render
+.quarto/
+.quarto-cache/
+**/_freeze/
+**/cache/
+
+# Carpeta del sitio renderizado
+_site/
+docs/_site/
+es/_site/
+en/_site/
+
+# Archivos HTML renderizados localmente
+*.html
+
+# ─────────────────────────────────────────────
+# ARCHIVOS DE NOTEBOOKS O CONVERSIÓN
+# ─────────────────────────────────────────────
+**/*.ipynb
+**/*.quarto_ipynb
+.ipynb_checkpoints/
+
+# ─────────────────────────────────────────────
+# ARCHIVOS TEMPORALES O DE COMPILACIÓN
+# ─────────────────────────────────────────────
+*.log
+*.aux
+*.out
+*.toc
+*.lof
+*.lot
+*.fdb_latexmk
+*.fls
+*.synctex.gz
+
+# ─────────────────────────────────────────────
+# FIGURAS Y SALIDAS INTERMEDIAS
+# ─────────────────────────────────────────────
+**/figure-html/
+**/figs_tmp/
+**/tmp/
+*.png~
+*.jpg~
+*.svg~
+
+# ─────────────────────────────────────────────
+# ENTORNOS O DEPENDENCIAS LOCALES
+# ─────────────────────────────────────────────
+.env/
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
+
+# ─────────────────────────────────────────────
+# PUBLICACIÓN Y DEPLOY
+# ─────────────────────────────────────────────
+.quarto-publish/
+publish/
+

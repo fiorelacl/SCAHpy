@@ -1,0 +1,35 @@
+project:
+  output-dir: _site/es
+
+lang: es
+language: _language-es.yml
+
+website:
+  navbar:
+    left:
+      - text: "Inicio"
+        href: es/index.qmd
+      - text: "Instalación"
+        href: es/01_install.qmd
+      - text: "Uso"
+        href: es/02_use.qmd
+      - text: "Tutoriales"
+        menu:
+          - es/03_tutorial_01.qmd
+          - es/03_tutorial_02.qmd
+          - es/03_tutorial_03.qmd
+      - text: "Galería"
+        href: es/gallery.qmd
+      - text: "API"
+        href: es/04_API.qmd
+      - text: "Benchmarks"
+        href: es/benchmarks.qmd
+      - text: "FAQ"
+        href: es/faq.qmd
+    right:
+      - text: EN
+        href: /SCAHpy/en/
+
+bibliography: es/references.bib
+
+
