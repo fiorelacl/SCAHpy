@@ -1,29 +1,41 @@
 project:
   type: website
 
-profiles: [es, en]
+profile:  
+  default: english
+  group: [english, spanish]
 
 website:
-  title: "SCAHpy"
-  site-url: https://fiorelacl.github.io/SCAHpy
-  repo-url: https://github.com/fiorelacl/SCAHpy
-  repo-actions: [issue, source]
-  favicon: assets/cover.png
+  title: 'SCAHpy'
+  favicon: assets/logo.png
+  page-footer: "Copyright 2025, Fiorela Castillón"
+  bread-crumbs: false
   sidebar:
-    style: floating
-    search: true
+    tools:
+      - icon: filetype-py
+        href: https://pypi.org/project/scahpy/
+      - icon: github
+        href: https://github.com/fiorelacl/SCAHpy/
 
 format:
   html:
-    theme: cosmo
+    theme:
+      light:
+        - brite
+        - scahpy.scss
+    include-before-body: _includes/announcement.html
+    max-width: 100%     # o incluso 100% si quieres
     toc: true
     toc-depth: 3
     code-copy: true
-    code-overflow: wrap
-    number-sections: true
+    code-overflow: scroll
+    code-block-bg: "#f3f9ee"
+    code-block-border-left: "#0c447d"
+    number-sections: false
     df-print: paged
+
 execute:
-  freeze: auto
+  enabled: false
   echo: true
   warning: false
   message: false

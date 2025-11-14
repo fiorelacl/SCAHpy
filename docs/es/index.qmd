@@ -1,4 +1,4 @@
-# Guía de inicio {.unnumbered}
+# Bienvenido ✨! {.unnumbered}
 
 ## **¿Qué es SCAHpy?**
 

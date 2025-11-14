@@ -1,0 +1,45 @@
+lang: en
+metadata-files: ["_language-en.yml"]
+
+project:
+  output-dir: ./_site/en
+
+website:
+  sidebar:
+    style: "docked"
+    title: "DOCUMENTATION"
+    logo: assets/cover.png
+    search: true
+    collapse-level: 1
+    contents:
+      - text: "Introduction"
+        href: en/index.qmd
+
+      - text: "Installation"
+        href: en/01_install.qmd
+
+      - text: "Usage"
+        href: en/02_use.qmd
+
+      - section: "Tutorials"
+        contents:
+          - text: "Tutorial 1: Reading WRF"
+            href: en/03_tutorial_01.qmd
+          - text: "Tutorial 2: Reading CROCO"
+            href: en/03_tutorial_02.qmd
+          - text: "Tutorial 3: Basic Plots"
+            href: en/03_tutorial_03.qmd
+
+      - section: "Help & References"
+        contents:
+          - text: "API Reference"
+            href: en/04_API.qmd
+          - text: "Contributing"
+            href: en/05_contrib.qmd
+          - text: "References"
+            href: en/06_references.qmd
+
+format:
+  html:
+    toc: true
+    include-after-body: _includes/lang-switch.html
