@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="../en" xml:lang="../en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.537">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>SCAHpy</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../assets/logo.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body>
+
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contents</h2>
+   
+  <ul>
+  <li><a href="#api-reference" id="toc-api-reference" class="nav-link active" data-scroll-target="#api-reference">API reference</a>
+  <ul class="collapse">
+  <li><a href="#in_out.read_wrf_multi" id="toc-in_out.read_wrf_multi" class="nav-link" data-scroll-target="#in_out.read_wrf_multi"><strong><code>in_out.read_wrf_multi</code></strong></a>
+  <ul class="collapse">
+  <li><a href="#parameters" id="toc-parameters" class="nav-link" data-scroll-target="#parameters">Parameters:</a></li>
+  <li><a href="#returns" id="toc-returns" class="nav-link" data-scroll-target="#returns">Returns</a></li>
+  </ul></li>
+  <li><a href="#in_out.read_wrf_single" id="toc-in_out.read_wrf_single" class="nav-link" data-scroll-target="#in_out.read_wrf_single"><strong><code>in_out.read_wrf_single</code></strong></a>
+  <ul class="collapse">
+  <li><a href="#parameters-1" id="toc-parameters-1" class="nav-link" data-scroll-target="#parameters-1">Parameters:</a></li>
+  <li><a href="#returns-1" id="toc-returns-1" class="nav-link" data-scroll-target="#returns-1">Returns</a></li>
+  </ul></li>
+  <li><a href="#in_out.extract_station_wrf" id="toc-in_out.extract_station_wrf" class="nav-link" data-scroll-target="#in_out.extract_station_wrf"><strong><code>in_out.extract_station_wrf</code></strong></a>
+  <ul class="collapse">
+  <li><a href="#parameters-2" id="toc-parameters-2" class="nav-link" data-scroll-target="#parameters-2">Parameters:</a></li>
+  <li><a href="#returns-2" id="toc-returns-2" class="nav-link" data-scroll-target="#returns-2">Returns</a></li>
+  </ul></li>
+  <li><a href="#met_vars.calc_pp" id="toc-met_vars.calc_pp" class="nav-link" data-scroll-target="#met_vars.calc_pp"><strong><code>met_vars.calc_pp</code></strong></a>
+  <ul class="collapse">
+  <li><a href="#parameters-3" id="toc-parameters-3" class="nav-link" data-scroll-target="#parameters-3">Parameters:</a></li>
+  <li><a href="#returns-3" id="toc-returns-3" class="nav-link" data-scroll-target="#returns-3">Returns</a></li>
+  </ul></li>
+  <li><a href="#met_vars.calc_wsp" id="toc-met_vars.calc_wsp" class="nav-link" data-scroll-target="#met_vars.calc_wsp"><strong><code>met_vars.calc_wsp</code></strong></a>
+  <ul class="collapse">
+  <li><a href="#parameters-4" id="toc-parameters-4" class="nav-link" data-scroll-target="#parameters-4">Parameters:</a></li>
+  <li><a href="#returns-4" id="toc-returns-4" class="nav-link" data-scroll-target="#returns-4">Returns</a></li>
+  </ul></li>
+  <li><a href="#met_vars.calc_pres" id="toc-met_vars.calc_pres" class="nav-link" data-scroll-target="#met_vars.calc_pres"><strong><code>met_vars.calc_pres</code></strong></a>
+  <ul class="collapse">
+  <li><a href="#parameters-5" id="toc-parameters-5" class="nav-link" data-scroll-target="#parameters-5">Parameters:</a></li>
+  <li><a href="#returns-5" id="toc-returns-5" class="nav-link" data-scroll-target="#returns-5">Returns</a></li>
+  </ul></li>
+  <li><a href="#met_vars.calc_tp" id="toc-met_vars.calc_tp" class="nav-link" data-scroll-target="#met_vars.calc_tp"><strong><code>met_vars.calc_tp</code></strong></a>
+  <ul class="collapse">
+  <li><a href="#parameters-6" id="toc-parameters-6" class="nav-link" data-scroll-target="#parameters-6">Parameters:</a></li>
+  <li><a href="#returns-6" id="toc-returns-6" class="nav-link" data-scroll-target="#returns-6">Returns</a></li>
+  </ul></li>
+  <li><a href="#met_vars.calc_qe" id="toc-met_vars.calc_qe" class="nav-link" data-scroll-target="#met_vars.calc_qe"><strong><code>met_vars.calc_qe</code></strong></a>
+  <ul class="collapse">
+  <li><a href="#parameters-7" id="toc-parameters-7" class="nav-link" data-scroll-target="#parameters-7">Parameters:</a></li>
+  <li><a href="#returns-7" id="toc-returns-7" class="nav-link" data-scroll-target="#returns-7">Returns</a></li>
+  </ul></li>
+  <li><a href="#spatial_scales.vert_levs" id="toc-spatial_scales.vert_levs" class="nav-link" data-scroll-target="#spatial_scales.vert_levs"><strong><code>spatial_scales.vert_levs</code></strong></a>
+  <ul class="collapse">
+  <li><a href="#parameters-8" id="toc-parameters-8" class="nav-link" data-scroll-target="#parameters-8">Parameters:</a></li>
+  <li><a href="#returns-8" id="toc-returns-8" class="nav-link" data-scroll-target="#returns-8">Returns</a></li>
+  </ul></li>
+  <li><a href="#temp_scales.dmy_var" id="toc-temp_scales.dmy_var" class="nav-link" data-scroll-target="#temp_scales.dmy_var"><strong><code>temp_scales.dmy_var</code></strong></a>
+  <ul class="collapse">
+  <li><a href="#parameters-9" id="toc-parameters-9" class="nav-link" data-scroll-target="#parameters-9">Parameters:</a></li>
+  <li><a href="#returns-9" id="toc-returns-9" class="nav-link" data-scroll-target="#returns-9">Returns</a></li>
+  </ul></li>
+  <li><a href="#temp_scales.monthly_clim" id="toc-temp_scales.monthly_clim" class="nav-link" data-scroll-target="#temp_scales.monthly_clim"><strong><code>temp_scales.monthly_clim</code></strong></a>
+  <ul class="collapse">
+  <li><a href="#parameters-10" id="toc-parameters-10" class="nav-link" data-scroll-target="#parameters-10">Parameters:</a></li>
+  <li><a href="#returns-10" id="toc-returns-10" class="nav-link" data-scroll-target="#returns-10">Returns</a></li>
+  </ul></li>
+  <li><a href="#temp_scales.daily_clim" id="toc-temp_scales.daily_clim" class="nav-link" data-scroll-target="#temp_scales.daily_clim"><strong><code>temp_scales.daily_clim</code></strong></a>
+  <ul class="collapse">
+  <li><a href="#parameters-11" id="toc-parameters-11" class="nav-link" data-scroll-target="#parameters-11">Parameters:</a></li>
+  <li><a href="#returns-11" id="toc-returns-11" class="nav-link" data-scroll-target="#returns-11">Returns</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+<div class="update-banner">
+  ⚠️ Actualizando documentación / Updating documentation (v1 → v2)<br>
+  <small>Algunos contenidos pueden estar en revisión · Some sections may be under revision.</small>
+</div>
+
+
+
+
+<section id="api-reference" class="level1 unnumbered">
+<h1 class="unnumbered">API reference</h1>
+<p>Here are the main functions of <strong>SCAHpy</strong>:</p>
+<section id="in_out.read_wrf_multi" class="level2">
+<h2 class="anchored" data-anchor-id="in_out.read_wrf_multi"><strong><code>in_out.read_wrf_multi</code></strong></h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>in_out.read_wrf_multi(files,list_no_vars,difHor<span class="op">=</span><span class="dv">0</span>,sign<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Read a list of wrfout files for the variables selected.</p>
+<section id="parameters" class="level3">
+<h3 class="anchored" data-anchor-id="parameters">Parameters:</h3>
+<ul>
+<li><code>files</code> : List of wrfout files</li>
+<li><code>list_no_vars</code> : List of variables to be delated</li>
+<li><code>difHor</code> : String with the hours t</li>
+<li><code>sign</code>: -1 or 1 according to the difference</li>
+</ul>
+</section>
+<section id="returns" class="level3">
+<h3 class="anchored" data-anchor-id="returns">Returns</h3>
+<ul>
+<li><code>fig</code> (matplotlib.figure.Figure)</li>
+<li><code>ax</code> (matplotlib.axes.Axes)</li>
+</ul>
+</section>
+</section>
+<section id="in_out.read_wrf_single" class="level2">
+<h2 class="anchored" data-anchor-id="in_out.read_wrf_single"><strong><code>in_out.read_wrf_single</code></strong></h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>in_out.ds_wrf_single(<span class="bu">file</span>,list_no_vars,difHor<span class="op">=</span><span class="dv">0</span>,sign<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Read a list of wrfout files for the variables selected.</p>
+<section id="parameters-1" class="level3">
+<h3 class="anchored" data-anchor-id="parameters-1">Parameters:</h3>
+<ul>
+<li><code>file</code> : List of wrfout files</li>
+<li><code>list_no_vars</code> : List of variables to be delated</li>
+<li><code>difHor</code> : String with the hours t</li>
+<li><code>sign</code>: -1 or 1 according to the difference</li>
+</ul>
+</section>
+<section id="returns-1" class="level3">
+<h3 class="anchored" data-anchor-id="returns-1">Returns</h3>
+<ul>
+<li><code>fig</code> (matplotlib.figure.Figure)</li>
+<li><code>ax</code> (matplotlib.axes.Axes)</li>
+</ul>
+</section>
+</section>
+<section id="in_out.extract_station_wrf" class="level2">
+<h2 class="anchored" data-anchor-id="in_out.extract_station_wrf"><strong><code>in_out.extract_station_wrf</code></strong></h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>in_out.extract_station_wrf(out,station,lon_col, lat_col, name_col, output_format<span class="op">=</span><span class="st">'netcdf'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Extracts data from a WRF output file using station coordinates provided in a CSV or shapefile.</p>
+<section id="parameters-2" class="level3">
+<h3 class="anchored" data-anchor-id="parameters-2">Parameters:</h3>
+<ul>
+<li><code>out</code> (nc): the wrf outfile already laoded.</li>
+<li><code>station</code> (str): Path to the CSV or shapefile containing station coordinates.</li>
+<li><code>lon_col</code> (str): Name of the column containing longitude values.</li>
+<li><code>lat_col</code> (str): Name of the column containing latitude values.</li>
+<li><code>name_col</code> (str): Name of the column containing station names.</li>
+<li><code>output_format</code> (str, optional): Output format (‘netcdf’ or ‘dataframe’). Defaults to ‘netcdf’.</li>
+</ul>
+</section>
+<section id="returns-2" class="level3">
+<h3 class="anchored" data-anchor-id="returns-2">Returns</h3>
+<ul>
+<li><code>fig</code> (matplotlib.figure.Figure)</li>
+<li><code>ax</code> (matplotlib.axes.Axes)</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="met_vars.calc_pp" class="level2">
+<h2 class="anchored" data-anchor-id="met_vars.calc_pp"><strong><code>met_vars.calc_pp</code></strong></h2>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>met_diag.calc_pp(ds, elim<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>de-acumulate the rainfall and save it as PP.</p>
+<section id="parameters-3" class="level3">
+<h3 class="anchored" data-anchor-id="parameters-3">Parameters:</h3>
+<ul>
+<li><code>ds</code> (nc): dataset with the variables RAINC, RAINNC and RAINSH already loaded.</li>
+<li><code>elim</code> (bool): False (default) keep the old and new variables, True keep only the new variable.</li>
+</ul>
+</section>
+<section id="returns-3" class="level3">
+<h3 class="anchored" data-anchor-id="returns-3">Returns</h3>
+<ul>
+<li><code>netcdf</code> xarray.Dataset</li>
+</ul>
+</section>
+</section>
+<section id="met_vars.calc_wsp" class="level2">
+<h2 class="anchored" data-anchor-id="met_vars.calc_wsp"><strong><code>met_vars.calc_wsp</code></strong></h2>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>met_diag.calc_wsp(ds, elim<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>calculate the wind speed.</p>
+<section id="parameters-4" class="level3">
+<h3 class="anchored" data-anchor-id="parameters-4">Parameters:</h3>
+<ul>
+<li><code>ds</code> (nc): dataset with the variables U10 and V10 already loaded with coordinates already processed.</li>
+<li><code>elim</code> (bool): False (default) keep the old and new variables, True keep only the new variable.</li>
+</ul>
+</section>
+<section id="returns-4" class="level3">
+<h3 class="anchored" data-anchor-id="returns-4">Returns</h3>
+<ul>
+<li><code>netcdf</code> xarray.Dataset</li>
+</ul>
+</section>
+</section>
+<section id="met_vars.calc_pres" class="level2">
+<h2 class="anchored" data-anchor-id="met_vars.calc_pres"><strong><code>met_vars.calc_pres</code></strong></h2>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>met_diag.calc_pres(ds, elim<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>calculate the total atmospheric pressure and save it as Presion.</p>
+<section id="parameters-5" class="level3">
+<h3 class="anchored" data-anchor-id="parameters-5">Parameters:</h3>
+<ul>
+<li><code>ds</code> (nc): dataset with the variables P, PB already loaded with coordinates already processed.</li>
+<li><code>elim</code> (bool): False (default) keep the old and new variables, True keep only the new variable.</li>
+</ul>
+</section>
+<section id="returns-5" class="level3">
+<h3 class="anchored" data-anchor-id="returns-5">Returns</h3>
+<ul>
+<li><code>netcdf</code> xarray.Dataset</li>
+</ul>
+</section>
+</section>
+<section id="met_vars.calc_tp" class="level2">
+<h2 class="anchored" data-anchor-id="met_vars.calc_tp"><strong><code>met_vars.calc_tp</code></strong></h2>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>met_diag.calc_tp(ds, elim<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>calculate the potential temperature and save it as TPo.</p>
+<section id="parameters-6" class="level3">
+<h3 class="anchored" data-anchor-id="parameters-6">Parameters:</h3>
+<ul>
+<li><code>ds</code> (nc): dataset with the variable T already loaded with coordinates already processed.</li>
+<li><code>elim</code> (bool): False (default) keep the old and new variables, True keep only the new variable.</li>
+</ul>
+</section>
+<section id="returns-6" class="level3">
+<h3 class="anchored" data-anchor-id="returns-6">Returns</h3>
+<ul>
+<li><code>netcdf</code> xarray.Dataset</li>
+</ul>
+</section>
+</section>
+<section id="met_vars.calc_qe" class="level2">
+<h2 class="anchored" data-anchor-id="met_vars.calc_qe"><strong><code>met_vars.calc_qe</code></strong></h2>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>met_diag.calc_qe(ds, elim<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>calculate the specific humidity and save it as QE.</p>
+<section id="parameters-7" class="level3">
+<h3 class="anchored" data-anchor-id="parameters-7">Parameters:</h3>
+<ul>
+<li><code>ds</code> (nc): dataset with the variable QVAPOR already loaded with coordinates already processed.</li>
+<li><code>elim</code> (bool): False (default) keep the old and new variables, True keep only the new variable.</li>
+</ul>
+</section>
+<section id="returns-7" class="level3">
+<h3 class="anchored" data-anchor-id="returns-7">Returns</h3>
+<ul>
+<li><code>netcdf</code> xarray.Dataset</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="spatial_scales.vert_levs" class="level2">
+<h2 class="anchored" data-anchor-id="spatial_scales.vert_levs"><strong><code>spatial_scales.vert_levs</code></strong></h2>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>spatial_scales.vert_levs(ds,varis,lvls<span class="op">=</span><span class="va">None</span>):</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Interpolate vertical levels to a pressure variable</p>
+<section id="parameters-8" class="level3">
+<h3 class="anchored" data-anchor-id="parameters-8">Parameters:</h3>
+<ul>
+<li><code>ds</code> (nc): dataset already loaded.</li>
+<li><code>varis</code> (list): list of vertical variables to interpolate.</li>
+<li><code>lvls</code> (list): list of levels to be interpolated, if none provided, it will use [1000,975,950,925,900,850,800,700,600,500,400,300,200] as default.</li>
+</ul>
+</section>
+<section id="returns-8" class="level3">
+<h3 class="anchored" data-anchor-id="returns-8">Returns</h3>
+<ul>
+<li><code>netcdf</code> xarray.Dataset</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="temp_scales.dmy_var" class="level2">
+<h2 class="anchored" data-anchor-id="temp_scales.dmy_var"><strong><code>temp_scales.dmy_var</code></strong></h2>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>temp_scales.dmy_var(ds,tiempo<span class="op">=</span><span class="va">None</span> ,accum<span class="op">=</span><span class="va">None</span>, avg<span class="op">=</span><span class="va">None</span>, mediana<span class="op">=</span><span class="va">None</span>):</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Convert hourly (default wrf out) time to any acceptable by resample function.</p>
+<section id="parameters-9" class="level3">
+<h3 class="anchored" data-anchor-id="parameters-9">Parameters:</h3>
+<ul>
+<li><code>ds</code> : Dataset loaded</li>
+<li><code>tiempo</code> : Time accepted by resample</li>
+<li><code>accum</code> : List of variables who need sum</li>
+<li><code>avg</code> : if True use the mean function</li>
+<li><code>mediana</code> : if True use the median function</li>
+</ul>
+</section>
+<section id="returns-9" class="level3">
+<h3 class="anchored" data-anchor-id="returns-9">Returns</h3>
+<ul>
+<li><code>netcdf</code> xarray.Dataset</li>
+</ul>
+</section>
+</section>
+<section id="temp_scales.monthly_clim" class="level2">
+<h2 class="anchored" data-anchor-id="temp_scales.monthly_clim"><strong><code>temp_scales.monthly_clim</code></strong></h2>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>temp_scales.monthly_clim(ds, stat<span class="op">=</span><span class="va">None</span>, time_slice<span class="op">=</span><span class="va">None</span>):</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Convert a Dataset to monthly climatology.</p>
+<section id="parameters-10" class="level3">
+<h3 class="anchored" data-anchor-id="parameters-10">Parameters:</h3>
+<ul>
+<li><code>ds</code> : Dataset loaded</li>
+<li><code>stat</code> : Mean or median</li>
+<li><code>time_slice</code> : use the slice(ini,fin)</li>
+</ul>
+</section>
+<section id="returns-10" class="level3">
+<h3 class="anchored" data-anchor-id="returns-10">Returns</h3>
+<ul>
+<li><code>netcdf</code> xarray.Dataset</li>
+</ul>
+</section>
+</section>
+<section id="temp_scales.daily_clim" class="level2">
+<h2 class="anchored" data-anchor-id="temp_scales.daily_clim"><strong><code>temp_scales.daily_clim</code></strong></h2>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>temp_scales.daily_clim(ds, var):</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Generate daily climatology using moving window (mw) each 15 days.</p>
+<section id="parameters-11" class="level3">
+<h3 class="anchored" data-anchor-id="parameters-11">Parameters:</h3>
+<ul>
+<li><code>ds</code> : Dataset loaded</li>
+<li><code>var</code> : str with the variable’s name</li>
+</ul>
+</section>
+<section id="returns-11" class="level3">
+<h3 class="anchored" data-anchor-id="returns-11">Returns</h3>
+<ul>
+<li><code>netcdf</code> xarray.Dataset</li>
+</ul>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<style>
+  .lang-switch {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+    z-index: 2000;
+  }
+  .lang-switch a {
+    display: inline-block;
+    padding: 8px 12px;
+    border-radius: 999px;
+    text-decoration: none;
+    border: 1px solid #ccc;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,.08);
+    font-weight: 600;
+  }
+</style>
+
+<div class="lang-switch">
+  <a id="langBtn" href="#">—</a>
+</div>
+
+<script>
+(function () {
+  const btn = document.getElementById('langBtn');
+  if (!btn) return;
+
+  // Detecta idioma actual por la ruta: /_site/en/... o /_site/es/...
+  const path = window.location.pathname;
+  const isEN = /\/en\//.test(path);
+  const isES = /\/es\//.test(path);
+
+  // Define etiqueta del botón
+  btn.textContent = isEN ? "Español" : "English";
+
+  // Al hacer clic, cambia solo el prefijo /en/ ↔ /es/
+  btn.addEventListener('click', function (e) {
+    e.preventDefault();
+    if (!isEN && !isES) {
+      // fallback si no hay prefijo: manda al home EN
+      window.location.href = path.replace(/\/$/, '') + '/en/';
+      return;
+    }
+    const target = isEN ? path.replace('/en/', '/es/') : path.replace('/es/', '/en/');
+    window.location.href = target + window.location.search + window.location.hash;
+  });
+})();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      return note.innerHTML;
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Copyright 2025, Fiorela Castillón</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
