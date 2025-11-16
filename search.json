@@ -1,7 +1,7 @@
 [
   {
-    "objectID": "index_es.html",
-    "href": "index_es.html",
+    "objectID": "00_index_es.html",
+    "href": "00_index_es.html",
     "title": "Bienvenido ✨!",
     "section": "",
     "text": "⚠️ Actualizando documentación / Updating documentation (v1 → v2)\n  Algunos contenidos pueden estar en revisión · Some sections may be under revision.",
@@ -10,8 +10,8 @@
     ]
   },
   {
-    "objectID": "index_es.html#qué-es-scahpy",
-    "href": "index_es.html#qué-es-scahpy",
+    "objectID": "00_index_es.html#qué-es-scahpy",
+    "href": "00_index_es.html#qué-es-scahpy",
     "title": "Bienvenido ✨!",
     "section": "¿Qué es SCAHpy?",
     "text": "¿Qué es SCAHpy?\nSCAHpy es un paquete de Python de código abierto desarrollado como herramienta de posprocesamiento para los componentes atmosférico, oceánico e hidrológico del Modelo del Sistema Terrestre Regional (Regional Earth System Model) que cubre el territorio peruano y el océano Pacífico.\nEste modelo, denominado IGP-RESM-COW v1, fue implementado por el Instituto Geofísico del Perú (IGP) sobre la base del modelo atmosférico WRF, el modelo oceánico CROCO y el acoplador OASIS.",
@@ -20,8 +20,8 @@
     ]
   },
   {
-    "objectID": "index_es.html#por-qué-scahpy",
-    "href": "index_es.html#por-qué-scahpy",
+    "objectID": "00_index_es.html#por-qué-scahpy",
+    "href": "00_index_es.html#por-qué-scahpy",
     "title": "Bienvenido ✨!",
     "section": "¿Por qué SCAHpy?",
     "text": "¿Por qué SCAHpy?\nEl paquete SCAHpy fue creado para abordar el desafío que representa el procesamiento de los grandes volúmenes de datos generados por el modelo IGP-RESM-COW.\nEste modelo, con su componente atmosférico basado en WRF, produce cantidades masivas de información durante las simulaciones, lo que demanda un tiempo considerable para su análisis.\nSCAHpy agiliza este proceso homogeneizando coordenadas y dimensiones, garantizando la compatibilidad y facilitando el análisis de los datos.\nAl simplificar la manipulación y preparación de la información, reduce significativamente el tiempo requerido para el posprocesamiento científico.",
@@ -30,8 +30,8 @@
     ]
   },
   {
-    "objectID": "index_es.html#cómo-usar-scahpy",
-    "href": "index_es.html#cómo-usar-scahpy",
+    "objectID": "00_index_es.html#cómo-usar-scahpy",
+    "href": "00_index_es.html#cómo-usar-scahpy",
     "title": "Bienvenido ✨!",
     "section": "¿Cómo usar SCAHpy?",
     "text": "¿Cómo usar SCAHpy?\nSCAHpy puede emplearse como un paquete independiente.\nPara más detalles, consulta la sección Uso y los tutoriales que se presentan a continuación.\n\n\n\n\n\n\nNota\n\n\n\nSCAHpy ha sido desarrollado y probado con las salidas del modelo IGP-RESM-COW v1.\nSin embargo, está diseñado para trabajar con cualquier salida del modelo WRF.\n¡Estamos abiertos a contribuciones de la comunidad!\n\n\n\nPrimeros pasos\n\nInstalación\nUso\n\n\n\nTutoriales\n\nLectura de archivos individuales\nLectura de múltiples archivos\nVariables en niveles de presión\n\n\n\nAyuda y referencias\n\nReferencia de la API\nContribución",

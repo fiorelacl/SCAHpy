@@ -114,7 +114,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index_es.html" class="sidebar-item-text sidebar-link active">
+  <a href="./00_index_es.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Introducción</span></a>
   </div>
 </li>
@@ -289,23 +289,29 @@ Sin embargo, está diseñado para trabajar con cualquier salida del modelo <stro
 <script>
   function switchLang() {
     const url = new URL(window.location.href);
-    const path = url.pathname;
+    let path = url.pathname; // por ejemplo: /SCAHpy/es/01_install_es.html
 
-    // Asume que siempre hay /es/ o /en/ en la ruta
+    // 1. Caso normal: ya estamos en /es/ o /en/
     if (path.includes("/es/")) {
-      url.pathname = path.replace("/es/", "/en/");
+      // Cambia carpeta y sufijo
+      path = path.replace("/es/", "/en/");
+      path = path.replace("_es.html", "_en.html");
     } else if (path.includes("/en/")) {
-      url.pathname = path.replace("/en/", "/es/");
+      path = path.replace("/en/", "/es/");
+      path = path.replace("_en.html", "_es.html");
     } else {
-      // Caso raro: si no encuentra, por defecto manda al home en español
-      url.pathname = "/es/index.html";
+      // 2. Caso raro: estamos en /SCAHpy/ o /SCAHpy/index.html
+      // Usamos ruta RELATIVA para no perder el /SCAHpy
+      window.location.href = "es/index.html";
+      return;
     }
 
+    url.pathname = path;
     window.location.href = url.toString();
   }
 </script>
 
-<div class="lang-switch">
+<div class="lang-switch" style="margin: 1rem 0;">
   <button onclick="switchLang()">
     Cambiar idioma
   </button>
