@@ -290,31 +290,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </main> <!-- /main -->
 <script>
-(function () {
-  const btn = document.getElementById('langBtn');
-  if (!btn) return;
-
+  // Detecta si estás en inglés o español por la URL
   const path = window.location.pathname;
-  const isEN = /\/en\//.test(path);
-  const isES = /\/es\//.test(path);
 
-  btn.textContent = isEN ? "Español" : "English";
+  // Ojo: ajusta "SCAHpy" si tu repo se llama distinto
+  const base = "/SCAHpy/dist";
 
-  btn.addEventListener('click', function (e) {
-    e.preventDefault();
-    if (!isEN && !isES) {
-      // si por alguna razón no estamos en /en/ o /es/, ir al home EN
-      window.location.href = path.replace(/\/$/, '') + '/en/';
-      return;
-    }
-    const target = isEN
-      ? path.replace('/en/', '/es/')
-      : path.replace('/es/', '/en/');
+  const isEnglish = path.includes("/en/");
+  const target = isEnglish ? base + "/es/es/index.html"
+                           : base + "/en/en/index.html";
 
-    window.location.href = target + window.location.search + window.location.hash;
-  });
-})();
+  function switchLang() {
+    window.location.href = target;
+  }
 </script>
+
+<div class="lang-switch">
+  <button onclick="switchLang()">
+    Cambiar idioma
+  </button>
+</div>
+
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

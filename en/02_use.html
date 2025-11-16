@@ -268,18 +268,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="importing-the-package" class="level2">
 <h2 class="anchored" data-anchor-id="importing-the-package">Importing the Package</h2>
 <p>To import all the modules in <code>scahpy</code> we can use the <code>*</code> cd as for example:</p>
-<div id="fdf0fad0" class="cell">
+<div id="4f4bdec2" class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scahpy <span class="im">import</span> <span class="op">*</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>To import specific modules from the package, we can specify their names:</p>
-<div id="4a706b32" class="cell">
+<div id="3c0f6f2b" class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scahpy <span class="im">import</span> in_out, met_vars</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="reading-wrf-outputs-files" class="level2">
 <h2 class="anchored" data-anchor-id="reading-wrf-outputs-files">Reading WRF outputs files</h2>
 <p>The WRF model can generate outputs either with one time per file or multiple times in a single file. <code>scahpy</code> is capable of handling both scenarios. For reading multiple wrfout files, you can utilize the <code>read_wrf_multi</code> function, while for reading a single file, you can use the <code>read_wrf_single</code> function.</p>
-<div id="c46c9e88" class="cell">
+<div id="7bf3915b" class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example: Reading and processing multiple WRF datasets</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>sfc <span class="op">=</span> in_out._drop_vars(<span class="st">'/datos/wrfout_d01_2024-01-01_03:00:00'</span>,[<span class="st">'RAINC'</span>, <span class="st">'RAINNC'</span>, <span class="st">'RAINSH'</span>, <span class="st">'U10'</span>, <span class="st">'V10'</span>, <span class="st">'SSTSK'</span>], model<span class="op">=</span><span class="st">'wrf'</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>files <span class="op">=</span> <span class="bu">sorted</span>(glob.glob(<span class="st">'/datos/wrfout_d01*'</span>))</span>
@@ -289,7 +289,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="calculating-precipitation" class="level2">
 <h2 class="anchored" data-anchor-id="calculating-precipitation">Calculating Precipitation</h2>
 <p><code>scahpy</code> has a module called <code>met_vars</code> designed specifically for calculating various diagnostic variables, such as precipitation, using the <code>calc_pp</code> function.</p>
-<div id="d3a01172" class="cell">
+<div id="d128d0ac" class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example: Calculating precipitation using diagnostics module</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>ds2 <span class="op">=</span> met_vars.calc_pp(ds,vars_to_sum<span class="op">=</span>[<span class="st">'RAINC'</span>, <span class="st">'RAINNC'</span>, <span class="st">'RAINSH'</span>],<span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -299,31 +299,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </main> <!-- /main -->
 <script>
-(function () {
-  const btn = document.getElementById('langBtn');
-  if (!btn) return;
-
+  // Detecta si estás en inglés o español por la URL
   const path = window.location.pathname;
-  const isEN = /\/en\//.test(path);
-  const isES = /\/es\//.test(path);
 
-  btn.textContent = isEN ? "Español" : "English";
+  // Ojo: ajusta "SCAHpy" si tu repo se llama distinto
+  const base = "/SCAHpy/dist";
 
-  btn.addEventListener('click', function (e) {
-    e.preventDefault();
-    if (!isEN && !isES) {
-      // si por alguna razón no estamos en /en/ o /es/, ir al home EN
-      window.location.href = path.replace(/\/$/, '') + '/en/';
-      return;
-    }
-    const target = isEN
-      ? path.replace('/en/', '/es/')
-      : path.replace('/es/', '/en/');
+  const isEnglish = path.includes("/en/");
+  const target = isEnglish ? base + "/es/es/index.html"
+                           : base + "/en/en/index.html";
 
-    window.location.href = target + window.location.search + window.location.hash;
-  });
-})();
+  function switchLang() {
+    window.location.href = target;
+  }
 </script>
+
+<div class="lang-switch">
+  <button onclick="switchLang()">
+    Cambiar idioma
+  </button>
+</div>
+
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
