@@ -41,8 +41,6 @@
   Version <b>2.0</b> of SCAHpy is now available with improved stability,
   new analytical and plotting features, and a fully reorganized documentation framework.
 
-  <br><br>
-
   The official documentation is now provided in <b>two languages</b>:
   <b>English</b> and <b>Spanish</b>, increasing accessibility for both regional and international research communities.
 
