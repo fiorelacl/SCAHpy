@@ -2,17 +2,17 @@ lang: en-US
 metadata-files: ["_language-en.yml"]
 
 project:
-  output-dir: dist/en
+  output-dir: _site/en
   render:
-    - en/01_install.qmd
-    - en/02_use.qmd
-    - en/03_tutorial_01.qmd
-    - en/03_tutorial_02.qmd
-    - en/03_tutorial_03.qmd
-    - en/04_API.qmd
-    - en/05_contrib.qmd
-    - en/06_references.qmd
-    - en/index.qmd
+    - 01_install_en.qmd
+    - 02_use_en.qmd
+    - 03_tutorial_01_en.qmd
+    - 03_tutorial_02_en.qmd
+    - 03_tutorial_03_en.qmd
+    - 04_API_en.qmd
+    - 05_contrib_en.qmd
+    - 06_references_en.qmd
+    - index_en.qmd
 
 website:
   sidebar:
@@ -23,31 +23,31 @@ website:
     collapse-level: 1
     contents:
       - text: "Introduction"
-        href: en/index.qmd
+        href: index_en.qmd
 
       - text: "Installation"
-        href: en/01_install.qmd
+        href: 01_install_en.qmd
 
       - text: "Usage"
-        href: en/02_use.qmd
+        href: 02_use_en.qmd
 
       - section: "Tutorials"
         contents:
           - text: "Tutorial 1: Reading WRF"
-            href: en/03_tutorial_01.qmd
+            href: 03_tutorial_01_en.qmd
           - text: "Tutorial 2: Reading CROCO"
-            href: en/03_tutorial_02.qmd
+            href: 03_tutorial_02_en.qmd
           - text: "Tutorial 3: Basic Plots"
-            href: en/03_tutorial_03.qmd
+            href: 03_tutorial_03_en.qmd
 
       - section: "Help & References"
         contents:
           - text: "API Reference"
-            href: en/04_API.qmd
+            href: 04_API_en.qmd
           - text: "Contributing"
-            href: en/05_contrib.qmd
+            href: 05_contrib_en.qmd
           - text: "References"
-            href: en/06_references.qmd
+            href: 06_references_en.qmd
 
 format:
   html:

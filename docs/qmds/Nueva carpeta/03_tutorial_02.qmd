@@ -1,0 +1,66 @@
+# Reading Multiple File {.unnumbered}
+
+In this tutorial, we will guide you through the process of analyzing multiple output dataset from the WRF (Weather Research and Forecasting) model and creating 2D maps featuring rainfall and wind variables using the `scahpy` package. To begin, let's import the `glob` package to manage files and paths, as well as the `scahpy` package.
+
+``` python
+from scahpy import *
+import glob
+```
+
+## Step 1: Reading WRF Data
+
+We initiate the process by listing all the files we want to read using the `glob` package and assigning them to the variable `list_files`.
+
+``` python
+list_files = sorted(glob.glob('/data/datos/COW/OUT_DIAG_WRF/wrfouts/wrfout_d01_*'))
+```
+
+Given the capability to specify excluded variables when reading netCDF files using the `drop_variables` argument (refer to xarray functions `open_dataset` and `open_mfdataset`), we utilize the `_drop_vars` function from the module `in_out`. This function takes the list of variables we require and generates a list containing all variables present in the output file, subsequently removing those we are not interested in (such as *'RAINC', 'RAINNC', 'RAINSH', 'U10', 'V10', 'SSTSK'*). For this purpose, we use the first file from our list of files, assigning it to the variable `dvars`.
+
+``` python
+dvars = in_out._drop_vars(list_files[0], ['RAINC', 'RAINNC', 'RAINSH', 'U10', 'V10', 'SSTSK'], model='wrf')
+```
+
+Subsequently, we utilize the `read_wrf_multi` function to selectively read the variables of interest. This function accepts the input path (`file_name` in this case), the list of variables to be excluded (`vars`), any required time difference (e.g., `'5 hours'`), and the corresponding sign of the time difference (`-1` for negative, `1` for positive). The outcome is an `xarray.Dataset` containing longitude, latitude, time, and the specified variables. Optionally, you can designate a save path to export the netCDF.
+
+``` python
+ds = in_out.read_wrf_multi(list_files, dvars, '5 hours', -1)
+```
+
+## Step 2: Calculating Precipitation and Wind Speed
+
+In this step, we will utilize the `met_vars` module to calculate precipitation (`calc_pp`), wind speed (`calc_wsp`), and convert sea surface temperature from Kelvin to Celsius (`calc_celsius`).
+
+The `calc_pp` function has an optional argument `vars_to_sum`, allowing users to specify which variables to sum to obtain total precipitation. If no variables are provided, it will default to summing the three variables: `RAINC`, `RAINNC`, and `RAINSH`.
+
+``` python
+ds_sfc = met_vars.calc_pp(ds, vars_to_sum=['RAINC', 'RAINNC', 'RAINSH'], elim=True)
+ds_sfc = met_vars.calc_wsp(ds_sfc, elim=False)
+ds_sfc = met_vars.calc_celsius(ds_sfc, 'SSTSK')
+```
+
+By running these commands, we ensure that our dataset `ds_sfc` now contains calculated precipitation, wind speed, and sea surface temperature in Celsius, ready for further analysis or visualization.
+
+## Step 3: Aggregating the Data
+
+Now, we'll aggregate the data to operate on a daily time scale instead of hourly. To achieve this, we'll utilize the `dmy_var` function from the `temp_scales` module. This function takes an `xarray.Dataset` as input, where we specify the desired time scale (e.g., '1D' for daily, 'ME' for monthly, 'YE' for yearly). Additionally, we can specify which variables should be aggregated by sum, average, or median by providing lists for each aggregation method.
+
+``` python
+dd = temp_scales.dmy_var(ds_sfc, tiempo='1D', accum=['PP'], avg=['U10', 'V10'], mediana=['SSTSK'])
+```
+
+By executing this code, we'll have our data aggregated to a daily time scale, with certain variables summed, averaged, or median-calculated according to our specifications.
+
+## Step 4: Plotting Precipitation Maps
+
+Next, we'll generate precipitation maps with SST contours and wind vectors using the `map_pp_uv10_sst` function from the `map_plots` module. This function takes the rainfall (PP) variable as input, followed by the dataset with SST and wind components, precipitation levels, SST contours, optional shapefile, exportation settings, output path, temporal scale ('H' for hourly, 'D' for daily, 'M' for monthly, 'Y' for yearly), vector speed, and plot extent (\[x1, x2, y1, y2\]).
+
+``` python
+# Example usage
+precipitation_levels = [1, 2, 3, 5, 7, 11, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60]
+sst_contour_levels = [26, 27, 28]
+
+map_plots.map_pp_uv10_sst(ds_sfc['PP'], ds_sfc, precipitation_levels, sst_contour_levels, shapefile=None, 
+                           output_path='.', save_maps=True, freq='H',
+                           quiverkey_speed=10, extent=None)
+```

@@ -1,0 +1,55 @@
+# Reading a Single File {.unnumbered}
+
+In this tutorial, we will guide you through the process of analyzing output data from the WRF (Weather Research and Forecasting) model and creating 2D maps featuring rainfall and wind variables using the `scahpy` package. To begin, let's import the package.
+
+``` python
+from scahpy import *
+```
+
+## Step 1: Reading WRF Data
+
+We begin by setting the absolute path of the output file we intend to work with and assign it to a variable, in this case, `file_name`.
+
+``` python
+file_name = '/data/datos/COW/OUT_DIAG_WRF/wrfouts/wrfout_d01_2023-03-10_03:00:00'
+```
+
+Since we have the flexibility to specify which variables to exclude when reading netCDF files using the `drop_variables` argument (see xarray functions open_dataset and open_mfdataset), we leverage the `_drop_wrf_vars` function from the module `in_out`. This function takes the list of variables we require and generates a list containing all variables present in the output file, subsequently removing those we are not interested in (such as *'RAINC', 'RAINNC', 'RAINSH', 'U10', 'V10', 'SSTSK'*).
+
+``` python
+dvars = in_out._drop_vars(file_name, ['RAINC', 'RAINNC', 'RAINSH', 'U10', 'V10', 'SSTSK'], model='wrf')
+```
+
+Subsequently, we utilize the `read_wrf_single` function to selectively read the variables of interest. This function accepts the input path (`file_name` in this case), the list of variables to be excluded (`vars`), any required time difference (e.g., `'5 hours'`), and the corresponding sign of the time difference (`-1` for negative, `1` for positive). The outcome is an `xarray.Dataset` containing longitude, latitude, time, and the specified variables. Optionally, you can designate a save path to export the netCDF.
+
+``` python
+ds = in_out.read_wrf_single(file_name, dvars, '5 hours', -1)
+```
+
+## Step 2: Calculating Precipitation and Wind Speed
+
+In this step, we will utilize the `met_vars` module to calculate precipitation (`calc_pp`), wind speed (`calc_wsp`), and convert sea surface temperature from Kelvin to Celsius (`calc_celsius`).
+
+The `calc_pp` function has an optional argument `vars_to_sum`, allowing users to specify which variables to sum to obtain total precipitation. If no variables are provided, it will default to summing the three variables: `RAINC`, `RAINNC`, and `RAINSH`.
+
+``` python
+ds_sfc = met_vars.calc_pp(ds, vars_to_sum=['RAINC', 'RAINNC', 'RAINSH'], elim=True)
+ds_sfc = met_vars.calc_wsp(ds_sfc, elim=False)
+ds_sfc = met_vars.calc_celsius(ds_sfc, 'SSTSK')
+```
+
+By running these commands, we ensure that our dataset `ds_sfc` now contains calculated precipitation, wind speed, and sea surface temperature in Celsius, ready for further analysis or visualization.
+
+## Step 3: Plotting Precipitation Maps
+
+Next, we'll generate precipitation maps with SST contours and wind vectors using the `map_pp_uv10_sst` function from the `map_plots` module. This function takes the rainfall (PP) variable as input, followed by the dataset with SST and wind components, precipitation levels, SST contours, optional shapefile, exportation settings, output path, temporal scale ('H' for hourly, 'D' for daily, 'M' for monthly, 'Y' for yearly), vector speed, and plot extent (\[x1, x2, y1, y2\]).
+
+``` python
+# Example usage
+precipitation_levels = [1, 2, 3, 5, 7, 11, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60]
+sst_contour_levels = [26, 27, 28]
+
+map_plots.map_pp_uv10_sst(ds_sfc['PP'], ds_sfc, precipitation_levels, sst_contour_levels, shapefile=None, 
+                           output_path='.', save_maps=True, freq='H',
+                           quiverkey_speed=10, extent=None)
+```

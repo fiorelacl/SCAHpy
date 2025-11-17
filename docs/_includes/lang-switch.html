@@ -1,30 +1,46 @@
 <script>
   function switchLang() {
     const url = new URL(window.location.href);
-    let path = url.pathname; // por ejemplo: /SCAHpy/es/01_install_es.html
+    let path = url.pathname;
 
-    // 1. Caso normal: ya estamos en /es/ o /en/
-    if (path.includes("/es/")) {
-      // Cambia carpeta y sufijo
-      path = path.replace("/es/", "/en/");
-      path = path.replace("_es.html", "_en.html");
-    } else if (path.includes("/en/")) {
-      path = path.replace("/en/", "/es/");
-      path = path.replace("_en.html", "_es.html");
-    } else {
-      // 2. Caso raro: estamos en /SCAHpy/ o /SCAHpy/index.html
-      // Usamos ruta RELATIVA para no perder el /SCAHpy
-      window.location.href = "es/index.html";
+    // Si por alguna razón caemos en /SCAHpy/ a secas, manda al home en español
+    if (path === "/SCAHpy/" || path === "/SCAHpy") {
+      url.pathname = "/SCAHpy/es/";
+      window.location.href = url.toString();
       return;
     }
 
-    url.pathname = path;
+    if (path.includes("/es/")) {
+      // ESPAÑOL → INGLÉS
+      const newPath = path
+        .replace("/es/", "/en/")
+        .replace(/\.html$/, "_en.html");   // archivo.html → archivo_en.html
+
+      url.pathname = newPath;
+      window.location.href = url.toString();
+      return;
+    }
+
+    if (path.includes("/en/")) {
+      // INGLÉS → ESPAÑOL
+      const newPath = path
+        .replace("/en/", "/es/")
+        .replace("_en.html", ".html");
+
+      url.pathname = newPath;
+      window.location.href = url.toString();
+      return;
+    }
+
+    // Fallback: manda al home español
+    url.pathname = "/SCAHpy/es/";
     window.location.href = url.toString();
   }
 </script>
 
 <div class="lang-switch" style="margin: 1rem 0;">
-  <button onclick="switchLang()">
-    Cambiar idioma
-  </button>
+  <button onclick="switchLang()">Cambiar idioma / Switch language</button>
 </div>
+
+
+

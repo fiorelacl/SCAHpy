@@ -1,0 +1,37 @@
+# Usage {.unnumbered}
+
+An overview of `scahpy` capabilities will be displayed.
+
+## Importing the Package
+
+To import all the modules in `scahpy` we can use the `*` cd as for example:
+
+```{python, eval=FALSE}
+from scahpy import *
+```
+
+To import specific modules from the package, we can specify their names:
+
+```{python, eval=FALSE}
+from scahpy import in_out, met_vars
+```
+
+## Reading WRF outputs files
+
+The WRF model can generate outputs either with one time per file or multiple times in a single file. `scahpy` is capable of handling both scenarios. For reading multiple wrfout files, you can utilize the `read_wrf_multi` function, while for reading a single file, you can use the `read_wrf_single` function.
+
+```{python, eval=FALSE}
+# Example: Reading and processing multiple WRF datasets
+sfc = in_out._drop_vars('/datos/wrfout_d01_2024-01-01_03:00:00',['RAINC', 'RAINNC', 'RAINSH', 'U10', 'V10', 'SSTSK'], model='wrf')
+files = sorted(glob.glob('/datos/wrfout_d01*'))
+ds = in_out.read_wrf_multi(files, sfc, '5 hours', -1)
+```
+
+## Calculating Precipitation
+
+`scahpy` has a module called `met_vars` designed specifically for calculating various diagnostic variables, such as precipitation, using the `calc_pp` function.
+
+```{python, eval=FALSE}
+# Example: Calculating precipitation using diagnostics module
+ds2 = met_vars.calc_pp(ds,vars_to_sum=['RAINC', 'RAINNC', 'RAINSH'],True)
+```

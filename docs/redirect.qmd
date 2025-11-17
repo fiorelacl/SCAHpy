@@ -1,0 +1,15 @@
+---
+title: "Redirigiendo…"
+format:
+  html:
+    output-file: index.html   # 👈 solo nombre, SIN rutas
+---
+
+<script>
+// En GitHub Pages la doc vive bajo /SCAHpy/
+// Redirigimos al home en español
+window.location.href = "/SCAHpy/es/";
+</script>
+
+Si no eres redirigido automáticamente, haz clic aquí:  
+👉 <a href="/SCAHpy/es/">Ir a la documentación en español</a>.
