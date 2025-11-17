@@ -225,30 +225,26 @@ ul.task-list li input[type="checkbox"] {
 <section id="qué-es-scahpy" class="level2">
 <h2 class="anchored" data-anchor-id="qué-es-scahpy"><strong>¿Qué es SCAHpy?</strong></h2>
 <p><strong>SCAHpy</strong> (System for Coupled Atmosphere–Hydrosphere Analysis in Python) es un paquete de Python de código abierto diseñado para facilitar el análisis, diagnóstico y visualización del <strong>Modelo del Sistema Terrestre Regional del IGP (IGP-RESM-COW)</strong>, un sistema acoplado océano-atmósfera que cubre el territorio peruano y el océano Pacífico oriental.</p>
-<p>El modelo <strong>IGP RESM-COW</strong> integra: el modelo atmosférico <strong>WRF</strong>, el modelo oceánico <strong>CROCO</strong> y, el acoplador <strong>OASIS</strong>.</p>
+<p>El modelo IGP RESM-COW integra: el modelo atmosférico <strong>WRF</strong>, el modelo oceánico <strong>CROCO</strong> y, el acoplador <strong>OASIS</strong>.</p>
 <div style="text-align:center;">
 <p><img src="https://github.com/fiorelacl/SCAHpy/blob/main/docs/assets/cow_model.jpg?raw=true" width="450"></p>
 </div>
-<p>Este sistema numérico ha sido implementado y operado por el <strong>Instituto Geofísico del Perú (IGP)</strong> para estudios de dinámica oceánica, procesos atmosféricos y variabilidad climática en la región peruana.</p>
+<p>Este sistema numérico ha sido implementado y operado por el <em>Instituto Geofísico del Perú (IGP)</em> para estudios de dinámica oceánica, procesos atmosféricos y variabilidad climática en la región peruana.</p>
 <p>Documentación técnica del sistema acoplado (IGP RESM-COW):</p>
 <ul>
-<li>Modelado atmosférico regional y configuración WRF:<br>
-http://hdl.handle.net/20.500.12816/5406<br>
+<li><a href="http://hdl.handle.net/20.500.12816/5406">Modelado atmosférico regional y configuración WRF</a><br>
 </li>
-<li>Configuración oceánica regional con CROCO:<br>
-http://hdl.handle.net/20.500.12816/5568<br>
+<li><a href="http://hdl.handle.net/20.500.12816/5568">Configuración oceánica regional con CROCO</a><br>
 </li>
-<li>Implementación y validación del sistema acoplado:<br>
-http://hdl.handle.net/20.500.12816/5327<br>
+<li><a href="http://hdl.handle.net/20.500.12816/5327">Implementación y validación del sistema acoplado</a><br>
 </li>
-<li>Aplicaciones del modelo en estudios del clima costero peruano:<br>
-http://hdl.handle.net/20.500.12816/5506</li>
+<li><a href="http://hdl.handle.net/20.500.12816/5506">Aplicaciones del modelo en estudios del clima costero peruano</a></li>
 </ul>
 <hr>
 </section>
 <section id="por-qué-scahpy" class="level2">
 <h2 class="anchored" data-anchor-id="por-qué-scahpy"><strong>¿Por qué SCAHpy?</strong></h2>
-<p>Tanto la componente oceánica como atmosférica del modelo IGP RESM-COW genera <strong>grandes volúmenes de información NetCDF</strong>, usualmente distribuidos en múltiples archivos diarios, mensuales o multianuales.<br>
+<p>Tanto la componente oceánica como atmosférica del modelo IGP RESM-COW genera grandes volúmenes de información NetCDF, usualmente distribuidos en múltiples archivos diarios, mensuales o multianuales.<br>
 Procesar estos datos puede ser retador debido a diferencias en:</p>
 <ul>
 <li>dimensiones y convenciones de coordenadas,<br>
@@ -265,7 +261,7 @@ Procesar estos datos puede ser retador debido a diferencias en:</p>
 </ul>
 <p><strong>SCAHpy</strong> fue creado para resolver estos desafíos proporcionando:</p>
 <ul>
-<li>funciones estandarizadas para <strong>leer</strong> salidas WRF y CROCO,<br>
+<li>funciones estandarizadas para leer salidas WRF y CROCO,<br>
 </li>
 <li>manejo robusto de coordenadas y dimensiones,<br>
 </li>
@@ -293,7 +289,7 @@ Nota
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>SCAHpy ha sido desarrollado y validado principalmente con salidas del sistema <strong>IGP RESM-COW</strong>; sin embargo, es compatible con salidas individuales del modelo <strong>WRF</strong>, <strong>CROCO</strong> o dataset NetCDF que siga las <strong>CF-Conventions</strong>.<br>
+<p>SCAHpy ha sido desarrollado y validado principalmente con salidas del sistema <strong>IGP RESM-COW</strong>; sin embargo, es compatible con salidas individuales del modelo <em>WRF</em>, <em>CROCO</em> o dataset NetCDF que siga las CF-Conventions.<br>
 ¡Estamos abiertos a contribuciones de la comunidad!</p>
 </div>
 </div>
