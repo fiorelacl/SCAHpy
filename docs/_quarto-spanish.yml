@@ -1,8 +1,18 @@
-lang: es
+lang: es-PE
 metadata-files: ["_language-es.yml"]
 
 project:
-  output-dir: ./_site/es
+  render:
+    - es/index.qmd
+    - es/01_install.qmd
+    - es/02_use.qmd
+    - es/03_tutorial_01.qmd
+    - es/03_tutorial_02.qmd
+    - es/03_tutorial_03.qmd
+    - es/04_API.qmd
+    - es/05_contrib.qmd
+    - es/06_references.qmd
+
 
 website: 
   sidebar:

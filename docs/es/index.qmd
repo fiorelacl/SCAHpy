@@ -1,3 +1,8 @@
+---
+format:
+  html:
+    output-file: index.html
+---
 # Bienvenido ✨! {.unnumbered}
 
 ## **¿Qué es SCAHpy?**

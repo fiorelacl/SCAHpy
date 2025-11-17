@@ -1,8 +1,17 @@
-lang: en
+lang: en-US
 metadata-files: ["_language-en.yml"]
 
 project:
-  output-dir: ./_site/en
+  render:
+    - en/index.qmd
+    - en/01_install.qmd
+    - en/02_use.qmd
+    - en/03_tutorial_01.qmd
+    - en/03_tutorial_02.qmd
+    - en/03_tutorial_03.qmd
+    - en/04_API.qmd
+    - en/05_contrib.qmd
+    - en/06_references.qmd
 
 website:
   sidebar:

@@ -1,9 +1,9 @@
 project:
   type: website
+  output-dir: dist
 
 profile:  
-  default: english
-  group: [english, spanish]
+  group: [spanish, english]
 
 website:
   title: 'SCAHpy'
