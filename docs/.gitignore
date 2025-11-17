@@ -7,15 +7,6 @@
 **/_freeze/
 **/cache/
 
-# Carpeta del sitio renderizado
-_site/
-docs/_site/
-es/_site/
-en/_site/
-
-# Archivos HTML renderizados localmente
-*.html
-
 # ─────────────────────────────────────────────
 # ARCHIVOS DE NOTEBOOKS O CONVERSIÓN
 # ─────────────────────────────────────────────
