@@ -244,35 +244,48 @@ div.csl-indent {
 <script>
   function switchLang() {
     const url = new URL(window.location.href);
-    let path = url.pathname; // ej: /SCAHpy/01_install_en.html
+    let path = url.pathname;
 
-    // Normalizamos: si estamos en /SCAHpy, asumimos index.html
-    if (path === "/SCAHpy" || path === "/SCAHpy/") {
-      path = "/SCAHpy/index.html";
+    // Si por alguna razón caemos en /SCAHpy/ a secas, manda al home en español
+    if (path === "/SCAHpy/" || path === "/SCAHpy") {
+      url.pathname = "/SCAHpy/es/";
+      window.location.href = url.toString();
+      return;
     }
 
-    if (path.endsWith("_en.html")) {
-      // Estamos en INGLÉS → pasar a ESPAÑOL
-      path = path.replace("_en.html", ".html");  // 01_install_en.html → 01_install.html
-    } else if (path.endsWith(".html")) {
-      // Estamos en ESPAÑOL → pasar a INGLÉS
-      const withoutHtml = path.replace(".html", "");   // 01_install.html → 01_install
-      path = withoutHtml + "_en.html";                // → 01_install_en.html
-    } else {
-      // Caso raro: no es .html → mandar a home inglés
-      path = "/SCAHpy/index_en.html";
+    if (path.includes("/es/")) {
+      // ESPAÑOL → INGLÉS
+      const newPath = path
+        .replace("/es/", "/en/")
+        .replace(/\.html$/, "_en.html");   // archivo.html → archivo_en.html
+
+      url.pathname = newPath;
+      window.location.href = url.toString();
+      return;
     }
 
-    url.pathname = path;
+    if (path.includes("/en/")) {
+      // INGLÉS → ESPAÑOL
+      const newPath = path
+        .replace("/en/", "/es/")
+        .replace("_en.html", ".html");
+
+      url.pathname = newPath;
+      window.location.href = url.toString();
+      return;
+    }
+
+    // Fallback: manda al home español
+    url.pathname = "/SCAHpy/es/";
     window.location.href = url.toString();
   }
 </script>
 
 <div class="lang-switch" style="margin: 1rem 0;">
-  <button onclick="switchLang()">
-    Cambiar idioma / Switch language
-  </button>
+  <button onclick="switchLang()">Cambiar idioma / Switch language</button>
 </div>
+
+
 
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
