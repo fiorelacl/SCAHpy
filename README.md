@@ -1,23 +1,6 @@
-<div style="text-align: center;">
-<img width="500" src="https://github.com/fiorelacl/SCAHpy/blob/main/docs/assets/cover.png?raw=true" >
-</div>
-
-<div style="
-  background-color:#f1f6ff;
-  border-left: 6px solid #4d79ff;
-  padding: 0.9em 1.1em;
-  margin: 1.4em 0;
-  border-radius: 6px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-">
-  <h3 style="margin-top:0; margin-bottom:0.4em;">📢 SCAHpy v2.0 — Major Release</h3>
-  <p style="margin:0;">
-    Version <b>2.0</b> of SCAHpy is now available with improved stability,
-    new analytical and plotting features, and a fully reorganized documentation framework.<br><br>
-    The official documentation is now provided in <b>two languages</b>: <b>English</b> and <b>Spanish</b>,
-    increasing accessibility for both regional and international research communities.
-  </p>
-</div>
+<p align="center">
+  <img width="500" src="https://github.com/fiorelacl/SCAHpy/blob/main/docs/assets/cover.png?raw=true">
+</p>
 
 <p align="center">
 
@@ -43,16 +26,40 @@
 
 </p>
 
+<table align="center" width="100%">
+<tr><td>
+
+<div style="
+  background-color:#f1f6ff;
+  border-left: 6px solid #4d79ff;
+  padding: 1em;
+  margin: 1em 0;
+  ">
+  
+  <h3 style="margin-top:0;">📢 SCAHpy v2.0 — Major Release ⭐</h3>
+
+  Version <b>2.0</b> of SCAHpy is now available with improved stability,
+  new analytical and plotting features, and a fully reorganized documentation framework.
+
+  <br><br>
+
+  The official documentation is now provided in <b>two languages</b>:
+  <b>English</b> and <b>Spanish</b>, increasing accessibility for both regional and international research communities.
+
+</div>
+
+</td></tr>
+</table>
 
 ## **What is SCAHpy?**
 
-**SCAHpy** (System for Coupled Atmosphere–Hydrosphere Analysis in Python) is an open-source scientific Python package that facilitates the analysis and visualization of outputs from the atmospheric, oceanic, and hydrological components of the Geophysical Institute of Peru Regional Earth System Model — **IGP-RESM-COW**.
+**SCAHpy** (System for Coupled Atmosphere–Hydrosphere Analysis in Python) is an open-source scientific Python package that facilitates the analysis and visualization of outputs from the atmospheric, oceanic, and hydrological components of **IGP RESM-COW** coupled model (see ref).
 
-It provides tools for processing, diagnosing, and visualizing model results in a modular and reproducible way, enabling seamless workflows for multi-component climate simulations.
+It provides tools for processing, diagnosing, and visualizing model results in a modular and reproducible way.
 
-<div style="text-align: center;">
-<img width="450" src="https://github.com/fiorelacl/SCAHpy/blob/main/docs/assets/cow_model.jpg?raw=true" >
-</div>
+<p align="center">
+<img width="500" src="https://github.com/fiorelacl/SCAHpy/blob/main/docs/assets/cow_model.jpg?raw=true" >
+</p>
 
 ## **Why SCAHpy?**
 
@@ -68,7 +75,7 @@ SCAHpy can be used as a standalone Python package or within high-performance com
 <div class="note" style='background-color:#e4f2f7; color: #1f2426; border-left: solid #add8e6 5px; border-radius: 2px; padding:0.3em;'>
 <span>
 <p style='margin-top:0.4em; text-align:left; margin-right:0.5em'>
-<b>Note:</b> <i>SCAHpy has been developed and validated using IGP-RESM-COW model outputs. However, it is fully compatible with any WRF or CROCO-based dataset or NetCDF output following CF-Conventions. Community contributions are welcome!</i>
+<b>Note:</b> <i>SCAHpy has been developed and validated using IGP RESM-COW model outputs. However, it is fully compatible with any WRF or CROCO-based dataset or NetCDF output following CF-Conventions. Community contributions are welcome!</i>
 </p>
 </span>
 </div>
