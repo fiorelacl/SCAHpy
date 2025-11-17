@@ -2,7 +2,7 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Bienvenido ✨!",
+    "title": "Bienvenido ✨!!",
     "section": "",
     "text": "⚠️ Actualizando documentación / Updating documentation (v1 → v2)\n  Algunos contenidos pueden estar en revisión · Some sections may be under revision.",
     "crumbs": [
@@ -12,9 +12,9 @@
   {
     "objectID": "index.html#qué-es-scahpy",
     "href": "index.html#qué-es-scahpy",
-    "title": "Bienvenido ✨!",
+    "title": "Bienvenido ✨!!",
     "section": "¿Qué es SCAHpy?",
-    "text": "¿Qué es SCAHpy?\nSCAHpy es un paquete de Python de código abierto desarrollado como herramienta de posprocesamiento para los componentes atmosférico, oceánico e hidrológico del Modelo del Sistema Terrestre Regional (Regional Earth System Model) que cubre el territorio peruano y el océano Pacífico.\nEste modelo, denominado IGP-RESM-COW v1, fue implementado por el Instituto Geofísico del Perú (IGP) sobre la base del modelo atmosférico WRF, el modelo oceánico CROCO y el acoplador OASIS.",
+    "text": "¿Qué es SCAHpy?\nSCAHpy (System for Coupled Atmosphere–Hydrosphere Analysis in Python) es un paquete de Python de código abierto diseñado para facilitar el análisis, diagnóstico y visualización del Modelo del Sistema Terrestre Regional del IGP (IGP-RESM-COW), un sistema acoplado océano-atmósfera que cubre el territorio peruano y el océano Pacífico oriental.\nEl modelo IGP RESM-COW integra: el modelo atmosférico WRF, el modelo oceánico CROCO y, el acoplador OASIS.\n\n\n\nEste sistema numérico ha sido implementado y operado por el Instituto Geofísico del Perú (IGP) para estudios de dinámica oceánica, procesos atmosféricos y variabilidad climática en la región peruana.\nDocumentación técnica del sistema acoplado (IGP RESM-COW):\n\nModelado atmosférico regional y configuración WRF:\nhttp://hdl.handle.net/20.500.12816/5406\n\nConfiguración oceánica regional con CROCO:\nhttp://hdl.handle.net/20.500.12816/5568\n\nImplementación y validación del sistema acoplado:\nhttp://hdl.handle.net/20.500.12816/5327\n\nAplicaciones del modelo en estudios del clima costero peruano:\nhttp://hdl.handle.net/20.500.12816/5506",
     "crumbs": [
       "Introducción"
     ]
@@ -22,9 +22,9 @@
   {
     "objectID": "index.html#por-qué-scahpy",
     "href": "index.html#por-qué-scahpy",
-    "title": "Bienvenido ✨!",
+    "title": "Bienvenido ✨!!",
     "section": "¿Por qué SCAHpy?",
-    "text": "¿Por qué SCAHpy?\nEl paquete SCAHpy fue creado para abordar el desafío que representa el procesamiento de los grandes volúmenes de datos generados por el modelo IGP-RESM-COW.\nEste modelo, con su componente atmosférico basado en WRF, produce cantidades masivas de información durante las simulaciones, lo que demanda un tiempo considerable para su análisis.\nSCAHpy agiliza este proceso homogeneizando coordenadas y dimensiones, garantizando la compatibilidad y facilitando el análisis de los datos.\nAl simplificar la manipulación y preparación de la información, reduce significativamente el tiempo requerido para el posprocesamiento científico.",
+    "text": "¿Por qué SCAHpy?\nTanto la componente oceánica como atmosférica del modelo IGP RESM-COW genera grandes volúmenes de información NetCDF, usualmente distribuidos en múltiples archivos diarios, mensuales o multianuales.\nProcesar estos datos puede ser retador debido a diferencias en:\n\ndimensiones y convenciones de coordenadas,\n\nniveles verticales (sigma, niveles de presión),\n\ncalendarios y zonas horarias,\n\nconcatenación temporal,\n\nextracción de cortes horizontales y verticales,\n\ngeneración de productos reproducibles para análisis científico.\n\nSCAHpy fue creado para resolver estos desafíos proporcionando:\n\nfunciones estandarizadas para leer salidas WRF y CROCO,\n\nmanejo robusto de coordenadas y dimensiones,\n\ntransformación vertical (sigma → presión),\n\ndiagnósticos atmosféricos y oceánicos,\n\nvisualización de alto nivel (mapas, secciones, series de tiempo),\n\nflujos de trabajo reproducibles tanto en entornos locales como en HPC.\n\nSCAHpy reduce significativamente el tiempo necesario para el posprocesamiento científico y permite enfocarse en la interpretación física de los resultados.",
     "crumbs": [
       "Introducción"
     ]
@@ -32,9 +32,39 @@
   {
     "objectID": "index.html#cómo-usar-scahpy",
     "href": "index.html#cómo-usar-scahpy",
-    "title": "Bienvenido ✨!",
+    "title": "Bienvenido ✨!!",
     "section": "¿Cómo usar SCAHpy?",
-    "text": "¿Cómo usar SCAHpy?\nSCAHpy puede emplearse como un paquete independiente.\nPara más detalles, consulta la sección Uso y los tutoriales que se presentan a continuación.\n\n\n\n\n\n\nNota\n\n\n\nSCAHpy ha sido desarrollado y probado con las salidas del modelo IGP-RESM-COW v1.\nSin embargo, está diseñado para trabajar con cualquier salida del modelo WRF.\n¡Estamos abiertos a contribuciones de la comunidad!\n\n\n\nPrimeros pasos\n\nInstalación\nUso\n\n\n\nTutoriales\n\nLectura de archivos individuales\nLectura de múltiples archivos\nVariables en niveles de presión\n\n\n\nAyuda y referencias\n\nReferencia de la API\nContribución",
+    "text": "¿Cómo usar SCAHpy?\nPara comenzar, consulta la sección Uso y los tutoriales presentados más abajo.\n\n\n\n\n\n\nNota\n\n\n\nSCAHpy ha sido desarrollado y validado principalmente con salidas del sistema IGP RESM-COW; sin embargo, es compatible con salidas individuales del modelo WRF, CROCO o dataset NetCDF que siga las CF-Conventions.\n¡Estamos abiertos a contribuciones de la comunidad!",
+    "crumbs": [
+      "Introducción"
+    ]
+  },
+  {
+    "objectID": "index.html#primeros-pasos",
+    "href": "index.html#primeros-pasos",
+    "title": "Bienvenido ✨!!",
+    "section": "Primeros pasos",
+    "text": "Primeros pasos\n\nInstalación\nUso",
+    "crumbs": [
+      "Introducción"
+    ]
+  },
+  {
+    "objectID": "index.html#tutoriales",
+    "href": "index.html#tutoriales",
+    "title": "Bienvenido ✨!!",
+    "section": "Tutoriales",
+    "text": "Tutoriales\n\nLectura de archivos individuales\nLectura de múltiples archivos\nVariables en niveles de presión",
+    "crumbs": [
+      "Introducción"
+    ]
+  },
+  {
+    "objectID": "index.html#ayuda-y-referencias",
+    "href": "index.html#ayuda-y-referencias",
+    "title": "Bienvenido ✨!!",
+    "section": "Ayuda y referencias",
+    "text": "Ayuda y referencias\n\nReferencia de la API\nContribución",
     "crumbs": [
       "Introducción"
     ]

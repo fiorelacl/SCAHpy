@@ -198,16 +198,14 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Contenido</h2>
    
   <ul>
-  <li><a href="#bienvenido" id="toc-bienvenido" class="nav-link active" data-scroll-target="#bienvenido">Bienvenido ✨!</a>
+  <li><a href="#bienvenido" id="toc-bienvenido" class="nav-link active" data-scroll-target="#bienvenido">Bienvenido ✨!!</a>
   <ul class="collapse">
   <li><a href="#qué-es-scahpy" id="toc-qué-es-scahpy" class="nav-link" data-scroll-target="#qué-es-scahpy"><strong>¿Qué es SCAHpy?</strong></a></li>
   <li><a href="#por-qué-scahpy" id="toc-por-qué-scahpy" class="nav-link" data-scroll-target="#por-qué-scahpy"><strong>¿Por qué SCAHpy?</strong></a></li>
-  <li><a href="#cómo-usar-scahpy" id="toc-cómo-usar-scahpy" class="nav-link" data-scroll-target="#cómo-usar-scahpy"><strong>¿Cómo usar SCAHpy?</strong></a>
-  <ul class="collapse">
+  <li><a href="#cómo-usar-scahpy" id="toc-cómo-usar-scahpy" class="nav-link" data-scroll-target="#cómo-usar-scahpy"><strong>¿Cómo usar SCAHpy?</strong></a></li>
   <li><a href="#primeros-pasos" id="toc-primeros-pasos" class="nav-link" data-scroll-target="#primeros-pasos"><strong>Primeros pasos</strong></a></li>
   <li><a href="#tutoriales" id="toc-tutoriales" class="nav-link" data-scroll-target="#tutoriales"><strong>Tutoriales</strong></a></li>
   <li><a href="#ayuda-y-referencias" id="toc-ayuda-y-referencias" class="nav-link" data-scroll-target="#ayuda-y-referencias"><strong>Ayuda y referencias</strong></a></li>
-  </ul></li>
   </ul></li>
   </ul>
 </nav>
@@ -223,26 +221,68 @@ ul.task-list li input[type="checkbox"] {
 
 
 <section id="bienvenido" class="level1 unnumbered">
-<h1 class="unnumbered">Bienvenido ✨!</h1>
+<h1 class="unnumbered">Bienvenido ✨!!</h1>
 <section id="qué-es-scahpy" class="level2">
 <h2 class="anchored" data-anchor-id="qué-es-scahpy"><strong>¿Qué es SCAHpy?</strong></h2>
-<p><strong>SCAHpy</strong> es un paquete de Python de código abierto desarrollado como herramienta de posprocesamiento para los componentes atmosférico, oceánico e hidrológico del Modelo del Sistema Terrestre Regional (<em>Regional Earth System Model</em>) que cubre el territorio peruano y el océano Pacífico.<br>
-Este modelo, denominado <em>IGP-RESM-COW v1</em>, fue implementado por el <em>Instituto Geofísico del Perú</em> (IGP) sobre la base del modelo atmosférico <em>WRF</em>, el modelo oceánico <em>CROCO</em> y el acoplador <em>OASIS</em>.</p>
+<p><strong>SCAHpy</strong> (System for Coupled Atmosphere–Hydrosphere Analysis in Python) es un paquete de Python de código abierto diseñado para facilitar el análisis, diagnóstico y visualización del <strong>Modelo del Sistema Terrestre Regional del IGP (IGP-RESM-COW)</strong>, un sistema acoplado océano-atmósfera que cubre el territorio peruano y el océano Pacífico oriental.</p>
+<p>El modelo <strong>IGP RESM-COW</strong> integra: el modelo atmosférico <strong>WRF</strong>, el modelo oceánico <strong>CROCO</strong> y, el acoplador <strong>OASIS</strong>.</p>
 <div style="text-align:center;">
 <p><img src="https://github.com/fiorelacl/SCAHpy/blob/main/docs/assets/cow_model.jpg?raw=true" width="450"></p>
 </div>
+<p>Este sistema numérico ha sido implementado y operado por el <strong>Instituto Geofísico del Perú (IGP)</strong> para estudios de dinámica oceánica, procesos atmosféricos y variabilidad climática en la región peruana.</p>
+<p>Documentación técnica del sistema acoplado (IGP RESM-COW):</p>
+<ul>
+<li>Modelado atmosférico regional y configuración WRF:<br>
+http://hdl.handle.net/20.500.12816/5406<br>
+</li>
+<li>Configuración oceánica regional con CROCO:<br>
+http://hdl.handle.net/20.500.12816/5568<br>
+</li>
+<li>Implementación y validación del sistema acoplado:<br>
+http://hdl.handle.net/20.500.12816/5327<br>
+</li>
+<li>Aplicaciones del modelo en estudios del clima costero peruano:<br>
+http://hdl.handle.net/20.500.12816/5506</li>
+</ul>
+<hr>
 </section>
 <section id="por-qué-scahpy" class="level2">
 <h2 class="anchored" data-anchor-id="por-qué-scahpy"><strong>¿Por qué SCAHpy?</strong></h2>
-<p>El paquete SCAHpy fue creado para abordar el desafío que representa el procesamiento de los grandes volúmenes de datos generados por el modelo IGP-RESM-COW.<br>
-Este modelo, con su componente atmosférico basado en WRF, produce cantidades masivas de información durante las simulaciones, lo que demanda un tiempo considerable para su análisis.<br>
-SCAHpy agiliza este proceso homogeneizando coordenadas y dimensiones, garantizando la compatibilidad y facilitando el análisis de los datos.<br>
-Al simplificar la manipulación y preparación de la información, reduce significativamente el tiempo requerido para el posprocesamiento científico.</p>
+<p>Tanto la componente oceánica como atmosférica del modelo IGP RESM-COW genera <strong>grandes volúmenes de información NetCDF</strong>, usualmente distribuidos en múltiples archivos diarios, mensuales o multianuales.<br>
+Procesar estos datos puede ser retador debido a diferencias en:</p>
+<ul>
+<li>dimensiones y convenciones de coordenadas,<br>
+</li>
+<li>niveles verticales (sigma, niveles de presión),<br>
+</li>
+<li>calendarios y zonas horarias,<br>
+</li>
+<li>concatenación temporal,<br>
+</li>
+<li>extracción de cortes horizontales y verticales,<br>
+</li>
+<li>generación de productos reproducibles para análisis científico.</li>
+</ul>
+<p><strong>SCAHpy</strong> fue creado para resolver estos desafíos proporcionando:</p>
+<ul>
+<li>funciones estandarizadas para <strong>leer</strong> salidas WRF y CROCO,<br>
+</li>
+<li>manejo robusto de coordenadas y dimensiones,<br>
+</li>
+<li>transformación vertical (sigma → presión),<br>
+</li>
+<li>diagnósticos atmosféricos y oceánicos,<br>
+</li>
+<li>visualización de alto nivel (mapas, secciones, series de tiempo),<br>
+</li>
+<li>flujos de trabajo reproducibles tanto en entornos locales como en HPC.</li>
+</ul>
+<p>SCAHpy reduce significativamente el tiempo necesario para el posprocesamiento científico y permite enfocarse en la interpretación física de los resultados.</p>
+<hr>
 </section>
 <section id="cómo-usar-scahpy" class="level2">
 <h2 class="anchored" data-anchor-id="cómo-usar-scahpy"><strong>¿Cómo usar SCAHpy?</strong></h2>
-<p>SCAHpy puede emplearse como un paquete independiente.<br>
-Para más detalles, consulta la sección <strong><a href="./02_use.html">Uso</a></strong> y los tutoriales que se presentan a continuación.</p>
+<p>Para comenzar, consulta la sección <strong><a href="./02_use.html">Uso</a></strong> y los tutoriales presentados más abajo.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -253,35 +293,37 @@ Nota
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>SCAHpy ha sido desarrollado y probado con las salidas del modelo <strong>IGP-RESM-COW v1</strong>.<br>
-Sin embargo, está diseñado para trabajar con cualquier salida del modelo <strong>WRF</strong>.<br>
+<p>SCAHpy ha sido desarrollado y validado principalmente con salidas del sistema <strong>IGP RESM-COW</strong>; sin embargo, es compatible con salidas individuales del modelo <strong>WRF</strong>, <strong>CROCO</strong> o dataset NetCDF que siga las <strong>CF-Conventions</strong>.<br>
 ¡Estamos abiertos a contribuciones de la comunidad!</p>
 </div>
 </div>
-<section id="primeros-pasos" class="level3">
-<h3 class="anchored" data-anchor-id="primeros-pasos"><strong>Primeros pasos</strong></h3>
+<hr>
+</section>
+<section id="primeros-pasos" class="level2">
+<h2 class="anchored" data-anchor-id="primeros-pasos"><strong>Primeros pasos</strong></h2>
 <ul>
 <li><strong><a href="./01_install.html">Instalación</a></strong></li>
 <li><strong><a href="./02_use.html">Uso</a></strong></li>
 </ul>
+<hr>
 </section>
-<section id="tutoriales" class="level3">
-<h3 class="anchored" data-anchor-id="tutoriales"><strong>Tutoriales</strong></h3>
+<section id="tutoriales" class="level2">
+<h2 class="anchored" data-anchor-id="tutoriales"><strong>Tutoriales</strong></h2>
 <ul>
 <li><strong><a href="./03_tutorial_01.html">Lectura de archivos individuales</a></strong></li>
 <li><strong><a href="./03_tutorial_02.html">Lectura de múltiples archivos</a></strong></li>
 <li><strong><a href="./03_tutorial_03.html">Variables en niveles de presión</a></strong></li>
 </ul>
+<hr>
 </section>
-<section id="ayuda-y-referencias" class="level3">
-<h3 class="anchored" data-anchor-id="ayuda-y-referencias"><strong>Ayuda y referencias</strong></h3>
+<section id="ayuda-y-referencias" class="level2">
+<h2 class="anchored" data-anchor-id="ayuda-y-referencias"><strong>Ayuda y referencias</strong></h2>
 <ul>
 <li><strong><a href="./04_API.html">Referencia de la API</a></strong></li>
 <li><strong><a href="./05_contrib.html">Contribución</a></strong></li>
 </ul>
 
 
-</section>
 </section>
 </section>
 
@@ -324,12 +366,68 @@ Sin embargo, está diseñado para trabajar con cualquier salida del modelo <stro
     url.pathname = "/SCAHpy/es/";
     window.location.href = url.toString();
   }
+
+  // Ajustar el texto del botón según el idioma actual
+  window.addEventListener("DOMContentLoaded", () => {
+    const btn = document.getElementById("lang-switch-btn");
+    if (!btn) return;
+
+    const path = window.location.pathname;
+
+    if (path.includes("/es/")) {
+      btn.textContent = "English";
+    } else if (path.includes("/en/")) {
+      btn.textContent = "Español";
+    } else {
+      // Fallback genérico
+      btn.textContent = "Cambiar idioma";
+    }
+  });
 </script>
 
-<div class="lang-switch" style="margin: 1rem 0;">
-  <button onclick="switchLang()">Cambiar idioma / Switch language</button>
-</div>
+<style>
+  .lang-switch {
+    position: fixed;
+    right: 1.25rem;
+    bottom: 1.25rem;
+    z-index: 2000;
+  }
 
+  .lang-switch button {
+    background-color: #ffffff;
+    border: 1px solid #0b3c7e;
+    color: #0b3c7e;
+    padding: 0.4rem 0.9rem;
+    border-radius: 999px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    white-space: nowrap;
+  }
+
+  .lang-switch button:hover {
+    background-color: #0b3c7e;
+    color: #ffffff;
+  }
+
+  @media (max-width: 768px) {
+    .lang-switch {
+      right: 0.75rem;
+      bottom: 0.75rem;
+    }
+
+    .lang-switch button {
+      font-size: 0.8rem;
+      padding: 0.35rem 0.75rem;
+    }
+  }
+</style>
+
+<div class="lang-switch">
+  <button id="lang-switch-btn" onclick="switchLang()">
+    Cambiar idioma
+  </button>
+</div>
 
 
 <script id="quarto-html-after-body" type="application/javascript">
