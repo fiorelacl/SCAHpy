@@ -56,7 +56,7 @@
 It provides tools for processing, diagnosing, and visualizing model results in a modular and reproducible way.
 
 <p align="center">
-<img width="500" src="https://github.com/fiorelacl/SCAHpy/blob/main/docs/assets/cow_model.jpg?raw=true" >
+<img wodth="300" src="https://github.com/fiorelacl/SCAHpy/blob/main/docs/assets/cow_model.jpg?raw=true" >
 </p>
 
 ## **Why SCAHpy?**
