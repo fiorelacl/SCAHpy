@@ -234,9 +234,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#installation" id="toc-installation" class="nav-link active" data-scroll-target="#installation">Installation</a>
   <ul class="collapse">
-  <li><a href="#required-dependencies" id="toc-required-dependencies" class="nav-link" data-scroll-target="#required-dependencies">Required dependencies:</a></li>
-  <li><a href="#optional-dependencies" id="toc-optional-dependencies" class="nav-link" data-scroll-target="#optional-dependencies">Optional dependencies:</a></li>
-  <li><a href="#step-by-step-instructions" id="toc-step-by-step-instructions" class="nav-link" data-scroll-target="#step-by-step-instructions">Step-by-step instructions</a></li>
+  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link" data-scroll-target="#prerequisites">1. Prerequisites</a></li>
+  <li><a href="#step-by-step-instructions" id="toc-step-by-step-instructions" class="nav-link" data-scroll-target="#step-by-step-instructions"><strong>Step-by-step instructions</strong></a>
+  <ul class="collapse">
+  <li><a href="#windows" id="toc-windows" class="nav-link" data-scroll-target="#windows"><strong>Windows</strong></a></li>
+  <li><a href="#macos" id="toc-macos" class="nav-link" data-scroll-target="#macos"><strong>macOS</strong></a></li>
+  <li><a href="#linux" id="toc-linux" class="nav-link" data-scroll-target="#linux"><strong>Linux</strong></a></li>
+  </ul></li>
+  <li><a href="#using-conda" id="toc-using-conda" class="nav-link" data-scroll-target="#using-conda"><strong>Using Conda</strong></a>
+  <ul class="collapse">
+  <li><a href="#download-and-install-miniforge" id="toc-download-and-install-miniforge" class="nav-link" data-scroll-target="#download-and-install-miniforge">1. Download and install Miniforge</a></li>
+  <li><a href="#create-a-new-conda-environment-and-install-scahpy" id="toc-create-a-new-conda-environment-and-install-scahpy" class="nav-link" data-scroll-target="#create-a-new-conda-environment-and-install-scahpy">2. Create a new Conda environment and install SCAHpy</a></li>
+  </ul></li>
+  <li><a href="#using-mamba" id="toc-using-mamba" class="nav-link" data-scroll-target="#using-mamba"><strong>Using Mamba</strong></a>
+  <ul class="collapse">
+  <li><a href="#download-and-install-mamba" id="toc-download-and-install-mamba" class="nav-link" data-scroll-target="#download-and-install-mamba">1. Download and install Mamba</a></li>
+  <li><a href="#install-scahpy-and-dependencies" id="toc-install-scahpy-and-dependencies" class="nav-link" data-scroll-target="#install-scahpy-and-dependencies">2. Install SCAHpy and dependencies</a></li>
+  </ul></li>
+  <li><a href="#using-pip" id="toc-using-pip" class="nav-link" data-scroll-target="#using-pip"><strong>Using pip</strong></a></li>
   </ul></li>
   </ul>
 </nav>
@@ -251,111 +266,124 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="installation" class="level1 unnumbered">
-<h1 class="unnumbered">Installation</h1>
-<p>If you would like to use <strong>SCAHpy</strong> for your own datasets and run it on a local machine or server, you will need to download and install it first.</p>
-<section id="required-dependencies" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="required-dependencies">Required dependencies:</h2>
+<section id="installation" class="level1">
+<h1>Installation</h1>
+<p>This section describes the recommended methods for installing <strong>SCAHpy</strong>, both in local environments and on high-performance computing (HPC) clusters. The package is designed to work within modern scientific ecosystems that mainly rely on <strong>xarray</strong>, <strong>netCDF4</strong>, <strong>matplotlib</strong>.</p>
+<hr>
+<section id="prerequisites" class="level2">
+<h2 class="anchored" data-anchor-id="prerequisites">1. Prerequisites</h2>
+<p>Before installing SCAHpy, verify the following:</p>
 <ul>
-<li>Python &gt;= 3.9</li>
-<li><a href="http://xarray.pydata.org/">xarray</a></li>
-<li><a href="https://github.com/NCAR/wrf-python">wrf-python</a></li>
-<li><a href="https://unidata.github.io/netcdf4-python">netCDF4</a></li>
-<li><a href="http://distributed.dask.org/">Dask</a></li>
+<li><strong>Python</strong> version <strong>3.9</strong> or higher</li>
+<li><strong>mamba</strong> or <strong>conda</strong> installed (recommended)</li>
+<li>Internet access to download dependencies from <em>conda-forge</em> or PyPI</li>
+<li>On HPC systems, make sure to install in your <strong>HOME</strong> directory (avoid system paths)</li>
+</ul>
+<p>Optional packages:</p>
+<ul>
+<li><code>cartopy</code> for geographic visualization</li>
+<li><code>dask</code> for parallel processing (highly recommended on HPC)</li>
+<li><code>jupyterlab</code> for interactive environments</li>
 </ul>
 </section>
-<section id="optional-dependencies" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="optional-dependencies">Optional dependencies:</h2>
-<p>For optimal performance, it is highly recommended that you install the following dependencies:</p>
+<section id="step-by-step-instructions" class="level2">
+<h2 class="anchored" data-anchor-id="step-by-step-instructions"><strong>Step-by-step instructions</strong></h2>
+<p>These instructions should work across most operating systems, including <em>Windows</em>, <em>macOS</em>, and <em>Linux</em>, as <code>Conda</code> and <code>Miniforge</code> are designed to be cross-platform. However, slight differences in installation steps or command syntax may occur depending on the system.</p>
+<p>To ensure clarity and compatibility across all platforms, consider the following:</p>
+<section id="windows" class="level3">
+<h3 class="anchored" data-anchor-id="windows"><strong>Windows</strong></h3>
 <ul>
-<li><a href="https://github.com/kwgoodman/bottleneck">bottleneck</a></li>
-<li><a href="https://scitools.org.uk/cartopy">Cartopy</a></li>
-<li><a href="https://ipython.org/">IPython</a></li>
-<li><a href="https://jupyterlab.readthedocs.io/en/latest/">JupyterLab</a></li>
+<li>You may need to open the terminal or Command Prompt as an administrator to execute certain commands.</li>
+<li>Paths in the terminal must use backslashes (<code>\</code>) instead of slashes (<code>/</code>).</li>
 </ul>
 </section>
-<section id="step-by-step-instructions" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="step-by-step-instructions">Step-by-step instructions</h2>
-<p>These instructions should function in most operating systems, including <em>Windows</em>, <em>macOS</em>, and <em>Linux</em>, as <code>Conda</code> and <code>Miniforge</code> are designed to be cross-platform. However, there might be slight differences in the installation process or command syntax depending on the operating system.</p>
-<p>To ensure clarity and compatibility across all operating systems, consider the following:</p>
+<section id="macos" class="level3">
+<h3 class="anchored" data-anchor-id="macos"><strong>macOS</strong></h3>
 <ul>
-<li><strong>Windows:</strong>
-<ul>
-<li>Users might need to open the terminal or command prompt as an administrator to execute some commands.</li>
-<li>Paths in the terminal should use backslashes (<code>\</code>) instead of forward slashes (<code>/</code>).</li>
-</ul></li>
-<li><strong>macOS:</strong>
-<ul>
-<li>Users may need to install command-line developer tools if they haven’t done so already. This can be done by running <code>xcode-select --install</code> in the terminal.</li>
-<li>Ensure that users have permission to execute scripts and install packages.</li>
-</ul></li>
-<li><strong>Linux:</strong>
-<ul>
-<li>Some Linux distributions might require additional dependencies or configurations for Conda or Miniforge to work properly. It’s advisable to consult the documentation specific to the Linux distribution being used.</li>
-</ul></li>
+<li>Users may need to install the <em>Command Line Developer Tools</em> if they have not already done so. This can be done by running <code>xcode-select --install</code> in the terminal.</li>
+<li>Ensure the user has permission to execute scripts and install packages.</li>
 </ul>
-<section id="using-conda" class="level4">
-<h4 class="anchored" data-anchor-id="using-conda"><strong>Using Conda</strong></h4>
-<ol type="1">
-<li><p><strong>Download and Install Miniforge:</strong></p>
+</section>
+<section id="linux" class="level3">
+<h3 class="anchored" data-anchor-id="linux"><strong>Linux</strong></h3>
 <ul>
-<li><p>Before installing <code>scahpy</code>, you need to ensure that you have Conda installed on your system. Miniforge is a minimal distribution of Conda that includes essential tools for package management.</p></li>
-<li><p>Go to the <a href="https://github.com/conda-forge/miniforge">Miniforge GitHub page</a> and follow the instructions to download and install Miniforge suitable for your operating system.</p></li>
-</ul></li>
-<li><p><strong>Create a New Conda Environment and Install SCAHpy:</strong></p>
+<li>Some Linux distributions may require additional dependencies or configurations for Conda or Miniforge to work correctly. It is advisable to check the documentation of the specific distribution.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="using-conda" class="level2">
+<h2 class="anchored" data-anchor-id="using-conda"><strong>Using Conda</strong></h2>
+<section id="download-and-install-miniforge" class="level3">
+<h3 class="anchored" data-anchor-id="download-and-install-miniforge">1. Download and install Miniforge</h3>
 <ul>
-<li><p>Once Conda is installed, you can create a new Conda environment specifically for <code>scahpy</code> and its dependencies. To do this, you’ll use an environment file called <code>environment.yml</code>, which contains a list of packages and their versions required for <code>scahpy</code> to function properly.</p></li>
+<li><p>Before installing <code>scahpy</code>, ensure that Conda is installed on your system. Miniforge is a minimal Conda distribution that includes the essential tools for environment and package management.</p></li>
+<li><p>Visit the <a href="https://github.com/conda-forge/miniforge">Miniforge GitHub page</a> and follow the instructions to download and install the version appropriate for your operating system.</p></li>
+</ul>
+</section>
+<section id="create-a-new-conda-environment-and-install-scahpy" class="level3">
+<h3 class="anchored" data-anchor-id="create-a-new-conda-environment-and-install-scahpy">2. Create a new Conda environment and install SCAHpy</h3>
+<ul>
+<li><p>Once Conda is installed, you can create a dedicated environment for <code>scahpy</code> and its dependencies. This is done using an <code>environment.yml</code> file, which contains the list of packages and versions required for SCAHpy.</p></li>
 <li><p>Download the <code>environment.yml</code> file from the <a href="https://github.com/fiorelacl/SCAHpy/blob/4ec3cca0a13444411a0dcb28221f3ee982a2594b/environment.yml">SCAHpy GitHub repository</a>.</p></li>
-<li><p>Open a terminal or command prompt and navigate to the directory where the <code>environment.yml</code> file is located.</p></li>
-<li><p>Run the following command to create a new Conda environment named <code>scahpy_env</code> and install all the packages listed in the <code>environment.yml</code> file:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> env create <span class="at">--file</span> environment.yml <span class="at">-n</span> scahpy_env</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
-<li><p>This command will create a new Conda environment named <code>scahpy_env</code> and install all the required dependencies listed in the <code>environment.yml</code> file into this environment.</p></li>
-<li><p>Once the environment is created, activate it using the following command:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate scahpy_env</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
-</ul></li>
-</ol>
-<p>By following these steps, you’ll have <code>scahpy</code> and all its dependencies installed and ready to use in your Conda environment.</p>
-</section>
-<section id="using-mamba" class="level4">
-<h4 class="anchored" data-anchor-id="using-mamba"><strong>Using Mamba</strong></h4>
-<ol type="1">
-<li><p><strong>Download and Install Mamba:</strong> Before installing <code>scahpy</code>, you need to ensure that you have Mamba installed on your system. Mamba is a package manager for Conda environments and can be installed via Miniforge, which is a minimal distribution of Conda that includes Mamba.</p>
+<li><p>Open a terminal and navigate to the directory where the <code>environment.yml</code> file is located.</p></li>
+<li><p>Run the following command to create a Conda environment named <code>scahpy_env</code> and install all required dependencies:</p></li>
+</ul>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> env create <span class="at">--file</span> environment.yml <span class="at">-n</span> scahpy_env</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
-<li>Go to the <a href="https://github.com/conda-forge/miniforge">Miniforge GitHub page</a> and follow the instructions to download and install Miniforge suitable for your operating system.</li>
-</ul></li>
-<li><p><strong>Install SCAHpy and Dependencies:</strong></p>
-<ul>
-<li><p>The easiest and recommended way to install <code>scahpy</code> along with its required dependencies is by using an environment file called <code>environment.yml</code>. This file contains a list of packages and their versions that are needed for <code>scahpy</code> to function properly.</p></li>
-<li><p>Download the <code>environment.yml</code> file from the <a href="https://github.com/fiorelacl/SCAHpy/blob/4ec3cca0a13444411a0dcb28221f3ee982a2594b/environment.yml">SCAHpy GitHub repository</a>.</p></li>
-<li><p>Open a terminal or command prompt and navigate to the directory where the <code>environment.yml</code> file is located.</p></li>
-<li><p>Run the following command to create a new Conda environment named <code>scahpy_env</code> and install all the packages listed in the <code>environment.yml</code> file:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> env create <span class="at">--file</span> environment.yml <span class="at">-n</span> scahpy_env</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
-<li><p>This command will create a new Conda environment named <code>scahpy_env</code> and install all the required dependencies listed in the <code>environment.yml</code> file into this environment.</p></li>
-</ul></li>
-</ol>
-<p>By following these steps, you’ll have <code>scahpy</code> and all its dependencies installed and ready to use in your Python environment.</p>
+<li><p>This command will create the new environment and install all packages listed in <code>environment.yml</code>.</p></li>
+<li><p>Once created, activate the environment:</p></li>
+</ul>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate scahpy_env</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>After this, <code>scahpy</code> and all its dependencies will be installed and ready to use in your Conda environment.</p>
+<hr>
 </section>
-<section id="using-pip" class="level4">
-<h4 class="anchored" data-anchor-id="using-pip"><strong>Using pip</strong></h4>
+</section>
+<section id="using-mamba" class="level2">
+<h2 class="anchored" data-anchor-id="using-mamba"><strong>Using Mamba</strong></h2>
+<section id="download-and-install-mamba" class="level3">
+<h3 class="anchored" data-anchor-id="download-and-install-mamba">1. Download and install Mamba</h3>
+<p>Before installing <code>scahpy</code>, ensure that Mamba is installed. Mamba is a very fast package manager compatible with Conda and can be installed via Miniforge.</p>
+<ul>
+<li>Visit the <a href="https://github.com/conda-forge/miniforge">Miniforge GitHub page</a> and download the appropriate version for your operating system.</li>
+</ul>
+</section>
+<section id="install-scahpy-and-dependencies" class="level3">
+<h3 class="anchored" data-anchor-id="install-scahpy-and-dependencies">2. Install SCAHpy and dependencies</h3>
+<ul>
+<li><p>The recommended approach to install <code>scahpy</code> together with all required dependencies is to use the <code>environment.yml</code> file.</p></li>
+<li><p>Download the file from the <a href="https://github.com/fiorelacl/SCAHpy/blob/4ec3cca0a13444411a0dcb28221f3ee982a2594b/environment.yml">SCAHpy GitHub repository</a>.</p></li>
+<li><p>From the terminal, navigate to the directory where the file is located and run:</p></li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> env create <span class="at">--file</span> environment.yml <span class="at">-n</span> scahpy_env</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li>This will create a Conda environment called <code>scahpy_env</code> and install all necessary packages.</li>
+</ul>
+<p>Once the process completes, the environment will be ready to run <code>scahpy</code>.</p>
+<hr>
+</section>
+</section>
+<section id="using-pip" class="level2">
+<h2 class="anchored" data-anchor-id="using-pip"><strong>Using pip</strong></h2>
 <ol type="1">
-<li><p>First, ensure you have Python and pip installed on your system. You can download and install Python from the <a href="https://www.python.org/downloads/">official Python website</a>, which usually includes pip by default.</p></li>
-<li><p>The easiest way to install <code>scahpy</code> and its dependencies is by creating a virtual environment and installing from a requirements file. Open a terminal or command prompt, then run the following commands:</p></li>
+<li><p>First, make sure you have Python and pip installed. You can download Python from the <a href="https://www.python.org/downloads/">official Python website</a>; pip is usually included by default.</p></li>
+<li><p>The simplest way to install <code>scahpy</code> and its dependencies using pip is to create a virtual environment and install the packages using a <code>requirements.txt</code> file.</p></li>
 </ol>
+<p>In the terminal:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a virtual environment (optional but recommended)</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> venv scahpy_env</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Activate the virtual environment</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># On Windows</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Activate the virtual environment</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># On Windows:</span></span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="ex">scahpy_env\Scripts\activate</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># On macOS/Linux</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># On macOS/Linux:</span></span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> scahpy_env/bin/activate</span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Install scahpy and dependencies from requirements.txt</span></span>
 <span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">-r</span> requirements.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>In this example, <code>requirements.txt</code> is a file containing a list of dependencies including <code>scahpy</code>. You would need to provide or generate this file yourself, listing all necessary packages and their versions: <code>wrf-python, netCDF4, xarray, numpy, pandas, matplotlib, cartopy, geopandas, datetime, scahpy</code>.</p>
+<p>In this example, <code>requirements.txt</code> should contain the list of dependencies—including <code>scahpy</code>—with their corresponding versions. This file must be created beforehand; you may use the previously provided environment.yml as reference.</p>
 
 
-</section>
 </section>
 </section>
 
