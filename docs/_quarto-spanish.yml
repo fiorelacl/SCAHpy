@@ -2,8 +2,8 @@ lang: es-PE
 metadata-files: ["_language-es.yml"]
 
 project:
+  output-dir: dist/es
   render:
-    - es/index.qmd
     - es/01_install.qmd
     - es/02_use.qmd
     - es/03_tutorial_01.qmd
@@ -12,6 +12,7 @@ project:
     - es/04_API.qmd
     - es/05_contrib.qmd
     - es/06_references.qmd
+    - es/index.qmd
 
 
 website: 
