@@ -1,82 +1,398 @@
 [
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "SCAHpy",
+    "objectID": "api/plots.html",
+    "href": "api/plots.html",
+    "title": "plots",
+    "section": "",
+    "text": "⚠️ Actualizando documentación / Updating documentation (v1 → v2)\n  Algunos contenidos pueden estar en revisión · Some sections may be under revision.\n\n\n\n\n\n\nplots\nplots\n\n\nSCAHpy Plots\nVisualization utilities for model diagnostics and analyses.\nSubmodules: - maps: Horizontal map visualizations. - sections: Vertical cross-sections. - timeseries: Temporal evolution at points or regions."
+  },
+  {
+    "objectID": "api/core.html",
+    "href": "api/core.html",
+    "title": "core",
+    "section": "",
+    "text": "⚠️ Actualizando documentación / Updating documentation (v1 → v2)\n  Algunos contenidos pueden estar en revisión · Some sections may be under revision.\n\n\n\n\n\n\ncore\ncore\n\n\nSCAHpy Core\nCore utilities for I/O, coordinates, spatial/temporal ops, and vertical interpolation."
+  },
+  {
+    "objectID": "api/components.atmos.html",
+    "href": "api/components.atmos.html",
+    "title": "components.atmos",
+    "section": "",
+    "text": "⚠️ Actualizando documentación / Updating documentation (v1 → v2)\n  Algunos contenidos pueden estar en revisión · Some sections may be under revision.\n\n\n\n\n\n\ncomponents.atmos\ncomponents.atmos\n\n\nSCAHpy Atmos Component\nAtmospheric component for WRF model data.\nIncludes: - wrf_io: Input/output utilities for reading WRF files. - wrf_coords: Vertical coordinate extraction and interpolation. - wrf_diags: Derived atmospheric diagnostics (e.g., wind speed, geopotential, RH)."
+  },
+  {
+    "objectID": "06_references_en.html",
+    "href": "06_references_en.html",
+    "title": "References",
     "section": "",
     "text": "⚠️ Actualizando documentación / Updating documentation (v1 → v2)\n  Algunos contenidos pueden estar en revisión · Some sections may be under revision.",
     "crumbs": [
-      "Introduction"
+      "Help & References",
+      "References"
     ]
   },
   {
-    "objectID": "index.html#welcome",
-    "href": "index.html#welcome",
-    "title": "SCAHpy",
-    "section": "WELCOME ✨!!",
-    "text": "WELCOME ✨!!",
+    "objectID": "06_references_en.html#how-to-cite-scahpy",
+    "href": "06_references_en.html#how-to-cite-scahpy",
+    "title": "References",
+    "section": "How to Cite SCAHpy",
+    "text": "How to Cite SCAHpy\nIf you wish to cite SCAHpy in academic work, we currently recommend using the following Research Advance published in the IGP Scientific Bulletin:\n\nCastillón, F., & Montes, I. (2024). Herramienta para el posprocesamiento de los datos numéricos de modelos regionales: SCAHpy. Boletín Científico El Niño, Instituto Geofísico del Perú, 11(03), 13–17. http://hdl.handle.net/20.500.12816/5707\n\nA formal paper is coming soon! ;)",
     "crumbs": [
-      "Introduction"
+      "Help & References",
+      "References"
     ]
   },
   {
-    "objectID": "index.html#what-is-scahpy",
-    "href": "index.html#what-is-scahpy",
-    "title": "SCAHpy",
-    "section": "What is SCAHpy?",
-    "text": "What is SCAHpy?\nSCAHpy (System for Coupled Atmosphere–Hydrosphere Analysis in Python) is an open-source Python package designed to facilitate the analysis, diagnostics, and visualization of the Regional Earth System Model implemented by the Instituto Geofísico del Perú (IGP RESM-COW), a coupled ocean atmosphere system over the Peruvian territory and the eastern Pacific.\nThe IGP RESM-COW system integrates: the atmospheric model WRF, the ocean model CROCO and, the coupler OASIS,\n\n\n\nThis modeling system supports scientific research at the IGP by providing high-resolution simulations for studies of oceanic dynamics, atmospheric processes, and climate variability along the Peruvian region.\nTechnical documentation of the IGP RESM-COW system (in Spanish, IGP institutional reports):\n\nRegional atmospheric modeling and WRF configuration\n\nRegional ocean configuration using CROCO\n\nImplementation and validation of the coupled system\n\nApplications to coastal climate studies in Peru",
+    "objectID": "06_references_en.html#references-for-the-igp-resm-cow-system",
+    "href": "06_references_en.html#references-for-the-igp-resm-cow-system",
+    "title": "References",
+    "section": "References for the IGP RESM-COW System",
+    "text": "References for the IGP RESM-COW System\nThe following institutional documents may be consulted:\n\nCastillón, F., Berlin, S., & Montes, I. (2023). Validación de la componente atmosférica del sistema acoplado regional océano-atmósfera del Pacífico sudeste. Boletín Científico El Niño, Instituto Geofísico del Perú, 10(1), 9–12. http://hdl.handle.net/20.500.12816/5406\nSegura, B., Montes, I., Castillón, F., Manay, R., & Takahashi, K. (2023). Implementación del componente acoplado océano-atmósfera del Modelo Regional del Sistema Tierra (RESM) en modo pronóstico para el territorio peruano y el océano Pacífico oriental: periodo enero–julio 2023. Boletín Científico El Niño, Instituto Geofísico del Perú, 10(11), 10–13. http://hdl.handle.net/20.500.12816/5568\nSegura, B., & Montes, I. (2021). Análisis de sensibilidad del sistema acoplado regional COW para el Pacífico sudeste. Boletín Científico El Niño, Instituto Geofísico del Perú, 8(2), 12–17. http://hdl.handle.net/20.500.12816/5327\nSegura, B., Montes, I., & Mosquera, K. (2014). Evolución del Sistema Computacional de Alto Rendimiento en el IGP para un mejor pronóstico y estudio de los fenómenos climáticos. Boletín Técnico: Generación de modelos climáticos para el pronóstico de la ocurrencia del Fenómeno El Niño, Instituto Geofísico del Perú, 1(11), 8–9. http://hdl.handle.net/20.500.12816/4647",
     "crumbs": [
-      "Introduction"
+      "Help & References",
+      "References"
     ]
   },
   {
-    "objectID": "index.html#why-scahpy",
-    "href": "index.html#why-scahpy",
-    "title": "SCAHpy",
-    "section": "Why SCAHpy?",
-    "text": "Why SCAHpy?\nThe atmospheric and oceanic components of the IGP RESM-COW produce massive amounts of NetCDF data, often distributed across daily, monthly, or multi-year simulation files.\nProcessing these outputs can be challenging due to:\n\nheterogeneous dimensions and coordinate conventions,\n\ndifferent vertical representations (sigma, pressure levels),\n\ncalendar and timezone handling (UTC/local time),\n\ntemporal concatenation of multiple files,\n\nextraction of vertical and horizontal sections,\n\nthe need for reproducible scientific workflows.\n\nSCAHpy addresses these challenges by providing:\n\nstandardized functions to read WRF and CROCO outputs,\n\nrobust handling of coordinates and dimensions,\n\nvertical transformations (sigma → pressure levels),\n\natmospheric and oceanic diagnostics,\n\nhigh-level visualization tools (maps, vertical sections, time series),\n\nreproducible workflows both locally and in HPC environments.\n\nSCAHpy significantly reduces the time required for scientific post-processing, allowing researchers to focus on physical interpretation rather than data handling.",
+    "objectID": "06_references_en.html#references-for-numerical-models",
+    "href": "06_references_en.html#references-for-numerical-models",
+    "title": "References",
+    "section": "References for Numerical Models",
+    "text": "References for Numerical Models\n\nWRF Model\nCROCO Model\nOasis Coupler",
     "crumbs": [
-      "Introduction"
+      "Help & References",
+      "References"
     ]
   },
   {
-    "objectID": "index.html#how-to-use-scahpy",
-    "href": "index.html#how-to-use-scahpy",
-    "title": "SCAHpy",
-    "section": "How to use SCAHpy?",
-    "text": "How to use SCAHpy?\nTo begin, visit the Usage page and the tutorials listed below.\n\n\n\n\n\n\nNote\n\n\n\nSCAHpy has been developed and validated primarily with outputs from the IGP RESM-COW system; however, it is compatible with any WRF, CROCO, or NetCDF dataset following CF-Conventions.\nCommunity contributions are welcome!",
+    "objectID": "06_references_en.html#scientific-software-used",
+    "href": "06_references_en.html#scientific-software-used",
+    "title": "References",
+    "section": "Scientific Software Used",
+    "text": "Scientific Software Used\nSCAHpy relies on the following core Python packages:\n\nxarray\ndask\nnetCDF4\nnumpy\nmatplotlib\npandas\ncartopy\npyshp\ncmocean and crameri (optional, for high-quality scientific colormaps)",
     "crumbs": [
-      "Introduction"
+      "Help & References",
+      "References"
     ]
   },
   {
-    "objectID": "index.html#getting-started",
-    "href": "index.html#getting-started",
-    "title": "SCAHpy",
-    "section": "Getting Started",
-    "text": "Getting Started\n\nInstallation\nUsage",
+    "objectID": "04_API_en.html",
+    "href": "04_API_en.html",
+    "title": "API reference",
+    "section": "",
+    "text": "⚠️ Actualizando documentación / Updating documentation (v1 → v2)\n  Algunos contenidos pueden estar en revisión · Some sections may be under revision.",
     "crumbs": [
-      "Introduction"
+      "Help & References",
+      "API Reference"
     ]
   },
   {
-    "objectID": "index.html#tutorials",
-    "href": "index.html#tutorials",
-    "title": "SCAHpy",
-    "section": "Tutorials",
-    "text": "Tutorials\n\nReading a single file\nReading multiple files\nPressure-level variables",
+    "objectID": "04_API_en.html#io-atmosférico-wrf",
+    "href": "04_API_en.html#io-atmosférico-wrf",
+    "title": "API reference",
+    "section": "IO Atmosférico (WRF)",
+    "text": "IO Atmosférico (WRF)\nFunciones para lectura, manejo de coordenadas y diagnósticos atmosféricos WRF.\n\n\n\ncomponents.atmos\nSCAHpy Atmos Component",
     "crumbs": [
-      "Introduction"
+      "Help & References",
+      "API Reference"
     ]
   },
   {
-    "objectID": "index.html#help-and-references",
-    "href": "index.html#help-and-references",
-    "title": "SCAHpy",
-    "section": "Help and References",
-    "text": "Help and References\n\nAPI Reference\nContributing",
+    "objectID": "04_API_en.html#io-oceánico-croco",
+    "href": "04_API_en.html#io-oceánico-croco",
+    "title": "API reference",
+    "section": "IO Oceánico (CROCO)",
+    "text": "IO Oceánico (CROCO)\nFunciones para lectura, coordenadas y diagnósticos del modelo oceánico CROCO.\n\n\n\ncomponents.ocean\nSCAHpy Ocean Component",
     "crumbs": [
-      "Introduction"
+      "Help & References",
+      "API Reference"
+    ]
+  },
+  {
+    "objectID": "04_API_en.html#core-operaciones-esenciales",
+    "href": "04_API_en.html#core-operaciones-esenciales",
+    "title": "API reference",
+    "section": "Core (Operaciones esenciales)",
+    "text": "Core (Operaciones esenciales)\nOperaciones comunes de coordenadas, tiempo, vertical y utilidades.\n\n\n\ncore\nSCAHpy Core",
+    "crumbs": [
+      "Help & References",
+      "API Reference"
+    ]
+  },
+  {
+    "objectID": "04_API_en.html#plotting",
+    "href": "04_API_en.html#plotting",
+    "title": "API reference",
+    "section": "Plotting",
+    "text": "Plotting\nFunciones de visualización para mapas, secciones y series de tiempo.\n\n\n\nplots\nSCAHpy Plots",
+    "crumbs": [
+      "Help & References",
+      "API Reference"
+    ]
+  },
+  {
+    "objectID": "03_tutorial_02_en.html",
+    "href": "03_tutorial_02_en.html",
+    "title": "Reading Multiple File",
+    "section": "",
+    "text": "⚠️ Actualizando documentación / Updating documentation (v1 → v2)\n  Algunos contenidos pueden estar en revisión · Some sections may be under revision.",
+    "crumbs": [
+      "Tutorials",
+      "Tutorial 2: Reading CROCO"
+    ]
+  },
+  {
+    "objectID": "03_tutorial_02_en.html#step-1-reading-wrf-data",
+    "href": "03_tutorial_02_en.html#step-1-reading-wrf-data",
+    "title": "Reading Multiple File",
+    "section": "Step 1: Reading WRF Data",
+    "text": "Step 1: Reading WRF Data\nWe initiate the process by listing all the files we want to read using the glob package and assigning them to the variable list_files.\nlist_files = sorted(glob.glob('/data/datos/COW/OUT_DIAG_WRF/wrfouts/wrfout_d01_*'))\nGiven the capability to specify excluded variables when reading netCDF files using the drop_variables argument (refer to xarray functions open_dataset and open_mfdataset), we utilize the _drop_vars function from the module in_out. This function takes the list of variables we require and generates a list containing all variables present in the output file, subsequently removing those we are not interested in (such as ‘RAINC’, ‘RAINNC’, ‘RAINSH’, ‘U10’, ‘V10’, ‘SSTSK’). For this purpose, we use the first file from our list of files, assigning it to the variable dvars.\ndvars = in_out._drop_vars(list_files[0], ['RAINC', 'RAINNC', 'RAINSH', 'U10', 'V10', 'SSTSK'], model='wrf')\nSubsequently, we utilize the read_wrf_multi function to selectively read the variables of interest. This function accepts the input path (file_name in this case), the list of variables to be excluded (vars), any required time difference (e.g., '5 hours'), and the corresponding sign of the time difference (-1 for negative, 1 for positive). The outcome is an xarray.Dataset containing longitude, latitude, time, and the specified variables. Optionally, you can designate a save path to export the netCDF.\nds = in_out.read_wrf_multi(list_files, dvars, '5 hours', -1)",
+    "crumbs": [
+      "Tutorials",
+      "Tutorial 2: Reading CROCO"
+    ]
+  },
+  {
+    "objectID": "03_tutorial_02_en.html#step-2-calculating-precipitation-and-wind-speed",
+    "href": "03_tutorial_02_en.html#step-2-calculating-precipitation-and-wind-speed",
+    "title": "Reading Multiple File",
+    "section": "Step 2: Calculating Precipitation and Wind Speed",
+    "text": "Step 2: Calculating Precipitation and Wind Speed\nIn this step, we will utilize the met_vars module to calculate precipitation (calc_pp), wind speed (calc_wsp), and convert sea surface temperature from Kelvin to Celsius (calc_celsius).\nThe calc_pp function has an optional argument vars_to_sum, allowing users to specify which variables to sum to obtain total precipitation. If no variables are provided, it will default to summing the three variables: RAINC, RAINNC, and RAINSH.\nds_sfc = met_vars.calc_pp(ds, vars_to_sum=['RAINC', 'RAINNC', 'RAINSH'], elim=True)\nds_sfc = met_vars.calc_wsp(ds_sfc, elim=False)\nds_sfc = met_vars.calc_celsius(ds_sfc, 'SSTSK')\nBy running these commands, we ensure that our dataset ds_sfc now contains calculated precipitation, wind speed, and sea surface temperature in Celsius, ready for further analysis or visualization.",
+    "crumbs": [
+      "Tutorials",
+      "Tutorial 2: Reading CROCO"
+    ]
+  },
+  {
+    "objectID": "03_tutorial_02_en.html#step-3-aggregating-the-data",
+    "href": "03_tutorial_02_en.html#step-3-aggregating-the-data",
+    "title": "Reading Multiple File",
+    "section": "Step 3: Aggregating the Data",
+    "text": "Step 3: Aggregating the Data\nNow, we’ll aggregate the data to operate on a daily time scale instead of hourly. To achieve this, we’ll utilize the dmy_var function from the temp_scales module. This function takes an xarray.Dataset as input, where we specify the desired time scale (e.g., ‘1D’ for daily, ‘ME’ for monthly, ‘YE’ for yearly). Additionally, we can specify which variables should be aggregated by sum, average, or median by providing lists for each aggregation method.\ndd = temp_scales.dmy_var(ds_sfc, tiempo='1D', accum=['PP'], avg=['U10', 'V10'], mediana=['SSTSK'])\nBy executing this code, we’ll have our data aggregated to a daily time scale, with certain variables summed, averaged, or median-calculated according to our specifications.",
+    "crumbs": [
+      "Tutorials",
+      "Tutorial 2: Reading CROCO"
+    ]
+  },
+  {
+    "objectID": "03_tutorial_02_en.html#step-4-plotting-precipitation-maps",
+    "href": "03_tutorial_02_en.html#step-4-plotting-precipitation-maps",
+    "title": "Reading Multiple File",
+    "section": "Step 4: Plotting Precipitation Maps",
+    "text": "Step 4: Plotting Precipitation Maps\nNext, we’ll generate precipitation maps with SST contours and wind vectors using the map_pp_uv10_sst function from the map_plots module. This function takes the rainfall (PP) variable as input, followed by the dataset with SST and wind components, precipitation levels, SST contours, optional shapefile, exportation settings, output path, temporal scale (‘H’ for hourly, ‘D’ for daily, ‘M’ for monthly, ‘Y’ for yearly), vector speed, and plot extent ([x1, x2, y1, y2]).\n# Example usage\nprecipitation_levels = [1, 2, 3, 5, 7, 11, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60]\nsst_contour_levels = [26, 27, 28]\n\nmap_plots.map_pp_uv10_sst(ds_sfc['PP'], ds_sfc, precipitation_levels, sst_contour_levels, shapefile=None, \n                           output_path='.', save_maps=True, freq='H',\n                           quiverkey_speed=10, extent=None)",
+    "crumbs": [
+      "Tutorials",
+      "Tutorial 2: Reading CROCO"
+    ]
+  },
+  {
+    "objectID": "02_use_en.html",
+    "href": "02_use_en.html",
+    "title": "Usage",
+    "section": "",
+    "text": "⚠️ Actualizando documentación / Updating documentation (v1 → v2)\n  Algunos contenidos pueden estar en revisión · Some sections may be under revision.\nAn overview of scahpy capabilities will be displayed.",
+    "crumbs": [
+      "Usage"
+    ]
+  },
+  {
+    "objectID": "02_use_en.html#importing-the-package",
+    "href": "02_use_en.html#importing-the-package",
+    "title": "Usage",
+    "section": "Importing the Package",
+    "text": "Importing the Package\nTo import all the modules in scahpy we can use the * cd as for example:\n\nfrom scahpy import *\n\nTo import specific modules from the package, we can specify their names:\n\nfrom scahpy import in_out, met_vars",
+    "crumbs": [
+      "Usage"
+    ]
+  },
+  {
+    "objectID": "02_use_en.html#reading-wrf-outputs-files",
+    "href": "02_use_en.html#reading-wrf-outputs-files",
+    "title": "Usage",
+    "section": "Reading WRF outputs files",
+    "text": "Reading WRF outputs files\nThe WRF model can generate outputs either with one time per file or multiple times in a single file. scahpy is capable of handling both scenarios. For reading multiple wrfout files, you can utilize the read_wrf_multi function, while for reading a single file, you can use the read_wrf_single function.\n\n# Example: Reading and processing multiple WRF datasets\nsfc = in_out._drop_vars('/datos/wrfout_d01_2024-01-01_03:00:00',['RAINC', 'RAINNC', 'RAINSH', 'U10', 'V10', 'SSTSK'], model='wrf')\nfiles = sorted(glob.glob('/datos/wrfout_d01*'))\nds = in_out.read_wrf_multi(files, sfc, '5 hours', -1)",
+    "crumbs": [
+      "Usage"
+    ]
+  },
+  {
+    "objectID": "02_use_en.html#calculating-precipitation",
+    "href": "02_use_en.html#calculating-precipitation",
+    "title": "Usage",
+    "section": "Calculating Precipitation",
+    "text": "Calculating Precipitation\nscahpy has a module called met_vars designed specifically for calculating various diagnostic variables, such as precipitation, using the calc_pp function.\n\n# Example: Calculating precipitation using diagnostics module\nds2 = met_vars.calc_pp(ds,vars_to_sum=['RAINC', 'RAINNC', 'RAINSH'],True)",
+    "crumbs": [
+      "Usage"
+    ]
+  },
+  {
+    "objectID": "01_install_en.html",
+    "href": "01_install_en.html",
+    "title": "Installation",
+    "section": "",
+    "text": "⚠️ Actualizando documentación / Updating documentation (v1 → v2)\n  Algunos contenidos pueden estar en revisión · Some sections may be under revision.",
+    "crumbs": [
+      "Installation"
+    ]
+  },
+  {
+    "objectID": "01_install_en.html#prerequisites",
+    "href": "01_install_en.html#prerequisites",
+    "title": "Installation",
+    "section": "Prerequisites",
+    "text": "Prerequisites\nBefore installing SCAHpy, verify the following:\n\nPython version 3.9 or higher\nmamba or conda installed (recommended)\nInternet access to download dependencies from conda-forge or PyPI\nOn HPC systems, make sure to install in your HOME directory (avoid system paths)\n\nOptional packages:\n\ncartopy for geographic visualization\ndask for parallel processing (highly recommended on HPC)\njupyterlab for interactive environments",
+    "crumbs": [
+      "Installation"
+    ]
+  },
+  {
+    "objectID": "01_install_en.html#step-by-step-instructions",
+    "href": "01_install_en.html#step-by-step-instructions",
+    "title": "Installation",
+    "section": "Step-by-step instructions",
+    "text": "Step-by-step instructions\nThese instructions should work across most operating systems, including Windows, macOS, and Linux, as Conda and Miniforge are designed to be cross-platform. However, slight differences in installation steps or command syntax may occur depending on the system.\nTo ensure clarity and compatibility across all platforms, consider the following:\n\nWindows\n\nYou may need to open the terminal or Command Prompt as an administrator to execute certain commands.\nPaths in the terminal must use backslashes (\\) instead of slashes (/).\n\n\n\nmacOS\n\nUsers may need to install the Command Line Developer Tools if they have not already done so. This can be done by running xcode-select --install in the terminal.\nEnsure the user has permission to execute scripts and install packages.\n\n\n\nLinux\n\nSome Linux distributions may require additional dependencies or configurations for Conda or Miniforge to work correctly. It is advisable to check the documentation of the specific distribution.",
+    "crumbs": [
+      "Installation"
+    ]
+  },
+  {
+    "objectID": "01_install_en.html#using-conda",
+    "href": "01_install_en.html#using-conda",
+    "title": "Installation",
+    "section": "Using Conda",
+    "text": "Using Conda\n\n1. Download and install Miniforge\n\nBefore installing scahpy, ensure that Conda is installed on your system. Miniforge is a minimal Conda distribution that includes the essential tools for environment and package management.\nVisit the Miniforge GitHub page and follow the instructions to download and install the version appropriate for your operating system.\n\n\n\n2. Create a new Conda environment and install SCAHpy\n\nOnce Conda is installed, you can create a dedicated environment for scahpy and its dependencies. This is done using an environment.yml file, which contains the list of packages and versions required for SCAHpy.\nDownload the environment.yml file from the SCAHpy GitHub repository.\nOpen a terminal and navigate to the directory where the environment.yml file is located.\nRun the following command to create a Conda environment named scahpy_env and install all required dependencies:\n\nconda env create --file environment.yml -n scahpy_env\n\nThis command will create the new environment and install all packages listed in environment.yml.\nOnce created, activate the environment:\n\nconda activate scahpy_env\nAfter this, scahpy and all its dependencies will be installed and ready to use in your Conda environment.",
+    "crumbs": [
+      "Installation"
+    ]
+  },
+  {
+    "objectID": "01_install_en.html#using-mamba",
+    "href": "01_install_en.html#using-mamba",
+    "title": "Installation",
+    "section": "Using Mamba",
+    "text": "Using Mamba\n\n1. Download and install Mamba\nBefore installing scahpy, ensure that Mamba is installed. Mamba is a very fast package manager compatible with Conda and can be installed via Miniforge.\n\nVisit the Miniforge GitHub page and download the appropriate version for your operating system.\n\n\n\n2. Install SCAHpy and dependencies\n\nThe recommended approach to install scahpy together with all required dependencies is to use the environment.yml file.\nDownload the file from the SCAHpy GitHub repository.\nFrom the terminal, navigate to the directory where the file is located and run:\n\nmamba env create --file environment.yml -n scahpy_env\n\nThis will create a Conda environment called scahpy_env and install all necessary packages.\n\nOnce the process completes, the environment will be ready to run scahpy.",
+    "crumbs": [
+      "Installation"
+    ]
+  },
+  {
+    "objectID": "01_install_en.html#using-pip",
+    "href": "01_install_en.html#using-pip",
+    "title": "Installation",
+    "section": "Using pip",
+    "text": "Using pip\n\nFirst, make sure you have Python and pip installed. You can download Python from the official Python website; pip is usually included by default.\nThe simplest way to install scahpy and its dependencies using pip is to create a virtual environment and install the packages using a requirements.txt file.\n\nIn the terminal:\n# Create a virtual environment (optional but recommended)\npython -m venv scahpy_env\n\n# Activate the virtual environment\n# On Windows:\nscahpy_env\\Scripts\\activate\n# On macOS/Linux:\nsource scahpy_env/bin/activate\n\n# Install scahpy and dependencies from requirements.txt\npip install -r requirements.txt\nIn this example, requirements.txt should contain the list of dependencies—including scahpy—with their corresponding versions. This file must be created beforehand; you may use the previously provided environment.yml as reference.",
+    "crumbs": [
+      "Installation"
+    ]
+  },
+  {
+    "objectID": "03_tutorial_01_en.html",
+    "href": "03_tutorial_01_en.html",
+    "title": "Reading a Single File",
+    "section": "",
+    "text": "⚠️ Actualizando documentación / Updating documentation (v1 → v2)\n  Algunos contenidos pueden estar en revisión · Some sections may be under revision.",
+    "crumbs": [
+      "Tutorials",
+      "Tutorial 1: Reading WRF"
+    ]
+  },
+  {
+    "objectID": "03_tutorial_01_en.html#step-1-reading-wrf-data",
+    "href": "03_tutorial_01_en.html#step-1-reading-wrf-data",
+    "title": "Reading a Single File",
+    "section": "Step 1: Reading WRF Data",
+    "text": "Step 1: Reading WRF Data\nWe begin by setting the absolute path of the output file we intend to work with and assign it to a variable, in this case, file_name.\nfile_name = '/data/datos/COW/OUT_DIAG_WRF/wrfouts/wrfout_d01_2023-03-10_03:00:00'\nSince we have the flexibility to specify which variables to exclude when reading netCDF files using the drop_variables argument (see xarray functions open_dataset and open_mfdataset), we leverage the _drop_wrf_vars function from the module in_out. This function takes the list of variables we require and generates a list containing all variables present in the output file, subsequently removing those we are not interested in (such as ‘RAINC’, ‘RAINNC’, ‘RAINSH’, ‘U10’, ‘V10’, ‘SSTSK’).\ndvars = in_out._drop_vars(file_name, ['RAINC', 'RAINNC', 'RAINSH', 'U10', 'V10', 'SSTSK'], model='wrf')\nSubsequently, we utilize the read_wrf_single function to selectively read the variables of interest. This function accepts the input path (file_name in this case), the list of variables to be excluded (vars), any required time difference (e.g., '5 hours'), and the corresponding sign of the time difference (-1 for negative, 1 for positive). The outcome is an xarray.Dataset containing longitude, latitude, time, and the specified variables. Optionally, you can designate a save path to export the netCDF.\nds = in_out.read_wrf_single(file_name, dvars, '5 hours', -1)",
+    "crumbs": [
+      "Tutorials",
+      "Tutorial 1: Reading WRF"
+    ]
+  },
+  {
+    "objectID": "03_tutorial_01_en.html#step-2-calculating-precipitation-and-wind-speed",
+    "href": "03_tutorial_01_en.html#step-2-calculating-precipitation-and-wind-speed",
+    "title": "Reading a Single File",
+    "section": "Step 2: Calculating Precipitation and Wind Speed",
+    "text": "Step 2: Calculating Precipitation and Wind Speed\nIn this step, we will utilize the met_vars module to calculate precipitation (calc_pp), wind speed (calc_wsp), and convert sea surface temperature from Kelvin to Celsius (calc_celsius).\nThe calc_pp function has an optional argument vars_to_sum, allowing users to specify which variables to sum to obtain total precipitation. If no variables are provided, it will default to summing the three variables: RAINC, RAINNC, and RAINSH.\nds_sfc = met_vars.calc_pp(ds, vars_to_sum=['RAINC', 'RAINNC', 'RAINSH'], elim=True)\nds_sfc = met_vars.calc_wsp(ds_sfc, elim=False)\nds_sfc = met_vars.calc_celsius(ds_sfc, 'SSTSK')\nBy running these commands, we ensure that our dataset ds_sfc now contains calculated precipitation, wind speed, and sea surface temperature in Celsius, ready for further analysis or visualization.",
+    "crumbs": [
+      "Tutorials",
+      "Tutorial 1: Reading WRF"
+    ]
+  },
+  {
+    "objectID": "03_tutorial_01_en.html#step-3-plotting-precipitation-maps",
+    "href": "03_tutorial_01_en.html#step-3-plotting-precipitation-maps",
+    "title": "Reading a Single File",
+    "section": "Step 3: Plotting Precipitation Maps",
+    "text": "Step 3: Plotting Precipitation Maps\nNext, we’ll generate precipitation maps with SST contours and wind vectors using the map_pp_uv10_sst function from the map_plots module. This function takes the rainfall (PP) variable as input, followed by the dataset with SST and wind components, precipitation levels, SST contours, optional shapefile, exportation settings, output path, temporal scale (‘H’ for hourly, ‘D’ for daily, ‘M’ for monthly, ‘Y’ for yearly), vector speed, and plot extent ([x1, x2, y1, y2]).\n# Example usage\nprecipitation_levels = [1, 2, 3, 5, 7, 11, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60]\nsst_contour_levels = [26, 27, 28]\n\nmap_plots.map_pp_uv10_sst(ds_sfc['PP'], ds_sfc, precipitation_levels, sst_contour_levels, shapefile=None, \n                           output_path='.', save_maps=True, freq='H',\n                           quiverkey_speed=10, extent=None)",
+    "crumbs": [
+      "Tutorials",
+      "Tutorial 1: Reading WRF"
+    ]
+  },
+  {
+    "objectID": "03_tutorial_03_en.html",
+    "href": "03_tutorial_03_en.html",
+    "title": "Pressure levels variables",
+    "section": "",
+    "text": "⚠️ Actualizando documentación / Updating documentation (v1 → v2)\n  Algunos contenidos pueden estar en revisión · Some sections may be under revision.",
+    "crumbs": [
+      "Tutorials",
+      "Tutorial 3: Basic Plots"
+    ]
+  },
+  {
+    "objectID": "03_tutorial_03_en.html#step-1-reading-wrf-data",
+    "href": "03_tutorial_03_en.html#step-1-reading-wrf-data",
+    "title": "Pressure levels variables",
+    "section": "Step 1: Reading WRF Data",
+    "text": "Step 1: Reading WRF Data\nWe initiate the process by listing all the files we want to read using the glob package and assigning them to the variable list_files.\nlist_files = sorted(glob.glob('/data/datos/COW/OUT_DIAG_WRF/wrfouts/wrfout_d01_*'))\nGiven the capability to specify excluded variables when reading netCDF files using the drop_variables argument (refer to xarray functions open_dataset and open_mfdataset), we utilize the _drop_vars function from the module in_out. This function takes the list of variables we require and generates a list containing all variables present in the output file, subsequently removing those we are not interested in (such as ‘P’, ‘PB’, ‘U’, ‘W’, ‘QVAPOR’). For this purpose, we use the first file from our list of files, assigning it to the variable dvars.\ndvars = in_out._drop_vars(list_files[0], ['P', 'PB', 'U', 'W', 'QVAPOR'], model='wrf')\nSubsequently, we utilize the read_wrf_multi function to selectively read the variables of interest. This function accepts the input path (file_name in this case), the list of variables to be excluded (dvars), any required time difference (e.g., '5 hours'), and the corresponding sign of the time difference (-1 for negative, 1 for positive). The outcome is an xarray.Dataset containing longitude, latitude, bottom_top, time, and the specified variables. Optionally, you can designate a save path to export the netCDF.\nds = in_out.read_wrf_multi(list_files, dvars, '5 hours', -1)",
+    "crumbs": [
+      "Tutorials",
+      "Tutorial 3: Basic Plots"
+    ]
+  },
+  {
+    "objectID": "03_tutorial_03_en.html#step-2-calculating-specific-humidity-and-total-pressure",
+    "href": "03_tutorial_03_en.html#step-2-calculating-specific-humidity-and-total-pressure",
+    "title": "Pressure levels variables",
+    "section": "Step 2: Calculating Specific Humidity and Total pressure",
+    "text": "Step 2: Calculating Specific Humidity and Total pressure\nIn this step, we will utilize the met_diag module to calculate specific humidity (calc_qe), and total pressure (calc_pres). Whe have the option of the parameter elimthat can be set to True or False in order to remove some variables used to calculate the final variable.\nds_lvl = met_vars.calc_qe(ds, elim=True)\nds_lvl = met_vars.calc_pres(ds_lvl, elim=True)\nBy running these commands, we ensure that our dataset ds_lvl now contains calculated specific humidity and total pressure, ready for further analysis or visualization.",
+    "crumbs": [
+      "Tutorials",
+      "Tutorial 3: Basic Plots"
+    ]
+  },
+  {
+    "objectID": "03_tutorial_03_en.html#step-3-aggregating-the-data",
+    "href": "03_tutorial_03_en.html#step-3-aggregating-the-data",
+    "title": "Pressure levels variables",
+    "section": "Step 3: Aggregating the Data",
+    "text": "Step 3: Aggregating the Data\nNow, we’ll aggregate the data to operate on a daily time scale instead of hourly. To achieve this, we’ll utilize the dmy_var function from the temp_scales module. This function takes an xarray.Dataset as input, where we specify the desired time scale (e.g., ‘1D’ for daily, ‘ME’ for monthly, ‘YE’ for yearly). Additionally, we can specify which variables should be aggregated by sum, average, or median by providing lists for each aggregation method.\ndd = temp_scales.dmy_var(ds_lvl, tiempo='1D', accum=None, avg=['Presion','U','W','QE'], mediana=None)\nBy executing this code, we’ll have our data aggregated to a daily time scale, with variables averaged according to our specifications.",
+    "crumbs": [
+      "Tutorials",
+      "Tutorial 3: Basic Plots"
+    ]
+  },
+  {
+    "objectID": "03_tutorial_03_en.html#step-4-interpolation-to-vertical-levels",
+    "href": "03_tutorial_03_en.html#step-4-interpolation-to-vertical-levels",
+    "title": "Pressure levels variables",
+    "section": "Step 4: Interpolation to vertical levels",
+    "text": "Step 4: Interpolation to vertical levels\nWe use the functionvert_levs from spatial_scalesmodule to interpolate the data to same pressure levels, when we do not specify the levels, by default the interpolation is to: 1000,975,950,925,900,850,800,700,600,500,400,300,200 hPa. The dataset dd should contain the total pressure and the variables we are interested in.\ndd2=vert_levs(dd,['U','W','QE'],lvls=None)",
+    "crumbs": [
+      "Tutorials",
+      "Tutorial 3: Basic Plots"
+    ]
+  },
+  {
+    "objectID": "03_tutorial_03_en.html#step-5-plotting-precipitation-maps",
+    "href": "03_tutorial_03_en.html#step-5-plotting-precipitation-maps",
+    "title": "Pressure levels variables",
+    "section": "Step 5: Plotting Precipitation Maps",
+    "text": "Step 5: Plotting Precipitation Maps\nNext, we’ll generate cross section plots with specific humidity contours and wind vectors using the cross_section_xz function from the map_plots module. This function takes the dataset with specific humidity, total pressure and wind components, humidity levels, exportation settings, output path, temporal scale (‘H’ for hourly, ‘D’ for daily, ‘M’ for monthly, ‘Y’ for yearly) and vector speed.\n# Example usage\nlevs=[0,0.2,0.4,0.6,0.8,1,1.5,2,2.5,5,7.5,10,12,15,18]\ncmaps=cmocean.tools.lighten(matplotlib.colormaps['rainbow'],0.90)# 1d\ndf=dd2.sel(lat=-5,method='nearest').sel(lon=slice(-90,-80),time=slice('2023-03-10','2023-03-13'))\ndf['QE']=df['QE']*1000\ncross_section_xz(df,'QE',levs,cmaps,'QE',quiverkey_speed=8, output_path=None, freq='D',\n                           save_maps=False)",
+    "crumbs": [
+      "Tutorials",
+      "Tutorial 3: Basic Plots"
     ]
   },
   {
@@ -201,334 +517,125 @@
     ]
   },
   {
-    "objectID": "03_tutorial_03_en.html",
-    "href": "03_tutorial_03_en.html",
-    "title": "Pressure levels variables",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "SCAHpy",
     "section": "",
     "text": "⚠️ Actualizando documentación / Updating documentation (v1 → v2)\n  Algunos contenidos pueden estar en revisión · Some sections may be under revision.",
     "crumbs": [
-      "Tutorials",
-      "Tutorial 3: Basic Plots"
+      "Introduction"
     ]
   },
   {
-    "objectID": "03_tutorial_03_en.html#step-1-reading-wrf-data",
-    "href": "03_tutorial_03_en.html#step-1-reading-wrf-data",
-    "title": "Pressure levels variables",
-    "section": "Step 1: Reading WRF Data",
-    "text": "Step 1: Reading WRF Data\nWe initiate the process by listing all the files we want to read using the glob package and assigning them to the variable list_files.\nlist_files = sorted(glob.glob('/data/datos/COW/OUT_DIAG_WRF/wrfouts/wrfout_d01_*'))\nGiven the capability to specify excluded variables when reading netCDF files using the drop_variables argument (refer to xarray functions open_dataset and open_mfdataset), we utilize the _drop_vars function from the module in_out. This function takes the list of variables we require and generates a list containing all variables present in the output file, subsequently removing those we are not interested in (such as ‘P’, ‘PB’, ‘U’, ‘W’, ‘QVAPOR’). For this purpose, we use the first file from our list of files, assigning it to the variable dvars.\ndvars = in_out._drop_vars(list_files[0], ['P', 'PB', 'U', 'W', 'QVAPOR'], model='wrf')\nSubsequently, we utilize the read_wrf_multi function to selectively read the variables of interest. This function accepts the input path (file_name in this case), the list of variables to be excluded (dvars), any required time difference (e.g., '5 hours'), and the corresponding sign of the time difference (-1 for negative, 1 for positive). The outcome is an xarray.Dataset containing longitude, latitude, bottom_top, time, and the specified variables. Optionally, you can designate a save path to export the netCDF.\nds = in_out.read_wrf_multi(list_files, dvars, '5 hours', -1)",
+    "objectID": "index.html#welcome",
+    "href": "index.html#welcome",
+    "title": "SCAHpy",
+    "section": "WELCOME ✨!!",
+    "text": "WELCOME ✨!!",
     "crumbs": [
-      "Tutorials",
-      "Tutorial 3: Basic Plots"
+      "Introduction"
     ]
   },
   {
-    "objectID": "03_tutorial_03_en.html#step-2-calculating-specific-humidity-and-total-pressure",
-    "href": "03_tutorial_03_en.html#step-2-calculating-specific-humidity-and-total-pressure",
-    "title": "Pressure levels variables",
-    "section": "Step 2: Calculating Specific Humidity and Total pressure",
-    "text": "Step 2: Calculating Specific Humidity and Total pressure\nIn this step, we will utilize the met_diag module to calculate specific humidity (calc_qe), and total pressure (calc_pres). Whe have the option of the parameter elimthat can be set to True or False in order to remove some variables used to calculate the final variable.\nds_lvl = met_vars.calc_qe(ds, elim=True)\nds_lvl = met_vars.calc_pres(ds_lvl, elim=True)\nBy running these commands, we ensure that our dataset ds_lvl now contains calculated specific humidity and total pressure, ready for further analysis or visualization.",
+    "objectID": "index.html#what-is-scahpy",
+    "href": "index.html#what-is-scahpy",
+    "title": "SCAHpy",
+    "section": "What is SCAHpy?",
+    "text": "What is SCAHpy?\nSCAHpy (System for Coupled Atmosphere–Hydrosphere Analysis in Python) is an open-source Python package designed to facilitate the analysis, diagnostics, and visualization of the Regional Earth System Model implemented by the Instituto Geofísico del Perú (IGP RESM-COW), a coupled ocean atmosphere system over the Peruvian territory and the eastern Pacific.\nThe IGP RESM-COW system integrates: the atmospheric model WRF, the ocean model CROCO and, the coupler OASIS,\n\n\n\nThis modeling system supports scientific research at the IGP by providing high-resolution simulations for studies of oceanic dynamics, atmospheric processes, and climate variability along the Peruvian region.\nTechnical documentation of the IGP RESM-COW system (in Spanish, IGP institutional reports):\n\nRegional atmospheric modeling and WRF configuration\n\nRegional ocean configuration using CROCO\n\nImplementation and validation of the coupled system\n\nApplications to coastal climate studies in Peru",
     "crumbs": [
-      "Tutorials",
-      "Tutorial 3: Basic Plots"
+      "Introduction"
     ]
   },
   {
-    "objectID": "03_tutorial_03_en.html#step-3-aggregating-the-data",
-    "href": "03_tutorial_03_en.html#step-3-aggregating-the-data",
-    "title": "Pressure levels variables",
-    "section": "Step 3: Aggregating the Data",
-    "text": "Step 3: Aggregating the Data\nNow, we’ll aggregate the data to operate on a daily time scale instead of hourly. To achieve this, we’ll utilize the dmy_var function from the temp_scales module. This function takes an xarray.Dataset as input, where we specify the desired time scale (e.g., ‘1D’ for daily, ‘ME’ for monthly, ‘YE’ for yearly). Additionally, we can specify which variables should be aggregated by sum, average, or median by providing lists for each aggregation method.\ndd = temp_scales.dmy_var(ds_lvl, tiempo='1D', accum=None, avg=['Presion','U','W','QE'], mediana=None)\nBy executing this code, we’ll have our data aggregated to a daily time scale, with variables averaged according to our specifications.",
+    "objectID": "index.html#why-scahpy",
+    "href": "index.html#why-scahpy",
+    "title": "SCAHpy",
+    "section": "Why SCAHpy?",
+    "text": "Why SCAHpy?\nThe atmospheric and oceanic components of the IGP RESM-COW produce massive amounts of NetCDF data, often distributed across daily, monthly, or multi-year simulation files.\nProcessing these outputs can be challenging due to:\n\nheterogeneous dimensions and coordinate conventions,\n\ndifferent vertical representations (sigma, pressure levels),\n\ncalendar and timezone handling (UTC/local time),\n\ntemporal concatenation of multiple files,\n\nextraction of vertical and horizontal sections,\n\nthe need for reproducible scientific workflows.\n\nSCAHpy addresses these challenges by providing:\n\nstandardized functions to read WRF and CROCO outputs,\n\nrobust handling of coordinates and dimensions,\n\nvertical transformations (sigma → pressure levels),\n\natmospheric and oceanic diagnostics,\n\nhigh-level visualization tools (maps, vertical sections, time series),\n\nreproducible workflows both locally and in HPC environments.\n\nSCAHpy significantly reduces the time required for scientific post-processing, allowing researchers to focus on physical interpretation rather than data handling.",
     "crumbs": [
-      "Tutorials",
-      "Tutorial 3: Basic Plots"
+      "Introduction"
     ]
   },
   {
-    "objectID": "03_tutorial_03_en.html#step-4-interpolation-to-vertical-levels",
-    "href": "03_tutorial_03_en.html#step-4-interpolation-to-vertical-levels",
-    "title": "Pressure levels variables",
-    "section": "Step 4: Interpolation to vertical levels",
-    "text": "Step 4: Interpolation to vertical levels\nWe use the functionvert_levs from spatial_scalesmodule to interpolate the data to same pressure levels, when we do not specify the levels, by default the interpolation is to: 1000,975,950,925,900,850,800,700,600,500,400,300,200 hPa. The dataset dd should contain the total pressure and the variables we are interested in.\ndd2=vert_levs(dd,['U','W','QE'],lvls=None)",
+    "objectID": "index.html#how-to-use-scahpy",
+    "href": "index.html#how-to-use-scahpy",
+    "title": "SCAHpy",
+    "section": "How to use SCAHpy?",
+    "text": "How to use SCAHpy?\nTo begin, visit the Usage page and the tutorials listed below.\n\n\n\n\n\n\nNote\n\n\n\nSCAHpy has been developed and validated primarily with outputs from the IGP RESM-COW system; however, it is compatible with any WRF, CROCO, or NetCDF dataset following CF-Conventions.\nCommunity contributions are welcome!",
     "crumbs": [
-      "Tutorials",
-      "Tutorial 3: Basic Plots"
+      "Introduction"
     ]
   },
   {
-    "objectID": "03_tutorial_03_en.html#step-5-plotting-precipitation-maps",
-    "href": "03_tutorial_03_en.html#step-5-plotting-precipitation-maps",
-    "title": "Pressure levels variables",
-    "section": "Step 5: Plotting Precipitation Maps",
-    "text": "Step 5: Plotting Precipitation Maps\nNext, we’ll generate cross section plots with specific humidity contours and wind vectors using the cross_section_xz function from the map_plots module. This function takes the dataset with specific humidity, total pressure and wind components, humidity levels, exportation settings, output path, temporal scale (‘H’ for hourly, ‘D’ for daily, ‘M’ for monthly, ‘Y’ for yearly) and vector speed.\n# Example usage\nlevs=[0,0.2,0.4,0.6,0.8,1,1.5,2,2.5,5,7.5,10,12,15,18]\ncmaps=cmocean.tools.lighten(matplotlib.colormaps['rainbow'],0.90)# 1d\ndf=dd2.sel(lat=-5,method='nearest').sel(lon=slice(-90,-80),time=slice('2023-03-10','2023-03-13'))\ndf['QE']=df['QE']*1000\ncross_section_xz(df,'QE',levs,cmaps,'QE',quiverkey_speed=8, output_path=None, freq='D',\n                           save_maps=False)",
+    "objectID": "index.html#getting-started",
+    "href": "index.html#getting-started",
+    "title": "SCAHpy",
+    "section": "Getting Started",
+    "text": "Getting Started\n\nInstallation\nUsage",
     "crumbs": [
-      "Tutorials",
-      "Tutorial 3: Basic Plots"
+      "Introduction"
     ]
   },
   {
-    "objectID": "03_tutorial_01_en.html",
-    "href": "03_tutorial_01_en.html",
-    "title": "Reading a Single File",
+    "objectID": "index.html#tutorials",
+    "href": "index.html#tutorials",
+    "title": "SCAHpy",
+    "section": "Tutorials",
+    "text": "Tutorials\n\nReading a single file\nReading multiple files\nPressure-level variables",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "index.html#help-and-references",
+    "href": "index.html#help-and-references",
+    "title": "SCAHpy",
+    "section": "Help and References",
+    "text": "Help and References\n\nAPI Reference\nContributing",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "api/components.ocean.html",
+    "href": "api/components.ocean.html",
+    "title": "components.ocean",
     "section": "",
-    "text": "⚠️ Actualizando documentación / Updating documentation (v1 → v2)\n  Algunos contenidos pueden estar en revisión · Some sections may be under revision.",
-    "crumbs": [
-      "Tutorials",
-      "Tutorial 1: Reading WRF"
-    ]
+    "text": "⚠️ Actualizando documentación / Updating documentation (v1 → v2)\n  Algunos contenidos pueden estar en revisión · Some sections may be under revision.\n\n\n\n\n\n\ncomponents.ocean\ncomponents.ocean\n\n\nSCAHpy Ocean Component\nOceanic component for CROCO model data.\nIncludes: - croco_io: Input/output utilities for CROCO NetCDF files. - croco_coords: Vertical coordinates and sigma-to-z interpolation. - croco_diags: Derived ocean diagnostics (e.g., KE, vorticity, SST gradients)."
   },
   {
-    "objectID": "03_tutorial_01_en.html#step-1-reading-wrf-data",
-    "href": "03_tutorial_01_en.html#step-1-reading-wrf-data",
-    "title": "Reading a Single File",
-    "section": "Step 1: Reading WRF Data",
-    "text": "Step 1: Reading WRF Data\nWe begin by setting the absolute path of the output file we intend to work with and assign it to a variable, in this case, file_name.\nfile_name = '/data/datos/COW/OUT_DIAG_WRF/wrfouts/wrfout_d01_2023-03-10_03:00:00'\nSince we have the flexibility to specify which variables to exclude when reading netCDF files using the drop_variables argument (see xarray functions open_dataset and open_mfdataset), we leverage the _drop_wrf_vars function from the module in_out. This function takes the list of variables we require and generates a list containing all variables present in the output file, subsequently removing those we are not interested in (such as ‘RAINC’, ‘RAINNC’, ‘RAINSH’, ‘U10’, ‘V10’, ‘SSTSK’).\ndvars = in_out._drop_vars(file_name, ['RAINC', 'RAINNC', 'RAINSH', 'U10', 'V10', 'SSTSK'], model='wrf')\nSubsequently, we utilize the read_wrf_single function to selectively read the variables of interest. This function accepts the input path (file_name in this case), the list of variables to be excluded (vars), any required time difference (e.g., '5 hours'), and the corresponding sign of the time difference (-1 for negative, 1 for positive). The outcome is an xarray.Dataset containing longitude, latitude, time, and the specified variables. Optionally, you can designate a save path to export the netCDF.\nds = in_out.read_wrf_single(file_name, dvars, '5 hours', -1)",
-    "crumbs": [
-      "Tutorials",
-      "Tutorial 1: Reading WRF"
-    ]
-  },
-  {
-    "objectID": "03_tutorial_01_en.html#step-2-calculating-precipitation-and-wind-speed",
-    "href": "03_tutorial_01_en.html#step-2-calculating-precipitation-and-wind-speed",
-    "title": "Reading a Single File",
-    "section": "Step 2: Calculating Precipitation and Wind Speed",
-    "text": "Step 2: Calculating Precipitation and Wind Speed\nIn this step, we will utilize the met_vars module to calculate precipitation (calc_pp), wind speed (calc_wsp), and convert sea surface temperature from Kelvin to Celsius (calc_celsius).\nThe calc_pp function has an optional argument vars_to_sum, allowing users to specify which variables to sum to obtain total precipitation. If no variables are provided, it will default to summing the three variables: RAINC, RAINNC, and RAINSH.\nds_sfc = met_vars.calc_pp(ds, vars_to_sum=['RAINC', 'RAINNC', 'RAINSH'], elim=True)\nds_sfc = met_vars.calc_wsp(ds_sfc, elim=False)\nds_sfc = met_vars.calc_celsius(ds_sfc, 'SSTSK')\nBy running these commands, we ensure that our dataset ds_sfc now contains calculated precipitation, wind speed, and sea surface temperature in Celsius, ready for further analysis or visualization.",
-    "crumbs": [
-      "Tutorials",
-      "Tutorial 1: Reading WRF"
-    ]
-  },
-  {
-    "objectID": "03_tutorial_01_en.html#step-3-plotting-precipitation-maps",
-    "href": "03_tutorial_01_en.html#step-3-plotting-precipitation-maps",
-    "title": "Reading a Single File",
-    "section": "Step 3: Plotting Precipitation Maps",
-    "text": "Step 3: Plotting Precipitation Maps\nNext, we’ll generate precipitation maps with SST contours and wind vectors using the map_pp_uv10_sst function from the map_plots module. This function takes the rainfall (PP) variable as input, followed by the dataset with SST and wind components, precipitation levels, SST contours, optional shapefile, exportation settings, output path, temporal scale (‘H’ for hourly, ‘D’ for daily, ‘M’ for monthly, ‘Y’ for yearly), vector speed, and plot extent ([x1, x2, y1, y2]).\n# Example usage\nprecipitation_levels = [1, 2, 3, 5, 7, 11, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60]\nsst_contour_levels = [26, 27, 28]\n\nmap_plots.map_pp_uv10_sst(ds_sfc['PP'], ds_sfc, precipitation_levels, sst_contour_levels, shapefile=None, \n                           output_path='.', save_maps=True, freq='H',\n                           quiverkey_speed=10, extent=None)",
-    "crumbs": [
-      "Tutorials",
-      "Tutorial 1: Reading WRF"
-    ]
-  },
-  {
-    "objectID": "01_install_en.html",
-    "href": "01_install_en.html",
-    "title": "Installation",
+    "objectID": "api/index.html",
+    "href": "api/index.html",
+    "title": "Function reference",
     "section": "",
-    "text": "⚠️ Actualizando documentación / Updating documentation (v1 → v2)\n  Algunos contenidos pueden estar en revisión · Some sections may be under revision.",
-    "crumbs": [
-      "Installation"
-    ]
+    "text": "⚠️ Actualizando documentación / Updating documentation (v1 → v2)\n  Algunos contenidos pueden estar en revisión · Some sections may be under revision."
   },
   {
-    "objectID": "01_install_en.html#prerequisites",
-    "href": "01_install_en.html#prerequisites",
-    "title": "Installation",
-    "section": "Prerequisites",
-    "text": "Prerequisites\nBefore installing SCAHpy, verify the following:\n\nPython version 3.9 or higher\nmamba or conda installed (recommended)\nInternet access to download dependencies from conda-forge or PyPI\nOn HPC systems, make sure to install in your HOME directory (avoid system paths)\n\nOptional packages:\n\ncartopy for geographic visualization\ndask for parallel processing (highly recommended on HPC)\njupyterlab for interactive environments",
-    "crumbs": [
-      "Installation"
-    ]
+    "objectID": "api/index.html#io-atmosférico-wrf",
+    "href": "api/index.html#io-atmosférico-wrf",
+    "title": "Function reference",
+    "section": "IO Atmosférico (WRF)",
+    "text": "IO Atmosférico (WRF)\nFunciones para lectura, manejo de coordenadas y diagnósticos atmosféricos WRF.\n\n\n\ncomponents.atmos\nSCAHpy Atmos Component"
   },
   {
-    "objectID": "01_install_en.html#step-by-step-instructions",
-    "href": "01_install_en.html#step-by-step-instructions",
-    "title": "Installation",
-    "section": "Step-by-step instructions",
-    "text": "Step-by-step instructions\nThese instructions should work across most operating systems, including Windows, macOS, and Linux, as Conda and Miniforge are designed to be cross-platform. However, slight differences in installation steps or command syntax may occur depending on the system.\nTo ensure clarity and compatibility across all platforms, consider the following:\n\nWindows\n\nYou may need to open the terminal or Command Prompt as an administrator to execute certain commands.\nPaths in the terminal must use backslashes (\\) instead of slashes (/).\n\n\n\nmacOS\n\nUsers may need to install the Command Line Developer Tools if they have not already done so. This can be done by running xcode-select --install in the terminal.\nEnsure the user has permission to execute scripts and install packages.\n\n\n\nLinux\n\nSome Linux distributions may require additional dependencies or configurations for Conda or Miniforge to work correctly. It is advisable to check the documentation of the specific distribution.",
-    "crumbs": [
-      "Installation"
-    ]
+    "objectID": "api/index.html#io-oceánico-croco",
+    "href": "api/index.html#io-oceánico-croco",
+    "title": "Function reference",
+    "section": "IO Oceánico (CROCO)",
+    "text": "IO Oceánico (CROCO)\nFunciones para lectura, coordenadas y diagnósticos del modelo oceánico CROCO.\n\n\n\ncomponents.ocean\nSCAHpy Ocean Component"
   },
   {
-    "objectID": "01_install_en.html#using-conda",
-    "href": "01_install_en.html#using-conda",
-    "title": "Installation",
-    "section": "Using Conda",
-    "text": "Using Conda\n\n1. Download and install Miniforge\n\nBefore installing scahpy, ensure that Conda is installed on your system. Miniforge is a minimal Conda distribution that includes the essential tools for environment and package management.\nVisit the Miniforge GitHub page and follow the instructions to download and install the version appropriate for your operating system.\n\n\n\n2. Create a new Conda environment and install SCAHpy\n\nOnce Conda is installed, you can create a dedicated environment for scahpy and its dependencies. This is done using an environment.yml file, which contains the list of packages and versions required for SCAHpy.\nDownload the environment.yml file from the SCAHpy GitHub repository.\nOpen a terminal and navigate to the directory where the environment.yml file is located.\nRun the following command to create a Conda environment named scahpy_env and install all required dependencies:\n\nconda env create --file environment.yml -n scahpy_env\n\nThis command will create the new environment and install all packages listed in environment.yml.\nOnce created, activate the environment:\n\nconda activate scahpy_env\nAfter this, scahpy and all its dependencies will be installed and ready to use in your Conda environment.",
-    "crumbs": [
-      "Installation"
-    ]
+    "objectID": "api/index.html#core-operaciones-esenciales",
+    "href": "api/index.html#core-operaciones-esenciales",
+    "title": "Function reference",
+    "section": "Core (Operaciones esenciales)",
+    "text": "Core (Operaciones esenciales)\nOperaciones comunes de coordenadas, tiempo, vertical y utilidades.\n\n\n\ncore\nSCAHpy Core"
   },
   {
-    "objectID": "01_install_en.html#using-mamba",
-    "href": "01_install_en.html#using-mamba",
-    "title": "Installation",
-    "section": "Using Mamba",
-    "text": "Using Mamba\n\n1. Download and install Mamba\nBefore installing scahpy, ensure that Mamba is installed. Mamba is a very fast package manager compatible with Conda and can be installed via Miniforge.\n\nVisit the Miniforge GitHub page and download the appropriate version for your operating system.\n\n\n\n2. Install SCAHpy and dependencies\n\nThe recommended approach to install scahpy together with all required dependencies is to use the environment.yml file.\nDownload the file from the SCAHpy GitHub repository.\nFrom the terminal, navigate to the directory where the file is located and run:\n\nmamba env create --file environment.yml -n scahpy_env\n\nThis will create a Conda environment called scahpy_env and install all necessary packages.\n\nOnce the process completes, the environment will be ready to run scahpy.",
-    "crumbs": [
-      "Installation"
-    ]
-  },
-  {
-    "objectID": "01_install_en.html#using-pip",
-    "href": "01_install_en.html#using-pip",
-    "title": "Installation",
-    "section": "Using pip",
-    "text": "Using pip\n\nFirst, make sure you have Python and pip installed. You can download Python from the official Python website; pip is usually included by default.\nThe simplest way to install scahpy and its dependencies using pip is to create a virtual environment and install the packages using a requirements.txt file.\n\nIn the terminal:\n# Create a virtual environment (optional but recommended)\npython -m venv scahpy_env\n\n# Activate the virtual environment\n# On Windows:\nscahpy_env\\Scripts\\activate\n# On macOS/Linux:\nsource scahpy_env/bin/activate\n\n# Install scahpy and dependencies from requirements.txt\npip install -r requirements.txt\nIn this example, requirements.txt should contain the list of dependencies—including scahpy—with their corresponding versions. This file must be created beforehand; you may use the previously provided environment.yml as reference.",
-    "crumbs": [
-      "Installation"
-    ]
-  },
-  {
-    "objectID": "02_use_en.html",
-    "href": "02_use_en.html",
-    "title": "Usage",
-    "section": "",
-    "text": "⚠️ Actualizando documentación / Updating documentation (v1 → v2)\n  Algunos contenidos pueden estar en revisión · Some sections may be under revision.\nAn overview of scahpy capabilities will be displayed.",
-    "crumbs": [
-      "Usage"
-    ]
-  },
-  {
-    "objectID": "02_use_en.html#importing-the-package",
-    "href": "02_use_en.html#importing-the-package",
-    "title": "Usage",
-    "section": "Importing the Package",
-    "text": "Importing the Package\nTo import all the modules in scahpy we can use the * cd as for example:\n\nfrom scahpy import *\n\nTo import specific modules from the package, we can specify their names:\n\nfrom scahpy import in_out, met_vars",
-    "crumbs": [
-      "Usage"
-    ]
-  },
-  {
-    "objectID": "02_use_en.html#reading-wrf-outputs-files",
-    "href": "02_use_en.html#reading-wrf-outputs-files",
-    "title": "Usage",
-    "section": "Reading WRF outputs files",
-    "text": "Reading WRF outputs files\nThe WRF model can generate outputs either with one time per file or multiple times in a single file. scahpy is capable of handling both scenarios. For reading multiple wrfout files, you can utilize the read_wrf_multi function, while for reading a single file, you can use the read_wrf_single function.\n\n# Example: Reading and processing multiple WRF datasets\nsfc = in_out._drop_vars('/datos/wrfout_d01_2024-01-01_03:00:00',['RAINC', 'RAINNC', 'RAINSH', 'U10', 'V10', 'SSTSK'], model='wrf')\nfiles = sorted(glob.glob('/datos/wrfout_d01*'))\nds = in_out.read_wrf_multi(files, sfc, '5 hours', -1)",
-    "crumbs": [
-      "Usage"
-    ]
-  },
-  {
-    "objectID": "02_use_en.html#calculating-precipitation",
-    "href": "02_use_en.html#calculating-precipitation",
-    "title": "Usage",
-    "section": "Calculating Precipitation",
-    "text": "Calculating Precipitation\nscahpy has a module called met_vars designed specifically for calculating various diagnostic variables, such as precipitation, using the calc_pp function.\n\n# Example: Calculating precipitation using diagnostics module\nds2 = met_vars.calc_pp(ds,vars_to_sum=['RAINC', 'RAINNC', 'RAINSH'],True)",
-    "crumbs": [
-      "Usage"
-    ]
-  },
-  {
-    "objectID": "03_tutorial_02_en.html",
-    "href": "03_tutorial_02_en.html",
-    "title": "Reading Multiple File",
-    "section": "",
-    "text": "⚠️ Actualizando documentación / Updating documentation (v1 → v2)\n  Algunos contenidos pueden estar en revisión · Some sections may be under revision.",
-    "crumbs": [
-      "Tutorials",
-      "Tutorial 2: Reading CROCO"
-    ]
-  },
-  {
-    "objectID": "03_tutorial_02_en.html#step-1-reading-wrf-data",
-    "href": "03_tutorial_02_en.html#step-1-reading-wrf-data",
-    "title": "Reading Multiple File",
-    "section": "Step 1: Reading WRF Data",
-    "text": "Step 1: Reading WRF Data\nWe initiate the process by listing all the files we want to read using the glob package and assigning them to the variable list_files.\nlist_files = sorted(glob.glob('/data/datos/COW/OUT_DIAG_WRF/wrfouts/wrfout_d01_*'))\nGiven the capability to specify excluded variables when reading netCDF files using the drop_variables argument (refer to xarray functions open_dataset and open_mfdataset), we utilize the _drop_vars function from the module in_out. This function takes the list of variables we require and generates a list containing all variables present in the output file, subsequently removing those we are not interested in (such as ‘RAINC’, ‘RAINNC’, ‘RAINSH’, ‘U10’, ‘V10’, ‘SSTSK’). For this purpose, we use the first file from our list of files, assigning it to the variable dvars.\ndvars = in_out._drop_vars(list_files[0], ['RAINC', 'RAINNC', 'RAINSH', 'U10', 'V10', 'SSTSK'], model='wrf')\nSubsequently, we utilize the read_wrf_multi function to selectively read the variables of interest. This function accepts the input path (file_name in this case), the list of variables to be excluded (vars), any required time difference (e.g., '5 hours'), and the corresponding sign of the time difference (-1 for negative, 1 for positive). The outcome is an xarray.Dataset containing longitude, latitude, time, and the specified variables. Optionally, you can designate a save path to export the netCDF.\nds = in_out.read_wrf_multi(list_files, dvars, '5 hours', -1)",
-    "crumbs": [
-      "Tutorials",
-      "Tutorial 2: Reading CROCO"
-    ]
-  },
-  {
-    "objectID": "03_tutorial_02_en.html#step-2-calculating-precipitation-and-wind-speed",
-    "href": "03_tutorial_02_en.html#step-2-calculating-precipitation-and-wind-speed",
-    "title": "Reading Multiple File",
-    "section": "Step 2: Calculating Precipitation and Wind Speed",
-    "text": "Step 2: Calculating Precipitation and Wind Speed\nIn this step, we will utilize the met_vars module to calculate precipitation (calc_pp), wind speed (calc_wsp), and convert sea surface temperature from Kelvin to Celsius (calc_celsius).\nThe calc_pp function has an optional argument vars_to_sum, allowing users to specify which variables to sum to obtain total precipitation. If no variables are provided, it will default to summing the three variables: RAINC, RAINNC, and RAINSH.\nds_sfc = met_vars.calc_pp(ds, vars_to_sum=['RAINC', 'RAINNC', 'RAINSH'], elim=True)\nds_sfc = met_vars.calc_wsp(ds_sfc, elim=False)\nds_sfc = met_vars.calc_celsius(ds_sfc, 'SSTSK')\nBy running these commands, we ensure that our dataset ds_sfc now contains calculated precipitation, wind speed, and sea surface temperature in Celsius, ready for further analysis or visualization.",
-    "crumbs": [
-      "Tutorials",
-      "Tutorial 2: Reading CROCO"
-    ]
-  },
-  {
-    "objectID": "03_tutorial_02_en.html#step-3-aggregating-the-data",
-    "href": "03_tutorial_02_en.html#step-3-aggregating-the-data",
-    "title": "Reading Multiple File",
-    "section": "Step 3: Aggregating the Data",
-    "text": "Step 3: Aggregating the Data\nNow, we’ll aggregate the data to operate on a daily time scale instead of hourly. To achieve this, we’ll utilize the dmy_var function from the temp_scales module. This function takes an xarray.Dataset as input, where we specify the desired time scale (e.g., ‘1D’ for daily, ‘ME’ for monthly, ‘YE’ for yearly). Additionally, we can specify which variables should be aggregated by sum, average, or median by providing lists for each aggregation method.\ndd = temp_scales.dmy_var(ds_sfc, tiempo='1D', accum=['PP'], avg=['U10', 'V10'], mediana=['SSTSK'])\nBy executing this code, we’ll have our data aggregated to a daily time scale, with certain variables summed, averaged, or median-calculated according to our specifications.",
-    "crumbs": [
-      "Tutorials",
-      "Tutorial 2: Reading CROCO"
-    ]
-  },
-  {
-    "objectID": "03_tutorial_02_en.html#step-4-plotting-precipitation-maps",
-    "href": "03_tutorial_02_en.html#step-4-plotting-precipitation-maps",
-    "title": "Reading Multiple File",
-    "section": "Step 4: Plotting Precipitation Maps",
-    "text": "Step 4: Plotting Precipitation Maps\nNext, we’ll generate precipitation maps with SST contours and wind vectors using the map_pp_uv10_sst function from the map_plots module. This function takes the rainfall (PP) variable as input, followed by the dataset with SST and wind components, precipitation levels, SST contours, optional shapefile, exportation settings, output path, temporal scale (‘H’ for hourly, ‘D’ for daily, ‘M’ for monthly, ‘Y’ for yearly), vector speed, and plot extent ([x1, x2, y1, y2]).\n# Example usage\nprecipitation_levels = [1, 2, 3, 5, 7, 11, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60]\nsst_contour_levels = [26, 27, 28]\n\nmap_plots.map_pp_uv10_sst(ds_sfc['PP'], ds_sfc, precipitation_levels, sst_contour_levels, shapefile=None, \n                           output_path='.', save_maps=True, freq='H',\n                           quiverkey_speed=10, extent=None)",
-    "crumbs": [
-      "Tutorials",
-      "Tutorial 2: Reading CROCO"
-    ]
-  },
-  {
-    "objectID": "04_API_en.html",
-    "href": "04_API_en.html",
-    "title": "API reference",
-    "section": "",
-    "text": "⚠️ Actualizando documentación / Updating documentation (v1 → v2)\n  Algunos contenidos pueden estar en revisión · Some sections may be under revision.\n\n\n\n\n\n\nAPI reference\nHere are the main functions of SCAHpy:",
-    "crumbs": [
-      "Help & References",
-      "API Reference"
-    ]
-  },
-  {
-    "objectID": "06_references_en.html",
-    "href": "06_references_en.html",
-    "title": "References",
-    "section": "",
-    "text": "⚠️ Actualizando documentación / Updating documentation (v1 → v2)\n  Algunos contenidos pueden estar en revisión · Some sections may be under revision.",
-    "crumbs": [
-      "Help & References",
-      "References"
-    ]
-  },
-  {
-    "objectID": "06_references_en.html#how-to-cite-scahpy",
-    "href": "06_references_en.html#how-to-cite-scahpy",
-    "title": "References",
-    "section": "How to Cite SCAHpy",
-    "text": "How to Cite SCAHpy\nIf you wish to cite SCAHpy in academic work, we currently recommend using the following Research Advance published in the IGP Scientific Bulletin:\n\nCastillón, F., & Montes, I. (2024). Herramienta para el posprocesamiento de los datos numéricos de modelos regionales: SCAHpy. Boletín Científico El Niño, Instituto Geofísico del Perú, 11(03), 13–17. http://hdl.handle.net/20.500.12816/5707\n\nA formal paper is coming soon! ;)",
-    "crumbs": [
-      "Help & References",
-      "References"
-    ]
-  },
-  {
-    "objectID": "06_references_en.html#references-for-the-igp-resm-cow-system",
-    "href": "06_references_en.html#references-for-the-igp-resm-cow-system",
-    "title": "References",
-    "section": "References for the IGP RESM-COW System",
-    "text": "References for the IGP RESM-COW System\nThe following institutional documents may be consulted:\n\nCastillón, F., Berlin, S., & Montes, I. (2023). Validación de la componente atmosférica del sistema acoplado regional océano-atmósfera del Pacífico sudeste. Boletín Científico El Niño, Instituto Geofísico del Perú, 10(1), 9–12. http://hdl.handle.net/20.500.12816/5406\nSegura, B., Montes, I., Castillón, F., Manay, R., & Takahashi, K. (2023). Implementación del componente acoplado océano-atmósfera del Modelo Regional del Sistema Tierra (RESM) en modo pronóstico para el territorio peruano y el océano Pacífico oriental: periodo enero–julio 2023. Boletín Científico El Niño, Instituto Geofísico del Perú, 10(11), 10–13. http://hdl.handle.net/20.500.12816/5568\nSegura, B., & Montes, I. (2021). Análisis de sensibilidad del sistema acoplado regional COW para el Pacífico sudeste. Boletín Científico El Niño, Instituto Geofísico del Perú, 8(2), 12–17. http://hdl.handle.net/20.500.12816/5327\nSegura, B., Montes, I., & Mosquera, K. (2014). Evolución del Sistema Computacional de Alto Rendimiento en el IGP para un mejor pronóstico y estudio de los fenómenos climáticos. Boletín Técnico: Generación de modelos climáticos para el pronóstico de la ocurrencia del Fenómeno El Niño, Instituto Geofísico del Perú, 1(11), 8–9. http://hdl.handle.net/20.500.12816/4647",
-    "crumbs": [
-      "Help & References",
-      "References"
-    ]
-  },
-  {
-    "objectID": "06_references_en.html#references-for-numerical-models",
-    "href": "06_references_en.html#references-for-numerical-models",
-    "title": "References",
-    "section": "References for Numerical Models",
-    "text": "References for Numerical Models\n\nWRF Model\nCROCO Model\nOasis Coupler",
-    "crumbs": [
-      "Help & References",
-      "References"
-    ]
-  },
-  {
-    "objectID": "06_references_en.html#scientific-software-used",
-    "href": "06_references_en.html#scientific-software-used",
-    "title": "References",
-    "section": "Scientific Software Used",
-    "text": "Scientific Software Used\nSCAHpy relies on the following core Python packages:\n\nxarray\ndask\nnetCDF4\nnumpy\nmatplotlib\npandas\ncartopy\npyshp\ncmocean and crameri (optional, for high-quality scientific colormaps)",
-    "crumbs": [
-      "Help & References",
-      "References"
-    ]
+    "objectID": "api/index.html#plotting",
+    "href": "api/index.html#plotting",
+    "title": "Function reference",
+    "section": "Plotting",
+    "text": "Plotting\nFunciones de visualización para mapas, secciones y series de tiempo.\n\n\n\nplots\nSCAHpy Plots"
   }
 ]
