@@ -51,7 +51,7 @@
 
 ## **What is SCAHpy?**
 
-**SCAHpy** (System for Coupled Atmosphere–Hydrosphere Analysis in Python) is an open-source scientific Python package that facilitates the analysis and visualization of outputs from the atmospheric, oceanic, and hydrological components of **IGP RESM-COW** coupled model (see ref).
+**SCAHpy** (System for Coupled Atmosphere–Hydrosphere Analysis in Python) is an open-source scientific Python package that facilitates the analysis and visualization of outputs from the atmospheric, oceanic, and hydrological components of **IGP RESM-COW** coupled model (see [ref1](http://hdl.handle.net/20.500.12816/5327), [ref2](http://hdl.handle.net/20.500.12816/5568)).
 
 It provides tools for processing, diagnosing, and visualizing model results in a modular and reproducible way.
 

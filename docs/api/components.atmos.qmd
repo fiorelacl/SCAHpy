@@ -1,0 +1,13 @@
+# components.atmos { #scahpy.components.atmos }
+
+`components.atmos`
+
+SCAHpy Atmos Component
+======================
+
+Atmospheric component for WRF model data.
+
+Includes:
+- wrf_io: Input/output utilities for reading WRF files.
+- wrf_coords: Vertical coordinate extraction and interpolation.
+- wrf_diags: Derived atmospheric diagnostics (e.g., wind speed, geopotential, RH).

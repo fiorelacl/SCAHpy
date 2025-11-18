@@ -1,44 +1,77 @@
-# Bienvenido ✨! {.unnumbered}
-
+## Bienvenid@ ✨!! {.unnumbered}
 ## **¿Qué es SCAHpy?**
 
-**SCAHpy** es un paquete de Python de código abierto desarrollado como herramienta de posprocesamiento para los componentes atmosférico, oceánico e hidrológico del Modelo del Sistema Terrestre Regional (*Regional Earth System Model*) que cubre el territorio peruano y el océano Pacífico.  
-Este modelo, denominado *IGP-RESM-COW v1*, fue implementado por el *Instituto Geofísico del Perú* (IGP) sobre la base del modelo atmosférico *WRF*, el modelo oceánico *CROCO* y el acoplador *OASIS*.
+**SCAHpy** (System for Coupled Atmosphere–Hydrosphere Analysis in Python) es un paquete de Python de código abierto diseñado para facilitar el análisis, diagnóstico y visualización del **Modelo del Sistema Terrestre Regional del IGP (IGP-RESM-COW)**, un sistema acoplado océano-atmósfera que cubre el territorio peruano y el océano Pacífico oriental.
+
+El modelo IGP RESM-COW integra: el modelo atmosférico **WRF**,  el modelo oceánico **CROCO**  y, el acoplador **OASIS**.
 
 ::: {style="text-align:center;"}
 <img src="https://github.com/fiorelacl/SCAHpy/blob/main/docs/assets/cow_model.jpg?raw=true" width="450"/>
 :::
 
+Este sistema numérico ha sido implementado y operado por el *Instituto Geofísico del Perú (IGP)* para estudios de dinámica oceánica, procesos atmosféricos y variabilidad climática en la región peruana.
+
+Documentación técnica del sistema acoplado (IGP RESM-COW):
+
+- [Modelado atmosférico regional y configuración WRF](http://hdl.handle.net/20.500.12816/5406)  
+- [Configuración oceánica regional con CROCO](http://hdl.handle.net/20.500.12816/5568)  
+- [Implementación y validación del sistema acoplado](http://hdl.handle.net/20.500.12816/5327)  
+- [Aplicaciones del modelo en estudios del clima costero peruano](http://hdl.handle.net/20.500.12816/5506)  
+
+---
+
 ## **¿Por qué SCAHpy?**
 
-El paquete SCAHpy fue creado para abordar el desafío que representa el procesamiento de los grandes volúmenes de datos generados por el modelo IGP-RESM-COW.  
-Este modelo, con su componente atmosférico basado en WRF, produce cantidades masivas de información durante las simulaciones, lo que demanda un tiempo considerable para su análisis.  
-SCAHpy agiliza este proceso homogeneizando coordenadas y dimensiones, garantizando la compatibilidad y facilitando el análisis de los datos.  
-Al simplificar la manipulación y preparación de la información, reduce significativamente el tiempo requerido para el posprocesamiento científico.
+Tanto la componente oceánica como atmosférica del modelo IGP RESM-COW genera grandes volúmenes de información NetCDF, usualmente distribuidos en múltiples archivos diarios, mensuales o multianuales.  
+Procesar estos datos puede ser retador debido a diferencias en:
+
+- dimensiones y convenciones de coordenadas,  
+- niveles verticales (sigma, niveles de presión),  
+- calendarios y zonas horarias,  
+- concatenación temporal,  
+- extracción de cortes horizontales y verticales,  
+- generación de productos reproducibles para análisis científico.
+
+**SCAHpy** fue creado para resolver estos desafíos proporcionando:
+
+- funciones estandarizadas para leer salidas WRF y CROCO,  
+- manejo robusto de coordenadas y dimensiones,  
+- transformación vertical (sigma → presión),  
+- diagnósticos atmosféricos y oceánicos,  
+- visualización de alto nivel (mapas, secciones, series de tiempo),  
+- flujos de trabajo reproducibles tanto en entornos locales como en HPC.
+
+SCAHpy reduce significativamente el tiempo necesario para el posprocesamiento científico y permite enfocarse en la interpretación física de los resultados.
+
+---
 
 ## **¿Cómo usar SCAHpy?**
 
-SCAHpy puede emplearse como un paquete independiente.  
-Para más detalles, consulta la sección **[Uso](02_use.qmd)** y los tutoriales que se presentan a continuación.
+Para comenzar, consulta la sección **[Uso](02_use.qmd)** y los tutoriales presentados más abajo.
 
 ::: callout-note
-SCAHpy ha sido desarrollado y probado con las salidas del modelo **IGP-RESM-COW v1**.  
-Sin embargo, está diseñado para trabajar con cualquier salida del modelo **WRF**.  
+SCAHpy ha sido desarrollado y validado principalmente con salidas del sistema **IGP RESM-COW**; sin embargo, es compatible con salidas individuales del modelo *WRF*, *CROCO* o dataset NetCDF que siga las CF-Conventions.  
 ¡Estamos abiertos a contribuciones de la comunidad!
 :::
 
-### **Primeros pasos**
+---
+
+## **Primeros pasos**
 
 - **[Instalación](01_install.qmd)**
 - **[Uso](02_use.qmd)**
 
-### **Tutoriales**
+---
+
+## **Tutoriales**
 
 - **[Lectura de archivos individuales](03_tutorial_01.qmd)**
 - **[Lectura de múltiples archivos](03_tutorial_02.qmd)**
 - **[Variables en niveles de presión](03_tutorial_03.qmd)**
 
-### **Ayuda y referencias**
+---
+
+## **Ayuda y referencias**
 
 - **[Referencia de la API](04_API.qmd)**
 - **[Contribución](05_contrib.qmd)**

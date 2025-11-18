@@ -1,4 +1,47 @@
-# References {.unnumbered}
+# References
 
-::: {#refs}
-:::
+This section presents the set of references used in the development of *SCAHpy*, including scientific documentation of the **IGP RESM-COW** system, underlying numerical models, and scientific software tools.
+
+## How to Cite SCAHpy
+
+If you wish to cite SCAHpy in academic work, we currently recommend using the following Research Advance published in the IGP Scientific Bulletin:
+
+> Castillón, F., & Montes, I. (2024). *Herramienta para el posprocesamiento de los datos numéricos de modelos regionales: SCAHpy.* Boletín Científico El Niño, Instituto Geofísico del Perú, 11(03), 13–17. [http://hdl.handle.net/20.500.12816/5707](http://hdl.handle.net/20.500.12816/5707)
+
+A formal paper is coming soon! ;)
+
+## References for the IGP RESM-COW System
+
+The following institutional documents may be consulted:
+
+* Castillón, F., Berlin, S., & Montes, I. (2023). *Validación de la componente atmosférica del sistema acoplado regional océano-atmósfera del Pacífico sudeste.* Boletín Científico El Niño, Instituto Geofísico del Perú, 10(1), 9–12. [http://hdl.handle.net/20.500.12816/5406](http://hdl.handle.net/20.500.12816/5406)
+
+* Segura, B., Montes, I., Castillón, F., Manay, R., & Takahashi, K. (2023). *Implementación del componente acoplado océano-atmósfera del Modelo Regional del Sistema Tierra (RESM) en modo pronóstico para el territorio peruano y el océano Pacífico oriental: periodo enero–julio 2023.* Boletín Científico El Niño, Instituto Geofísico del Perú, 10(11), 10–13. [http://hdl.handle.net/20.500.12816/5568](http://hdl.handle.net/20.500.12816/5568)
+
+* Segura, B., & Montes, I. (2021). *Análisis de sensibilidad del sistema acoplado regional COW para el Pacífico sudeste.* Boletín Científico El Niño, Instituto Geofísico del Perú, 8(2), 12–17. [http://hdl.handle.net/20.500.12816/5327](http://hdl.handle.net/20.500.12816/5327)
+
+* Segura, B., Montes, I., & Mosquera, K. (2014). *Evolución del Sistema Computacional de Alto Rendimiento en el IGP para un mejor pronóstico y estudio de los fenómenos climáticos.* Boletín Técnico: Generación de modelos climáticos para el pronóstico de la ocurrencia del Fenómeno El Niño, Instituto Geofísico del Perú, 1(11), 8–9. [http://hdl.handle.net/20.500.12816/4647](http://hdl.handle.net/20.500.12816/4647)
+
+---
+
+## References for Numerical Models
+
+* [WRF Model](https://www2.mmm.ucar.edu/wrf/users/)
+* [CROCO Model](https://www.croco-ocean.org/)
+* [Oasis Coupler](https://oasis.cerfacs.fr/en/home/)
+
+---
+
+## Scientific Software Used
+
+SCAHpy relies on the following core Python packages:
+
+* [xarray](https://docs.xarray.dev/en/stable/index.html)
+* [dask](https://docs.dask.org/en/stable/index.html)
+* [netCDF4](https://unidata.github.io/netcdf4-python/#introduction)
+* [numpy](https://numpy.org/)
+* [matplotlib](https://matplotlib.org/)
+* [pandas](https://pandas.pydata.org/)
+* [cartopy](https://pypi.org/project/Cartopy/)
+* [pyshp](https://pypi.org/project/pyshp/)
+* [cmocean](https://matplotlib.org/cmocean/) and [crameri](https://www.fabiocrameri.ch/colourmaps/) (optional, for high-quality scientific colormaps)

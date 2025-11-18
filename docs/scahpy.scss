@@ -130,6 +130,7 @@ $h6-font-size: 1rem;
 /* enlaces del TOC un poco más pequeños */
 .quarto-page-toc .nav-link {
   font-size: 0.95rem;
+  font-weight: 330;
 }
 
 /* ===== Footer compacto y bien centrado ===== */
@@ -186,7 +187,7 @@ footer.footer .nav-footer-right {
 
 body {
   letter-spacing: 0.3px;   /* ayuda dislexia */
-  font-weight: 400;
+  font-weight: 330;
 }
 
 /* Párrafos y listas */

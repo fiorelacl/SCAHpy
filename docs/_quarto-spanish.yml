@@ -13,6 +13,7 @@ project:
     - 05_contrib.qmd
     - 06_references.qmd
     - index.qmd
+    - api/*.qmd
 
 
 website: 

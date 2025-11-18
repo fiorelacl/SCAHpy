@@ -1,0 +1,33 @@
+# Function reference {.doc .doc-index}
+
+## IO Atmosférico (WRF)
+
+Funciones para lectura, manejo de coordenadas y diagnósticos atmosféricos WRF.
+
+| | |
+| --- | --- |
+| [components.atmos](api/components.atmos.html) | SCAHpy Atmos Component |
+
+## IO Oceánico (CROCO)
+
+Funciones para lectura, coordenadas y diagnósticos del modelo oceánico CROCO.
+
+| | |
+| --- | --- |
+| [components.ocean](api/components.ocean.html) | SCAHpy Ocean Component |
+
+## Core (Operaciones esenciales)
+
+Operaciones comunes de coordenadas, tiempo, vertical y utilidades.
+
+| | |
+| --- | --- |
+| [core](api/core.html) | SCAHpy Core |
+
+## Plotting
+
+Funciones de visualización para mapas, secciones y series de tiempo.
+
+| | |
+| --- | --- |
+| [plots](api/plots.html) | SCAHpy Plots |

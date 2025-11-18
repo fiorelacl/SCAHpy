@@ -1,113 +1,125 @@
-# Installation {.unnumbered}
+# Instalación
 
-If you would like to use **SCAHpy** for your own datasets and run it on a local machine or server, you will need to download and install it first.
+Esta sección describe los métodos recomendados para instalar **SCAHpy**, tanto en entornos locales como en clústeres de cómputo de alto rendimiento (HPC).  
+El paquete está desarrollado para funcionar sobre ecosistemas científicos modernos que utilizan principalmente *xarray*, *netCDF4*, *matplotlib*.
 
-## Required dependencies: {.unnumbered}
+## 1. Requisitos previos
 
--   Python \>= 3.9
--   [xarray](http://xarray.pydata.org/)
--   [wrf-python](https://github.com/NCAR/wrf-python)
--   [netCDF4](https://unidata.github.io/netcdf4-python)
--   [Dask](http://distributed.dask.org/)
+Antes de instalar SCAHpy, verifica lo siguiente:
 
-## Optional dependencies: {.unnumbered}
+- **Python** versión **3.9** o superior.  
+- mamba o conda instalados (recomendado).  
+- Acceso a internet para descargar dependencias desde *conda-forge* o *PyPI*.
+- En entornos HPC, asegúrate de instalar en tu HOME (evita rutas del sistema).
 
-For optimal performance, it is highly recommended that you install the following dependencies:
+Opcionalmente, puedes instalar:
 
--   [bottleneck](https://github.com/kwgoodman/bottleneck)
--   [Cartopy](https://scitools.org.uk/cartopy)
--   [IPython](https://ipython.org/)
--   [JupyterLab](https://jupyterlab.readthedocs.io/en/latest/)
+- `cartopy` para visualización geográfica,
+- `dask` para procesamiento paralelo (altamente recomendado en HPC),
+- `jupyterlab` para entornos interactivos.
 
-## Step-by-step instructions {.unnumbered}
+## **Instrucciones paso a paso**
 
-These instructions should function in most operating systems, including *Windows*, *macOS*, and *Linux*, as `Conda` and `Miniforge` are designed to be cross-platform. However, there might be slight differences in the installation process or command syntax depending on the operating system.
+Estas instrucciones deberían funcionar en la mayoría de sistemas operativos, incluidos *Windows*, *macOS* y *Linux*, ya que `Conda` y `Miniforge` están diseñados para ser multiplataforma. Sin embargo, pueden existir ligeras diferencias en el proceso de instalación o en la sintaxis de algunos comandos según el sistema operativo.
 
-To ensure clarity and compatibility across all operating systems, consider the following:
+Para garantizar claridad y compatibilidad en todos los sistemas, considere lo siguiente:
 
--   **Windows:**
-    -   Users might need to open the terminal or command prompt as an administrator to execute some commands.
-    -   Paths in the terminal should use backslashes (`\`) instead of forward slashes (`/`).
--   **macOS:**
-    -   Users may need to install command-line developer tools if they haven't done so already. This can be done by running `xcode-select --install` in the terminal.
-    -   Ensure that users have permission to execute scripts and install packages.
--   **Linux:**
-    -   Some Linux distributions might require additional dependencies or configurations for Conda or Miniforge to work properly. It's advisable to consult the documentation specific to the Linux distribution being used.
+### **Windows:**
 
-#### **Using Conda**
+  * Es posible que se requiera abrir la terminal o el *Command Prompt* como administrador para ejecutar algunos comandos.
+  * Las rutas en la terminal deben escribirse con barras invertidas (`\`) en lugar de barras normales (`/`).
 
-1.  **Download and Install Miniforge:**
+### **macOS:**
 
-    -   Before installing `scahpy`, you need to ensure that you have Conda installed on your system. Miniforge is a minimal distribution of Conda that includes essential tools for package management.
+  * Es posible que los usuarios necesiten instalar las *Command Line Developer Tools* si aún no lo han hecho. Esto se puede realizar ejecutando `xcode-select --install` en la terminal.
+  * Asegúrese de que el usuario tenga permisos para ejecutar scripts e instalar paquetes.
 
-    -   Go to the [Miniforge GitHub page](https://github.com/conda-forge/miniforge) and follow the instructions to download and install Miniforge suitable for your operating system.
+### **Linux:**
 
-2.  **Create a New Conda Environment and Install SCAHpy:**
+  * Algunas distribuciones pueden requerir dependencias adicionales o configuraciones específicas para que Conda o Miniforge funcionen correctamente. Se recomienda consultar la documentación de la distribución correspondiente.
 
-    -   Once Conda is installed, you can create a new Conda environment specifically for `scahpy` and its dependencies. To do this, you'll use an environment file called `environment.yml`, which contains a list of packages and their versions required for `scahpy` to function properly.
+---
 
-    -   Download the `environment.yml` file from the [SCAHpy GitHub repository](https://github.com/fiorelacl/SCAHpy/blob/4ec3cca0a13444411a0dcb28221f3ee982a2594b/environment.yml).
+## **Usando Conda**
 
-    -   Open a terminal or command prompt and navigate to the directory where the `environment.yml` file is located.
+### 1. Descargar e instalar Miniforge
 
-    -   Run the following command to create a new Conda environment named `scahpy_env` and install all the packages listed in the `environment.yml` file:
+* Antes de instalar `scahpy`, asegúrese de tener Conda instalado en su sistema. Miniforge es una distribución mínima de Conda que incluye las herramientas esenciales para la gestión de entornos y paquetes.
 
-        ``` bash
-        conda env create --file environment.yml -n scahpy_env
-        ```
+* Visite la página de [Miniforge en GitHub](https://github.com/conda-forge/miniforge) y siga las instrucciones para descargar e instalar la versión adecuada para su sistema operativo.
 
-    -   This command will create a new Conda environment named `scahpy_env` and install all the required dependencies listed in the `environment.yml` file into this environment.
+### 2. Crear un nuevo entorno Conda e instalar SCAHpy
 
-    -   Once the environment is created, activate it using the following command:
+* Una vez instalado Conda, puede crear un entorno nuevo específicamente para `scahpy` y sus dependencias. Para ello, se utiliza un archivo llamado `environment.yml`, que contiene la lista de paquetes y versiones requeridos para el correcto funcionamiento de `scahpy`.
 
-        ``` bash
-        conda activate scahpy_env
-        ```
+* Descargue el archivo `environment.yml` desde el [repositorio de SCAHpy en GitHub](https://github.com/fiorelacl/SCAHpy/blob/4ec3cca0a13444411a0dcb28221f3ee982a2594b/environment.yml).
 
-By following these steps, you'll have `scahpy` and all its dependencies installed and ready to use in your Conda environment.
+* Abra una terminal o consola y navegue al directorio donde se encuentra el archivo `environment.yml`.
 
-#### **Using Mamba**
+* Ejecute el siguiente comando para crear un entorno Conda llamado `scahpy_env` e instalar todas las dependencias especificadas:
 
-1.  **Download and Install Mamba:** Before installing `scahpy`, you need to ensure that you have Mamba installed on your system. Mamba is a package manager for Conda environments and can be installed via Miniforge, which is a minimal distribution of Conda that includes Mamba.
+```bash
+conda env create --file environment.yml -n scahpy_env
+```
 
-    -   Go to the [Miniforge GitHub page](https://github.com/conda-forge/miniforge) and follow the instructions to download and install Miniforge suitable for your operating system.
+* Este comando creará un entorno nuevo llamado `scahpy_env` e instalará todas las dependencias listadas en el archivo `environment.yml`.
 
-2.  **Install SCAHpy and Dependencies:**
+* Una vez creado el entorno, actívelo con:
 
-    -   The easiest and recommended way to install `scahpy` along with its required dependencies is by using an environment file called `environment.yml`. This file contains a list of packages and their versions that are needed for `scahpy` to function properly.
+```bash
+conda activate scahpy_env
+```
 
-    -   Download the `environment.yml` file from the [SCAHpy GitHub repository](https://github.com/fiorelacl/SCAHpy/blob/4ec3cca0a13444411a0dcb28221f3ee982a2594b/environment.yml).
+Después de esto, tendrá `scahpy` y todas sus dependencias instaladas y listas para usarse dentro de su entorno Conda.
 
-    -   Open a terminal or command prompt and navigate to the directory where the `environment.yml` file is located.
+---
 
-    -   Run the following command to create a new Conda environment named `scahpy_env` and install all the packages listed in the `environment.yml` file:
+## **Usando Mamba**
 
-        ``` bash
-        mamba env create --file environment.yml -n scahpy_env
-        ```
+### 1. Descargar e instalar Mamba
 
-    -   This command will create a new Conda environment named `scahpy_env` and install all the required dependencies listed in the `environment.yml` file into this environment.
+Antes de instalar `scahpy`, asegúrese de tener Mamba instalado. Mamba es un gestor de paquetes muy rápido compatible con Conda y puede instalarse mediante Miniforge.
 
-By following these steps, you'll have `scahpy` and all its dependencies installed and ready to use in your Python environment.
+* Visite la página de [Miniforge en GitHub](https://github.com/conda-forge/miniforge) y descargue la versión adecuada para su sistema operativo.
 
-#### **Using pip**
+### 2. Instalar SCAHpy y sus dependencias
 
-1.  First, ensure you have Python and pip installed on your system. You can download and install Python from the [official Python website](https://www.python.org/downloads/), which usually includes pip by default.
+* La forma más recomendada de instalar `scahpy` junto con todas sus dependencias es mediante el archivo `environment.yml`.
 
-2.  The easiest way to install `scahpy` and its dependencies is by creating a virtual environment and installing from a requirements file. Open a terminal or command prompt, then run the following commands:
+* Descargue el archivo desde el [repositorio de SCAHpy en GitHub](https://github.com/fiorelacl/SCAHpy/blob/4ec3cca0a13444411a0dcb28221f3ee982a2594b/environment.yml).
 
-``` bash
-# Create a virtual environment (optional but recommended)
+* Desde la terminal, navegue al directorio donde está el archivo y ejecute:
+
+```bash
+mamba env create --file environment.yml -n scahpy_env
+```
+
+* Esto creará un entorno Conda llamado `scahpy_env` e instalará todos los paquetes necesarios.
+
+Una vez finalizado, el entorno estará listo para ejecutar `scahpy`.
+
+---
+
+## **Usando pip**
+
+1. Primero, asegúrese de tener Python y pip instalados en su sistema. Puede descargar Python desde el [sitio oficial](https://www.python.org/downloads/); usualmente pip viene incluido.
+
+2. La forma más sencilla de instalar `scahpy` y sus dependencias con pip es creando un entorno virtual e instalando desde un archivo `requirements.txt`.
+
+En la terminal:
+
+```bash
+# Crear un entorno virtual (opcional pero recomendado)
 python -m venv scahpy_env
-# Activate the virtual environment
 
-# On Windows
+# Activar el entorno virtual
+# En Windows:
 scahpy_env\Scripts\activate
-# On macOS/Linux
+# En macOS/Linux:
 source scahpy_env/bin/activate
 
-# Install scahpy and dependencies from requirements.txt
+# Instalar scahpy y dependencias desde requirements.txt
 pip install -r requirements.txt
 ```
 
-In this example, `requirements.txt` is a file containing a list of dependencies including `scahpy`. You would need to provide or generate this file yourself, listing all necessary packages and their versions: `wrf-python, netCDF4, xarray, numpy, pandas, matplotlib, cartopy, geopandas, datetime, scahpy`.
+En este ejemplo, `requirements.txt` debe contener la lista de dependencias (incluyendo `scahpy`) con sus respectivas versiones. Este archivo debe proporcionarse o generarse previamente, puede tomar como referencia environment.yml previamente proporcionado.

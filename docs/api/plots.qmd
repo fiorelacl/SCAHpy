@@ -1,0 +1,13 @@
+# plots { #scahpy.plots }
+
+`plots`
+
+SCAHpy Plots
+============
+
+Visualization utilities for model diagnostics and analyses.
+
+Submodules:
+- maps: Horizontal map visualizations.
+- sections: Vertical cross-sections.
+- timeseries: Temporal evolution at points or regions.

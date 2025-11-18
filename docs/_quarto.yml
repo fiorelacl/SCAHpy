@@ -4,6 +4,31 @@ project:
 group:
   - [spanish, english] 
 
+quartodoc:
+  style: pkgdown
+  dir: api
+  package: scahpy
+  sections:
+    - title: "IO Atmosférico (WRF)"
+      desc: "Funciones para lectura, manejo de coordenadas y diagnósticos atmosféricos WRF."
+      contents:
+        - components.atmos
+
+    - title: "IO Oceánico (CROCO)"
+      desc: "Funciones para lectura, coordenadas y diagnósticos del modelo oceánico CROCO."
+      contents:
+        - components.ocean
+
+    - title: "Core (Operaciones esenciales)"
+      desc: "Operaciones comunes de coordenadas, tiempo, vertical y utilidades."
+      contents:
+        - core
+
+    - title: "Plotting"
+      desc: "Funciones de visualización para mapas, secciones y series de tiempo."
+      contents:
+        - plots
+
 website:
   title: 'SCAHpy'
   favicon: assets/logo.png

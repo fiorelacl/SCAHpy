@@ -1,5 +1,234 @@
-# Contributing {.unnumbered}
+# Contribución 
 
-All types of crontributions, bugs, feedbacks are welcome!
+SCAHpy es un proyecto de código abierto que busca facilitar el análisis de salidas océano-atmosféricas, en particular del modelo **IGP RESM-COW**.  
+Las contribuciones de la comunidad son bienvenidas y ayudan a mejorar la herramienta para investigadores, estudiantes y usuarios de HPC.
 
-Report bugs and submit feedback at [Github Issues](https://github.com/fiorelacl/SCAHpy/issues).
+Esta página describe cómo participar en el desarrollo del proyecto, la estructura básica del repositorio y algunas buenas prácticas recomendadas.
+
+## 1. Formas de contribuir
+
+Puedes contribuir a SCAHpy de varias maneras:
+
+- Reportando *errores (bugs)*.
+- Proponiendo *nuevas funcionalidades* o mejoras.
+- Mejorando la *documentación* (texto, ejemplos, tutoriales).
+- Añadiendo o mejorando *pruebas automatizadas*.
+- Optimizando *rendimiento* o compatibilidad con nuevos entornos/modelos.
+
+Todas las contribuciones (grandes o pequeñas) son valiosas ☆.
+
+
+## 2. Flujo general de trabajo
+
+El flujo típico para contribuir código es:
+
+1. Hacer un **fork** del repositorio en GitHub:  
+   <https://github.com/fiorelacl/SCAHpy>
+
+2. Clonar tu fork en tu máquina local:
+
+   ```bash
+   git clone https://github.com/TU_USUARIO/SCAHpy.git
+   cd SCAHpy
+   ```
+
+3. Crear y activar el entorno de desarrollo (por ejemplo, usando `environment.yml`):
+
+   ```bash
+   mamba env create -f environment.yml -n scahpy_dev
+   mamba activate scahpy_dev
+   ```
+
+4. Crear una rama nueva para tus cambios:
+
+   ```bash
+   git checkout -b feature/mi-nueva-funcion
+   ```
+
+5. Implementar los cambios en el código y/o documentación.
+
+6. Ejecutar pruebas (si existen) y asegurarte de que todo funciona.
+
+7. Hacer *commits* descriptivos y subir tu rama a tu fork:
+
+   ```bash
+   git add .
+   git commit -m "Agrega función para ..."
+   git push origin feature/mi-nueva-funcion
+   ```
+
+8. Crear un **Pull Request (PR)** hacia el repositorio principal, explicando:
+
+   * el propósito de los cambios,
+   * cómo probarlos,
+   * si introduce nuevas dependencias o rompe compatibilidad previa.
+
+
+## 3. Estructura del repositorio
+
+La estructura general del repositorio de SCAHpy (puede cambiar ligeramente con el tiempo) es similar a:
+
+```text
+SCAHpy/
+├── scahpy/                          # Código fuente del paquete
+│   ├── components/                  # Componentes científicos principales
+│   │   ├── atmos/                   # Funciones atmosféricas (WRF)
+│   │   │   ├── wrf_coords.py
+│   │   │   ├── wrf_diags.py
+│   │   │   └── wrf_io.py
+│   │   ├── ocean/                   # Funciones oceánicas (CROCO)
+│   │   │   ├── croco_coords.py
+│   │   │   ├── croco_diags.py
+│   │   │   └── croco_io.py
+│   │   ├── core/                    # Operaciones comunes (coords, tiempo, espacio)
+│   │   │   ├── coords.py
+│   │   │   ├── io.py
+│   │   │   ├── spatial_ops.py
+│   │   │   ├── time_ops.py
+│   │   │   ├── utils.py
+│   │   │   └── vertical.py
+│   │   ├── data/                    # Datos integrados / utilidades de datos
+│   │   └── plots/                   # Funciones de visualización
+│   │       ├── _helpers.py
+│   │       ├── maps.py
+│   │       ├── sections.py
+│   │       └── timeseries.py
+│   └── ...
+├── docs/                            # Documentación (Quarto, sitio ES/EN)
+│   ├── es/
+│   └── en/
+├── tests/                           # Pruebas automatizadas
+├── environment.yml                  # Entorno recomendado para desarrollo
+├── pyproject.toml / setup.cfg       # Configuración de empaquetado
+└── README.md                        # Descripción principal del proyecto
+```
+
+Antes de agregar nuevo código, busca el módulo más adecuado para tu contribución (por ejemplo, `atmos`, `ocean`, `io`, `plots`).
+
+
+## 4. Estilo de código y buenas prácticas
+
+Para mantener el proyecto consistente y legible:
+
+* Sigue las guías de estilo de *PEP 8* (sangría, nombres de variables, longitud de línea, etc.).
+* Escribe nombres de funciones y variables descriptivos, en *inglés*.
+* Añade *docstrings* a las funciones, indicando:
+
+  * propósito,
+  * parámetros,
+  * tipo de retorno,
+  * unidades (cuando aplique),
+  * referencias científicas si corresponden.
+
+Ejemplo de docstring:
+
+```python
+def compute_sst_anomaly(ds, climatology):
+    """
+    Compute sea surface temperature anomalies.
+
+    Parameters
+    ----------
+    ds : xarray.Dataset
+        Input dataset containing sea surface temperature.
+    climatology : xarray.DataArray
+        Climatological mean SST for the same region and period.
+
+    Returns
+    -------
+    xarray.DataArray
+        SST anomaly (K).
+    """
+    ...
+```
+
+
+## 5. Pruebas y ejemplos
+
+Cuando añadas nuevas funciones o modifiques las existentes:
+
+* Incluye pruebas en la carpeta `tests/` siempre que sea posible.
+* Intenta que tus pruebas:
+
+  * sean rápidas (no dependan de archivos enormes),
+  * utilicen datos sintéticos o recortados,
+  * cubran casos típicos y bordes simples.
+
+Ejemplo de comando para ejecutar pruebas (si se usa `pytest`):
+
+```bash
+pytest -v
+```
+
+Además, es muy útil:
+
+* Añadir ejemplos breves en la documentación o en docstrings.
+* Actualizar los tutoriales si tu cambio afecta el flujo de uso.
+
+
+## 6. Reporte de errores (issues)
+
+Si encuentras un problema, por favor abre un **issue** en GitHub:
+
+[https://github.com/fiorelacl/SCAHpy/issues](https://github.com/fiorelacl/SCAHpy/issues)
+
+Intenta incluir:
+
+* Descripción clara del error.
+* Pasos para reproducirlo (idealmente un ejemplo mínimo).
+* Información del entorno:
+
+  * versión de SCAHpy,
+  * versión de Python,
+  * sistema operativo,
+  * forma de instalación (pip/conda/mamba/HPC),
+  * extracto del mensaje de error.
+
+Esto facilita la reproducción y corrección del problema.
+
+## 7. Propuestas de nuevas funciones
+
+Si deseas proponer una nueva funcionalidad:
+
+1. Abre un **issue de tipo “enhancement”** describiendo:
+
+   * la necesidad científica o técnica,
+   * el tipo de entrada y salida esperadas,
+   * posibles módulos donde integrarla.
+
+2. Discute brevemente el diseño antes de implementar una gran cantidad de código; esto ayuda a mantener la coherencia del paquete.
+
+
+## 8. Documentación
+
+Las mejoras a la documentación son especialmente bienvenidas:
+
+* Corrección de errores tipográficos.
+* Clarificación de explicaciones.
+* Nuevos ejemplos de uso, especialmente enfocados en:
+
+  * aplicaciones atmosféricas (WRF),
+  * aplicaciones oceánicas (CROCO),
+  * flujos de trabajo con el sistema IGP RESM-COW.
+
+La documentación está escrita con *Quarto* en dos idiomas (ES/EN).
+Si añades una sección nueva en español, idealmente acompáñala de su versión en inglés.
+
+
+## 9. Código de conducta
+
+Se espera que todas las interacciones relacionadas con SCAHpy (issues, PRs, discusiones) mantengan un trato:
+
+* respetuoso y colaborativo,
+* inclusivo con personas de distintos niveles de experiencia,
+* orientado a la construcción de soluciones.
+
+## 10. Agradecimientos
+
+SCAHpy se desarrolla en el contexto de las actividades científicas del *Instituto Geofísico del Perú (IGP)* y contribuciones individuales de la comunidad.
+Toda participación desde la detección de un error tipográfico hasta la implementación de nuevos diagnósticos físicos ayuda a fortalecer la herramienta y a ampliar su impacto en la investigación océano-atmosférica ♡.
+
+Si utilizas SCAHpy en tu tesis, artículo o informe técnico, considera:
+
+* citar el paquete en la sección de métodos, y
+* compartir enlaces a tus trabajos a través de issues o PRs para incluirlos como ejemplos de uso.
