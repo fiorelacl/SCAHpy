@@ -334,9 +334,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
     if (path.includes("/es/")) {
       // ESPAÑOL → INGLÉS
-      const newPath = path
-        .replace("/es/", "/en/")
-        .replace(/\.html$/, "_en.html");   // archivo.html → archivo_en.html
+
+      let newPath;
+
+      // Caso especial: documentación de la API
+      if (path.includes("/es/api/")) {
+        // /SCAHpy/es/api/core.coords.html
+        // → /SCAHpy/en/api_en/core.coords_en.html
+        newPath = path
+          .replace("/es/api/", "/en/api_en/")
+          .replace(/\.html$/, "_en.html");
+      } else {
+        // Resto de páginas normales
+        newPath = path
+          .replace("/es/", "/en/")
+          .replace(/\.html$/, "_en.html");
+      }
 
       url.pathname = newPath;
       window.location.href = url.toString();
@@ -345,9 +358,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
     if (path.includes("/en/")) {
       // INGLÉS → ESPAÑOL
-      const newPath = path
-        .replace("/en/", "/es/")
-        .replace("_en.html", ".html");
+
+      let newPath;
+
+      // Caso especial: documentación de la API
+      if (path.includes("/en/api_en/")) {
+        // /SCAHpy/en/api_en/core.coords_en.html
+        // → /SCAHpy/es/api/core.coords.html
+        newPath = path
+          .replace("/en/api_en/", "/es/api/")
+          .replace("_en.html", ".html");
+      } else {
+        // Resto de páginas normales
+        newPath = path
+          .replace("/en/", "/es/")
+          .replace("_en.html", ".html");
+      }
 
       url.pathname = newPath;
       window.location.href = url.toString();
@@ -376,6 +402,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     }
   });
 </script>
+
 
 <style>
   .lang-switch {
