@@ -436,8 +436,8 @@
     "objectID": "01_install.html#requisitos-previos",
     "href": "01_install.html#requisitos-previos",
     "title": "Instalación",
-    "section": "1. Requisitos previos",
-    "text": "1. Requisitos previos\nAntes de instalar SCAHpy, verifica lo siguiente:\n\nPython versión 3.9 o superior.\n\nmamba o conda instalados (recomendado).\n\nAcceso a internet para descargar dependencias desde conda-forge o PyPI.\nEn entornos HPC, asegúrate de instalar en tu HOME (evita rutas del sistema).\n\nOpcionalmente, puedes instalar:\n\ncartopy para visualización geográfica,\ndask para procesamiento paralelo (altamente recomendado en HPC),\njupyterlab para entornos interactivos.",
+    "section": "Requisitos previos",
+    "text": "Requisitos previos\nAntes de instalar SCAHpy, verifica lo siguiente:\n\nPython versión 3.9 o superior.\n\nmamba o conda instalados (recomendado).\n\nAcceso a internet para descargar dependencias desde conda-forge o PyPI.\nEn entornos HPC, asegúrate de instalar en tu HOME (evita rutas del sistema).\n\nOpcionalmente, puedes instalar:\n\ncartopy para visualización geográfica,\ndask para procesamiento paralelo (altamente recomendado en HPC),\njupyterlab para entornos interactivos.",
     "crumbs": [
       "Instalación"
     ]
