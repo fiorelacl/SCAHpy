@@ -20,26 +20,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -217,7 +198,13 @@ div.csl-indent {
     <h2 id="toc-title">Contents</h2>
    
   <ul>
-  <li><a href="#references" id="toc-references" class="nav-link active" data-scroll-target="#references">References</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link active" data-scroll-target="#references">References</a>
+  <ul class="collapse">
+  <li><a href="#how-to-cite-scahpy" id="toc-how-to-cite-scahpy" class="nav-link" data-scroll-target="#how-to-cite-scahpy">How to Cite SCAHpy</a></li>
+  <li><a href="#references-for-the-igp-resm-cow-system" id="toc-references-for-the-igp-resm-cow-system" class="nav-link" data-scroll-target="#references-for-the-igp-resm-cow-system">References for the IGP RESM-COW System</a></li>
+  <li><a href="#references-for-numerical-models" id="toc-references-for-numerical-models" class="nav-link" data-scroll-target="#references-for-numerical-models">References for Numerical Models</a></li>
+  <li><a href="#scientific-software-used" id="toc-scientific-software-used" class="nav-link" data-scroll-target="#scientific-software-used">Scientific Software Used</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -231,13 +218,54 @@ div.csl-indent {
 
 
 
-<section id="references" class="level1 unnumbered">
-<h1 class="unnumbered">References</h1>
-<div id="refs" role="list">
+<section id="references" class="level1">
+<h1>References</h1>
+<p>This section presents the set of references used in the development of <em>SCAHpy</em>, including scientific documentation of the <strong>IGP RESM-COW</strong> system, underlying numerical models, and scientific software tools.</p>
+<section id="how-to-cite-scahpy" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-cite-scahpy">How to Cite SCAHpy</h2>
+<p>If you wish to cite SCAHpy in academic work, we currently recommend using the following Research Advance published in the IGP Scientific Bulletin:</p>
+<blockquote class="blockquote">
+<p>Castillón, F., &amp; Montes, I. (2024). <em>Herramienta para el posprocesamiento de los datos numéricos de modelos regionales: SCAHpy.</em> Boletín Científico El Niño, Instituto Geofísico del Perú, 11(03), 13–17. <a href="http://hdl.handle.net/20.500.12816/5707">http://hdl.handle.net/20.500.12816/5707</a></p>
+</blockquote>
+<p>A formal paper is coming soon! ;)</p>
+</section>
+<section id="references-for-the-igp-resm-cow-system" class="level2">
+<h2 class="anchored" data-anchor-id="references-for-the-igp-resm-cow-system">References for the IGP RESM-COW System</h2>
+<p>The following institutional documents may be consulted:</p>
+<ul>
+<li><p>Castillón, F., Berlin, S., &amp; Montes, I. (2023). <em>Validación de la componente atmosférica del sistema acoplado regional océano-atmósfera del Pacífico sudeste.</em> Boletín Científico El Niño, Instituto Geofísico del Perú, 10(1), 9–12. <a href="http://hdl.handle.net/20.500.12816/5406">http://hdl.handle.net/20.500.12816/5406</a></p></li>
+<li><p>Segura, B., Montes, I., Castillón, F., Manay, R., &amp; Takahashi, K. (2023). <em>Implementación del componente acoplado océano-atmósfera del Modelo Regional del Sistema Tierra (RESM) en modo pronóstico para el territorio peruano y el océano Pacífico oriental: periodo enero–julio 2023.</em> Boletín Científico El Niño, Instituto Geofísico del Perú, 10(11), 10–13. <a href="http://hdl.handle.net/20.500.12816/5568">http://hdl.handle.net/20.500.12816/5568</a></p></li>
+<li><p>Segura, B., &amp; Montes, I. (2021). <em>Análisis de sensibilidad del sistema acoplado regional COW para el Pacífico sudeste.</em> Boletín Científico El Niño, Instituto Geofísico del Perú, 8(2), 12–17. <a href="http://hdl.handle.net/20.500.12816/5327">http://hdl.handle.net/20.500.12816/5327</a></p></li>
+<li><p>Segura, B., Montes, I., &amp; Mosquera, K. (2014). <em>Evolución del Sistema Computacional de Alto Rendimiento en el IGP para un mejor pronóstico y estudio de los fenómenos climáticos.</em> Boletín Técnico: Generación de modelos climáticos para el pronóstico de la ocurrencia del Fenómeno El Niño, Instituto Geofísico del Perú, 1(11), 8–9. <a href="http://hdl.handle.net/20.500.12816/4647">http://hdl.handle.net/20.500.12816/4647</a></p></li>
+</ul>
+<hr>
+</section>
+<section id="references-for-numerical-models" class="level2">
+<h2 class="anchored" data-anchor-id="references-for-numerical-models">References for Numerical Models</h2>
+<ul>
+<li><a href="https://www2.mmm.ucar.edu/wrf/users/">WRF Model</a></li>
+<li><a href="https://www.croco-ocean.org/">CROCO Model</a></li>
+<li><a href="https://oasis.cerfacs.fr/en/home/">Oasis Coupler</a></li>
+</ul>
+<hr>
+</section>
+<section id="scientific-software-used" class="level2">
+<h2 class="anchored" data-anchor-id="scientific-software-used">Scientific Software Used</h2>
+<p>SCAHpy relies on the following core Python packages:</p>
+<ul>
+<li><a href="https://docs.xarray.dev/en/stable/index.html">xarray</a></li>
+<li><a href="https://docs.dask.org/en/stable/index.html">dask</a></li>
+<li><a href="https://unidata.github.io/netcdf4-python/#introduction">netCDF4</a></li>
+<li><a href="https://numpy.org/">numpy</a></li>
+<li><a href="https://matplotlib.org/">matplotlib</a></li>
+<li><a href="https://pandas.pydata.org/">pandas</a></li>
+<li><a href="https://pypi.org/project/Cartopy/">cartopy</a></li>
+<li><a href="https://pypi.org/project/pyshp/">pyshp</a></li>
+<li><a href="https://matplotlib.org/cmocean/">cmocean</a> and <a href="https://www.fabiocrameri.ch/colourmaps/">crameri</a> (optional, for high-quality scientific colormaps)</li>
+</ul>
 
-</div>
 
-
+</section>
 </section>
 
 </main> <!-- /main -->

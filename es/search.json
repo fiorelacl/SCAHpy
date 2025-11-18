@@ -82,9 +82,119 @@
   {
     "objectID": "05_contrib.html",
     "href": "05_contrib.html",
-    "title": "Contributing",
+    "title": "Contribución",
     "section": "",
-    "text": "⚠️ Actualizando documentación / Updating documentation (v1 → v2)\n  Algunos contenidos pueden estar en revisión · Some sections may be under revision.\n\n\n\n\n\n\nContributing\nAll types of crontributions, bugs, feedbacks are welcome!\nReport bugs and submit feedback at Github Issues.",
+    "text": "⚠️ Actualizando documentación / Updating documentation (v1 → v2)\n  Algunos contenidos pueden estar en revisión · Some sections may be under revision.",
+    "crumbs": [
+      "Ayuda y referencias",
+      "Contribuir"
+    ]
+  },
+  {
+    "objectID": "05_contrib.html#formas-de-contribuir",
+    "href": "05_contrib.html#formas-de-contribuir",
+    "title": "Contribución",
+    "section": "1. Formas de contribuir",
+    "text": "1. Formas de contribuir\nPuedes contribuir a SCAHpy de varias maneras:\n\nReportando errores (bugs).\nProponiendo nuevas funcionalidades o mejoras.\nMejorando la documentación (texto, ejemplos, tutoriales).\nAñadiendo o mejorando pruebas automatizadas.\nOptimizando rendimiento o compatibilidad con nuevos entornos/modelos.\n\nTodas las contribuciones (grandes o pequeñas) son valiosas ☆.",
+    "crumbs": [
+      "Ayuda y referencias",
+      "Contribuir"
+    ]
+  },
+  {
+    "objectID": "05_contrib.html#flujo-general-de-trabajo",
+    "href": "05_contrib.html#flujo-general-de-trabajo",
+    "title": "Contribución",
+    "section": "2. Flujo general de trabajo",
+    "text": "2. Flujo general de trabajo\nEl flujo típico para contribuir código es:\n\nHacer un fork del repositorio en GitHub:\nhttps://github.com/fiorelacl/SCAHpy\nClonar tu fork en tu máquina local:\ngit clone https://github.com/TU_USUARIO/SCAHpy.git\ncd SCAHpy\nCrear y activar el entorno de desarrollo (por ejemplo, usando environment.yml):\nmamba env create -f environment.yml -n scahpy_dev\nmamba activate scahpy_dev\nCrear una rama nueva para tus cambios:\ngit checkout -b feature/mi-nueva-funcion\nImplementar los cambios en el código y/o documentación.\nEjecutar pruebas (si existen) y asegurarte de que todo funciona.\nHacer commits descriptivos y subir tu rama a tu fork:\ngit add .\ngit commit -m \"Agrega función para ...\"\ngit push origin feature/mi-nueva-funcion\nCrear un Pull Request (PR) hacia el repositorio principal, explicando:\n\nel propósito de los cambios,\ncómo probarlos,\nsi introduce nuevas dependencias o rompe compatibilidad previa.",
+    "crumbs": [
+      "Ayuda y referencias",
+      "Contribuir"
+    ]
+  },
+  {
+    "objectID": "05_contrib.html#estructura-del-repositorio",
+    "href": "05_contrib.html#estructura-del-repositorio",
+    "title": "Contribución",
+    "section": "3. Estructura del repositorio",
+    "text": "3. Estructura del repositorio\nLa estructura general del repositorio de SCAHpy (puede cambiar ligeramente con el tiempo) es similar a:\nSCAHpy/\n├── scahpy/                          # Código fuente del paquete\n│   ├── components/                  # Componentes científicos principales\n│   │   ├── atmos/                   # Funciones atmosféricas (WRF)\n│   │   │   ├── wrf_coords.py\n│   │   │   ├── wrf_diags.py\n│   │   │   └── wrf_io.py\n│   │   ├── ocean/                   # Funciones oceánicas (CROCO)\n│   │   │   ├── croco_coords.py\n│   │   │   ├── croco_diags.py\n│   │   │   └── croco_io.py\n│   │   ├── core/                    # Operaciones comunes (coords, tiempo, espacio)\n│   │   │   ├── coords.py\n│   │   │   ├── io.py\n│   │   │   ├── spatial_ops.py\n│   │   │   ├── time_ops.py\n│   │   │   ├── utils.py\n│   │   │   └── vertical.py\n│   │   ├── data/                    # Datos integrados / utilidades de datos\n│   │   └── plots/                   # Funciones de visualización\n│   │       ├── _helpers.py\n│   │       ├── maps.py\n│   │       ├── sections.py\n│   │       └── timeseries.py\n│   └── ...\n├── docs/                            # Documentación (Quarto, sitio ES/EN)\n│   ├── es/\n│   └── en/\n├── tests/                           # Pruebas automatizadas\n├── environment.yml                  # Entorno recomendado para desarrollo\n├── pyproject.toml / setup.cfg       # Configuración de empaquetado\n└── README.md                        # Descripción principal del proyecto\nAntes de agregar nuevo código, busca el módulo más adecuado para tu contribución (por ejemplo, atmos, ocean, io, plots).",
+    "crumbs": [
+      "Ayuda y referencias",
+      "Contribuir"
+    ]
+  },
+  {
+    "objectID": "05_contrib.html#estilo-de-código-y-buenas-prácticas",
+    "href": "05_contrib.html#estilo-de-código-y-buenas-prácticas",
+    "title": "Contribución",
+    "section": "4. Estilo de código y buenas prácticas",
+    "text": "4. Estilo de código y buenas prácticas\nPara mantener el proyecto consistente y legible:\n\nSigue las guías de estilo de PEP 8 (sangría, nombres de variables, longitud de línea, etc.).\nEscribe nombres de funciones y variables descriptivos, en inglés.\nAñade docstrings a las funciones, indicando:\n\npropósito,\nparámetros,\ntipo de retorno,\nunidades (cuando aplique),\nreferencias científicas si corresponden.\n\n\nEjemplo de docstring:\ndef compute_sst_anomaly(ds, climatology):\n    \"\"\"\n    Compute sea surface temperature anomalies.\n\n    Parameters\n    ----------\n    ds : xarray.Dataset\n        Input dataset containing sea surface temperature.\n    climatology : xarray.DataArray\n        Climatological mean SST for the same region and period.\n\n    Returns\n    -------\n    xarray.DataArray\n        SST anomaly (K).\n    \"\"\"\n    ...",
+    "crumbs": [
+      "Ayuda y referencias",
+      "Contribuir"
+    ]
+  },
+  {
+    "objectID": "05_contrib.html#pruebas-y-ejemplos",
+    "href": "05_contrib.html#pruebas-y-ejemplos",
+    "title": "Contribución",
+    "section": "5. Pruebas y ejemplos",
+    "text": "5. Pruebas y ejemplos\nCuando añadas nuevas funciones o modifiques las existentes:\n\nIncluye pruebas en la carpeta tests/ siempre que sea posible.\nIntenta que tus pruebas:\n\nsean rápidas (no dependan de archivos enormes),\nutilicen datos sintéticos o recortados,\ncubran casos típicos y bordes simples.\n\n\nEjemplo de comando para ejecutar pruebas (si se usa pytest):\npytest -v\nAdemás, es muy útil:\n\nAñadir ejemplos breves en la documentación o en docstrings.\nActualizar los tutoriales si tu cambio afecta el flujo de uso.",
+    "crumbs": [
+      "Ayuda y referencias",
+      "Contribuir"
+    ]
+  },
+  {
+    "objectID": "05_contrib.html#reporte-de-errores-issues",
+    "href": "05_contrib.html#reporte-de-errores-issues",
+    "title": "Contribución",
+    "section": "6. Reporte de errores (issues)",
+    "text": "6. Reporte de errores (issues)\nSi encuentras un problema, por favor abre un issue en GitHub:\nhttps://github.com/fiorelacl/SCAHpy/issues\nIntenta incluir:\n\nDescripción clara del error.\nPasos para reproducirlo (idealmente un ejemplo mínimo).\nInformación del entorno:\n\nversión de SCAHpy,\nversión de Python,\nsistema operativo,\nforma de instalación (pip/conda/mamba/HPC),\nextracto del mensaje de error.\n\n\nEsto facilita la reproducción y corrección del problema.",
+    "crumbs": [
+      "Ayuda y referencias",
+      "Contribuir"
+    ]
+  },
+  {
+    "objectID": "05_contrib.html#propuestas-de-nuevas-funciones",
+    "href": "05_contrib.html#propuestas-de-nuevas-funciones",
+    "title": "Contribución",
+    "section": "7. Propuestas de nuevas funciones",
+    "text": "7. Propuestas de nuevas funciones\nSi deseas proponer una nueva funcionalidad:\n\nAbre un issue de tipo “enhancement” describiendo:\n\nla necesidad científica o técnica,\nel tipo de entrada y salida esperadas,\nposibles módulos donde integrarla.\n\nDiscute brevemente el diseño antes de implementar una gran cantidad de código; esto ayuda a mantener la coherencia del paquete.",
+    "crumbs": [
+      "Ayuda y referencias",
+      "Contribuir"
+    ]
+  },
+  {
+    "objectID": "05_contrib.html#documentación",
+    "href": "05_contrib.html#documentación",
+    "title": "Contribución",
+    "section": "8. Documentación",
+    "text": "8. Documentación\nLas mejoras a la documentación son especialmente bienvenidas:\n\nCorrección de errores tipográficos.\nClarificación de explicaciones.\nNuevos ejemplos de uso, especialmente enfocados en:\n\naplicaciones atmosféricas (WRF),\naplicaciones oceánicas (CROCO),\nflujos de trabajo con el sistema IGP RESM-COW.\n\n\nLa documentación está escrita con Quarto en dos idiomas (ES/EN). Si añades una sección nueva en español, idealmente acompáñala de su versión en inglés.",
+    "crumbs": [
+      "Ayuda y referencias",
+      "Contribuir"
+    ]
+  },
+  {
+    "objectID": "05_contrib.html#código-de-conducta",
+    "href": "05_contrib.html#código-de-conducta",
+    "title": "Contribución",
+    "section": "9. Código de conducta",
+    "text": "9. Código de conducta\nSe espera que todas las interacciones relacionadas con SCAHpy (issues, PRs, discusiones) mantengan un trato:\n\nrespetuoso y colaborativo,\ninclusivo con personas de distintos niveles de experiencia,\norientado a la construcción de soluciones.",
+    "crumbs": [
+      "Ayuda y referencias",
+      "Contribuir"
+    ]
+  },
+  {
+    "objectID": "05_contrib.html#agradecimientos",
+    "href": "05_contrib.html#agradecimientos",
+    "title": "Contribución",
+    "section": "10. Agradecimientos",
+    "text": "10. Agradecimientos\nSCAHpy se desarrolla en el contexto de las actividades científicas del Instituto Geofísico del Perú (IGP) y contribuciones individuales de la comunidad. Toda participación desde la detección de un error tipográfico hasta la implementación de nuevos diagnósticos físicos ayuda a fortalecer la herramienta y a ampliar su impacto en la investigación océano-atmosférica ♡.\nSi utilizas SCAHpy en tu tesis, artículo o informe técnico, considera:\n\ncitar el paquete en la sección de métodos, y\ncompartir enlaces a tus trabajos a través de issues o PRs para incluirlos como ejemplos de uso.",
     "crumbs": [
       "Ayuda y referencias",
       "Contribuir"
@@ -358,141 +468,9 @@
   {
     "objectID": "04_API.html",
     "href": "04_API.html",
-    "title": "API reference",
+    "title": "Referencias API",
     "section": "",
-    "text": "⚠️ Actualizando documentación / Updating documentation (v1 → v2)\n  Algunos contenidos pueden estar en revisión · Some sections may be under revision.",
-    "crumbs": [
-      "Ayuda y referencias",
-      "Referencia de la API"
-    ]
-  },
-  {
-    "objectID": "04_API.html#in_out.read_wrf_multi",
-    "href": "04_API.html#in_out.read_wrf_multi",
-    "title": "API reference",
-    "section": "in_out.read_wrf_multi",
-    "text": "in_out.read_wrf_multi\nin_out.read_wrf_multi(files,list_no_vars,difHor=0,sign=1)\nRead a list of wrfout files for the variables selected.\n\nParameters:\n\nfiles : List of wrfout files\nlist_no_vars : List of variables to be delated\ndifHor : String with the hours t\nsign: -1 or 1 according to the difference\n\n\n\nReturns\n\nfig (matplotlib.figure.Figure)\nax (matplotlib.axes.Axes)",
-    "crumbs": [
-      "Ayuda y referencias",
-      "Referencia de la API"
-    ]
-  },
-  {
-    "objectID": "04_API.html#in_out.read_wrf_single",
-    "href": "04_API.html#in_out.read_wrf_single",
-    "title": "API reference",
-    "section": "in_out.read_wrf_single",
-    "text": "in_out.read_wrf_single\nin_out.ds_wrf_single(file,list_no_vars,difHor=0,sign=1)\nRead a list of wrfout files for the variables selected.\n\nParameters:\n\nfile : List of wrfout files\nlist_no_vars : List of variables to be delated\ndifHor : String with the hours t\nsign: -1 or 1 according to the difference\n\n\n\nReturns\n\nfig (matplotlib.figure.Figure)\nax (matplotlib.axes.Axes)",
-    "crumbs": [
-      "Ayuda y referencias",
-      "Referencia de la API"
-    ]
-  },
-  {
-    "objectID": "04_API.html#in_out.extract_station_wrf",
-    "href": "04_API.html#in_out.extract_station_wrf",
-    "title": "API reference",
-    "section": "in_out.extract_station_wrf",
-    "text": "in_out.extract_station_wrf\nin_out.extract_station_wrf(out,station,lon_col, lat_col, name_col, output_format='netcdf')\nExtracts data from a WRF output file using station coordinates provided in a CSV or shapefile.\n\nParameters:\n\nout (nc): the wrf outfile already laoded.\nstation (str): Path to the CSV or shapefile containing station coordinates.\nlon_col (str): Name of the column containing longitude values.\nlat_col (str): Name of the column containing latitude values.\nname_col (str): Name of the column containing station names.\noutput_format (str, optional): Output format (‘netcdf’ or ‘dataframe’). Defaults to ‘netcdf’.\n\n\n\nReturns\n\nfig (matplotlib.figure.Figure)\nax (matplotlib.axes.Axes)",
-    "crumbs": [
-      "Ayuda y referencias",
-      "Referencia de la API"
-    ]
-  },
-  {
-    "objectID": "04_API.html#met_vars.calc_pp",
-    "href": "04_API.html#met_vars.calc_pp",
-    "title": "API reference",
-    "section": "met_vars.calc_pp",
-    "text": "met_vars.calc_pp\nmet_diag.calc_pp(ds, elim=False)\nde-acumulate the rainfall and save it as PP.\n\nParameters:\n\nds (nc): dataset with the variables RAINC, RAINNC and RAINSH already loaded.\nelim (bool): False (default) keep the old and new variables, True keep only the new variable.\n\n\n\nReturns\n\nnetcdf xarray.Dataset",
-    "crumbs": [
-      "Ayuda y referencias",
-      "Referencia de la API"
-    ]
-  },
-  {
-    "objectID": "04_API.html#met_vars.calc_wsp",
-    "href": "04_API.html#met_vars.calc_wsp",
-    "title": "API reference",
-    "section": "met_vars.calc_wsp",
-    "text": "met_vars.calc_wsp\nmet_diag.calc_wsp(ds, elim=False)\ncalculate the wind speed.\n\nParameters:\n\nds (nc): dataset with the variables U10 and V10 already loaded with coordinates already processed.\nelim (bool): False (default) keep the old and new variables, True keep only the new variable.\n\n\n\nReturns\n\nnetcdf xarray.Dataset",
-    "crumbs": [
-      "Ayuda y referencias",
-      "Referencia de la API"
-    ]
-  },
-  {
-    "objectID": "04_API.html#met_vars.calc_pres",
-    "href": "04_API.html#met_vars.calc_pres",
-    "title": "API reference",
-    "section": "met_vars.calc_pres",
-    "text": "met_vars.calc_pres\nmet_diag.calc_pres(ds, elim=False)\ncalculate the total atmospheric pressure and save it as Presion.\n\nParameters:\n\nds (nc): dataset with the variables P, PB already loaded with coordinates already processed.\nelim (bool): False (default) keep the old and new variables, True keep only the new variable.\n\n\n\nReturns\n\nnetcdf xarray.Dataset",
-    "crumbs": [
-      "Ayuda y referencias",
-      "Referencia de la API"
-    ]
-  },
-  {
-    "objectID": "04_API.html#met_vars.calc_tp",
-    "href": "04_API.html#met_vars.calc_tp",
-    "title": "API reference",
-    "section": "met_vars.calc_tp",
-    "text": "met_vars.calc_tp\nmet_diag.calc_tp(ds, elim=False)\ncalculate the potential temperature and save it as TPo.\n\nParameters:\n\nds (nc): dataset with the variable T already loaded with coordinates already processed.\nelim (bool): False (default) keep the old and new variables, True keep only the new variable.\n\n\n\nReturns\n\nnetcdf xarray.Dataset",
-    "crumbs": [
-      "Ayuda y referencias",
-      "Referencia de la API"
-    ]
-  },
-  {
-    "objectID": "04_API.html#met_vars.calc_qe",
-    "href": "04_API.html#met_vars.calc_qe",
-    "title": "API reference",
-    "section": "met_vars.calc_qe",
-    "text": "met_vars.calc_qe\nmet_diag.calc_qe(ds, elim=False)\ncalculate the specific humidity and save it as QE.\n\nParameters:\n\nds (nc): dataset with the variable QVAPOR already loaded with coordinates already processed.\nelim (bool): False (default) keep the old and new variables, True keep only the new variable.\n\n\n\nReturns\n\nnetcdf xarray.Dataset",
-    "crumbs": [
-      "Ayuda y referencias",
-      "Referencia de la API"
-    ]
-  },
-  {
-    "objectID": "04_API.html#spatial_scales.vert_levs",
-    "href": "04_API.html#spatial_scales.vert_levs",
-    "title": "API reference",
-    "section": "spatial_scales.vert_levs",
-    "text": "spatial_scales.vert_levs\nspatial_scales.vert_levs(ds,varis,lvls=None):\nInterpolate vertical levels to a pressure variable\n\nParameters:\n\nds (nc): dataset already loaded.\nvaris (list): list of vertical variables to interpolate.\nlvls (list): list of levels to be interpolated, if none provided, it will use [1000,975,950,925,900,850,800,700,600,500,400,300,200] as default.\n\n\n\nReturns\n\nnetcdf xarray.Dataset",
-    "crumbs": [
-      "Ayuda y referencias",
-      "Referencia de la API"
-    ]
-  },
-  {
-    "objectID": "04_API.html#temp_scales.dmy_var",
-    "href": "04_API.html#temp_scales.dmy_var",
-    "title": "API reference",
-    "section": "temp_scales.dmy_var",
-    "text": "temp_scales.dmy_var\ntemp_scales.dmy_var(ds,tiempo=None ,accum=None, avg=None, mediana=None):\nConvert hourly (default wrf out) time to any acceptable by resample function.\n\nParameters:\n\nds : Dataset loaded\ntiempo : Time accepted by resample\naccum : List of variables who need sum\navg : if True use the mean function\nmediana : if True use the median function\n\n\n\nReturns\n\nnetcdf xarray.Dataset",
-    "crumbs": [
-      "Ayuda y referencias",
-      "Referencia de la API"
-    ]
-  },
-  {
-    "objectID": "04_API.html#temp_scales.monthly_clim",
-    "href": "04_API.html#temp_scales.monthly_clim",
-    "title": "API reference",
-    "section": "temp_scales.monthly_clim",
-    "text": "temp_scales.monthly_clim\ntemp_scales.monthly_clim(ds, stat=None, time_slice=None):\nConvert a Dataset to monthly climatology.\n\nParameters:\n\nds : Dataset loaded\nstat : Mean or median\ntime_slice : use the slice(ini,fin)\n\n\n\nReturns\n\nnetcdf xarray.Dataset",
-    "crumbs": [
-      "Ayuda y referencias",
-      "Referencia de la API"
-    ]
-  },
-  {
-    "objectID": "04_API.html#temp_scales.daily_clim",
-    "href": "04_API.html#temp_scales.daily_clim",
-    "title": "API reference",
-    "section": "temp_scales.daily_clim",
-    "text": "temp_scales.daily_clim\ntemp_scales.daily_clim(ds, var):\nGenerate daily climatology using moving window (mw) each 15 days.\n\nParameters:\n\nds : Dataset loaded\nvar : str with the variable’s name\n\n\n\nReturns\n\nnetcdf xarray.Dataset",
+    "text": "⚠️ Actualizando documentación / Updating documentation (v1 → v2)\n  Algunos contenidos pueden estar en revisión · Some sections may be under revision.\n\n\n\n\n\n\nReferencias API\nAquí se detallan las principales funciones de SCAHpy:",
     "crumbs": [
       "Ayuda y referencias",
       "Referencia de la API"
@@ -501,9 +479,53 @@
   {
     "objectID": "06_references.html",
     "href": "06_references.html",
-    "title": "References",
+    "title": "Referencias",
     "section": "",
-    "text": "⚠️ Actualizando documentación / Updating documentation (v1 → v2)\n  Algunos contenidos pueden estar en revisión · Some sections may be under revision.\n\n\n\n\n\n\nReferences",
+    "text": "⚠️ Actualizando documentación / Updating documentation (v1 → v2)\n  Algunos contenidos pueden estar en revisión · Some sections may be under revision.",
+    "crumbs": [
+      "Ayuda y referencias",
+      "Referencias"
+    ]
+  },
+  {
+    "objectID": "06_references.html#cómo-citar-scahpy",
+    "href": "06_references.html#cómo-citar-scahpy",
+    "title": "Referencias",
+    "section": "Cómo citar SCAHpy?",
+    "text": "Cómo citar SCAHpy?\nSi deseas citar SCAHpy en trabajos académicos, de momento recomendamos emplear el siguiente Avance de Investigación publicado en el Boletín Científico del IGP:\n\nCastillón, F., y Montes, I. (2024). Herramienta para el posprocesamiento de los datos numéricos de modelos regionales: SCAHpy. Boletín científico El Niño, Instituto Geofísico del Perú, 11 (03), 13-17. http://hdl.handle.net/20.500.12816/5707\n\nPronto un paper ;)!",
+    "crumbs": [
+      "Ayuda y referencias",
+      "Referencias"
+    ]
+  },
+  {
+    "objectID": "06_references.html#referencias-del-sistema-igp-resm-cow",
+    "href": "06_references.html#referencias-del-sistema-igp-resm-cow",
+    "title": "Referencias",
+    "section": "Referencias del sistema IGP RESM-COW",
+    "text": "Referencias del sistema IGP RESM-COW\nPuede consultarse en los siguientes documentos institucionales:\n\nCastillón, F., Berlin, S., y Montes, I. (2023). Validación de la componente atmosférica del sistema acoplado regional océano-atmósfera del Pacífico sudeste. Boletín científico El Niño, Instituto Geofísico del Perú, 10 (1), 9-12. http://hdl.handle.net/20.500.12816/5406\nSegura, B., Montes, I., Castillón, F., Manay R. y Takahashi, K. (2023). Implementación del componente acoplado océano-atmósfera del Modelo Regional del Sistema Tierra (RESM) en modo pronóstico para el territorio peruano y el océano Pacífico oriental: periodo enero-julio 2023. Boletín científico El Niño, Instituto Geofísico del Perú, 10 (11), 10-13. http://hdl.handle.net/20.500.12816/5568\nSegura, B. y Montes, I. (2021). Análisis de sensibilidad del sistema acoplado regional COW para el Pacífico sudeste. Boletín científico El Niño, Instituto Geofísico del Perú, 8 (2), 12-17. http://hdl.handle.net/20.500.12816/5327\nSegura, B., Montes, I. y Mosquera, K. (2014). Evolución del Sistema Computacional de Alto Rendimiento en el IGP para un mejor pronóstico y estudio de los fenómenos climáticos. Boletín técnico: Generación de modelos climáticos para el pronóstico de la ocurrencia del Fenómeno El Niño, Instituto Geofísico del Perú, 1 (11), 8-9. http://hdl.handle.net/20.500.12816/4647",
+    "crumbs": [
+      "Ayuda y referencias",
+      "Referencias"
+    ]
+  },
+  {
+    "objectID": "06_references.html#referencias-de-modelos-numéricos",
+    "href": "06_references.html#referencias-de-modelos-numéricos",
+    "title": "Referencias",
+    "section": "Referencias de modelos numéricos",
+    "text": "Referencias de modelos numéricos\n\nModelo WRF\nModelo CROCO\nAcoplador Oasis",
+    "crumbs": [
+      "Ayuda y referencias",
+      "Referencias"
+    ]
+  },
+  {
+    "objectID": "06_references.html#software-científico-utilizado",
+    "href": "06_references.html#software-científico-utilizado",
+    "title": "Referencias",
+    "section": "Software científico utilizado",
+    "text": "Software científico utilizado\nSCAHpy se apoya en los paquetes fundamentales de Python:\n\nxarray\ndask\nnetCDF4\nnumpy\nmatplotlib\npandas\ncartopy\npyshp\ncmocean y crameri (Opcionales para paletas de color bonitas)",
     "crumbs": [
       "Ayuda y referencias",
       "Referencias"

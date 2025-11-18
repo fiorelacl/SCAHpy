@@ -20,26 +20,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -217,7 +198,13 @@ div.csl-indent {
     <h2 id="toc-title">Contenido</h2>
    
   <ul>
-  <li><a href="#references" id="toc-references" class="nav-link active" data-scroll-target="#references">References</a></li>
+  <li><a href="#referencias" id="toc-referencias" class="nav-link active" data-scroll-target="#referencias">Referencias</a>
+  <ul class="collapse">
+  <li><a href="#cómo-citar-scahpy" id="toc-cómo-citar-scahpy" class="nav-link" data-scroll-target="#cómo-citar-scahpy">Cómo citar SCAHpy?</a></li>
+  <li><a href="#referencias-del-sistema-igp-resm-cow" id="toc-referencias-del-sistema-igp-resm-cow" class="nav-link" data-scroll-target="#referencias-del-sistema-igp-resm-cow">Referencias del sistema IGP RESM-COW</a></li>
+  <li><a href="#referencias-de-modelos-numéricos" id="toc-referencias-de-modelos-numéricos" class="nav-link" data-scroll-target="#referencias-de-modelos-numéricos">Referencias de modelos numéricos</a></li>
+  <li><a href="#software-científico-utilizado" id="toc-software-científico-utilizado" class="nav-link" data-scroll-target="#software-científico-utilizado">Software científico utilizado</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -231,13 +218,54 @@ div.csl-indent {
 
 
 
-<section id="references" class="level1 unnumbered">
-<h1 class="unnumbered">References</h1>
-<div id="refs" role="list">
+<section id="referencias" class="level1">
+<h1>Referencias</h1>
+<p>En esta sección se presenta el conjunto de referencias utilizadas en el desarrollo de <em>SCAHpy</em>, incluyendo documentación científica del sistema <strong>IGP RESM-COW</strong>, modelos numéricos base y, herramientas de software científico.</p>
+<section id="cómo-citar-scahpy" class="level2">
+<h2 class="anchored" data-anchor-id="cómo-citar-scahpy">Cómo citar SCAHpy?</h2>
+<p>Si deseas citar SCAHpy en trabajos académicos, de momento recomendamos emplear el siguiente Avance de Investigación publicado en el Boletín Científico del IGP:</p>
+<blockquote class="blockquote">
+<p>Castillón, F., y Montes, I. (2024). Herramienta para el posprocesamiento de los datos numéricos de modelos regionales: SCAHpy. Boletín científico El Niño, Instituto Geofísico del Perú, 11 (03), 13-17. <a href="http://hdl.handle.net/20.500.12816/5707" class="uri">http://hdl.handle.net/20.500.12816/5707</a></p>
+</blockquote>
+<p>Pronto un paper ;)!</p>
+</section>
+<section id="referencias-del-sistema-igp-resm-cow" class="level2">
+<h2 class="anchored" data-anchor-id="referencias-del-sistema-igp-resm-cow">Referencias del sistema IGP RESM-COW</h2>
+<p>Puede consultarse en los siguientes documentos institucionales:</p>
+<ul>
+<li><p>Castillón, F., Berlin, S., y Montes, I. (2023). Validación de la componente atmosférica del sistema acoplado regional océano-atmósfera del Pacífico sudeste. Boletín científico El Niño, Instituto Geofísico del Perú, 10 (1), 9-12. <a href="http://hdl.handle.net/20.500.12816/5406" class="uri">http://hdl.handle.net/20.500.12816/5406</a></p></li>
+<li><p>Segura, B., Montes, I., Castillón, F., Manay R. y Takahashi, K. (2023). Implementación del componente acoplado océano-atmósfera del Modelo Regional del Sistema Tierra (RESM) en modo pronóstico para el territorio peruano y el océano Pacífico oriental: periodo enero-julio 2023. Boletín científico El Niño, Instituto Geofísico del Perú, 10 (11), 10-13. <a href="http://hdl.handle.net/20.500.12816/5568" class="uri">http://hdl.handle.net/20.500.12816/5568</a></p></li>
+<li><p>Segura, B. y Montes, I. (2021). Análisis de sensibilidad del sistema acoplado regional COW para el Pacífico sudeste. Boletín científico El Niño, Instituto Geofísico del Perú, 8 (2), 12-17. <a href="http://hdl.handle.net/20.500.12816/5327" class="uri">http://hdl.handle.net/20.500.12816/5327</a></p></li>
+<li><p>Segura, B., Montes, I. y Mosquera, K. (2014). Evolución del Sistema Computacional de Alto Rendimiento en el IGP para un mejor pronóstico y estudio de los fenómenos climáticos. Boletín técnico: Generación de modelos climáticos para el pronóstico de la ocurrencia del Fenómeno El Niño, Instituto Geofísico del Perú, 1 (11), 8-9. <a href="http://hdl.handle.net/20.500.12816/4647" class="uri">http://hdl.handle.net/20.500.12816/4647</a></p></li>
+</ul>
+<hr>
+</section>
+<section id="referencias-de-modelos-numéricos" class="level2">
+<h2 class="anchored" data-anchor-id="referencias-de-modelos-numéricos">Referencias de modelos numéricos</h2>
+<ul>
+<li><a href="https://www2.mmm.ucar.edu/wrf/users/">Modelo WRF</a></li>
+<li><a href="https://www.croco-ocean.org/">Modelo CROCO</a></li>
+<li><a href="https://oasis.cerfacs.fr/en/home/">Acoplador Oasis</a></li>
+</ul>
+<hr>
+</section>
+<section id="software-científico-utilizado" class="level2">
+<h2 class="anchored" data-anchor-id="software-científico-utilizado">Software científico utilizado</h2>
+<p>SCAHpy se apoya en los paquetes fundamentales de Python:</p>
+<ul>
+<li><a href="https://docs.xarray.dev/en/stable/index.html">xarray</a></li>
+<li><a href="https://docs.dask.org/en/stable/index.html">dask</a></li>
+<li><a href="https://unidata.github.io/netcdf4-python/#introduction">netCDF4</a></li>
+<li><a href="https://numpy.org/">numpy</a></li>
+<li><a href="https://matplotlib.org/">matplotlib</a></li>
+<li><a href="https://pandas.pydata.org/">pandas</a></li>
+<li><a href="https://pypi.org/project/Cartopy/">cartopy</a></li>
+<li><a href="https://pypi.org/project/pyshp/">pyshp</a></li>
+<li><a href="https://matplotlib.org/cmocean/">cmocean</a> y <a href="https://www.fabiocrameri.ch/colourmaps/">crameri</a> (Opcionales para paletas de color bonitas)</li>
+</ul>
 
-</div>
 
-
+</section>
 </section>
 
 </main> <!-- /main -->

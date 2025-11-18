@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -198,7 +232,19 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Contents</h2>
    
   <ul>
-  <li><a href="#contributing" id="toc-contributing" class="nav-link active" data-scroll-target="#contributing">Contributing</a></li>
+  <li><a href="#contribution" id="toc-contribution" class="nav-link active" data-scroll-target="#contribution">Contribution</a>
+  <ul class="collapse">
+  <li><a href="#ways-to-contribute" id="toc-ways-to-contribute" class="nav-link" data-scroll-target="#ways-to-contribute">1. Ways to Contribute</a></li>
+  <li><a href="#general-workflow" id="toc-general-workflow" class="nav-link" data-scroll-target="#general-workflow">2. General Workflow</a></li>
+  <li><a href="#repository-structure" id="toc-repository-structure" class="nav-link" data-scroll-target="#repository-structure">3. Repository Structure</a></li>
+  <li><a href="#code-style-and-best-practices" id="toc-code-style-and-best-practices" class="nav-link" data-scroll-target="#code-style-and-best-practices">4. Code Style and Best Practices</a></li>
+  <li><a href="#tests-and-examples" id="toc-tests-and-examples" class="nav-link" data-scroll-target="#tests-and-examples">5. Tests and Examples</a></li>
+  <li><a href="#reporting-bugs-issues" id="toc-reporting-bugs-issues" class="nav-link" data-scroll-target="#reporting-bugs-issues">6. Reporting Bugs (Issues)</a></li>
+  <li><a href="#proposing-new-features" id="toc-proposing-new-features" class="nav-link" data-scroll-target="#proposing-new-features">7. Proposing New Features</a></li>
+  <li><a href="#documentation" id="toc-documentation" class="nav-link" data-scroll-target="#documentation">8. Documentation</a></li>
+  <li><a href="#code-of-conduct" id="toc-code-of-conduct" class="nav-link" data-scroll-target="#code-of-conduct">9. Code of Conduct</a></li>
+  <li><a href="#acknowledgements" id="toc-acknowledgements" class="nav-link" data-scroll-target="#acknowledgements">10. Acknowledgements</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -212,12 +258,207 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="contributing" class="level1 unnumbered">
-<h1 class="unnumbered">Contributing</h1>
-<p>All types of crontributions, bugs, feedbacks are welcome!</p>
-<p>Report bugs and submit feedback at <a href="https://github.com/fiorelacl/SCAHpy/issues">Github Issues</a>.</p>
+<section id="contribution" class="level1">
+<h1>Contribution</h1>
+<p>SCAHpy is an open-source project designed to facilitate the analysis of coupled ocean–atmosphere outputs, particularly from the <em>IGP RESM-COW</em> model. Community contributions are welcome and help improve the tool for researchers, students, and HPC users.</p>
+<p>This page describes how to participate in the development of the project, the basic structure of the repository, and several recommended best practices.</p>
+<section id="ways-to-contribute" class="level2">
+<h2 class="anchored" data-anchor-id="ways-to-contribute">1. Ways to Contribute</h2>
+<p>You can contribute to SCAHpy in several ways:</p>
+<ul>
+<li>Reporting <em>bugs</em>.</li>
+<li>Proposing <em>new features</em> or enhancements.</li>
+<li>Improving the <em>documentation</em> (text, examples, tutorials).</li>
+<li>Adding or improving <em>automated tests</em>.</li>
+<li>Optimizing <em>performance</em> or compatibility with new environments/models.</li>
+</ul>
+<p>All contributions—large or small—are valuable ☆.</p>
+</section>
+<section id="general-workflow" class="level2">
+<h2 class="anchored" data-anchor-id="general-workflow">2. General Workflow</h2>
+<p>The standard workflow for contributing code is:</p>
+<ol type="1">
+<li><p><strong>Fork</strong> the repository on GitHub: <a href="https://github.com/fiorelacl/SCAHpy">https://github.com/fiorelacl/SCAHpy</a></p></li>
+<li><p>Clone the fork to your local machine:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/YOUR_USERNAME/SCAHpy.git</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> SCAHpy</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Create and activate the development environment (e.g., using <code>environment.yml</code>):</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> env create <span class="at">-f</span> environment.yml <span class="at">-n</span> scahpy_dev</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> activate scahpy_dev</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Create a new branch for your changes:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout <span class="at">-b</span> feature/my-new-function</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Implement your changes in the code and/or documentation.</p></li>
+<li><p>Run the existing tests (if available) and verify that everything works.</p></li>
+<li><p>Make descriptive commits and push your branch to your fork:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add .</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Add function for ..."</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push origin feature/my-new-function</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p>Open a <strong>Pull Request (PR)</strong> to the main repository, explaining:</p>
+<ul>
+<li>the purpose of the changes,</li>
+<li>how to test them,</li>
+<li>whether they introduce new dependencies or break backward compatibility.</li>
+</ul></li>
+</ol>
+</section>
+<section id="repository-structure" class="level2">
+<h2 class="anchored" data-anchor-id="repository-structure">3. Repository Structure</h2>
+<p>The general structure of the SCAHpy repository (subject to change over time) is:</p>
+<pre class="text"><code>SCAHpy/
+├── scahpy/                          # Package source code
+│   ├── components/                  # Main scientific components
+│   │   ├── atmos/                   # Atmospheric functions (WRF)
+│   │   │   ├── wrf_coords.py
+│   │   │   ├── wrf_diags.py
+│   │   │   └── wrf_io.py
+│   │   ├── ocean/                   # Oceanic functions (CROCO)
+│   │   │   ├── croco_coords.py
+│   │   │   ├── croco_diags.py
+│   │   │   └── croco_io.py
+│   │   ├── core/                    # Common operations (coords, time, space)
+│   │   │   ├── coords.py
+│   │   │   ├── io.py
+│   │   │   ├── spatial_ops.py
+│   │   │   ├── time_ops.py
+│   │   │   ├── utils.py
+│   │   │   └── vertical.py
+│   │   ├── data/                    # Built-in datasets / data utilities
+│   │   └── plots/                   # Visualization functions
+│   │       ├── _helpers.py
+│   │       ├── maps.py
+│   │       ├── sections.py
+│   │       └── timeseries.py
+│   └── ...
+├── docs/                            # Documentation (Quarto, ES/EN site)
+│   ├── es/
+│   └── en/
+├── tests/                           # Automated tests
+├── environment.yml                  # Recommended development environment
+├── pyproject.toml / setup.cfg       # Packaging configuration
+└── README.md                        # Main project description</code></pre>
+<p>Before adding new code, look for the most appropriate module for your contribution (e.g., <code>atmos</code>, <code>ocean</code>, <code>io</code>, <code>plots</code>).</p>
+</section>
+<section id="code-style-and-best-practices" class="level2">
+<h2 class="anchored" data-anchor-id="code-style-and-best-practices">4. Code Style and Best Practices</h2>
+<p>To keep the project consistent and readable:</p>
+<ul>
+<li><p>Follow <em>PEP 8</em> style guidelines (indentation, variable names, line length, etc.).</p></li>
+<li><p>Write descriptive function and variable names, in <em>English</em>.</p></li>
+<li><p>Add <em>docstrings</em> to all functions, including:</p>
+<ul>
+<li>purpose,</li>
+<li>parameters,</li>
+<li>return type,</li>
+<li>units (when applicable),</li>
+<li>scientific references when relevant.</li>
+</ul></li>
+</ul>
+<p>Example docstring:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_sst_anomaly(ds, climatology):</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Compute sea surface temperature anomalies.</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">    ds : xarray.Dataset</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">        Input dataset containing sea surface temperature.</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">    climatology : xarray.DataArray</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co">        Climatological mean SST for the same region and period.</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co">    -------</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co">    xarray.DataArray</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co">        SST anomaly (K).</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    ...</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="tests-and-examples" class="level2">
+<h2 class="anchored" data-anchor-id="tests-and-examples">5. Tests and Examples</h2>
+<p>When adding or modifying functions:</p>
+<ul>
+<li><p>Include tests in the <code>tests/</code> folder whenever possible.</p></li>
+<li><p>Try to ensure your tests:</p>
+<ul>
+<li>run quickly (avoid very large files),</li>
+<li>rely on synthetic or small sample datasets,</li>
+<li>cover typical and simple edge cases.</li>
+</ul></li>
+</ul>
+<p>Example command to run tests (if using <code>pytest</code>):</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pytest</span> <span class="at">-v</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Additionally, it is very helpful to:</p>
+<ul>
+<li>Add short examples in the documentation or docstrings.</li>
+<li>Update tutorials if your changes affect the workflow.</li>
+</ul>
+</section>
+<section id="reporting-bugs-issues" class="level2">
+<h2 class="anchored" data-anchor-id="reporting-bugs-issues">6. Reporting Bugs (Issues)</h2>
+<p>If you encounter an issue, please open a <strong>GitHub issue</strong>:</p>
+<p><a href="https://github.com/fiorelacl/SCAHpy/issues">https://github.com/fiorelacl/SCAHpy/issues</a></p>
+<p>Try to include:</p>
+<ul>
+<li><p>A clear description of the problem.</p></li>
+<li><p>Steps to reproduce it (ideally a minimal working example).</p></li>
+<li><p>Environment information:</p>
+<ul>
+<li>SCAHpy version,</li>
+<li>Python version,</li>
+<li>operating system,</li>
+<li>installation method (pip/conda/mamba/HPC),</li>
+<li>relevant error messages.</li>
+</ul></li>
+</ul>
+<p>This greatly helps with reproducing and fixing the issue.</p>
+</section>
+<section id="proposing-new-features" class="level2">
+<h2 class="anchored" data-anchor-id="proposing-new-features">7. Proposing New Features</h2>
+<p>If you want to propose a new feature:</p>
+<ol type="1">
+<li><p>Open an <strong>enhancement issue</strong> describing:</p>
+<ul>
+<li>the scientific or technical need,</li>
+<li>expected inputs and outputs,</li>
+<li>potential modules where it could be integrated.</li>
+</ul></li>
+<li><p>Discuss the design briefly before writing a large amount of code; this helps maintain consistency within the package.</p></li>
+</ol>
+</section>
+<section id="documentation" class="level2">
+<h2 class="anchored" data-anchor-id="documentation">8. Documentation</h2>
+<p>Documentation improvements are especially welcome:</p>
+<ul>
+<li><p>Fixing typos or errors.</p></li>
+<li><p>Clarifying explanations.</p></li>
+<li><p>Adding new usage examples, especially for:</p>
+<ul>
+<li>atmospheric applications (WRF),</li>
+<li>oceanic applications (CROCO),</li>
+<li>workflows using the IGP RESM-COW system.</li>
+</ul></li>
+</ul>
+<p>The documentation is written in <em>Quarto</em> in two languages (ES/EN). If you add a new section in Spanish, ideally include its English version as well.</p>
+</section>
+<section id="code-of-conduct" class="level2">
+<h2 class="anchored" data-anchor-id="code-of-conduct">9. Code of Conduct</h2>
+<p>All interactions related to SCAHpy (issues, PRs, discussions) are expected to remain:</p>
+<ul>
+<li>respectful and collaborative,</li>
+<li>inclusive of people with different experience levels,</li>
+<li>oriented toward constructive problem-solving.</li>
+</ul>
+</section>
+<section id="acknowledgements" class="level2">
+<h2 class="anchored" data-anchor-id="acknowledgements">10. Acknowledgements</h2>
+<p>SCAHpy is developed within the scientific activities of the <em>Instituto Geofísico del Perú (IGP)</em>, along with individual contributions from the community. Every contribution—from fixing a typo to implementing new physical diagnostics—helps strengthen the tool and broaden its impact on ocean–atmosphere research ♡.</p>
+<p>If you use SCAHpy in your thesis, article, or technical report, please consider:</p>
+<ul>
+<li>citing the package in the Methods section, and</li>
+<li>sharing links to your work through issues or PRs so they may be included as usage examples.</li>
+</ul>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
