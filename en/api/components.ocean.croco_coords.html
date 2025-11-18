@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="es-PE" xml:lang="es-PE"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US"><head>
 
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.4.537">
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -54,17 +88,17 @@ ul.task-list li input[type="checkbox"] {
   ],
   "show-item-context": false,
   "language": {
-    "search-no-results-text": "Sin resultados",
-    "search-matching-documents-text": "documentos coincidentes",
-    "search-copy-link-title": "Copiar el enlace en la búsqueda",
-    "search-hide-matches-text": "Ocultar resultados adicionales",
-    "search-more-match-text": "resultado adicional en este documento",
-    "search-more-matches-text": "resultados adicionales en este documento",
-    "search-clear-button-title": "Limpiar",
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
     "search-text-placeholder": "",
-    "search-detached-cancel-button-title": "Cancelar",
-    "search-submit-button-title": "Enviar",
-    "search-label": "Buscar"
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
@@ -80,11 +114,17 @@ ul.task-list li input[type="checkbox"] {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Contenido</h2>
+    <h2 id="toc-title">Contents</h2>
    
   <ul>
-  <li><a href="#scahpy.components.ocean" id="toc-scahpy.components.ocean" class="nav-link active" data-scroll-target="#scahpy.components.ocean">components.ocean</a></li>
-  <li><a href="#scahpy-ocean-component" id="toc-scahpy-ocean-component" class="nav-link" data-scroll-target="#scahpy-ocean-component">SCAHpy Ocean Component</a></li>
+  <li><a href="#scahpy.components.ocean.croco_coords" id="toc-scahpy.components.ocean.croco_coords" class="nav-link active" data-scroll-target="#scahpy.components.ocean.croco_coords">components.ocean.croco_coords</a>
+  <ul class="collapse">
+  <li><a href="#functions" id="toc-functions" class="nav-link" data-scroll-target="#functions">Functions</a>
+  <ul class="collapse">
+  <li><a href="#scahpy.components.ocean.croco_coords.croco_depths" id="toc-scahpy.components.ocean.croco_coords.croco_depths" class="nav-link" data-scroll-target="#scahpy.components.ocean.croco_coords.croco_depths">croco_depths</a></li>
+  <li><a href="#scahpy.components.ocean.croco_coords.crocointerp_sigma_to_z" id="toc-scahpy.components.ocean.croco_coords.crocointerp_sigma_to_z" class="nav-link" data-scroll-target="#scahpy.components.ocean.croco_coords.crocointerp_sigma_to_z">crocointerp_sigma_to_z</a></li>
+  </ul></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -98,16 +138,263 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="scahpy.components.ocean" class="level1">
-<h1>components.ocean</h1>
-<p><code>components.ocean</code></p>
+<section id="scahpy.components.ocean.croco_coords" class="level1">
+<h1>components.ocean.croco_coords</h1>
+<p><code>components.ocean.croco_coords</code></p>
+<section id="functions" class="level2">
+<h2 class="anchored" data-anchor-id="functions">Functions</h2>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="#scahpy.components.ocean.croco_coords.croco_depths">croco_depths</a></td>
+<td>Compute physical depths (z, in meters) at rho or w points for CROCO/ROMS grids.</td>
+</tr>
+<tr class="even">
+<td><a href="#scahpy.components.ocean.croco_coords.crocointerp_sigma_to_z">crocointerp_sigma_to_z</a></td>
+<td>Interpolate CROCO variables from sigma levels to fixed z levels (meters).</td>
+</tr>
+</tbody>
+</table>
+<section id="scahpy.components.ocean.croco_coords.croco_depths" class="level3">
+<h3 class="anchored" data-anchor-id="scahpy.components.ocean.croco_coords.croco_depths">croco_depths</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>components.ocean.croco_coords.croco_depths(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    ds,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">*</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    which<span class="op">=</span><span class="st">'rho'</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    levels_dim<span class="op">=</span><span class="st">'levels'</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    wlevels_dim<span class="op">=</span><span class="st">'s_w'</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    lat_dim<span class="op">=</span><span class="st">'lat'</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    lon_dim<span class="op">=</span><span class="st">'lon'</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    h_name<span class="op">=</span><span class="st">'h'</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    zeta_name<span class="op">=</span><span class="st">'zeta'</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    hc_name<span class="op">=</span><span class="st">'hc'</span>,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Compute physical depths (z, in meters) at rho or w points for CROCO/ROMS grids.</p>
+<p>This function is compatible with datasets produced by <code>read_croco</code> and computes the vertical coordinate transformation according to the model parameters, supporting both <strong>Vtransform = 1</strong> and <strong>Vtransform = 2</strong>. It does not create artificial dimensions and follows the original structure of the CROCO vertical grid.</p>
+<section id="parameters" class="level4 doc-section doc-section-parameters">
+<h4 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters">Parameters</h4>
+<table class="table">
+<colgroup>
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 82%">
+<col style="width: 5%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ds</td>
+<td>xr.Dataset</td>
+<td>CROCO dataset already standardized (as returned by <code>read_croco</code>).</td>
+<td><em>required</em></td>
+</tr>
+<tr class="even">
+<td>which</td>
+<td>(rho, w)</td>
+<td>Defines the grid points where depths are computed: - <code>'rho'</code> → centers of vertical layers (used for T, S, U, V) - <code>'w'</code> → interfaces between layers (used for vertical velocity)</td>
+<td><code>'rho'</code></td>
+</tr>
+<tr class="odd">
+<td>levels_dim</td>
+<td>str</td>
+<td>Name of the vertical dimension for rho-points (default: “levels”).</td>
+<td><code>'levels'</code></td>
+</tr>
+<tr class="even">
+<td>wlevels_dim</td>
+<td>str</td>
+<td>Name of the vertical dimension for w-points (default: “s_w”).</td>
+<td><code>'s_w'</code></td>
+</tr>
+<tr class="odd">
+<td>lat_dim</td>
+<td>str</td>
+<td>Names of the horizontal dimensions (default: “lat”, “lon”).</td>
+<td><code>'lat'</code></td>
+</tr>
+<tr class="even">
+<td>lon_dim</td>
+<td>str</td>
+<td>Names of the horizontal dimensions (default: “lat”, “lon”).</td>
+<td><code>'lat'</code></td>
+</tr>
+<tr class="odd">
+<td>h_name</td>
+<td>str</td>
+<td>Names of the bathymetry (<code>h</code>), free-surface elevation (<code>zeta</code>), and critical depth (<code>hc</code>) variables.</td>
+<td><code>'h'</code></td>
+</tr>
+<tr class="even">
+<td>zeta_name</td>
+<td>str</td>
+<td>Names of the bathymetry (<code>h</code>), free-surface elevation (<code>zeta</code>), and critical depth (<code>hc</code>) variables.</td>
+<td><code>'h'</code></td>
+</tr>
+<tr class="odd">
+<td>hc_name</td>
+<td>str</td>
+<td>Names of the bathymetry (<code>h</code>), free-surface elevation (<code>zeta</code>), and critical depth (<code>hc</code>) variables.</td>
+<td><code>'h'</code></td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="scahpy-ocean-component" class="level1">
-<h1>SCAHpy Ocean Component</h1>
-<p>Oceanic component for CROCO model data.</p>
-<p>Includes: - croco_io: Input/output utilities for CROCO NetCDF files. - croco_coords: Vertical coordinates and sigma-to-z interpolation. - croco_diags: Derived ocean diagnostics (e.g., KE, vorticity, SST gradients).</p>
+<section id="returns" class="level4 doc-section doc-section-returns">
+<h4 class="doc-section doc-section-returns anchored" data-anchor-id="returns">Returns</h4>
+<table class="table">
+<colgroup>
+<col style="width: 4%">
+<col style="width: 7%">
+<col style="width: 88%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td>xr.DataArray</td>
+<td>Physical depth (in meters) at either rho-points or w-points: - For <code>'rho'</code> → dimensions (time, levels, lat, lon) - For <code>'w'</code> → dimensions (time, s_w, lat, lon)</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="scahpy.components.ocean.croco_coords.crocointerp_sigma_to_z" class="level3">
+<h3 class="anchored" data-anchor-id="scahpy.components.ocean.croco_coords.crocointerp_sigma_to_z">crocointerp_sigma_to_z</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>components.ocean.croco_coords.crocointerp_sigma_to_z(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    ds,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    var_names,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">*</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    which_z<span class="op">=</span><span class="st">'rho'</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    z_levels<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    z_units<span class="op">=</span><span class="st">'m'</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    sigma_dim<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    new_dim<span class="op">=</span><span class="st">'z'</span>,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    mask_outside<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    persist<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Interpolate CROCO variables from sigma levels to fixed z levels (meters).</p>
+<section id="parameters-1" class="level4 doc-section doc-section-parameters">
+<h4 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters-1">Parameters</h4>
+<table class="table">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 17%">
+<col style="width: 65%">
+<col style="width: 8%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ds</td>
+<td>xr.Dataset</td>
+<td>CROCO Dataset con h, zeta, hc, s_{rho|w}, Cs_{r|w}.</td>
+<td><em>required</em></td>
+</tr>
+<tr class="even">
+<td>var_names</td>
+<td>sequence of str</td>
+<td>Variables a interpolar (deben contener la dimensión sigma).</td>
+<td><em>required</em></td>
+</tr>
+<tr class="odd">
+<td>which_z</td>
+<td>(rho, w)</td>
+<td>Profundidades de referencia para la interpolación (z_r o z_w).</td>
+<td><code>'rho','w'</code></td>
+</tr>
+<tr class="even">
+<td>z_levels</td>
+<td>sequence of float or None</td>
+<td>Niveles objetivo en z. Si None, usa [0, -10, -20, -30, -50, -75, -100, -150, -200, -300, -500, -1000].</td>
+<td><code>None</code></td>
+</tr>
+<tr class="odd">
+<td>z_units</td>
+<td>(m, km)</td>
+<td>Unidades de z_levels.</td>
+<td><code>'m','km'</code></td>
+</tr>
+<tr class="even">
+<td>sigma_dim</td>
+<td>str or None</td>
+<td>Nombre de la dimensión sigma; si None se infiere (‘s_rho’ o ‘s_w’).</td>
+<td><code>None</code></td>
+</tr>
+<tr class="odd">
+<td>new_dim</td>
+<td>str</td>
+<td>Nombre de la nueva dimensión.</td>
+<td><code>'z'</code></td>
+</tr>
+<tr class="even">
+<td>mask_outside</td>
+<td>bool</td>
+<td>Enmascara con NaN los puntos fuera del rango vertical local.</td>
+<td><code>True</code></td>
+</tr>
+<tr class="odd">
+<td>persist</td>
+<td>bool</td>
+<td>Llama .persist() en salidas (útil con Dask).</td>
+<td><code>False</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="returns-1" class="level4 doc-section doc-section-returns">
+<h4 class="doc-section doc-section-returns anchored" data-anchor-id="returns-1">Returns</h4>
+<table class="table">
+<colgroup>
+<col style="width: 9%">
+<col style="width: 14%">
+<col style="width: 75%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td>xr.Dataset</td>
+<td>Dataset con variables interpoladas en el eje <code>new_dim</code> (z).</td>
+</tr>
+</tbody>
+</table>
 
 
+</section>
+</section>
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -267,12 +554,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // flash "checked"
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copiado");
+    button.setAttribute("title", "Copied!");
     let tooltip;
     if (window.bootstrap) {
       button.setAttribute("data-bs-toggle", "tooltip");
       button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copiado");
+      button.setAttribute("data-bs-title", "Copied!");
       tooltip = new bootstrap.Tooltip(button, 
         { trigger: "manual", 
           customClass: "code-copy-button-tooltip",

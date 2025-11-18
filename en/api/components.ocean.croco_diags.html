@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -83,12 +117,14 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Contents</h2>
    
   <ul>
-  <li><a href="#function-reference" id="toc-function-reference" class="nav-link active" data-scroll-target="#function-reference">Function reference</a>
+  <li><a href="#scahpy.components.ocean.croco_diags" id="toc-scahpy.components.ocean.croco_diags" class="nav-link active" data-scroll-target="#scahpy.components.ocean.croco_diags">components.ocean.croco_diags</a>
   <ul class="collapse">
-  <li><a href="#core-operaciones-esenciales" id="toc-core-operaciones-esenciales" class="nav-link" data-scroll-target="#core-operaciones-esenciales">Core (Operaciones esenciales)</a></li>
-  <li><a href="#io-atmosférico-wrf" id="toc-io-atmosférico-wrf" class="nav-link" data-scroll-target="#io-atmosférico-wrf">IO Atmosférico (WRF)</a></li>
-  <li><a href="#io-oceánico-croco" id="toc-io-oceánico-croco" class="nav-link" data-scroll-target="#io-oceánico-croco">IO Oceánico (CROCO)</a></li>
-  <li><a href="#plotting" id="toc-plotting" class="nav-link" data-scroll-target="#plotting">Plotting</a></li>
+  <li><a href="#functions" id="toc-functions" class="nav-link" data-scroll-target="#functions">Functions</a>
+  <ul class="collapse">
+  <li><a href="#scahpy.components.ocean.croco_diags.grad_sst" id="toc-scahpy.components.ocean.croco_diags.grad_sst" class="nav-link" data-scroll-target="#scahpy.components.ocean.croco_diags.grad_sst">grad_sst</a></li>
+  <li><a href="#scahpy.components.ocean.croco_diags.ke_sfc" id="toc-scahpy.components.ocean.croco_diags.ke_sfc" class="nav-link" data-scroll-target="#scahpy.components.ocean.croco_diags.ke_sfc">ke_sfc</a></li>
+  <li><a href="#scahpy.components.ocean.croco_diags.vorticity_sfc" id="toc-scahpy.components.ocean.croco_diags.vorticity_sfc" class="nav-link" data-scroll-target="#scahpy.components.ocean.croco_diags.vorticity_sfc">vorticity_sfc</a></li>
+  </ul></li>
   </ul></li>
   </ul>
 </nav>
@@ -103,101 +139,342 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="function-reference" class="level1 doc doc-index">
-<h1 class="doc doc-index">Function reference</h1>
-<section id="core-operaciones-esenciales" class="level2">
-<h2 class="anchored" data-anchor-id="core-operaciones-esenciales">Core (Operaciones esenciales)</h2>
-<p>Operaciones comunes de coordenadas, tiempo, vertical y utilidades.</p>
+<section id="scahpy.components.ocean.croco_diags" class="level1">
+<h1>components.ocean.croco_diags</h1>
+<p><code>components.ocean.croco_diags</code></p>
+<section id="functions" class="level2">
+<h2 class="anchored" data-anchor-id="functions">Functions</h2>
 <table class="table">
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
 <tbody>
 <tr class="odd">
-<td><a href="api/core.coords.html">core.coords</a></td>
-<td></td>
+<td><a href="#scahpy.components.ocean.croco_diags.grad_sst">grad_sst</a></td>
+<td>Magnitude of the horizontal SST gradient <code>\|∇T\|</code>.</td>
 </tr>
 <tr class="even">
-<td><a href="api/core.io.html">core.io</a></td>
-<td></td>
+<td><a href="#scahpy.components.ocean.croco_diags.ke_sfc">ke_sfc</a></td>
+<td>Surface kinetic energy <code>KE = 0.5 * (u**2 + v**2)</code>.</td>
 </tr>
 <tr class="odd">
-<td><a href="api/core.spatial_ops.html">core.spatial_ops</a></td>
-<td></td>
+<td><a href="#scahpy.components.ocean.croco_diags.vorticity_sfc">vorticity_sfc</a></td>
+<td>Surface relative vorticity <code>ζ = ∂v/∂x − ∂u/∂y</code>.</td>
+</tr>
+</tbody>
+</table>
+<section id="scahpy.components.ocean.croco_diags.grad_sst" class="level3">
+<h3 class="anchored" data-anchor-id="scahpy.components.ocean.croco_diags.grad_sst">grad_sst</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>components.ocean.croco_diags.grad_sst(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    sst,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    pm,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    pn,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">*</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    x_dim<span class="op">=</span><span class="st">'lon'</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    y_dim<span class="op">=</span><span class="st">'lat'</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    mask<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    to_per_100km<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    name<span class="op">=</span><span class="st">'grad_sst_mag'</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Magnitude of the horizontal SST gradient <code>|∇T|</code>.</p>
+<p>Uses centered differences and CROCO/ROMS metric coefficients <code>pm=1/Δx</code> and <code>pn=1/Δy</code>. Units are °C per 100 km by default (set <code>to_per_100km=False</code> to keep °C m⁻¹).</p>
+<section id="parameters" class="level4 doc-section doc-section-parameters">
+<h4 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters">Parameters</h4>
+<table class="table">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 12%">
+<col style="width: 59%">
+<col style="width: 15%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>sst</td>
+<td>xr.DataArray</td>
+<td>Sea surface temperature (°C or K) on the ρ-grid.</td>
+<td><em>required</em></td>
 </tr>
 <tr class="even">
-<td><a href="api/core.time_ops.html">core.time_ops</a></td>
-<td></td>
+<td>pm</td>
+<td>xr.DataArray</td>
+<td>Metric coefficients 1/Δx and 1/Δy (m⁻¹), broadcastable to <code>sst</code>.</td>
+<td><em>required</em></td>
 </tr>
 <tr class="odd">
-<td><a href="api/core.utils.html">core.utils</a></td>
-<td></td>
+<td>pn</td>
+<td>xr.DataArray</td>
+<td>Metric coefficients 1/Δx and 1/Δy (m⁻¹), broadcastable to <code>sst</code>.</td>
+<td><em>required</em></td>
 </tr>
 <tr class="even">
-<td><a href="api/core.vertical.html">core.vertical</a></td>
-<td></td>
+<td>x_dim</td>
+<td>str</td>
+<td>Names of horizontal dimensions.</td>
+<td><code>("lon", "lat")</code></td>
+</tr>
+<tr class="odd">
+<td>y_dim</td>
+<td>str</td>
+<td>Names of horizontal dimensions.</td>
+<td><code>("lon", "lat")</code></td>
+</tr>
+<tr class="even">
+<td>mask</td>
+<td>xr.DataArray</td>
+<td>Ocean mask (1=sea, 0=land) to apply to the result.</td>
+<td><code>None</code></td>
+</tr>
+<tr class="odd">
+<td>to_per_100km</td>
+<td>bool</td>
+<td>If True, scales the magnitude to per 100 km.</td>
+<td><code>True</code></td>
+</tr>
+<tr class="even">
+<td>name</td>
+<td>str</td>
+<td>Output variable name.</td>
+<td><code>"grad_sst_mag"</code></td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="io-atmosférico-wrf" class="level2">
-<h2 class="anchored" data-anchor-id="io-atmosférico-wrf">IO Atmosférico (WRF)</h2>
-<p>Funciones para lectura, manejo de coordenadas y diagnósticos atmosféricos WRF.</p>
+<section id="returns" class="level4 doc-section doc-section-returns">
+<h4 class="doc-section doc-section-returns anchored" data-anchor-id="returns">Returns</h4>
 <table class="table">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 19%">
+<col style="width: 69%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
 <tbody>
 <tr class="odd">
-<td><a href="api/components.atmos.wrf_diags.html">components.atmos.wrf_diags</a></td>
 <td></td>
-</tr>
-<tr class="even">
-<td><a href="api/components.atmos.wrf_coords.html">components.atmos.wrf_coords</a></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td><a href="api/components.atmos.wrf_io.html">components.atmos.wrf_io</a></td>
-<td></td>
+<td>xr.DataArray</td>
+<td><code>\|∇T\|</code> in °C per 100 km (default) or °C m⁻¹.</td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="io-oceánico-croco" class="level2">
-<h2 class="anchored" data-anchor-id="io-oceánico-croco">IO Oceánico (CROCO)</h2>
-<p>Funciones para lectura, coordenadas y diagnósticos del modelo oceánico CROCO.</p>
+</section>
+<section id="scahpy.components.ocean.croco_diags.ke_sfc" class="level3">
+<h3 class="anchored" data-anchor-id="scahpy.components.ocean.croco_diags.ke_sfc">ke_sfc</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>components.ocean.croco_diags.ke_sfc(u, v, <span class="op">*</span>, mask<span class="op">=</span><span class="va">None</span>, name<span class="op">=</span><span class="st">'ke_sfc'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Surface kinetic energy <code>KE = 0.5 * (u**2 + v**2)</code>.</p>
+<p>Assumes that <code>u</code> and <code>v</code> are already on the same unstaggered grid and in earth-relative coordinates if needed (East–North). For purely scalar KE this rotation is not strictly necessary (KE is rotation-invariant), but ensure consistent pre-processing if you plan to overlay quivers.</p>
+<section id="parameters-1" class="level4 doc-section doc-section-parameters">
+<h4 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters-1">Parameters</h4>
 <table class="table">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 15%">
+<col style="width: 62%">
+<col style="width: 13%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
 <tbody>
 <tr class="odd">
-<td><a href="api/components.ocean.croco_coords.html">components.ocean.croco_coords</a></td>
-<td></td>
+<td>u</td>
+<td>xr.DataArray</td>
+<td>Horizontal velocity components at the surface (m s⁻¹).</td>
+<td><em>required</em></td>
 </tr>
 <tr class="even">
-<td><a href="api/components.ocean.croco_io.html">components.ocean.croco_io</a></td>
-<td></td>
+<td>v</td>
+<td>xr.DataArray</td>
+<td>Horizontal velocity components at the surface (m s⁻¹).</td>
+<td><em>required</em></td>
 </tr>
 <tr class="odd">
-<td><a href="api/components.ocean.croco_diags.html">components.ocean.croco_diags</a></td>
-<td></td>
+<td>mask</td>
+<td>xr.DataArray</td>
+<td>Ocean mask (1=sea, 0=land) to apply to the result.</td>
+<td><code>None</code></td>
+</tr>
+<tr class="even">
+<td>name</td>
+<td>str</td>
+<td>Output variable name.</td>
+<td><code>"ke_sfc"</code></td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="plotting" class="level2">
-<h2 class="anchored" data-anchor-id="plotting">Plotting</h2>
-<p>Funciones de visualización para mapas, secciones y series de tiempo.</p>
+<section id="returns-1" class="level4 doc-section doc-section-returns">
+<h4 class="doc-section doc-section-returns anchored" data-anchor-id="returns-1">Returns</h4>
 <table class="table">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 14%">
+<col style="width: 77%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
 <tbody>
 <tr class="odd">
-<td><a href="api/plots.maps.html">plots.maps</a></td>
 <td></td>
+<td>xr.DataArray</td>
+<td>Surface kinetic energy (m² s⁻²) with the same dimensions as <code>u</code>/<code>v</code>.</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="scahpy.components.ocean.croco_diags.vorticity_sfc" class="level3">
+<h3 class="anchored" data-anchor-id="scahpy.components.ocean.croco_diags.vorticity_sfc">vorticity_sfc</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>components.ocean.croco_diags.vorticity_sfc(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    u,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    v,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    pm,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    pn,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">*</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    x_dim<span class="op">=</span><span class="st">'lon'</span>,</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    y_dim<span class="op">=</span><span class="st">'lat'</span>,</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    mask<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    f<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    normalize_by_f<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    name<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Surface relative vorticity <code>ζ = ∂v/∂x − ∂u/∂y</code>.</p>
+<p>Derivatives are computed with centered differences and multiplied by the metric coefficients (<code>pm</code>, <code>pn</code>). If <code>normalize_by_f=True</code> the result is divided by the local Coriolis parameter <code>f</code> to obtain the adimensional quantity <code>ζ/f</code>.</p>
+<section id="parameters-2" class="level4 doc-section doc-section-parameters">
+<h4 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters-2">Parameters</h4>
+<table class="table">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 11%">
+<col style="width: 60%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>u</td>
+<td>xr.DataArray</td>
+<td>Horizontal velocity components at the surface (m s⁻¹).</td>
+<td><em>required</em></td>
 </tr>
 <tr class="even">
-<td><a href="api/plots.sections.html">plots.sections</a></td>
-<td></td>
+<td>v</td>
+<td>xr.DataArray</td>
+<td>Horizontal velocity components at the surface (m s⁻¹).</td>
+<td><em>required</em></td>
 </tr>
 <tr class="odd">
-<td><a href="api/plots.timeseries.html">plots.timeseries</a></td>
+<td>pm</td>
+<td>xr.DataArray</td>
+<td>Metric coefficients 1/Δx and 1/Δy (m⁻¹), broadcastable to <code>u</code>/<code>v</code>.</td>
+<td><em>required</em></td>
+</tr>
+<tr class="even">
+<td>pn</td>
+<td>xr.DataArray</td>
+<td>Metric coefficients 1/Δx and 1/Δy (m⁻¹), broadcastable to <code>u</code>/<code>v</code>.</td>
+<td><em>required</em></td>
+</tr>
+<tr class="odd">
+<td>x_dim</td>
+<td>str</td>
+<td>Names of horizontal dimensions.</td>
+<td><code>("lon", "lat")</code></td>
+</tr>
+<tr class="even">
+<td>y_dim</td>
+<td>str</td>
+<td>Names of horizontal dimensions.</td>
+<td><code>("lon", "lat")</code></td>
+</tr>
+<tr class="odd">
+<td>mask</td>
+<td>xr.DataArray</td>
+<td>Ocean mask (1=sea, 0=land) to apply to the result.</td>
+<td><code>None</code></td>
+</tr>
+<tr class="even">
+<td>f</td>
+<td>xr.DataArray</td>
+<td>Coriolis parameter (s⁻¹). Required if <code>normalize_by_f=True</code>.</td>
+<td><code>None</code></td>
+</tr>
+<tr class="odd">
+<td>normalize_by_f</td>
+<td>bool</td>
+<td>If True, returns <code>ζ/f</code> (dimensionless).</td>
+<td><code>False</code></td>
+</tr>
+<tr class="even">
+<td>name</td>
+<td>str</td>
+<td>Output variable name. Inferred from <code>normalize_by_f</code> if not provided.</td>
+<td><code>None</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="returns-2" class="level4 doc-section doc-section-returns">
+<h4 class="doc-section doc-section-returns anchored" data-anchor-id="returns-2">Returns</h4>
+<table class="table">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 14%">
+<col style="width: 77%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
 <td></td>
+<td>xr.DataArray</td>
+<td>Relative vorticity (s⁻¹) or normalized vorticity <code>ζ/f</code> (dimensionless).</td>
 </tr>
 </tbody>
 </table>
 
 
+</section>
+</section>
 </section>
 </section>
 

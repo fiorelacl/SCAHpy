@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -83,12 +117,13 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Contents</h2>
    
   <ul>
-  <li><a href="#function-reference" id="toc-function-reference" class="nav-link active" data-scroll-target="#function-reference">Function reference</a>
+  <li><a href="#scahpy.core.io" id="toc-scahpy.core.io" class="nav-link active" data-scroll-target="#scahpy.core.io">core.io</a>
   <ul class="collapse">
-  <li><a href="#core-operaciones-esenciales" id="toc-core-operaciones-esenciales" class="nav-link" data-scroll-target="#core-operaciones-esenciales">Core (Operaciones esenciales)</a></li>
-  <li><a href="#io-atmosférico-wrf" id="toc-io-atmosférico-wrf" class="nav-link" data-scroll-target="#io-atmosférico-wrf">IO Atmosférico (WRF)</a></li>
-  <li><a href="#io-oceánico-croco" id="toc-io-oceánico-croco" class="nav-link" data-scroll-target="#io-oceánico-croco">IO Oceánico (CROCO)</a></li>
-  <li><a href="#plotting" id="toc-plotting" class="nav-link" data-scroll-target="#plotting">Plotting</a></li>
+  <li><a href="#functions" id="toc-functions" class="nav-link" data-scroll-target="#functions">Functions</a>
+  <ul class="collapse">
+  <li><a href="#scahpy.core.io.drop_vars" id="toc-scahpy.core.io.drop_vars" class="nav-link" data-scroll-target="#scahpy.core.io.drop_vars">drop_vars</a></li>
+  <li><a href="#scahpy.core.io.get_metadata_vars" id="toc-scahpy.core.io.get_metadata_vars" class="nav-link" data-scroll-target="#scahpy.core.io.get_metadata_vars">get_metadata_vars</a></li>
+  </ul></li>
   </ul></li>
   </ul>
 </nav>
@@ -103,101 +138,184 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="function-reference" class="level1 doc doc-index">
-<h1 class="doc doc-index">Function reference</h1>
-<section id="core-operaciones-esenciales" class="level2">
-<h2 class="anchored" data-anchor-id="core-operaciones-esenciales">Core (Operaciones esenciales)</h2>
-<p>Operaciones comunes de coordenadas, tiempo, vertical y utilidades.</p>
+<section id="scahpy.core.io" class="level1">
+<h1>core.io</h1>
+<p><code>core.io</code></p>
+<section id="functions" class="level2">
+<h2 class="anchored" data-anchor-id="functions">Functions</h2>
 <table class="table">
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
 <tbody>
 <tr class="odd">
-<td><a href="api/core.coords.html">core.coords</a></td>
-<td></td>
+<td><a href="#scahpy.core.io.drop_vars">drop_vars</a></td>
+<td>Identifies variables in a NetCDF dataset that are not included</td>
 </tr>
 <tr class="even">
-<td><a href="api/core.io.html">core.io</a></td>
-<td></td>
+<td><a href="#scahpy.core.io.get_metadata_vars">get_metadata_vars</a></td>
+<td>Extracts metadata for each variable in a NetCDF dataset produced by</td>
+</tr>
+</tbody>
+</table>
+<section id="scahpy.core.io.drop_vars" class="level3">
+<h3 class="anchored" data-anchor-id="scahpy.core.io.drop_vars">drop_vars</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>core.io.drop_vars(file0, sel_vars, model<span class="op">=</span><span class="st">'WRF'</span>, engine<span class="op">=</span><span class="st">'netcdf4'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Identifies variables in a NetCDF dataset that are not included in the user-specified selection <code>sel_vars</code>.</p>
+<section id="parameters" class="level4 doc-section doc-section-parameters">
+<h4 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters">Parameters</h4>
+<table class="table">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 19%">
+<col style="width: 56%">
+<col style="width: 13%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>file0</td>
+<td>str | xr.Dataset</td>
+<td>Path to the NetCDF output file or an xarray.Dataset.</td>
+<td><em>required</em></td>
+</tr>
+<tr class="even">
+<td>sel_vars</td>
+<td>list[str]</td>
+<td>List of variable names the user wants to keep.</td>
+<td><em>required</em></td>
 </tr>
 <tr class="odd">
-<td><a href="api/core.spatial_ops.html">core.spatial_ops</a></td>
-<td></td>
+<td>model</td>
+<td>(WRF, CROCO)</td>
+<td>Model that generated the dataset.</td>
+<td><code>'WRF'</code></td>
 </tr>
 <tr class="even">
-<td><a href="api/core.time_ops.html">core.time_ops</a></td>
+<td>engine</td>
+<td>str or None</td>
 <td></td>
-</tr>
-<tr class="odd">
-<td><a href="api/core.utils.html">core.utils</a></td>
-<td></td>
-</tr>
-<tr class="even">
-<td><a href="api/core.vertical.html">core.vertical</a></td>
-<td></td>
+<td><code>'netcdf4'</code></td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="io-atmosférico-wrf" class="level2">
-<h2 class="anchored" data-anchor-id="io-atmosférico-wrf">IO Atmosférico (WRF)</h2>
-<p>Funciones para lectura, manejo de coordenadas y diagnósticos atmosféricos WRF.</p>
+<section id="returns" class="level4 doc-section doc-section-returns">
+<h4 class="doc-section doc-section-returns anchored" data-anchor-id="returns">Returns</h4>
 <table class="table">
+<colgroup>
+<col style="width: 7%">
+<col style="width: 12%">
+<col style="width: 80%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
 <tbody>
 <tr class="odd">
-<td><a href="api/components.atmos.wrf_diags.html">components.atmos.wrf_diags</a></td>
 <td></td>
-</tr>
-<tr class="even">
-<td><a href="api/components.atmos.wrf_coords.html">components.atmos.wrf_coords</a></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td><a href="api/components.atmos.wrf_io.html">components.atmos.wrf_io</a></td>
-<td></td>
+<td>list[str]</td>
+<td>List of variable names that are present in the dataset but not included in <code>sel_vars</code></td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="io-oceánico-croco" class="level2">
-<h2 class="anchored" data-anchor-id="io-oceánico-croco">IO Oceánico (CROCO)</h2>
-<p>Funciones para lectura, coordenadas y diagnósticos del modelo oceánico CROCO.</p>
+</section>
+<section id="scahpy.core.io.get_metadata_vars" class="level3">
+<h3 class="anchored" data-anchor-id="scahpy.core.io.get_metadata_vars">get_metadata_vars</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>core.io.get_metadata_vars(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    dataset,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    model<span class="op">=</span><span class="st">'WRF'</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    print_all<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    engine<span class="op">=</span><span class="st">'netcdf4'</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Extracts metadata for each variable in a NetCDF dataset produced by the WRF or CROCO models.</p>
+<section id="parameters-1" class="level4 doc-section doc-section-parameters">
+<h4 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters-1">Parameters</h4>
 <table class="table">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 17%">
+<col style="width: 59%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
 <tbody>
 <tr class="odd">
-<td><a href="api/components.ocean.croco_coords.html">components.ocean.croco_coords</a></td>
-<td></td>
+<td>dataset</td>
+<td>str | xr.Dataset</td>
+<td>Path to a NetCDF file or an already opened xarray Dataset.</td>
+<td><em>required</em></td>
 </tr>
 <tr class="even">
-<td><a href="api/components.ocean.croco_io.html">components.ocean.croco_io</a></td>
-<td></td>
+<td>model</td>
+<td>(WRF, CROCO)</td>
+<td>The model that produced the dataset. Accepts ‘WRF’ or ‘CROCO’.</td>
+<td><code>'WRF'</code></td>
 </tr>
 <tr class="odd">
-<td><a href="api/components.ocean.croco_diags.html">components.ocean.croco_diags</a></td>
+<td>print_all</td>
+<td>bool</td>
+<td>If True, prints the metadata for each variable.</td>
+<td><code>False</code></td>
+</tr>
+<tr class="even">
+<td>engine</td>
+<td>str or None</td>
 <td></td>
+<td><code>'netcdf4'</code></td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="plotting" class="level2">
-<h2 class="anchored" data-anchor-id="plotting">Plotting</h2>
-<p>Funciones de visualización para mapas, secciones y series de tiempo.</p>
+<section id="returns-1" class="level4 doc-section doc-section-returns">
+<h4 class="doc-section doc-section-returns anchored" data-anchor-id="returns-1">Returns</h4>
 <table class="table">
+<colgroup>
+<col style="width: 2%">
+<col style="width: 5%">
+<col style="width: 92%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
 <tbody>
 <tr class="odd">
-<td><a href="api/plots.maps.html">plots.maps</a></td>
 <td></td>
-</tr>
-<tr class="even">
-<td><a href="api/plots.sections.html">plots.sections</a></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td><a href="api/plots.timeseries.html">plots.timeseries</a></td>
-<td></td>
+<td>dict[str, list]</td>
+<td>A dictionary where each key is a variable name and the value is a list containing: For WRF: - dimensions (tuple of str) - units (str or None) - stagger (str or None) - description (str or None) For CROCO: - dimensions (tuple of str) - units (str or None) - long_name (str or None) - standard_name (str or None)</td>
 </tr>
 </tbody>
 </table>
 
 
+</section>
+</section>
 </section>
 </section>
 

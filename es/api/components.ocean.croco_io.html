@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -83,8 +117,13 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Contenido</h2>
    
   <ul>
-  <li><a href="#scahpy.components.atmos" id="toc-scahpy.components.atmos" class="nav-link active" data-scroll-target="#scahpy.components.atmos">components.atmos</a></li>
-  <li><a href="#scahpy-atmos-component" id="toc-scahpy-atmos-component" class="nav-link" data-scroll-target="#scahpy-atmos-component">SCAHpy Atmos Component</a></li>
+  <li><a href="#scahpy.components.ocean.croco_io" id="toc-scahpy.components.ocean.croco_io" class="nav-link active" data-scroll-target="#scahpy.components.ocean.croco_io">components.ocean.croco_io</a>
+  <ul class="collapse">
+  <li><a href="#functions" id="toc-functions" class="nav-link" data-scroll-target="#functions">Functions</a>
+  <ul class="collapse">
+  <li><a href="#scahpy.components.ocean.croco_io.read_croco" id="toc-scahpy.components.ocean.croco_io.read_croco" class="nav-link" data-scroll-target="#scahpy.components.ocean.croco_io.read_croco">read_croco</a></li>
+  </ul></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -98,16 +137,103 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="scahpy.components.atmos" class="level1">
-<h1>components.atmos</h1>
-<p><code>components.atmos</code></p>
+<section id="scahpy.components.ocean.croco_io" class="level1">
+<h1>components.ocean.croco_io</h1>
+<p><code>components.ocean.croco_io</code></p>
+<section id="functions" class="level2">
+<h2 class="anchored" data-anchor-id="functions">Functions</h2>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="#scahpy.components.ocean.croco_io.read_croco">read_croco</a></td>
+<td>Reads and processes multiple CROCO NetCDF output files as a merged dataset.</td>
+</tr>
+</tbody>
+</table>
+<section id="scahpy.components.ocean.croco_io.read_croco" class="level3">
+<h3 class="anchored" data-anchor-id="scahpy.components.ocean.croco_io.read_croco">read_croco</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>components.ocean.croco_io.read_croco(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    file_paths,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    drop_vars,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    destag<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    save_path<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Reads and processes multiple CROCO NetCDF output files as a merged dataset.</p>
+<p>Applies optional destaggering, coordinate standardization, and conversion of model time.</p>
+<section id="parameters" class="level4 doc-section doc-section-parameters">
+<h4 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters">Parameters</h4>
+<table class="table">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 13%">
+<col style="width: 63%">
+<col style="width: 12%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>file_paths</td>
+<td>list[str]</td>
+<td>List of paths to CROCO NetCDF files (e.g., ’croco_avg_*.nc’).</td>
+<td><em>required</em></td>
+</tr>
+<tr class="even">
+<td>drop_vars</td>
+<td>list[str]</td>
+<td>List of variable names to drop during loading.</td>
+<td><em>required</em></td>
+</tr>
+<tr class="odd">
+<td>destag</td>
+<td>bool</td>
+<td>Whether to perform destaggering and coordinate re-alignment.</td>
+<td><code>True</code></td>
+</tr>
+<tr class="even">
+<td>save_path</td>
+<td>str or None</td>
+<td>Optional path to save the final dataset as NetCDF.</td>
+<td><code>None</code></td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="scahpy-atmos-component" class="level1">
-<h1>SCAHpy Atmos Component</h1>
-<p>Atmospheric component for WRF model data.</p>
-<p>Includes: - wrf_io: Input/output utilities for reading WRF files. - wrf_coords: Vertical coordinate extraction and interpolation. - wrf_diags: Derived atmospheric diagnostics (e.g., wind speed, geopotential, RH).</p>
+<section id="returns" class="level4 doc-section doc-section-returns">
+<h4 class="doc-section doc-section-returns anchored" data-anchor-id="returns">Returns</h4>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td>xr.Dataset</td>
+<td>Combined and standardized CROCO dataset.</td>
+</tr>
+</tbody>
+</table>
 
 
+</section>
+</section>
+</section>
 </section>
 
 </main> <!-- /main -->

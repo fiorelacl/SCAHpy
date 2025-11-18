@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es-PE" xml:lang="es-PE"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.537">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>SCAHpy</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../assets/logo.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Sin resultados",
+    "search-matching-documents-text": "documentos coincidentes",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Limpiar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+
+
+</head>
+
+<body>
+
+<div id="quarto-search-results"></div>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contenido</h2>
+   
+  <ul>
+  <li><a href="#scahpy.plots.maps" id="toc-scahpy.plots.maps" class="nav-link active" data-scroll-target="#scahpy.plots.maps">plots.maps</a>
+  <ul class="collapse">
+  <li><a href="#functions" id="toc-functions" class="nav-link" data-scroll-target="#functions">Functions</a>
+  <ul class="collapse">
+  <li><a href="#scahpy.plots.maps.map_1var" id="toc-scahpy.plots.maps.map_1var" class="nav-link" data-scroll-target="#scahpy.plots.maps.map_1var">map_1var</a></li>
+  <li><a href="#scahpy.plots.maps.map_1var_winds" id="toc-scahpy.plots.maps.map_1var_winds" class="nav-link" data-scroll-target="#scahpy.plots.maps.map_1var_winds">map_1var_winds</a></li>
+  <li><a href="#scahpy.plots.maps.map_2var_contours" id="toc-scahpy.plots.maps.map_2var_contours" class="nav-link" data-scroll-target="#scahpy.plots.maps.map_2var_contours">map_2var_contours</a></li>
+  <li><a href="#scahpy.plots.maps.map_2vars_winds" id="toc-scahpy.plots.maps.map_2vars_winds" class="nav-link" data-scroll-target="#scahpy.plots.maps.map_2vars_winds">map_2vars_winds</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+<div class="update-banner">
+  ⚠️ Actualizando documentación / Updating documentation (v1 → v2)<br>
+  <small>Algunos contenidos pueden estar en revisión · Some sections may be under revision.</small>
+</div>
+
+
+
+
+<section id="scahpy.plots.maps" class="level1">
+<h1>plots.maps</h1>
+<p><code>plots.maps</code></p>
+<section id="functions" class="level2">
+<h2 class="anchored" data-anchor-id="functions">Functions</h2>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="#scahpy.plots.maps.map_1var">map_1var</a></td>
+<td>Draw a filled map of a single scalar variable.</td>
+</tr>
+<tr class="even">
+<td><a href="#scahpy.plots.maps.map_1var_winds">map_1var_winds</a></td>
+<td>Draw a filled map of a scalar variable and overlay wind vectors (U, V).</td>
+</tr>
+<tr class="odd">
+<td><a href="#scahpy.plots.maps.map_2var_contours">map_2var_contours</a></td>
+<td>Draw a filled map of a scalar variable and overlay contours</td>
+</tr>
+<tr class="even">
+<td><a href="#scahpy.plots.maps.map_2vars_winds">map_2vars_winds</a></td>
+<td>Draw a filled map (1 variable) + contour overlays (another variable)</td>
+</tr>
+</tbody>
+</table>
+<section id="scahpy.plots.maps.map_1var" class="level3">
+<h3 class="anchored" data-anchor-id="scahpy.plots.maps.map_1var">map_1var</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>plots.maps.map_1var(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    da,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">*</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    levels,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    cmap<span class="op">=</span><span class="st">'rain'</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    shapefile<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    extent<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    xticks<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    yticks<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    tick_step<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">5</span>),</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    draw_grid<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    time<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    month<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    colorbar_label<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    output_path<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Draw a filled map of a single scalar variable.</p>
+<p>The same temporal selection is applied to the data via: - <code>month</code> (for climatological datasets with a <code>month</code> coordinate), or - <code>time</code> (for datasets with a <code>time</code> coordinate; can be int index or str timestamp).</p>
+<section id="parameters" class="level4 doc-section doc-section-parameters">
+<h4 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters">Parameters</h4>
+<table class="table">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 15%">
+<col style="width: 63%">
+<col style="width: 9%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>da</td>
+<td>xarray.DataArray</td>
+<td>Scalar field with coordinates <code>(lat, lon)</code> and optionally <code>time</code> or <code>month</code>.</td>
+<td><em>required</em></td>
+</tr>
+<tr class="even">
+<td>levels</td>
+<td>iterable of float</td>
+<td>Discrete color levels for the filled contours.</td>
+<td><em>required</em></td>
+</tr>
+<tr class="odd">
+<td>cmap</td>
+<td>str</td>
+<td>Name of the cmocean colormap to use (lightened internally).</td>
+<td><code>'rain'</code></td>
+</tr>
+<tr class="even">
+<td>shapefile</td>
+<td>str or None</td>
+<td>Path to a custom shapefile. If None, uses the default South America shape.</td>
+<td><code>None</code></td>
+</tr>
+<tr class="odd">
+<td>extent</td>
+<td>tuple or None</td>
+<td>Map extent <code>(lon_min, lon_max, lat_min, lat_max)</code>. If None, uses DEFAULT_EXTENT.</td>
+<td><code>None</code></td>
+</tr>
+<tr class="even">
+<td>time</td>
+<td>int or str or None</td>
+<td>If dataset has <code>time</code>, selects a single frame: index (int) or timestamp (str).</td>
+<td><code>None</code></td>
+</tr>
+<tr class="odd">
+<td>month</td>
+<td>int or None</td>
+<td>If dataset has <code>month</code>, selects that month (1-12).</td>
+<td><code>None</code></td>
+</tr>
+<tr class="even">
+<td>title</td>
+<td>str or None</td>
+<td>Figure title. If None, uses <code>long_name</code> or variable name.</td>
+<td><code>None</code></td>
+</tr>
+<tr class="odd">
+<td>colorbar_label</td>
+<td>str or None</td>
+<td>Colorbar label. If None, uses <code>da.units</code> if available.</td>
+<td><code>None</code></td>
+</tr>
+<tr class="even">
+<td>output_path</td>
+<td>str or None</td>
+<td>If provided, saves the figure to disk; otherwise shows the figure.</td>
+<td><code>None</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="scahpy.plots.maps.map_1var_winds" class="level3">
+<h3 class="anchored" data-anchor-id="scahpy.plots.maps.map_1var_winds">map_1var_winds</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>plots.maps.map_1var_winds(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    da,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    U,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    V,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">*</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    levels,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    cmap<span class="op">=</span><span class="st">'rain'</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    shapefile<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    extent<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    xticks<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    yticks<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    tick_step<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">5</span>),</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    draw_grid<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    time<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    month<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    quiver_subsample<span class="op">=</span><span class="dv">7</span>,</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    quiverkey_speed<span class="op">=</span><span class="fl">5.0</span>,</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    colorbar_label<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    output_path<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Draw a filled map of a scalar variable and overlay wind vectors (U, V).</p>
+<p>The same temporal selection (<code>time</code> or <code>month</code>) is applied uniformly to <code>da</code>, <code>U</code>, and <code>V</code>.</p>
+<section id="parameters-1" class="level4 doc-section doc-section-parameters">
+<h4 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters-1">Parameters</h4>
+<table class="table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 56%">
+<col style="width: 10%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>da</td>
+<td>xarray.DataArray</td>
+<td>Scalar field with <code>(lat, lon)</code> and optionally <code>time</code>/<code>month</code>.</td>
+<td><em>required</em></td>
+</tr>
+<tr class="even">
+<td>U</td>
+<td>xarray.DataArray</td>
+<td>Vector components with the same horizontal grid as <code>da</code>.</td>
+<td><em>required</em></td>
+</tr>
+<tr class="odd">
+<td>V</td>
+<td>xarray.DataArray</td>
+<td>Vector components with the same horizontal grid as <code>da</code>.</td>
+<td><em>required</em></td>
+</tr>
+<tr class="even">
+<td>levels</td>
+<td>iterable of float</td>
+<td>Discrete color levels for the filled contours.</td>
+<td><em>required</em></td>
+</tr>
+<tr class="odd">
+<td>cmap</td>
+<td>str</td>
+<td>Name of the cmocean colormap (lightened internally).</td>
+<td><code>'rain'</code></td>
+</tr>
+<tr class="even">
+<td>shapefile</td>
+<td>str or None</td>
+<td>Custom shapefile path; None uses default SA shapefile.</td>
+<td><code>None</code></td>
+</tr>
+<tr class="odd">
+<td>extent</td>
+<td>tuple or None</td>
+<td>Map extent <code>(lon_min, lon_max, lat_min, lat_max)</code>.</td>
+<td><code>None</code></td>
+</tr>
+<tr class="even">
+<td>time</td>
+<td>see <code>map_1var</code></td>
+<td>Temporal selector (applied to all inputs).</td>
+<td><code>None</code></td>
+</tr>
+<tr class="odd">
+<td>month</td>
+<td>see <code>map_1var</code></td>
+<td>Temporal selector (applied to all inputs).</td>
+<td><code>None</code></td>
+</tr>
+<tr class="even">
+<td>quiver_subsample</td>
+<td>int</td>
+<td>Arrow subsampling step to reduce density.</td>
+<td><code>7</code></td>
+</tr>
+<tr class="odd">
+<td>quiverkey_speed</td>
+<td>float</td>
+<td>Reference speed (m/s) shown in the quiver key.</td>
+<td><code>5.0</code></td>
+</tr>
+<tr class="even">
+<td>title</td>
+<td>see <code>map_1var</code>.</td>
+<td></td>
+<td><code>None</code></td>
+</tr>
+<tr class="odd">
+<td>colorbar_label</td>
+<td>see <code>map_1var</code>.</td>
+<td></td>
+<td><code>None</code></td>
+</tr>
+<tr class="even">
+<td>output_path</td>
+<td>see <code>map_1var</code>.</td>
+<td></td>
+<td><code>None</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="scahpy.plots.maps.map_2var_contours" class="level3">
+<h3 class="anchored" data-anchor-id="scahpy.plots.maps.map_2var_contours">map_2var_contours</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>plots.maps.map_2var_contours(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    da_fill,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    da_contour,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">*</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    levels_fill,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    levels_contour,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    cmap_fill<span class="op">=</span><span class="st">'rain'</span>,</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    colors_contour<span class="op">=</span>(<span class="st">'k'</span>,),</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    linewidths_contour<span class="op">=</span>(<span class="fl">1.4</span>,),</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    alpha_contour<span class="op">=</span><span class="fl">0.9</span>,</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    shapefile<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    extent<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    xticks<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    yticks<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    tick_step<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">5</span>),</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    draw_grid<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    time<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    month<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    label_levels<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    colorbar_label<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    output_path<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Draw a filled map of a scalar variable and overlay contours (either of the same variable or another one).</p>
+<p>The same temporal selection (<code>time</code> or <code>month</code>) is applied to both layers.</p>
+<section id="parameters-2" class="level4 doc-section doc-section-parameters">
+<h4 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters-2">Parameters</h4>
+<table class="table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 15%">
+<col style="width: 57%">
+<col style="width: 10%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>da_fill</td>
+<td>xarray.DataArray</td>
+<td>Scalar field for filled contours (background).</td>
+<td><em>required</em></td>
+</tr>
+<tr class="even">
+<td>da_contour</td>
+<td>xarray.DataArray</td>
+<td>Field for line contours.</td>
+<td><em>required</em></td>
+</tr>
+<tr class="odd">
+<td>levels_fill</td>
+<td>iterable of float</td>
+<td>Levels for filled contours.</td>
+<td><em>required</em></td>
+</tr>
+<tr class="even">
+<td>levels_contour</td>
+<td>iterable of float</td>
+<td>Levels for the contour lines.</td>
+<td><em>required</em></td>
+</tr>
+<tr class="odd">
+<td>cmap_fill</td>
+<td>str</td>
+<td>cmocean colormap name for the filled layer (lightened internally).</td>
+<td><code>'rain'</code></td>
+</tr>
+<tr class="even">
+<td>colors_contour</td>
+<td>tuple</td>
+<td>Colors for contour lines.</td>
+<td><code>('k',)</code></td>
+</tr>
+<tr class="odd">
+<td>linewidths_contour</td>
+<td>tuple</td>
+<td>Line widths for contour lines.</td>
+<td><code>(1.4,)</code></td>
+</tr>
+<tr class="even">
+<td>alpha_contour</td>
+<td>float</td>
+<td>Alpha for contour lines.</td>
+<td><code>0.9</code></td>
+</tr>
+<tr class="odd">
+<td>shapefile</td>
+<td>Optional[str]</td>
+<td>See <code>map_1var</code>.</td>
+<td><code>None</code></td>
+</tr>
+<tr class="even">
+<td>extent</td>
+<td>Optional[str]</td>
+<td>See <code>map_1var</code>.</td>
+<td><code>None</code></td>
+</tr>
+<tr class="odd">
+<td>time</td>
+<td>Optional[str]</td>
+<td>See <code>map_1var</code>.</td>
+<td><code>None</code></td>
+</tr>
+<tr class="even">
+<td>month</td>
+<td>Optional[str]</td>
+<td>See <code>map_1var</code>.</td>
+<td><code>None</code></td>
+</tr>
+<tr class="odd">
+<td>title</td>
+<td>Optional[str]</td>
+<td>See <code>map_1var</code>.</td>
+<td><code>None</code></td>
+</tr>
+<tr class="even">
+<td>colorbar_label</td>
+<td>Optional[str]</td>
+<td>See <code>map_1var</code>.</td>
+<td><code>None</code></td>
+</tr>
+<tr class="odd">
+<td>output_path</td>
+<td>Optional[str]</td>
+<td>See <code>map_1var</code>.</td>
+<td><code>None</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="returns" class="level4 doc-section doc-section-returns">
+<h4 class="doc-section doc-section-returns anchored" data-anchor-id="returns">Returns</h4>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td>None</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="scahpy.plots.maps.map_2vars_winds" class="level3">
+<h3 class="anchored" data-anchor-id="scahpy.plots.maps.map_2vars_winds">map_2vars_winds</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>plots.maps.map_2vars_winds(</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    da_fill,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    da_contour,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    U,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    V,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">*</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    levels_fill,</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    levels_contour,</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    cmap_fill<span class="op">=</span><span class="st">'rain'</span>,</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    colors_contour<span class="op">=</span>(<span class="st">'#F29727'</span>, <span class="st">'#C70039'</span>, <span class="st">'#511F73'</span>),</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    linewidths_contour<span class="op">=</span>(<span class="fl">1.5</span>, <span class="fl">1.6</span>, <span class="fl">1.8</span>),</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    alpha_contour<span class="op">=</span><span class="fl">0.45</span>,</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    quiver_subsample<span class="op">=</span><span class="dv">7</span>,</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    quiverkey_speed<span class="op">=</span><span class="fl">5.0</span>,</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    shapefile<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    extent<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    xticks<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    yticks<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    tick_step<span class="op">=</span>(<span class="dv">5</span>, <span class="dv">5</span>),</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    draw_grid<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    time<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>    month<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    colorbar_label<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>    output_path<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Draw a filled map (1 variable) + contour overlays (another variable) + wind vectors (U, V) — ideal for ocean–atmosphere mixed maps.</p>
+<p>The same temporal selection (<code>time</code> or <code>month</code>) is applied uniformly to all layers.</p>
+<section id="parameters-3" class="level4 doc-section doc-section-parameters">
+<h4 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters-3">Parameters</h4>
+<table class="table">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 47%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>da_fill</td>
+<td>xarray.DataArray</td>
+<td>Scalar field for the filled layer (background).</td>
+<td><em>required</em></td>
+</tr>
+<tr class="even">
+<td>da_contour</td>
+<td>xarray.DataArray</td>
+<td>Field for contour lines.</td>
+<td><em>required</em></td>
+</tr>
+<tr class="odd">
+<td>U</td>
+<td>xarray.DataArray</td>
+<td>Vector components (same horizontal grid).</td>
+<td><em>required</em></td>
+</tr>
+<tr class="even">
+<td>V</td>
+<td>xarray.DataArray</td>
+<td>Vector components (same horizontal grid).</td>
+<td><em>required</em></td>
+</tr>
+<tr class="odd">
+<td>levels_fill</td>
+<td>iterable of float</td>
+<td>Levels for background and contour lines respectively.</td>
+<td><em>required</em></td>
+</tr>
+<tr class="even">
+<td>levels_contour</td>
+<td>iterable of float</td>
+<td>Levels for background and contour lines respectively.</td>
+<td><em>required</em></td>
+</tr>
+<tr class="odd">
+<td>cmap_fill</td>
+<td>str</td>
+<td>cmocean colormap name for the filled layer (lightened internally).</td>
+<td><code>'rain'</code></td>
+</tr>
+<tr class="even">
+<td>colors_contour</td>
+<td></td>
+<td>Style parameters for contour lines.</td>
+<td><code>('#F29727', '#C70039', '#511F73')</code></td>
+</tr>
+<tr class="odd">
+<td>linewidths_contour</td>
+<td></td>
+<td>Style parameters for contour lines.</td>
+<td><code>('#F29727', '#C70039', '#511F73')</code></td>
+</tr>
+<tr class="even">
+<td>alpha_contour</td>
+<td></td>
+<td>Style parameters for contour lines.</td>
+<td><code>('#F29727', '#C70039', '#511F73')</code></td>
+</tr>
+<tr class="odd">
+<td>quiver_subsample</td>
+<td>int</td>
+<td>Arrow subsampling step.</td>
+<td><code>7</code></td>
+</tr>
+<tr class="even">
+<td>quiverkey_speed</td>
+<td>float</td>
+<td>Reference speed (m/s) shown in the quiver key.</td>
+<td><code>5.0</code></td>
+</tr>
+<tr class="odd">
+<td>shapefile</td>
+<td>Optional[str]</td>
+<td>See <code>map_1var</code>.</td>
+<td><code>None</code></td>
+</tr>
+<tr class="even">
+<td>extent</td>
+<td>Optional[str]</td>
+<td>See <code>map_1var</code>.</td>
+<td><code>None</code></td>
+</tr>
+<tr class="odd">
+<td>time</td>
+<td>Optional[str]</td>
+<td>See <code>map_1var</code>.</td>
+<td><code>None</code></td>
+</tr>
+<tr class="even">
+<td>month</td>
+<td>Optional[str]</td>
+<td>See <code>map_1var</code>.</td>
+<td><code>None</code></td>
+</tr>
+<tr class="odd">
+<td>title</td>
+<td>Optional[str]</td>
+<td>See <code>map_1var</code>.</td>
+<td><code>None</code></td>
+</tr>
+<tr class="even">
+<td>colorbar_label</td>
+<td>Optional[str]</td>
+<td>See <code>map_1var</code>.</td>
+<td><code>None</code></td>
+</tr>
+<tr class="odd">
+<td>output_path</td>
+<td>Optional[str]</td>
+<td>See <code>map_1var</code>.</td>
+<td><code>None</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="returns-1" class="level4 doc-section doc-section-returns">
+<h4 class="doc-section doc-section-returns anchored" data-anchor-id="returns-1">Returns</h4>
+<table class="table">
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td>None</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+
+</section>
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script>
+  function switchLang() {
+    const url = new URL(window.location.href);
+    let path = url.pathname;
+
+    // Si por alguna razón caemos en /SCAHpy/ a secas, manda al home en español
+    if (path === "/SCAHpy/" || path === "/SCAHpy") {
+      url.pathname = "/SCAHpy/es/";
+      window.location.href = url.toString();
+      return;
+    }
+
+    if (path.includes("/es/")) {
+      // ESPAÑOL → INGLÉS
+      const newPath = path
+        .replace("/es/", "/en/")
+        .replace(/\.html$/, "_en.html");   // archivo.html → archivo_en.html
+
+      url.pathname = newPath;
+      window.location.href = url.toString();
+      return;
+    }
+
+    if (path.includes("/en/")) {
+      // INGLÉS → ESPAÑOL
+      const newPath = path
+        .replace("/en/", "/es/")
+        .replace("_en.html", ".html");
+
+      url.pathname = newPath;
+      window.location.href = url.toString();
+      return;
+    }
+
+    // Fallback: manda al home español
+    url.pathname = "/SCAHpy/es/";
+    window.location.href = url.toString();
+  }
+
+  // Ajustar el texto del botón según el idioma actual
+  window.addEventListener("DOMContentLoaded", () => {
+    const btn = document.getElementById("lang-switch-btn");
+    if (!btn) return;
+
+    const path = window.location.pathname;
+
+    if (path.includes("/es/")) {
+      btn.textContent = "English";
+    } else if (path.includes("/en/")) {
+      btn.textContent = "Español";
+    } else {
+      // Fallback genérico
+      btn.textContent = "Cambiar idioma";
+    }
+  });
+</script>
+
+<style>
+  .lang-switch {
+    position: fixed;
+    right: 1.25rem;
+    bottom: 1.25rem;
+    z-index: 2000;
+  }
+
+  .lang-switch button {
+    background-color: #ffffff;
+    border: 1px solid #0b3c7e;
+    color: #0b3c7e;
+    padding: 0.4rem 0.9rem;
+    border-radius: 999px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    white-space: nowrap;
+  }
+
+  .lang-switch button:hover {
+    background-color: #0b3c7e;
+    color: #ffffff;
+  }
+
+  @media (max-width: 768px) {
+    .lang-switch {
+      right: 0.75rem;
+      bottom: 0.75rem;
+    }
+
+    .lang-switch button {
+      font-size: 0.8rem;
+      padding: 0.35rem 0.75rem;
+    }
+  }
+</style>
+
+<div class="lang-switch">
+  <button id="lang-switch-btn" onclick="switchLang()">
+    Cambiar idioma
+  </button>
+</div>
+
+
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copiado");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copiado");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      return note.innerHTML;
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Copyright 2025, Fiorela Castillón</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

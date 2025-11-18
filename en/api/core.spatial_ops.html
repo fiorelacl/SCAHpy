@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -83,12 +117,12 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Contents</h2>
    
   <ul>
-  <li><a href="#function-reference" id="toc-function-reference" class="nav-link active" data-scroll-target="#function-reference">Function reference</a>
+  <li><a href="#scahpy.core.spatial_ops" id="toc-scahpy.core.spatial_ops" class="nav-link active" data-scroll-target="#scahpy.core.spatial_ops">core.spatial_ops</a>
   <ul class="collapse">
-  <li><a href="#core-operaciones-esenciales" id="toc-core-operaciones-esenciales" class="nav-link" data-scroll-target="#core-operaciones-esenciales">Core (Operaciones esenciales)</a></li>
-  <li><a href="#io-atmosférico-wrf" id="toc-io-atmosférico-wrf" class="nav-link" data-scroll-target="#io-atmosférico-wrf">IO Atmosférico (WRF)</a></li>
-  <li><a href="#io-oceánico-croco" id="toc-io-oceánico-croco" class="nav-link" data-scroll-target="#io-oceánico-croco">IO Oceánico (CROCO)</a></li>
-  <li><a href="#plotting" id="toc-plotting" class="nav-link" data-scroll-target="#plotting">Plotting</a></li>
+  <li><a href="#functions" id="toc-functions" class="nav-link" data-scroll-target="#functions">Functions</a>
+  <ul class="collapse">
+  <li><a href="#scahpy.core.spatial_ops.extract_points" id="toc-scahpy.core.spatial_ops.extract_points" class="nav-link" data-scroll-target="#scahpy.core.spatial_ops.extract_points">extract_points</a></li>
+  </ul></li>
   </ul></li>
   </ul>
 </nav>
@@ -103,101 +137,141 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="function-reference" class="level1 doc doc-index">
-<h1 class="doc doc-index">Function reference</h1>
-<section id="core-operaciones-esenciales" class="level2">
-<h2 class="anchored" data-anchor-id="core-operaciones-esenciales">Core (Operaciones esenciales)</h2>
-<p>Operaciones comunes de coordenadas, tiempo, vertical y utilidades.</p>
+<section id="scahpy.core.spatial_ops" class="level1">
+<h1>core.spatial_ops</h1>
+<p><code>core.spatial_ops</code></p>
+<section id="functions" class="level2">
+<h2 class="anchored" data-anchor-id="functions">Functions</h2>
 <table class="table">
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
 <tbody>
 <tr class="odd">
-<td><a href="api/core.coords.html">core.coords</a></td>
-<td></td>
+<td><a href="#scahpy.core.spatial_ops.extract_points">extract_points</a></td>
+<td>Extract data from a model output dataset (e.g., WRF/CROCO) at the nearest</td>
+</tr>
+</tbody>
+</table>
+<section id="scahpy.core.spatial_ops.extract_points" class="level3">
+<h3 class="anchored" data-anchor-id="scahpy.core.spatial_ops.extract_points">extract_points</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>core.spatial_ops.extract_points(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    ds_out,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    station,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    lon_col,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    lat_col,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    name_col,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    ds_lon_name<span class="op">=</span><span class="st">'lon'</span>,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    ds_lat_name<span class="op">=</span><span class="st">'lat'</span>,</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    output_format<span class="op">=</span><span class="st">'netcdf'</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    save_path<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Extract data from a model output dataset (e.g., WRF/CROCO) at the nearest grid point(s) to a set of station locations provided via CSV or Shapefile.</p>
+<section id="parameters" class="level4 doc-section doc-section-parameters">
+<h4 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters">Parameters</h4>
+<table class="table">
+<colgroup>
+<col style="width: 4%">
+<col style="width: 6%">
+<col style="width: 86%">
+<col style="width: 3%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ds_out</td>
+<td>xr.Dataset</td>
+<td>Model dataset already loaded in memory. The dataset must contain longitude and latitude variables whose names are provided via <code>ds_lon_name</code> and <code>ds_lat_name</code>. These may be 1D or 2D variables and will be promoted to coordinates if they are not already.</td>
+<td><em>required</em></td>
 </tr>
 <tr class="even">
-<td><a href="api/core.io.html">core.io</a></td>
-<td></td>
+<td>station</td>
+<td>str</td>
+<td>Path to a CSV (‘.csv’) or ESRI Shapefile (‘.shp’) with station metadata. The CSV/Shapefile must provide, at minimum, station name, longitude, and latitude columns as specified by <code>name_col</code>, <code>lon_col</code>, <code>lat_col</code>. For Shapefiles, the function reads the first point of each geometry as (lon, lat).</td>
+<td><em>required</em></td>
 </tr>
 <tr class="odd">
-<td><a href="api/core.spatial_ops.html">core.spatial_ops</a></td>
-<td></td>
+<td>lon_col</td>
+<td>str</td>
+<td>Column name in the stations file for longitudes (degrees East).</td>
+<td><em>required</em></td>
 </tr>
 <tr class="even">
-<td><a href="api/core.time_ops.html">core.time_ops</a></td>
-<td></td>
+<td>lat_col</td>
+<td>str</td>
+<td>Column name in the stations file for latitudes (degrees North).</td>
+<td><em>required</em></td>
 </tr>
 <tr class="odd">
-<td><a href="api/core.utils.html">core.utils</a></td>
-<td></td>
+<td>name_col</td>
+<td>str</td>
+<td>Column name in the stations file for station identifiers.</td>
+<td><em>required</em></td>
 </tr>
 <tr class="even">
-<td><a href="api/core.vertical.html">core.vertical</a></td>
-<td></td>
+<td>ds_lon_name</td>
+<td>str</td>
+<td>Variable name of longitudes in <code>ds_out</code> (e.g., ‘XLONG’, ‘lon_rho’). Default is ‘lon’.</td>
+<td><code>'lon'</code></td>
+</tr>
+<tr class="odd">
+<td>ds_lat_name</td>
+<td>str</td>
+<td>Variable name of latitudes in <code>ds_out</code> (e.g., ‘XLAT’, ‘lat_rho’). Default is ‘lat’.</td>
+<td><code>'lat'</code></td>
+</tr>
+<tr class="even">
+<td>output_format</td>
+<td>(netcdf, dataframe)</td>
+<td>Output format. If ‘dataframe’, returns a tidy pandas.DataFrame; otherwise returns an xarray.Dataset. Default is ‘netcdf’.</td>
+<td><code>'netcdf'</code></td>
+</tr>
+<tr class="odd">
+<td>save_path</td>
+<td>str</td>
+<td>If provided, the result is written to disk. Uses CSV when <code>output_format='dataframe'</code> and NetCDF otherwise.</td>
+<td><code>None</code></td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="io-atmosférico-wrf" class="level2">
-<h2 class="anchored" data-anchor-id="io-atmosférico-wrf">IO Atmosférico (WRF)</h2>
-<p>Funciones para lectura, manejo de coordenadas y diagnósticos atmosféricos WRF.</p>
+<section id="returns" class="level4 doc-section doc-section-returns">
+<h4 class="doc-section doc-section-returns anchored" data-anchor-id="returns">Returns</h4>
 <table class="table">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 33%">
+<col style="width: 58%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
 <tbody>
 <tr class="odd">
-<td><a href="api/components.atmos.wrf_diags.html">components.atmos.wrf_diags</a></td>
 <td></td>
-</tr>
-<tr class="even">
-<td><a href="api/components.atmos.wrf_coords.html">components.atmos.wrf_coords</a></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td><a href="api/components.atmos.wrf_io.html">components.atmos.wrf_io</a></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="io-oceánico-croco" class="level2">
-<h2 class="anchored" data-anchor-id="io-oceánico-croco">IO Oceánico (CROCO)</h2>
-<p>Funciones para lectura, coordenadas y diagnósticos del modelo oceánico CROCO.</p>
-<table class="table">
-<tbody>
-<tr class="odd">
-<td><a href="api/components.ocean.croco_coords.html">components.ocean.croco_coords</a></td>
-<td></td>
-</tr>
-<tr class="even">
-<td><a href="api/components.ocean.croco_io.html">components.ocean.croco_io</a></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td><a href="api/components.ocean.croco_diags.html">components.ocean.croco_diags</a></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="plotting" class="level2">
-<h2 class="anchored" data-anchor-id="plotting">Plotting</h2>
-<p>Funciones de visualización para mapas, secciones y series de tiempo.</p>
-<table class="table">
-<tbody>
-<tr class="odd">
-<td><a href="api/plots.maps.html">plots.maps</a></td>
-<td></td>
-</tr>
-<tr class="even">
-<td><a href="api/plots.sections.html">plots.sections</a></td>
-<td></td>
-</tr>
-<tr class="odd">
-<td><a href="api/plots.timeseries.html">plots.timeseries</a></td>
-<td></td>
+<td>xr.Dataset or pandas.DataFrame</td>
+<td>Extracted data at nearest grid point for each station.</td>
 </tr>
 </tbody>
 </table>
 
 
+</section>
+</section>
 </section>
 </section>
 
