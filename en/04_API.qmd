@@ -1,0 +1,6 @@
+# Referencias API 
+
+Aquí se detallan las principales funciones de **SCAHpy**:
+
+{{< include api/index.qmd >}}
+

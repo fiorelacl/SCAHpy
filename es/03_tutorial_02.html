@@ -253,6 +253,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#visualización-básica" id="toc-visualización-básica" class="nav-link" data-scroll-target="#visualización-básica">5. Visualización básica</a></li>
   <li><a href="#visualización-usando-funciones-de-scahpy" id="toc-visualización-usando-funciones-de-scahpy" class="nav-link" data-scroll-target="#visualización-usando-funciones-de-scahpy">6. Visualización usando funciones de SCAHpy</a></li>
+  <li><a href="#tutorial-1-lectura-de-un-archivo-croco" id="toc-tutorial-1-lectura-de-un-archivo-croco" class="nav-link" data-scroll-target="#tutorial-1-lectura-de-un-archivo-croco">Tutorial 1: Lectura de un archivo CROCO</a></li>
+  <li><a href="#lectura-rápida-de-un-archivo-croco" id="toc-lectura-rápida-de-un-archivo-croco" class="nav-link" data-scroll-target="#lectura-rápida-de-un-archivo-croco">5. Lectura rápida de un archivo CROCO</a>
+  <ul class="collapse">
+  <li><a href="#definir-la-ruta-del-archivo-croco" id="toc-definir-la-ruta-del-archivo-croco" class="nav-link" data-scroll-target="#definir-la-ruta-del-archivo-croco">5.1 Definir la ruta del archivo CROCO</a></li>
+  </ul></li>
+  <li><a href="#mapa-simple-de-sst-con-croco" id="toc-mapa-simple-de-sst-con-croco" class="nav-link" data-scroll-target="#mapa-simple-de-sst-con-croco">6. Mapa simple de SST con CROCO</a></li>
   </ul>
 </nav>
     </div>
@@ -407,6 +413,55 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    cmap<span class="op">=</span><span class="st">"Blues"</span>,</span>
 <span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="st">"Precipitación diaria acumulada"</span></span>
 <span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="tutorial-1-lectura-de-un-archivo-croco" class="level1">
+<h1>Tutorial 1: Lectura de un archivo CROCO</h1>
+</section>
+<section id="lectura-rápida-de-un-archivo-croco" class="level1">
+<h1>5. Lectura rápida de un archivo CROCO</h1>
+<p>Además de WRF, SCAHpy permite trabajar con salidas del modelo oceánico <strong>CROCO</strong>, utilizado en el componente marino del IGP RESM-COW.</p>
+<section id="definir-la-ruta-del-archivo-croco" class="level2">
+<h2 class="anchored" data-anchor-id="definir-la-ruta-del-archivo-croco">5.1 Definir la ruta del archivo CROCO</h2>
+<p>Como ejemplo:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>croco_file <span class="op">=</span> <span class="st">"/data/datos/COW/OUT_DIAG_CROCO/croco_avg_Y2000M01.nc"</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Nuevamente usaremos una lista, aunque solo haya un archivo:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>ds_croco <span class="op">=</span> croco_io.read_croco(</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    paths<span class="op">=</span>[croco_file],   <span class="co"># lista con un único archivo</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    destag<span class="op">=</span><span class="va">True</span>,          <span class="co"># pasar de grilla C a grilla centrada</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    keep_vertical<span class="op">=</span><span class="va">True</span>    <span class="co"># conservar niveles sigma</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>ds_croco</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>El resultado suele incluir:</p>
+<ul>
+<li><code>time</code>: tiempos diarios o subdiarios,</li>
+<li><code>eta_rho</code>, <code>xi_rho</code> o equivalentes convertidos a <code>lat</code>, <code>lon</code>,</li>
+<li><code>s_rho</code> o niveles sigma,</li>
+<li>Variables oceánicas: <code>temp</code>, <code>salt</code>, <code>u</code>, <code>v</code>, etc.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="mapa-simple-de-sst-con-croco" class="level1">
+<h1>6. Mapa simple de SST con CROCO</h1>
+<p>Suponiendo que la variable de temperatura se llama <code>temp</code> y que el último nivel vertical corresponde aproximadamente a la superficie:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>sst <span class="op">=</span> ds_croco[<span class="st">"temp"</span>].isel(s_rho<span class="op">=-</span><span class="dv">1</span>)  <span class="co"># último nivel = superficie</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>sst.name <span class="op">=</span> <span class="st">"SST"</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Tomamos, por ejemplo, el primer tiempo:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>sst.isel(time<span class="op">=</span><span class="dv">0</span>).plot(</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">"lon"</span>, y<span class="op">=</span><span class="st">"lat"</span>,</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    cmap<span class="op">=</span><span class="st">"viridis"</span>,</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    cbar_kwargs<span class="op">=</span>{<span class="st">"label"</span>: <span class="st">"SST (°C)"</span>}</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Temperatura superficial del mar – CROCO (archivo único)"</span>)</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>También puedes usar la función de SCAHpy:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>maps.map_1var(</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    ds<span class="op">=</span>ds_croco,</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    var_name<span class="op">=</span><span class="st">"temp"</span>,</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    time_index<span class="op">=</span><span class="dv">0</span>,</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    level_index<span class="op">=-</span><span class="dv">1</span>,    <span class="co"># superficie</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="st">"SST – CROCO (archivo único)"</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
 </section>

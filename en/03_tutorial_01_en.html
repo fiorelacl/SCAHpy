@@ -234,11 +234,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Contents</h2>
    
   <ul>
-  <li><a href="#reading-a-single-file" id="toc-reading-a-single-file" class="nav-link active" data-scroll-target="#reading-a-single-file">Reading a Single File</a>
+  <li><a href="#tutorial-01-wrf-model-outputs" id="toc-tutorial-01-wrf-model-outputs" class="nav-link active" data-scroll-target="#tutorial-01-wrf-model-outputs">Tutorial 01: WRF Model Outputs</a>
   <ul class="collapse">
-  <li><a href="#step-1-reading-wrf-data" id="toc-step-1-reading-wrf-data" class="nav-link" data-scroll-target="#step-1-reading-wrf-data">Step 1: Reading WRF Data</a></li>
-  <li><a href="#step-2-calculating-precipitation-and-wind-speed" id="toc-step-2-calculating-precipitation-and-wind-speed" class="nav-link" data-scroll-target="#step-2-calculating-precipitation-and-wind-speed">Step 2: Calculating Precipitation and Wind Speed</a></li>
-  <li><a href="#step-3-plotting-precipitation-maps" id="toc-step-3-plotting-precipitation-maps" class="nav-link" data-scroll-target="#step-3-plotting-precipitation-maps">Step 3: Plotting Precipitation Maps</a></li>
+  <li><a href="#reading-a-wrf-file" id="toc-reading-a-wrf-file" class="nav-link" data-scroll-target="#reading-a-wrf-file">Reading a WRF File</a>
+  <ul class="collapse">
+  <li><a href="#importing-packages" id="toc-importing-packages" class="nav-link" data-scroll-target="#importing-packages">1. Importing Packages</a></li>
+  <li><a href="#defining-the-wrf-file" id="toc-defining-the-wrf-file" class="nav-link" data-scroll-target="#defining-the-wrf-file">2. Defining the WRF File</a></li>
+  <li><a href="#selecting-variables-with-drop_vars" id="toc-selecting-variables-with-drop_vars" class="nav-link" data-scroll-target="#selecting-variables-with-drop_vars">3. Selecting Variables with <code>drop_vars</code></a></li>
+  <li><a href="#reading-the-file-with-read_wrf" id="toc-reading-the-file-with-read_wrf" class="nav-link" data-scroll-target="#reading-the-file-with-read_wrf">4. Reading the File with <code>read_wrf</code></a></li>
+  <li><a href="#computing-wind-speed" id="toc-computing-wind-speed" class="nav-link" data-scroll-target="#computing-wind-speed">5. Computing Wind Speed</a></li>
+  <li><a href="#d-map-wind-speed-with-vectors" id="toc-d-map-wind-speed-with-vectors" class="nav-link" data-scroll-target="#d-map-wind-speed-with-vectors">6. 2D Map: Wind Speed with Vectors</a></li>
+  <li><a href="#applying-a-mask-to-extract-land-areas" id="toc-applying-a-mask-to-extract-land-areas" class="nav-link" data-scroll-target="#applying-a-mask-to-extract-land-areas">7. Applying a Mask to Extract Land Areas</a></li>
+  <li><a href="#new-map-with-the-applied-mask" id="toc-new-map-with-the-applied-mask" class="nav-link" data-scroll-target="#new-map-with-the-applied-mask">8. New Map with the Applied Mask</a></li>
+  </ul></li>
   </ul></li>
   </ul>
 </nav>
@@ -253,40 +261,176 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="reading-a-single-file" class="level1 unnumbered">
-<h1 class="unnumbered">Reading a Single File</h1>
-<p>In this tutorial, we will guide you through the process of analyzing output data from the WRF (Weather Research and Forecasting) model and creating 2D maps featuring rainfall and wind variables using the <code>scahpy</code> package. To begin, let’s import the package.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scahpy <span class="im">import</span> <span class="op">*</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<section id="step-1-reading-wrf-data" class="level2">
-<h2 class="anchored" data-anchor-id="step-1-reading-wrf-data">Step 1: Reading WRF Data</h2>
-<p>We begin by setting the absolute path of the output file we intend to work with and assign it to a variable, in this case, <code>file_name</code>.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>file_name <span class="op">=</span> <span class="st">'/data/datos/COW/OUT_DIAG_WRF/wrfouts/wrfout_d01_2023-03-10_03:00:00'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Since we have the flexibility to specify which variables to exclude when reading netCDF files using the <code>drop_variables</code> argument (see xarray functions open_dataset and open_mfdataset), we leverage the <code>_drop_wrf_vars</code> function from the module <code>in_out</code>. This function takes the list of variables we require and generates a list containing all variables present in the output file, subsequently removing those we are not interested in (such as <em>‘RAINC’, ‘RAINNC’, ‘RAINSH’, ‘U10’, ‘V10’, ‘SSTSK’</em>).</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dvars <span class="op">=</span> in_out._drop_vars(file_name, [<span class="st">'RAINC'</span>, <span class="st">'RAINNC'</span>, <span class="st">'RAINSH'</span>, <span class="st">'U10'</span>, <span class="st">'V10'</span>, <span class="st">'SSTSK'</span>], model<span class="op">=</span><span class="st">'wrf'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Subsequently, we utilize the <code>read_wrf_single</code> function to selectively read the variables of interest. This function accepts the input path (<code>file_name</code> in this case), the list of variables to be excluded (<code>vars</code>), any required time difference (e.g., <code>'5 hours'</code>), and the corresponding sign of the time difference (<code>-1</code> for negative, <code>1</code> for positive). The outcome is an <code>xarray.Dataset</code> containing longitude, latitude, time, and the specified variables. Optionally, you can designate a save path to export the netCDF.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> in_out.read_wrf_single(file_name, dvars, <span class="st">'5 hours'</span>, <span class="op">-</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="tutorial-01-wrf-model-outputs" class="level1">
+<h1>Tutorial 01: WRF Model Outputs</h1>
+<p>In this tutorial, you will learn how to:</p>
+<ol type="1">
+<li>Read a single file or multiple files from the <strong>WRF</strong> model using SCAHpy.</li>
+<li>Perform basic diagnostics such as computing wind speed and precipitation.</li>
+<li>Generate a 2D map and a simple time series using meteorological variables.</li>
+</ol>
+<p>This workflow is ideal for getting started with the atmospheric component outputs of the coupled <em>IGP RESM-COW</em> model, or with any compatible WRF simulation.</p>
+<section id="reading-a-wrf-file" class="level2">
+<h2 class="anchored" data-anchor-id="reading-a-wrf-file">Reading a WRF File</h2>
+<p>In this first section we begin by working with <strong>a single WRF file</strong>, which allows us to understand the dataset structure and the use of the main functions. Later, we will extend these concepts to the case of <strong>multiple-input reading</strong>.</p>
+<section id="importing-packages" class="level3">
+<h3 class="anchored" data-anchor-id="importing-packages">1. Importing Packages</h3>
+<p>We import the modules required for path handling, WRF file reading, and numerical operations:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scahpy <span class="im">as</span> sc</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> glob</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="step-2-calculating-precipitation-and-wind-speed" class="level2">
-<h2 class="anchored" data-anchor-id="step-2-calculating-precipitation-and-wind-speed">Step 2: Calculating Precipitation and Wind Speed</h2>
-<p>In this step, we will utilize the <code>met_vars</code> module to calculate precipitation (<code>calc_pp</code>), wind speed (<code>calc_wsp</code>), and convert sea surface temperature from Kelvin to Celsius (<code>calc_celsius</code>).</p>
-<p>The <code>calc_pp</code> function has an optional argument <code>vars_to_sum</code>, allowing users to specify which variables to sum to obtain total precipitation. If no variables are provided, it will default to summing the three variables: <code>RAINC</code>, <code>RAINNC</code>, and <code>RAINSH</code>.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ds_sfc <span class="op">=</span> met_vars.calc_pp(ds, vars_to_sum<span class="op">=</span>[<span class="st">'RAINC'</span>, <span class="st">'RAINNC'</span>, <span class="st">'RAINSH'</span>], elim<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>ds_sfc <span class="op">=</span> met_vars.calc_wsp(ds_sfc, elim<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>ds_sfc <span class="op">=</span> met_vars.calc_celsius(ds_sfc, <span class="st">'SSTSK'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>By running these commands, we ensure that our dataset <code>ds_sfc</code> now contains calculated precipitation, wind speed, and sea surface temperature in Celsius, ready for further analysis or visualization.</p>
+<section id="defining-the-wrf-file" class="level3">
+<h3 class="anchored" data-anchor-id="defining-the-wrf-file">2. Defining the WRF File</h3>
+<p>SCAHpy’s reading functions require file paths to be provided as a <em>list of strings</em>. There are two ways to accomplish this:</p>
+<p><strong>a) Manually placing the file inside square brackets:</strong></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>file_name <span class="op">=</span> [<span class="st">'/data/users/fcastillon/COW_outs/diagnos/C2O5W4_SF2/wrf/wrfout_d01_2017-01-14_03:00:00'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>b) Using <code>glob.glob</code>, which already returns a list:</strong></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>file_name <span class="op">=</span> glob.glob(<span class="st">'/data/users/fcastillon/COW_outs/diagnos/C2O5W4_SF2/wrf/wrfout_d01_2017-01-14_03:00:00'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Both methods produce the correct format required by SCAHpy.</p>
 </section>
-<section id="step-3-plotting-precipitation-maps" class="level2">
-<h2 class="anchored" data-anchor-id="step-3-plotting-precipitation-maps">Step 3: Plotting Precipitation Maps</h2>
-<p>Next, we’ll generate precipitation maps with SST contours and wind vectors using the <code>map_pp_uv10_sst</code> function from the <code>map_plots</code> module. This function takes the rainfall (PP) variable as input, followed by the dataset with SST and wind components, precipitation levels, SST contours, optional shapefile, exportation settings, output path, temporal scale (‘H’ for hourly, ‘D’ for daily, ‘M’ for monthly, ‘Y’ for yearly), vector speed, and plot extent ([x1, x2, y1, y2]).</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example usage</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>precipitation_levels <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">11</span>, <span class="dv">15</span>, <span class="dv">20</span>, <span class="dv">25</span>, <span class="dv">30</span>, <span class="dv">35</span>, <span class="dv">40</span>, <span class="dv">45</span>, <span class="dv">50</span>, <span class="dv">55</span>, <span class="dv">60</span>]</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>sst_contour_levels <span class="op">=</span> [<span class="dv">26</span>, <span class="dv">27</span>, <span class="dv">28</span>]</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>map_plots.map_pp_uv10_sst(ds_sfc[<span class="st">'PP'</span>], ds_sfc, precipitation_levels, sst_contour_levels, shapefile<span class="op">=</span><span class="va">None</span>, </span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>                           output_path<span class="op">=</span><span class="st">'.'</span>, save_maps<span class="op">=</span><span class="va">True</span>, freq<span class="op">=</span><span class="st">'H'</span>,</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>                           quiverkey_speed<span class="op">=</span><span class="dv">10</span>, extent<span class="op">=</span><span class="va">None</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="selecting-variables-with-drop_vars" class="level3">
+<h3 class="anchored" data-anchor-id="selecting-variables-with-drop_vars">3. Selecting Variables with <code>drop_vars</code></h3>
+<p>To optimize the reading process, we can specify which variables to exclude from the WRF file. This is particularly useful when working with heavy simulations or multiple files.</p>
+<p>The function <code>drop_vars</code> has an important requirement:</p>
+<blockquote class="blockquote">
+<p><strong>It always requires a single file (<code>file0</code>) in string format even when working with multiple files.</strong> This is because the function inspects the typical structure and metadata of a WRF file to identify variables that should be excluded.</p>
+</blockquote>
+<p>Therefore, even if <code>file_name</code> contains more than one file, we use:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>file_name[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In this example, we will work with only four variables: <code>LANDMASK</code>, <code>LAKEMASK</code>, <code>U10</code>, and <code>V10</code>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>vars_wrf <span class="op">=</span> sc.drop_vars(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    file0 <span class="op">=</span> file_name[<span class="dv">0</span>],</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    sel_vars <span class="op">=</span> [<span class="st">'LANDMASK'</span>, <span class="st">'LAKEMASK'</span>, <span class="st">'U10'</span>, <span class="st">'V10'</span>],</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> <span class="st">'WRF'</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="reading-the-file-with-read_wrf" class="level3">
+<h3 class="anchored" data-anchor-id="reading-the-file-with-read_wrf">4. Reading the File with <code>read_wrf</code></h3>
+<p>We now read the file using the <code>read_wrf</code> function, passing the main options:</p>
+<ul>
+<li><strong><code>drop_vars</code></strong>: variables to exclude (obtained previously).</li>
+<li><strong><code>dif_hours</code> and <code>sign</code></strong>: time-zone adjustment (e.g., Peru = UTC−5 → <code>dif_hours=5</code>, <code>sign=-1</code>).</li>
+<li><strong><code>destag</code></strong>: whether destaggering is required; for this example it is not.</li>
+<li><strong><code>save_path</code></strong>: optional output path to save the processed file.</li>
+</ul>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ds_wrf <span class="op">=</span> sc.read_wrf(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    file_paths <span class="op">=</span> file_name,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    drop_vars <span class="op">=</span> vars_wrf,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    dif_hours <span class="op">=</span> <span class="dv">5</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    sign <span class="op">=</span> <span class="op">-</span><span class="dv">1</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    destag <span class="op">=</span> <span class="va">False</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    save_path <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="computing-wind-speed" class="level3">
+<h3 class="anchored" data-anchor-id="computing-wind-speed">5. Computing Wind Speed</h3>
+<p>Using the horizontal components <code>U10</code> and <code>V10</code>, we compute the magnitude of the surface wind:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>ds_wrf[<span class="st">'WSP'</span>] <span class="op">=</span> sc.wind_speed(ds_wrf.U10, ds_wrf.V10)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="d-map-wind-speed-with-vectors" class="level3">
+<h3 class="anchored" data-anchor-id="d-map-wind-speed-with-vectors">6. 2D Map: Wind Speed with Vectors</h3>
+<p>The function <code>map_1var_winds</code> belongs to the module: <code>scahpy.plots.maps</code>.</p>
+<p>This function allows plotting a scalar field together with a vector field. The most relevant parameters used here are:</p>
+<ul>
+<li><strong><code>da</code></strong>: scalar variable to plot (WSP).</li>
+<li><strong><code>U</code>, <code>V</code></strong>: wind components.</li>
+<li><strong><code>levels</code></strong>: contour levels.</li>
+<li><strong><code>cmap</code></strong>: color palette.</li>
+<li><strong><code>quiver_subsample</code></strong>: subsampling frequency for vectors.</li>
+<li><strong><code>quiverkey_speed</code></strong>: reference vector magnitude.</li>
+<li><strong><code>time</code></strong>: timestamp for the plot.</li>
+<li><strong><code>output_path</code></strong>: optional output path to save the figure.</li>
+</ul>
+<p>For more details on each parameter, see the <a href="04_API.qmd">API Reference</a>.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>sc.map_1var_winds(</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    da <span class="op">=</span> ds_wrf.WSP,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    U <span class="op">=</span> ds_wrf.U10,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    V <span class="op">=</span> ds_wrf.V10,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    levels <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="dv">11</span>, <span class="dv">1</span>),</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    cmap <span class="op">=</span> <span class="st">'rain'</span>,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    shapefile <span class="op">=</span> <span class="va">None</span>,</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    extent <span class="op">=</span> <span class="va">None</span>,</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    xticks <span class="op">=</span> <span class="va">None</span>,</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    yticks <span class="op">=</span> <span class="va">None</span>,</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    tick_step <span class="op">=</span> (<span class="dv">5</span>, <span class="dv">5</span>),</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    draw_grid <span class="op">=</span> <span class="va">False</span>,</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    time <span class="op">=</span> <span class="st">'2017-01-14T13'</span>,</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    month <span class="op">=</span> <span class="va">None</span>,</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    quiver_subsample <span class="op">=</span> <span class="dv">7</span>,</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    quiverkey_speed <span class="op">=</span> <span class="fl">5.0</span>,</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    title <span class="op">=</span> <span class="st">'Wind Speed'</span>,</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    colorbar_label <span class="op">=</span> <span class="st">'m/s'</span>,</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    output_path <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-03" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-03-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/fig_04.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-03-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: ds_maps
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="applying-a-mask-to-extract-land-areas" class="level3">
+<h3 class="anchored" data-anchor-id="applying-a-mask-to-extract-land-areas">7. Applying a Mask to Extract Land Areas</h3>
+<p>If we wish to plot only the <strong>continental region</strong>, we can use <code>apply_mask</code>, which belongs to the module <code>scahpy.core</code>.</p>
+<p>An important note:</p>
+<blockquote class="blockquote">
+<p>Although <code>LANDMASK</code> distinguishes land from ocean, WRF may <em>incorrectly interpolate variables over lake surfaces</em>, such as Lake Titicaca. Therefore, it is advisable to <em>exclude lakes</em> when working with masks.</p>
+</blockquote>
+<p>In this example, we retain only land areas, so we use <code>sea_is_one = True</code> and <code>exclude_lakes = False</code>.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ds_wrf[<span class="st">'WSP_land'</span>] <span class="op">=</span> sc.apply_mask(</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    da <span class="op">=</span> ds_wrf.WSP,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    mask <span class="op">=</span> ds_wrf.LANDMASK,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    sea_is_one <span class="op">=</span> <span class="va">True</span>,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    lakemask <span class="op">=</span> ds_wrf.LAKEMASK,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    exclude_lakes <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>ds_wrf[<span class="st">'U10_land'</span>] <span class="op">=</span> sc.apply_mask(</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    ds_wrf.U10,</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    ds_wrf.LANDMASK,</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    sea_is_one <span class="op">=</span> <span class="va">True</span>,</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    lakemask <span class="op">=</span> ds_wrf.LAKEMASK,</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    exclude_lakes <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>ds_wrf[<span class="st">'V10_land'</span>] <span class="op">=</span> sc.apply_mask(</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    ds_wrf.V10,</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    ds_wrf.LANDMASK,</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    sea_is_one <span class="op">=</span> <span class="va">True</span>,</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>    lakemask <span class="op">=</span> ds_wrf.LAKEMASK,</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>    exclude_lakes <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="new-map-with-the-applied-mask" class="level3">
+<h3 class="anchored" data-anchor-id="new-map-with-the-applied-mask">8. New Map with the Applied Mask</h3>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>sc.map_1var_winds(</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    da <span class="op">=</span> ds_wrf.WSP_land,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    U <span class="op">=</span> ds_wrf.U10_land,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    V <span class="op">=</span> ds_wrf.V10_land,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    levels <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="dv">11</span>, <span class="dv">1</span>),</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    cmap <span class="op">=</span> <span class="st">'rain'</span>,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    time <span class="op">=</span> <span class="st">'2017-01-14T13'</span>,</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    title <span class="op">=</span> <span class="st">'Wind Speed'</span>,</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    colorbar_label <span class="op">=</span> <span class="st">'m/s'</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-03" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-03-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/fig_05.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-03-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: ds_maps
+</figcaption>
+</figure>
+</div>
 
 
+</section>
 </section>
 </section>
 

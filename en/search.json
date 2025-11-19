@@ -176,7 +176,7 @@
     "href": "index.html#tutorials",
     "title": "SCAHpy",
     "section": "Tutorials",
-    "text": "Tutorials\n\nReading a single file\nReading multiple files\nPressure-level variables",
+    "text": "Tutorials\n\nReading WRF outputs\nReading CROCO outputs\nCase Study: ENSO 2017",
     "crumbs": [
       "Introduction"
     ]
@@ -381,7 +381,7 @@
   {
     "objectID": "03_tutorial_01_en.html",
     "href": "03_tutorial_01_en.html",
-    "title": "Reading a Single File",
+    "title": "Tutorial 01: WRF Model Outputs",
     "section": "",
     "text": "⚠️ Actualizando documentación / Updating documentation (v1 → v2)\n  Algunos contenidos pueden estar en revisión · Some sections may be under revision.",
     "crumbs": [
@@ -390,33 +390,11 @@
     ]
   },
   {
-    "objectID": "03_tutorial_01_en.html#step-1-reading-wrf-data",
-    "href": "03_tutorial_01_en.html#step-1-reading-wrf-data",
-    "title": "Reading a Single File",
-    "section": "Step 1: Reading WRF Data",
-    "text": "Step 1: Reading WRF Data\nWe begin by setting the absolute path of the output file we intend to work with and assign it to a variable, in this case, file_name.\nfile_name = '/data/datos/COW/OUT_DIAG_WRF/wrfouts/wrfout_d01_2023-03-10_03:00:00'\nSince we have the flexibility to specify which variables to exclude when reading netCDF files using the drop_variables argument (see xarray functions open_dataset and open_mfdataset), we leverage the _drop_wrf_vars function from the module in_out. This function takes the list of variables we require and generates a list containing all variables present in the output file, subsequently removing those we are not interested in (such as ‘RAINC’, ‘RAINNC’, ‘RAINSH’, ‘U10’, ‘V10’, ‘SSTSK’).\ndvars = in_out._drop_vars(file_name, ['RAINC', 'RAINNC', 'RAINSH', 'U10', 'V10', 'SSTSK'], model='wrf')\nSubsequently, we utilize the read_wrf_single function to selectively read the variables of interest. This function accepts the input path (file_name in this case), the list of variables to be excluded (vars), any required time difference (e.g., '5 hours'), and the corresponding sign of the time difference (-1 for negative, 1 for positive). The outcome is an xarray.Dataset containing longitude, latitude, time, and the specified variables. Optionally, you can designate a save path to export the netCDF.\nds = in_out.read_wrf_single(file_name, dvars, '5 hours', -1)",
-    "crumbs": [
-      "Tutorials",
-      "Tutorial 1: Reading WRF"
-    ]
-  },
-  {
-    "objectID": "03_tutorial_01_en.html#step-2-calculating-precipitation-and-wind-speed",
-    "href": "03_tutorial_01_en.html#step-2-calculating-precipitation-and-wind-speed",
-    "title": "Reading a Single File",
-    "section": "Step 2: Calculating Precipitation and Wind Speed",
-    "text": "Step 2: Calculating Precipitation and Wind Speed\nIn this step, we will utilize the met_vars module to calculate precipitation (calc_pp), wind speed (calc_wsp), and convert sea surface temperature from Kelvin to Celsius (calc_celsius).\nThe calc_pp function has an optional argument vars_to_sum, allowing users to specify which variables to sum to obtain total precipitation. If no variables are provided, it will default to summing the three variables: RAINC, RAINNC, and RAINSH.\nds_sfc = met_vars.calc_pp(ds, vars_to_sum=['RAINC', 'RAINNC', 'RAINSH'], elim=True)\nds_sfc = met_vars.calc_wsp(ds_sfc, elim=False)\nds_sfc = met_vars.calc_celsius(ds_sfc, 'SSTSK')\nBy running these commands, we ensure that our dataset ds_sfc now contains calculated precipitation, wind speed, and sea surface temperature in Celsius, ready for further analysis or visualization.",
-    "crumbs": [
-      "Tutorials",
-      "Tutorial 1: Reading WRF"
-    ]
-  },
-  {
-    "objectID": "03_tutorial_01_en.html#step-3-plotting-precipitation-maps",
-    "href": "03_tutorial_01_en.html#step-3-plotting-precipitation-maps",
-    "title": "Reading a Single File",
-    "section": "Step 3: Plotting Precipitation Maps",
-    "text": "Step 3: Plotting Precipitation Maps\nNext, we’ll generate precipitation maps with SST contours and wind vectors using the map_pp_uv10_sst function from the map_plots module. This function takes the rainfall (PP) variable as input, followed by the dataset with SST and wind components, precipitation levels, SST contours, optional shapefile, exportation settings, output path, temporal scale (‘H’ for hourly, ‘D’ for daily, ‘M’ for monthly, ‘Y’ for yearly), vector speed, and plot extent ([x1, x2, y1, y2]).\n# Example usage\nprecipitation_levels = [1, 2, 3, 5, 7, 11, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60]\nsst_contour_levels = [26, 27, 28]\n\nmap_plots.map_pp_uv10_sst(ds_sfc['PP'], ds_sfc, precipitation_levels, sst_contour_levels, shapefile=None, \n                           output_path='.', save_maps=True, freq='H',\n                           quiverkey_speed=10, extent=None)",
+    "objectID": "03_tutorial_01_en.html#reading-a-wrf-file",
+    "href": "03_tutorial_01_en.html#reading-a-wrf-file",
+    "title": "Tutorial 01: WRF Model Outputs",
+    "section": "Reading a WRF File",
+    "text": "Reading a WRF File\nIn this first section we begin by working with a single WRF file, which allows us to understand the dataset structure and the use of the main functions. Later, we will extend these concepts to the case of multiple-input reading.\n\n1. Importing Packages\nWe import the modules required for path handling, WRF file reading, and numerical operations:\nimport scahpy as sc\nimport numpy as np\nimport glob\n\n\n2. Defining the WRF File\nSCAHpy’s reading functions require file paths to be provided as a list of strings. There are two ways to accomplish this:\na) Manually placing the file inside square brackets:\nfile_name = ['/data/users/fcastillon/COW_outs/diagnos/C2O5W4_SF2/wrf/wrfout_d01_2017-01-14_03:00:00']\nb) Using glob.glob, which already returns a list:\nfile_name = glob.glob('/data/users/fcastillon/COW_outs/diagnos/C2O5W4_SF2/wrf/wrfout_d01_2017-01-14_03:00:00')\nBoth methods produce the correct format required by SCAHpy.\n\n\n3. Selecting Variables with drop_vars\nTo optimize the reading process, we can specify which variables to exclude from the WRF file. This is particularly useful when working with heavy simulations or multiple files.\nThe function drop_vars has an important requirement:\n\nIt always requires a single file (file0) in string format even when working with multiple files. This is because the function inspects the typical structure and metadata of a WRF file to identify variables that should be excluded.\n\nTherefore, even if file_name contains more than one file, we use:\nfile_name[0]\nIn this example, we will work with only four variables: LANDMASK, LAKEMASK, U10, and V10.\nvars_wrf = sc.drop_vars(\n    file0 = file_name[0],\n    sel_vars = ['LANDMASK', 'LAKEMASK', 'U10', 'V10'],\n    model = 'WRF'\n)\n\n\n4. Reading the File with read_wrf\nWe now read the file using the read_wrf function, passing the main options:\n\ndrop_vars: variables to exclude (obtained previously).\ndif_hours and sign: time-zone adjustment (e.g., Peru = UTC−5 → dif_hours=5, sign=-1).\ndestag: whether destaggering is required; for this example it is not.\nsave_path: optional output path to save the processed file.\n\nds_wrf = sc.read_wrf(\n    file_paths = file_name,\n    drop_vars = vars_wrf,\n    dif_hours = 5,\n    sign = -1,\n    destag = False,\n    save_path = None\n)\n\n\n5. Computing Wind Speed\nUsing the horizontal components U10 and V10, we compute the magnitude of the surface wind:\nds_wrf['WSP'] = sc.wind_speed(ds_wrf.U10, ds_wrf.V10)\n\n\n6. 2D Map: Wind Speed with Vectors\nThe function map_1var_winds belongs to the module: scahpy.plots.maps.\nThis function allows plotting a scalar field together with a vector field. The most relevant parameters used here are:\n\nda: scalar variable to plot (WSP).\nU, V: wind components.\nlevels: contour levels.\ncmap: color palette.\nquiver_subsample: subsampling frequency for vectors.\nquiverkey_speed: reference vector magnitude.\ntime: timestamp for the plot.\noutput_path: optional output path to save the figure.\n\nFor more details on each parameter, see the API Reference.\nsc.map_1var_winds(\n    da = ds_wrf.WSP,\n    U = ds_wrf.U10,\n    V = ds_wrf.V10,\n    levels = np.arange(0, 11, 1),\n    cmap = 'rain',\n    shapefile = None,\n    extent = None,\n    xticks = None,\n    yticks = None,\n    tick_step = (5, 5),\n    draw_grid = False,\n    time = '2017-01-14T13',\n    month = None,\n    quiver_subsample = 7,\n    quiverkey_speed = 5.0,\n    title = 'Wind Speed',\n    colorbar_label = 'm/s',\n    output_path = None\n)\n\n\n\n\n\n\nFigure 1: ds_maps\n\n\n\n\n\n7. Applying a Mask to Extract Land Areas\nIf we wish to plot only the continental region, we can use apply_mask, which belongs to the module scahpy.core.\nAn important note:\n\nAlthough LANDMASK distinguishes land from ocean, WRF may incorrectly interpolate variables over lake surfaces, such as Lake Titicaca. Therefore, it is advisable to exclude lakes when working with masks.\n\nIn this example, we retain only land areas, so we use sea_is_one = True and exclude_lakes = False.\nds_wrf['WSP_land'] = sc.apply_mask(\n    da = ds_wrf.WSP,\n    mask = ds_wrf.LANDMASK,\n    sea_is_one = True,\n    lakemask = ds_wrf.LAKEMASK,\n    exclude_lakes = False\n)\n\nds_wrf['U10_land'] = sc.apply_mask(\n    ds_wrf.U10,\n    ds_wrf.LANDMASK,\n    sea_is_one = True,\n    lakemask = ds_wrf.LAKEMASK,\n    exclude_lakes = False\n)\n\nds_wrf['V10_land'] = sc.apply_mask(\n    ds_wrf.V10,\n    ds_wrf.LANDMASK,\n    sea_is_one = True,\n    lakemask = ds_wrf.LAKEMASK,\n    exclude_lakes = False\n)\n\n\n8. New Map with the Applied Mask\nsc.map_1var_winds(\n    da = ds_wrf.WSP_land,\n    U = ds_wrf.U10_land,\n    V = ds_wrf.V10_land,\n    levels = np.arange(0, 11, 1),\n    cmap = 'rain',\n    time = '2017-01-14T13',\n    title = 'Wind Speed',\n    colorbar_label = 'm/s'\n)\n\n\n\n\n\n\nFigure 2: ds_maps",
     "crumbs": [
       "Tutorials",
       "Tutorial 1: Reading WRF"
@@ -527,7 +505,7 @@
     "href": "02_use_en.html#reading-data",
     "title": "Using SCAHpy",
     "section": "4. Reading Data",
-    "text": "4. Reading Data\nReading is the first fundamental step. SCAHpy provides specialized functions for WRF and CROCO that:\n\naccept file paths as lists,\nstandardize coordinates (lat, lon, time),\ncorrect local/UTC time,\napply destaggering when needed,\ncompute internal auxiliary variables.\n\n\n4.1 Reading WRF Files\nAssuming the package was imported as {python} import scahpy as sc:\nWRF_files  = sorted(glob.glob(\"/data/users/fcastillon/wrf/wrfout_d01_2017*\"))\nvars_wrf = sc.drop_vars(WRF_files[0], sel_vars = ['SST','LANDMASK','U10','V10'], model='WRF')\nds_wrf = sc.read_wrf(WRF_files, drop_vars = vars_wrf)\n\n\n\n\n\n\nFigure 1: ds_wrf\n\n\n\nOutput:\n\nDataset with homogenized coordinates\nConcatenated time dimension\nOptional: you may use {python} destag = True if required, as well as {python} save_path = 'output_path/file.nc' to save the generated NetCDF file.\n\n\n\n4.2 Reading CROCO Files\nAssuming the package was imported as {python} import scahpy as sc:\nCROCO_files = sorted(glob.glob(\"/data/users/fcastillon/croco/croco_avg_Y2017*.nc\"))\nvars_croco = sc.drop_vars(CROCO_files[0], sel_vars = ['temp','mask_rho','ubar','vbar'], model='CROCO')\nds_croco = sc.read_croco(CROCO_files, drop_vars = vars_croco)\n\n\n\n\n\n\nFigure 2: ds_croco\n\n\n\nOutput:\n\nDataset with homogenized coordinates\nConcatenated time dimension\nRenamed coordinates: time, lat, lon, levels",
+    "text": "4. Reading Data\nReading is the first fundamental step. SCAHpy provides specialized functions for WRF and CROCO that:\n\naccept file paths as lists,\nstandardize coordinates (lat, lon, time),\ncorrect local/UTC time,\napply destaggering when needed,\ncompute internal auxiliary variables.\n\n\n4.1 Reading WRF Files\nAssuming the package was imported as {python} import scahpy as sc:\nWRF_files  = sorted(glob.glob(\"/data/users/fcastillon/wrf/wrfout_d01_2017*\"))\nvars_wrf = sc.drop_vars(WRF_files[0], sel_vars = ['SST','LANDMASK','U10','V10','T2'], model='WRF')\nds_wrf = sc.read_wrf(WRF_files, drop_vars = vars_wrf)\n\n\n\n\n\n\nFigure 1: ds_wrf\n\n\n\nOutput:\n\nDataset with homogenized coordinates\nConcatenated time dimension\nOptional: you may use {python} destag = True if required, as well as {python} save_path = 'output_path/file.nc' to save the generated NetCDF file.\n\n\n\n4.2 Reading CROCO Files\nAssuming the package was imported as {python} import scahpy as sc:\nCROCO_files = sorted(glob.glob(\"/data/users/fcastillon/croco/croco_avg_Y2017*.nc\"))\nvars_croco = sc.drop_vars(CROCO_files[0], sel_vars = ['temp','mask_rho','ubar','vbar'], model='CROCO')\nds_croco = sc.read_croco(CROCO_files, drop_vars = vars_croco)\n\n\n\n\n\n\nFigure 2: ds_croco\n\n\n\nOutput:\n\nDataset with homogenized coordinates\nConcatenated time dimension\nRenamed coordinates: time, lat, lon, levels",
     "crumbs": [
       "Usage"
     ]
@@ -547,7 +525,7 @@
     "href": "02_use_en.html#visualization",
     "title": "Using SCAHpy",
     "section": "6. Visualization",
-    "text": "6. Visualization\nThe components.plots module contains ready-to-use functions for producing high-quality scientific graphics. One of the most common visualizations is the map plot:\nmaps.map_1var_winds(\n    ds=ds_wrf.SST,\n    U=ds_wrf.U10,\n    V=ds_wrf.V10,\n    levels=np.arange(16,31,1),\n    cmap=\"thermal\",\n    time='2017-01-02T12',\n    title=\"SST + 10m Winds\"\n)\n\n\n\n\n\n\nFigure 3: ds_maps",
+    "text": "6. Visualization\nThe components.plots module contains ready-to-use functions for producing high-quality scientific graphics. One of the most common visualizations is the map plot:\nmaps.map_1var_winds(\n    ds=ds_wrf.T2,\n    U=ds_wrf.U10,\n    V=ds_wrf.V10,\n    levels=np.arange(16,31,1),\n    cmap=\"thermal\",\n    time='2017-01-02T12',\n    title=\"T2 + 10m Winds\"\n)\n\n\n\n\n\n\nFigure 3: ds_maps",
     "crumbs": [
       "Usage"
     ]

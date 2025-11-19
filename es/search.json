@@ -176,7 +176,7 @@
     "href": "index.html#tutoriales",
     "title": "SCAHpy",
     "section": "Tutoriales",
-    "text": "Tutoriales\n\nLectura de archivos individuales\nLectura de múltiples archivos\nVariables en niveles de presión",
+    "text": "Tutoriales\n\nLectura de archivos WRF\nLectura de archivos CROCO\nEstudio de Caso: ENSO 2017",
     "crumbs": [
       "Introducción"
     ]
@@ -359,7 +359,7 @@
   {
     "objectID": "03_tutorial_01.html",
     "href": "03_tutorial_01.html",
-    "title": "Tutorial 1: Lectura de un archivo WRF",
+    "title": "Tutorial 01: Salidas del modelo WRF",
     "section": "",
     "text": "⚠️ Actualizando documentación / Updating documentation (v1 → v2)\n  Algunos contenidos pueden estar en revisión · Some sections may be under revision.",
     "crumbs": [
@@ -368,66 +368,11 @@
     ]
   },
   {
-    "objectID": "03_tutorial_01.html#lectura-del-archivo",
-    "href": "03_tutorial_01.html#lectura-del-archivo",
-    "title": "Tutorial 1: Lectura de un archivo WRF",
-    "section": "2.1 Lectura del archivo",
-    "text": "2.1 Lectura del archivo\nUsamos wrf_io.read_wrf() para abrir un solo archivo. Esta función:\n\nestandariza coordenadas,\nconvierte el tiempo a formato datetime,\naplica destaggering cuando corresponde,\npermite descartar variables innecesarias.\n\nds = wrf_io.read_wrf(\n    paths=file_path,\n    drop_vars=[\"TKE\"],          # opcional\n    time_offset_hours=-5        # conversión a hora local (UTC−5)\n)\nds\nResultado:\n\ntime: un único tiempo del archivo\nlat, lon: grilla\nVariables atmosféricas como T2, U10, V10, humedades, etc.",
-    "crumbs": [
-      "Tutoriales",
-      "Tutorial 1: Lectura de WRF"
-    ]
-  },
-  {
-    "objectID": "03_tutorial_01.html#precipitación-acumulada",
-    "href": "03_tutorial_01.html#precipitación-acumulada",
-    "title": "Tutorial 1: Lectura de un archivo WRF",
-    "section": "3.1 Precipitación acumulada",
-    "text": "3.1 Precipitación acumulada\nPrecipitación total = RAINC + RAINNC:\npp = ds[\"RAINC\"] + ds[\"RAINNC\"]\npp.name = \"PP\"     # renombramos para plot",
-    "crumbs": [
-      "Tutoriales",
-      "Tutorial 1: Lectura de WRF"
-    ]
-  },
-  {
-    "objectID": "03_tutorial_01.html#velocidad-del-viento-a-10-m",
-    "href": "03_tutorial_01.html#velocidad-del-viento-a-10-m",
-    "title": "Tutorial 1: Lectura de un archivo WRF",
-    "section": "3.2 Velocidad del viento a 10 m",
-    "text": "3.2 Velocidad del viento a 10 m\nwind10 = wrf_diags.wind_speed(ds[\"U10\"], ds[\"V10\"])\nwind10.name = \"wspd10\"",
-    "crumbs": [
-      "Tutoriales",
-      "Tutorial 1: Lectura de WRF"
-    ]
-  },
-  {
-    "objectID": "03_tutorial_01.html#temperatura-del-mar-en-c-si-existe-sst-en-el-archivo",
-    "href": "03_tutorial_01.html#temperatura-del-mar-en-c-si-existe-sst-en-el-archivo",
-    "title": "Tutorial 1: Lectura de un archivo WRF",
-    "section": "3.3 Temperatura del mar en °C (si existe SST en el archivo)",
-    "text": "3.3 Temperatura del mar en °C (si existe SST en el archivo)\nif \"SSTSK\" in ds:\n    sst = utils.to_celsius(ds[\"SSTSK\"])\n    sst.name = \"SST_C\"",
-    "crumbs": [
-      "Tutoriales",
-      "Tutorial 1: Lectura de WRF"
-    ]
-  },
-  {
-    "objectID": "03_tutorial_01.html#preparación-de-la-figura",
-    "href": "03_tutorial_01.html#preparación-de-la-figura",
-    "title": "Tutorial 1: Lectura de un archivo WRF",
-    "section": "4.1 Preparación de la figura",
-    "text": "4.1 Preparación de la figura\nfig, ax = plt.subplots(figsize=(8, 6))\n\npp.isel(time=0).plot(\n    ax=ax,\n    x=\"lon\", y=\"lat\",\n    cmap=\"Blues\",\n    cbar_kwargs={\"label\": \"Precipitación (mm)\"}\n)\n\nax.set_title(\"Precipitación – WRF single file\")\nplt.show()",
-    "crumbs": [
-      "Tutoriales",
-      "Tutorial 1: Lectura de WRF"
-    ]
-  },
-  {
-    "objectID": "03_tutorial_01.html#definir-la-ruta-del-archivo-croco",
-    "href": "03_tutorial_01.html#definir-la-ruta-del-archivo-croco",
-    "title": "Tutorial 1: Lectura de un archivo WRF",
-    "section": "5.1 Definir la ruta del archivo CROCO",
-    "text": "5.1 Definir la ruta del archivo CROCO\nComo ejemplo:\ncroco_file = \"/data/datos/COW/OUT_DIAG_CROCO/croco_avg_Y2000M01.nc\"\nNuevamente usaremos una lista, aunque solo haya un archivo:\nds_croco = croco_io.read_croco(\n    paths=[croco_file],   # lista con un único archivo\n    destag=True,          # pasar de grilla C a grilla centrada\n    keep_vertical=True    # conservar niveles sigma\n)\nds_croco\nEl resultado suele incluir:\n\ntime: tiempos diarios o subdiarios,\neta_rho, xi_rho o equivalentes convertidos a lat, lon,\ns_rho o niveles sigma,\nVariables oceánicas: temp, salt, u, v, etc.",
+    "objectID": "03_tutorial_01.html#lectura-de-un-archivo-wrf",
+    "href": "03_tutorial_01.html#lectura-de-un-archivo-wrf",
+    "title": "Tutorial 01: Salidas del modelo WRF",
+    "section": "Lectura de un archivo WRF",
+    "text": "Lectura de un archivo WRF\nEn esta primera parte comenzaremos trabajando con un solo archivo WRF, lo cual permite comprender la estructura básica del dataset y el uso de las funciones principales. Más adelante extenderemos estos conceptos para el caso de lecturas múltiples.\n\n1. Importación de paquetes\nImportamos los módulos necesarios para el manejo de rutas, lectura de archivos WRF y operaciones numéricas:\nimport scahpy as sc\nimport numpy as np\nimport glob\n\n\n2. Definición del archivo WRF\nLas funciones de lectura de SCAHpy requieren que las rutas de los archivos se proporcionen como lista de strings. Existen dos formas de lograrlo:\na) Colocar manualmente el archivo entre corchetes:\nfile_name = ['/data/users/fcastillon/COW_outs/diagnos/C2O5W4_SF2/wrf/wrfout_d01_2017-01-14_03:00:00']\nb) Utilizar glob.glob, que devuelve directamente una lista:\nfile_name = glob.glob('/data/users/fcastillon/COW_outs/diagnos/C2O5W4_SF2/wrf/wrfout_d01_2017-01-14_03:00:00')\nAmbos métodos son equivalentes respecto al formato que necesita SCAHpy.\n\n\n3. Selección de variables con drop_vars\nPara optimizar la lectura, podemos indicar qué variables excluir del archivo WRF. Esto es especialmente útil en simulaciones pesadas o cuando se trabaja con múltiples archivos.\nLa función drop_vars tiene un punto importante:\n\nSiempre requiere un único archivo (file0), en formato string, aun cuando trabajemos con múltiples archivos. Esto se debe a que la función analiza la estructura y metadata típica del archivo WRF para identificar las variables que deben excluirse.\n\nPor ello, incluso si file_name contiene más de un archivo, utilizamos:\nfile_name[0]\nEn este ejemplo trabajaremos solo con cuatro variables: LANDMASK, LAKEMASK, U10 y V10.\nvars_wrf = sc.drop_vars(\n    file0 = file_name[0],\n    sel_vars = ['LANDMASK', 'LAKEMASK', 'U10', 'V10'],\n    model = 'WRF'\n)\n\n\n4. Lectura del archivo con read_wrf\nA continuación, leemos el archivo usando la función read_wrf, pasando las opciones principales:\n\ndrop_vars: variables a excluir (obtenidas previamente).\ndif_hours y sign: ajustes de huso horario (p. ej. Perú = UTC−5 → dif_hours=5, sign=-1).\ndestag: si se requiere destaggering; en este ejemplo no es necesario.\nsave_path: ruta opcional para guardar el archivo procesado.\n\nds_wrf = sc.read_wrf(\n    file_paths = file_name,\n    drop_vars = vars_wrf,\n    dif_hours = 5,\n    sign = -1,\n    destag = False,\n    save_path = None\n)\n\n\n5. Cálculo de la velocidad del viento\nA partir de los componentes horizontales U10 y V10, calculamos la magnitud del viento superficial:\nds_wrf['WSP'] = sc.wind_speed(ds_wrf.U10, ds_wrf.V10)\n\n\n6. Mapa 2D: velocidad del viento con vectores\nLa función map_1var_winds pertenece al módulo: scahpy.plots.maps\nEsta función permite graficar un campo escalar acompañado de un campo vectorial. Los parámetros más relevantes que utilizamos aquí son:\n\nda: variable escalar a graficar (WSP).\nU, V: componentes del viento.\nlevels: niveles del contorno.\ncmap: paleta de colores.\nquiver_subsample: frecuencia de muestreo para los vectores.\nquiverkey_speed: escala de referencia.\ntime: tiempo a graficar.\noutput_path: ruta para guardar la figura (si se desea).\n\nMás detalles de cada parámetro, revisar la sección Referencia de la API\nsc.map_1var_winds(\n    da = ds_wrf.WSP,\n    U = ds_wrf.U10,\n    V = ds_wrf.V10,\n    levels = np.arange(0, 11, 1),\n    cmap = 'rain',\n    shapefile = None,\n    extent = None,\n    xticks = None,\n    yticks = None,\n    tick_step = (5, 5),\n    draw_grid = False,\n    time = '2017-01-14T13',\n    month = None,\n    quiver_subsample = 7,\n    quiverkey_speed = 5.0,\n    title = 'Velocidad del Viento',\n    colorbar_label = 'm/s',\n    output_path = None\n)\n\n\n\n\n\n\nFigura 1: ds_maps\n\n\n\n\n\n7. Aplicación de máscara para delimitar continente\nSi deseamos graficar solo la zona continental, podemos usar apply_mask, que pertenece al módulo: scahpy.core\nUna nota importante:\n\nAunque LANDMASK distingue mar y tierra, el modelo WRF puede interpolar incorrectamente variables sobre lagos, como el Lago Titicaca. Por ello, es recomendable excluir lagos al trabajar con máscaras.\n\nEn este caso mantendremos únicamente superficie terrestre, por lo que usamos sea_is_one = True y exclude_lakes = False.\nds_wrf['WSP_land'] = sc.apply_mask(\n    da = ds_wrf.WSP,\n    mask = ds_wrf.LANDMASK,\n    sea_is_one = True,\n    lakemask = ds_wrf.LAKEMASK,\n    exclude_lakes = False\n)\n\nds_wrf['U10_land'] = sc.apply_mask(\n    ds_wrf.U10,\n    ds_wrf.LANDMASK,\n    sea_is_one = True,\n    lakemask = ds_wrf.LAKEMASK,\n    exclude_lakes = False\n)\n\nds_wrf['V10_land'] = sc.apply_mask(\n    ds_wrf.V10,\n    ds_wrf.LANDMASK,\n    sea_is_one = True,\n    lakemask = ds_wrf.LAKEMASK,\n    exclude_lakes = False\n)\n\n\n8. Nuevo mapa con la máscara aplicada\nsc.map_1var_winds(\n    da = ds_wrf.WSP_land,\n    U = ds_wrf.U10_land,\n    V = ds_wrf.V10_land,\n    levels = np.arange(0, 11, 1),\n    cmap = 'rain',\n    time = '2017-01-14T13',\n    title = 'Velocidad del Viento',\n    colorbar_label = 'm/s'\n)\n\n\n\n\n\n\nFigura 2: ds_maps",
     "crumbs": [
       "Tutoriales",
       "Tutorial 1: Lectura de WRF"
@@ -538,7 +483,7 @@
     "href": "02_use.html#lectura-de-datos",
     "title": "Uso de SCAHpy",
     "section": "4. Lectura de datos",
-    "text": "4. Lectura de datos\nLa lectura es el primer paso fundamental. SCAHpy ofrece funciones especializadas para WRF y CROCO que:\n\naceptan rutas como listas de archivos,\nestandarizan coordenadas (lat, lon, time),\ncorrigen tiempo local/UTC,\naplican destaggering cuando corresponde,\ncalculan variables auxiliares internas.\n\n\n4.1 Lectura de archivos WRF\nAsumimos que se importó la librería como {python} import scahpy as sc\nWRF_files  = sorted(glob.glob(\"/data/users/fcastillon/wrf/wrfout_d01_2017*\"))\nvars_wrf = sc.drop_vars(WRF_files[0], sel_vars = ['SST','LANDMASK','U10','V10'], model='WRF')\nds_wrf = sc.read_wrf(WRF_files, drop_vars = vars_wrf)\n\n\n\n\n\n\nFigura 1: ds_wrf\n\n\n\nSalida:\n\nDataset con coordenadas homogéneas\nTiempo concatenado\nOpcional: se puede usar el parámetro {python} destag = True si fuera el caso, así como {python} save_path = 'ruta_salida/archivo.nc' para guardar el netcdf generado.\n\n\n\n4.2 Lectura de archivos CROCO\nAsumimos que se importó la librería como {python} import scahpy as sc\nCROCO_files = sorted(glob.glob(\"/data/users/fcastillon/croco/croco_avg_Y2017*.nc\"))\nvars_croco = sc.drop_vars(CROCO_files[0], sel_vars = ['temp','mask_rho','ubar','vbar'], model='CROCO')\nds_croco = sc.read_croco(CROCO_files, drop_vars = vars_croco,)\n\n\n\n\n\n\nFigura 2: ds_croco\n\n\n\nSalida:\n\nDataset con coordenadas homogéneas\nTiempo concatenado\nCoordenadas renombradas a time, lat, lon, levels",
+    "text": "4. Lectura de datos\nLa lectura es el primer paso fundamental. SCAHpy ofrece funciones especializadas para WRF y CROCO que:\n\naceptan rutas como listas de archivos,\nestandarizan coordenadas (lat, lon, time),\ncorrigen tiempo local/UTC,\naplican destaggering cuando corresponde,\ncalculan variables auxiliares internas.\n\n\n4.1 Lectura de archivos WRF\nAsumimos que se importó la librería como {python} import scahpy as sc\nWRF_files  = sorted(glob.glob(\"/data/users/fcastillon/wrf/wrfout_d01_2017*\"))\nvars_wrf = sc.drop_vars(WRF_files[0], sel_vars = ['SST','LANDMASK','U10','V10','T2'], model='WRF')\nds_wrf = sc.read_wrf(WRF_files, drop_vars = vars_wrf)\n\n\n\n\n\n\nFigura 1: ds_wrf\n\n\n\nSalida:\n\nDataset con coordenadas homogéneas\nTiempo concatenado\nOpcional: se puede usar el parámetro {python} destag = True si fuera el caso, así como {python} save_path = 'ruta_salida/archivo.nc' para guardar el netcdf generado.\n\n\n\n4.2 Lectura de archivos CROCO\nAsumimos que se importó la librería como {python} import scahpy as sc\nCROCO_files = sorted(glob.glob(\"/data/users/fcastillon/croco/croco_avg_Y2017*.nc\"))\nvars_croco = sc.drop_vars(CROCO_files[0], sel_vars = ['temp','mask_rho','ubar','vbar'], model='CROCO')\nds_croco = sc.read_croco(CROCO_files, drop_vars = vars_croco,)\n\n\n\n\n\n\nFigura 2: ds_croco\n\n\n\nSalida:\n\nDataset con coordenadas homogéneas\nTiempo concatenado\nCoordenadas renombradas a time, lat, lon, levels",
     "crumbs": [
       "Uso"
     ]
@@ -558,7 +503,7 @@
     "href": "02_use.html#visualización",
     "title": "Uso de SCAHpy",
     "section": "6. Visualización",
-    "text": "6. Visualización\nEl módulo components.plots contiene funciones listas para generar figuras de alta calidad científica. Una de las más clásicas es la de mapas.\nmaps.map_1var_winds(\n    ds=ds_wrf.SST,\n    U=ds_wrf.U10,\n    V=ds_wrf.V10,\n    levels=np.arange(16,31,1),\n    cmap=\"thermal\",\n    time='2017-01-02T12',\n    title=\"SST + 10m Winds\"\n)\n\n\n\n\n\n\nFigura 3: ds_maps",
+    "text": "6. Visualización\nEl módulo components.plots contiene funciones listas para generar figuras de alta calidad científica. Una de las más clásicas es la de mapas.\nmaps.map_1var_winds(\n    ds=ds_wrf.T2,\n    U=ds_wrf.U10,\n    V=ds_wrf.V10,\n    levels=np.arange(16,31,1),\n    cmap=\"thermal\",\n    time='2017-01-02T12',\n    title=\"T2 + 10m Winds\"\n)\n\n\n\n\n\n\nFigura 3: ds_maps",
     "crumbs": [
       "Uso"
     ]
@@ -635,6 +580,17 @@
     "title": "Tutorial 2: Lectura y análisis de múltiples archivos WRF",
     "section": "4.1 Agrupar por día",
     "text": "4.1 Agrupar por día\n# Precipitación diaria (suma)\npp_daily = pp.resample(time=\"1D\").sum()\n\n# Viento diario (promedio)\nwspd10_daily = wspd10.resample(time=\"1D\").mean()\n\n# SST diaria (mediana)\nif \"SSTSK\" in ds:\n    sst_daily = sst.resample(time=\"1D\").median()\nAgrupar así permite un control claro y reproducible.\nPuedes combinarlo en un solo Dataset:\nds_daily = xr.Dataset(\n    {\n        \"PP\": pp_daily,\n        \"wspd10\": wspd10_daily,\n        \"SST_C\": sst_daily if \"SSTSK\" in ds else None,\n    }\n)\nds_daily",
+    "crumbs": [
+      "Tutoriales",
+      "Tutorial 2: Lectura de CROCO"
+    ]
+  },
+  {
+    "objectID": "03_tutorial_02.html#definir-la-ruta-del-archivo-croco",
+    "href": "03_tutorial_02.html#definir-la-ruta-del-archivo-croco",
+    "title": "Tutorial 2: Lectura y análisis de múltiples archivos WRF",
+    "section": "5.1 Definir la ruta del archivo CROCO",
+    "text": "5.1 Definir la ruta del archivo CROCO\nComo ejemplo:\ncroco_file = \"/data/datos/COW/OUT_DIAG_CROCO/croco_avg_Y2000M01.nc\"\nNuevamente usaremos una lista, aunque solo haya un archivo:\nds_croco = croco_io.read_croco(\n    paths=[croco_file],   # lista con un único archivo\n    destag=True,          # pasar de grilla C a grilla centrada\n    keep_vertical=True    # conservar niveles sigma\n)\nds_croco\nEl resultado suele incluir:\n\ntime: tiempos diarios o subdiarios,\neta_rho, xi_rho o equivalentes convertidos a lat, lon,\ns_rho o niveles sigma,\nVariables oceánicas: temp, salt, u, v, etc.",
     "crumbs": [
       "Tutoriales",
       "Tutorial 2: Lectura de CROCO"

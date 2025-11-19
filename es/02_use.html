@@ -375,7 +375,7 @@ El énfasis estará en mostrar el flujo general y las capacidades del paquete, m
 <h3 class="anchored" data-anchor-id="lectura-de-archivos-wrf">4.1 Lectura de archivos WRF</h3>
 <p>Asumimos que se importó la librería como <code>{python} import scahpy as sc</code></p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>WRF_files  <span class="op">=</span> <span class="bu">sorted</span>(glob.glob(<span class="st">"/data/users/fcastillon/wrf/wrfout_d01_2017*"</span>))</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>vars_wrf <span class="op">=</span> sc.drop_vars(WRF_files[<span class="dv">0</span>], sel_vars <span class="op">=</span> [<span class="st">'SST'</span>,<span class="st">'LANDMASK'</span>,<span class="st">'U10'</span>,<span class="st">'V10'</span>], model<span class="op">=</span><span class="st">'WRF'</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>vars_wrf <span class="op">=</span> sc.drop_vars(WRF_files[<span class="dv">0</span>], sel_vars <span class="op">=</span> [<span class="st">'SST'</span>,<span class="st">'LANDMASK'</span>,<span class="st">'U10'</span>,<span class="st">'V10'</span>,<span class="st">'T2'</span>], model<span class="op">=</span><span class="st">'WRF'</span>)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>ds_wrf <span class="op">=</span> sc.read_wrf(WRF_files, drop_vars <span class="op">=</span> vars_wrf)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="fig-01" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
@@ -445,13 +445,13 @@ Figura&nbsp;2: ds_croco
 <h2 class="anchored" data-anchor-id="visualización">6. Visualización</h2>
 <p>El módulo <code>components.plots</code> contiene funciones listas para generar figuras de alta calidad científica. Una de las más clásicas es la de mapas.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>maps.map_1var_winds(</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    ds<span class="op">=</span>ds_wrf.SST,</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    ds<span class="op">=</span>ds_wrf.T2,</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    U<span class="op">=</span>ds_wrf.U10,</span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    V<span class="op">=</span>ds_wrf.V10,</span>
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    levels<span class="op">=</span>np.arange(<span class="dv">16</span>,<span class="dv">31</span>,<span class="dv">1</span>),</span>
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    cmap<span class="op">=</span><span class="st">"thermal"</span>,</span>
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    time<span class="op">=</span><span class="st">'2017-01-02T12'</span>,</span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="st">"SST + 10m Winds"</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="st">"T2 + 10m Winds"</span></span>
 <span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="fig-03" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
