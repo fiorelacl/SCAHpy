@@ -234,13 +234,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Contenido</h2>
    
   <ul>
-  <li><a href="#reading-multiple-file" id="toc-reading-multiple-file" class="nav-link active" data-scroll-target="#reading-multiple-file">Reading Multiple File</a>
+  <li><a href="#tutorial-2-lectura-y-análisis-de-múltiples-archivos-wrf" id="toc-tutorial-2-lectura-y-análisis-de-múltiples-archivos-wrf" class="nav-link active" data-scroll-target="#tutorial-2-lectura-y-análisis-de-múltiples-archivos-wrf">Tutorial 2: Lectura y análisis de múltiples archivos WRF</a></li>
+  <li><a href="#importación-del-paquete" id="toc-importación-del-paquete" class="nav-link" data-scroll-target="#importación-del-paquete">1. Importación del paquete</a></li>
+  <li><a href="#lectura-de-múltiples-archivos-wrf" id="toc-lectura-de-múltiples-archivos-wrf" class="nav-link" data-scroll-target="#lectura-de-múltiples-archivos-wrf">2. Lectura de múltiples archivos WRF</a>
   <ul class="collapse">
-  <li><a href="#step-1-reading-wrf-data" id="toc-step-1-reading-wrf-data" class="nav-link" data-scroll-target="#step-1-reading-wrf-data">Step 1: Reading WRF Data</a></li>
-  <li><a href="#step-2-calculating-precipitation-and-wind-speed" id="toc-step-2-calculating-precipitation-and-wind-speed" class="nav-link" data-scroll-target="#step-2-calculating-precipitation-and-wind-speed">Step 2: Calculating Precipitation and Wind Speed</a></li>
-  <li><a href="#step-3-aggregating-the-data" id="toc-step-3-aggregating-the-data" class="nav-link" data-scroll-target="#step-3-aggregating-the-data">Step 3: Aggregating the Data</a></li>
-  <li><a href="#step-4-plotting-precipitation-maps" id="toc-step-4-plotting-precipitation-maps" class="nav-link" data-scroll-target="#step-4-plotting-precipitation-maps">Step 4: Plotting Precipitation Maps</a></li>
+  <li><a href="#listar-archivos" id="toc-listar-archivos" class="nav-link" data-scroll-target="#listar-archivos">2.1 Listar archivos</a></li>
+  <li><a href="#leer-todos-los-archivos-concatenados" id="toc-leer-todos-los-archivos-concatenados" class="nav-link" data-scroll-target="#leer-todos-los-archivos-concatenados">2.2 Leer todos los archivos concatenados</a></li>
   </ul></li>
+  <li><a href="#cálculo-de-diagnósticos-precipitación-viento-y-sst" id="toc-cálculo-de-diagnósticos-precipitación-viento-y-sst" class="nav-link" data-scroll-target="#cálculo-de-diagnósticos-precipitación-viento-y-sst">3. Cálculo de diagnósticos (precipitación, viento y SST)</a>
+  <ul class="collapse">
+  <li><a href="#precipitación-acumulada" id="toc-precipitación-acumulada" class="nav-link" data-scroll-target="#precipitación-acumulada">3.1 Precipitación acumulada</a></li>
+  <li><a href="#velocidad-del-viento-a-10-m" id="toc-velocidad-del-viento-a-10-m" class="nav-link" data-scroll-target="#velocidad-del-viento-a-10-m">3.2 Velocidad del viento a 10 m</a></li>
+  <li><a href="#sst-en-grados-celsius-si-existe" id="toc-sst-en-grados-celsius-si-existe" class="nav-link" data-scroll-target="#sst-en-grados-celsius-si-existe">3.3 SST en grados Celsius (si existe)</a></li>
+  </ul></li>
+  <li><a href="#agregación-temporal-diaria" id="toc-agregación-temporal-diaria" class="nav-link" data-scroll-target="#agregación-temporal-diaria">4. Agregación temporal (diaria)</a>
+  <ul class="collapse">
+  <li><a href="#agrupar-por-día" id="toc-agrupar-por-día" class="nav-link" data-scroll-target="#agrupar-por-día">4.1 Agrupar por día</a></li>
+  </ul></li>
+  <li><a href="#visualización-básica" id="toc-visualización-básica" class="nav-link" data-scroll-target="#visualización-básica">5. Visualización básica</a></li>
+  <li><a href="#visualización-usando-funciones-de-scahpy" id="toc-visualización-usando-funciones-de-scahpy" class="nav-link" data-scroll-target="#visualización-usando-funciones-de-scahpy">6. Visualización usando funciones de SCAHpy</a></li>
   </ul>
 </nav>
     </div>
@@ -254,48 +266,149 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="reading-multiple-file" class="level1 unnumbered">
-<h1 class="unnumbered">Reading Multiple File</h1>
-<p>In this tutorial, we will guide you through the process of analyzing multiple output dataset from the WRF (Weather Research and Forecasting) model and creating 2D maps featuring rainfall and wind variables using the <code>scahpy</code> package. To begin, let’s import the <code>glob</code> package to manage files and paths, as well as the <code>scahpy</code> package.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scahpy <span class="im">import</span> <span class="op">*</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> glob</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<section id="step-1-reading-wrf-data" class="level2">
-<h2 class="anchored" data-anchor-id="step-1-reading-wrf-data">Step 1: Reading WRF Data</h2>
-<p>We initiate the process by listing all the files we want to read using the <code>glob</code> package and assigning them to the variable <code>list_files</code>.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>list_files <span class="op">=</span> <span class="bu">sorted</span>(glob.glob(<span class="st">'/data/datos/COW/OUT_DIAG_WRF/wrfouts/wrfout_d01_*'</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Given the capability to specify excluded variables when reading netCDF files using the <code>drop_variables</code> argument (refer to xarray functions <code>open_dataset</code> and <code>open_mfdataset</code>), we utilize the <code>_drop_vars</code> function from the module <code>in_out</code>. This function takes the list of variables we require and generates a list containing all variables present in the output file, subsequently removing those we are not interested in (such as <em>‘RAINC’, ‘RAINNC’, ‘RAINSH’, ‘U10’, ‘V10’, ‘SSTSK’</em>). For this purpose, we use the first file from our list of files, assigning it to the variable <code>dvars</code>.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dvars <span class="op">=</span> in_out._drop_vars(list_files[<span class="dv">0</span>], [<span class="st">'RAINC'</span>, <span class="st">'RAINNC'</span>, <span class="st">'RAINSH'</span>, <span class="st">'U10'</span>, <span class="st">'V10'</span>, <span class="st">'SSTSK'</span>], model<span class="op">=</span><span class="st">'wrf'</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Subsequently, we utilize the <code>read_wrf_multi</code> function to selectively read the variables of interest. This function accepts the input path (<code>file_name</code> in this case), the list of variables to be excluded (<code>vars</code>), any required time difference (e.g., <code>'5 hours'</code>), and the corresponding sign of the time difference (<code>-1</code> for negative, <code>1</code> for positive). The outcome is an <code>xarray.Dataset</code> containing longitude, latitude, time, and the specified variables. Optionally, you can designate a save path to export the netCDF.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> in_out.read_wrf_multi(list_files, dvars, <span class="st">'5 hours'</span>, <span class="op">-</span><span class="dv">1</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="tutorial-2-lectura-y-análisis-de-múltiples-archivos-wrf" class="level1">
+<h1>Tutorial 2: Lectura y análisis de múltiples archivos WRF</h1>
+<p>En este tutorial aprenderás a:</p>
+<ol type="1">
+<li>Leer <strong>varios archivos WRF</strong> (multi-tiempo) usando SCAHpy.<br>
+</li>
+<li>Calcular precipitación total, viento 10 m y SST.<br>
+</li>
+<li>Agregar datos a escala diaria.<br>
+</li>
+<li>Realizar una visualización básica.</li>
+</ol>
+<p>Este flujo es esencial para procesar días, meses o años de simulación del sistema <strong>IGP RESM-COW</strong>.</p>
+<hr>
 </section>
-<section id="step-2-calculating-precipitation-and-wind-speed" class="level2">
-<h2 class="anchored" data-anchor-id="step-2-calculating-precipitation-and-wind-speed">Step 2: Calculating Precipitation and Wind Speed</h2>
-<p>In this step, we will utilize the <code>met_vars</code> module to calculate precipitation (<code>calc_pp</code>), wind speed (<code>calc_wsp</code>), and convert sea surface temperature from Kelvin to Celsius (<code>calc_celsius</code>).</p>
-<p>The <code>calc_pp</code> function has an optional argument <code>vars_to_sum</code>, allowing users to specify which variables to sum to obtain total precipitation. If no variables are provided, it will default to summing the three variables: <code>RAINC</code>, <code>RAINNC</code>, and <code>RAINSH</code>.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ds_sfc <span class="op">=</span> met_vars.calc_pp(ds, vars_to_sum<span class="op">=</span>[<span class="st">'RAINC'</span>, <span class="st">'RAINNC'</span>, <span class="st">'RAINSH'</span>], elim<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>ds_sfc <span class="op">=</span> met_vars.calc_wsp(ds_sfc, elim<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>ds_sfc <span class="op">=</span> met_vars.calc_celsius(ds_sfc, <span class="st">'SSTSK'</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>By running these commands, we ensure that our dataset <code>ds_sfc</code> now contains calculated precipitation, wind speed, and sea surface temperature in Celsius, ready for further analysis or visualization.</p>
+<section id="importación-del-paquete" class="level1">
+<h1>1. Importación del paquete</h1>
+<p>Como en el tutorial anterior, importamos los módulos necesarios:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scahpy <span class="im">as</span> sph</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scahpy.components.atmos <span class="im">import</span> wrf_io, wrf_diags</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scahpy.components.core <span class="im">import</span> (</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    time_ops,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    utils</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scahpy.components.plots <span class="im">import</span> maps</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> xarray <span class="im">as</span> xr</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> glob</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<hr>
 </section>
-<section id="step-3-aggregating-the-data" class="level2">
-<h2 class="anchored" data-anchor-id="step-3-aggregating-the-data">Step 3: Aggregating the Data</h2>
-<p>Now, we’ll aggregate the data to operate on a daily time scale instead of hourly. To achieve this, we’ll utilize the <code>dmy_var</code> function from the <code>temp_scales</code> module. This function takes an <code>xarray.Dataset</code> as input, where we specify the desired time scale (e.g., ‘1D’ for daily, ‘ME’ for monthly, ‘YE’ for yearly). Additionally, we can specify which variables should be aggregated by sum, average, or median by providing lists for each aggregation method.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>dd <span class="op">=</span> temp_scales.dmy_var(ds_sfc, tiempo<span class="op">=</span><span class="st">'1D'</span>, accum<span class="op">=</span>[<span class="st">'PP'</span>], avg<span class="op">=</span>[<span class="st">'U10'</span>, <span class="st">'V10'</span>], mediana<span class="op">=</span>[<span class="st">'SSTSK'</span>])</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>By executing this code, we’ll have our data aggregated to a daily time scale, with certain variables summed, averaged, or median-calculated according to our specifications.</p>
+<section id="lectura-de-múltiples-archivos-wrf" class="level1">
+<h1>2. Lectura de múltiples archivos WRF</h1>
+<section id="listar-archivos" class="level2">
+<h2 class="anchored" data-anchor-id="listar-archivos">2.1 Listar archivos</h2>
+<p>Como mencionaste, por ahora prefieres usar <code>glob</code>:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>list_files <span class="op">=</span> <span class="bu">sorted</span>(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    glob.glob(<span class="st">"/data/datos/COW/OUT_DIAG_WRF/wrfouts/wrfout_d01_2023-03-*.nc"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>list_files[:<span class="dv">3</span>]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Ejemplo de salida:</p>
+<pre><code>['wrfout_d01_2023-03-01_00:00:00',
+ 'wrfout_d01_2023-03-01_03:00:00',
+ 'wrfout_d01_2023-03-01_06:00:00',
+ ...]</code></pre>
 </section>
-<section id="step-4-plotting-precipitation-maps" class="level2">
-<h2 class="anchored" data-anchor-id="step-4-plotting-precipitation-maps">Step 4: Plotting Precipitation Maps</h2>
-<p>Next, we’ll generate precipitation maps with SST contours and wind vectors using the <code>map_pp_uv10_sst</code> function from the <code>map_plots</code> module. This function takes the rainfall (PP) variable as input, followed by the dataset with SST and wind components, precipitation levels, SST contours, optional shapefile, exportation settings, output path, temporal scale (‘H’ for hourly, ‘D’ for daily, ‘M’ for monthly, ‘Y’ for yearly), vector speed, and plot extent ([x1, x2, y1, y2]).</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example usage</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>precipitation_levels <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">11</span>, <span class="dv">15</span>, <span class="dv">20</span>, <span class="dv">25</span>, <span class="dv">30</span>, <span class="dv">35</span>, <span class="dv">40</span>, <span class="dv">45</span>, <span class="dv">50</span>, <span class="dv">55</span>, <span class="dv">60</span>]</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>sst_contour_levels <span class="op">=</span> [<span class="dv">26</span>, <span class="dv">27</span>, <span class="dv">28</span>]</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>map_plots.map_pp_uv10_sst(ds_sfc[<span class="st">'PP'</span>], ds_sfc, precipitation_levels, sst_contour_levels, shapefile<span class="op">=</span><span class="va">None</span>, </span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>                           output_path<span class="op">=</span><span class="st">'.'</span>, save_maps<span class="op">=</span><span class="va">True</span>, freq<span class="op">=</span><span class="st">'H'</span>,</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>                           quiverkey_speed<span class="op">=</span><span class="dv">10</span>, extent<span class="op">=</span><span class="va">None</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="leer-todos-los-archivos-concatenados" class="level2">
+<h2 class="anchored" data-anchor-id="leer-todos-los-archivos-concatenados">2.2 Leer todos los archivos concatenados</h2>
+<p>Antes usabas:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> in_out.read_wrf_multi(...)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Ahora se reemplaza por <strong>una sola función moderna</strong>:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> wrf_io.read_wrf(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    paths<span class="op">=</span>list_files,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    drop_vars<span class="op">=</span>[<span class="st">"TKE"</span>],</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    time_offset_hours<span class="op">=-</span><span class="dv">5</span>      <span class="co"># convertir UTC → hora local Perú</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>ds</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>SCAHpy ahora:</p>
+<ul>
+<li>concatena el tiempo automáticamente,</li>
+<li>estandariza coordenadas (<code>lat</code>, <code>lon</code>),</li>
+<li>corrige tipos y atributos,</li>
+<li>maneja destaggering cuando corresponde.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="cálculo-de-diagnósticos-precipitación-viento-y-sst" class="level1">
+<h1>3. Cálculo de diagnósticos (precipitación, viento y SST)</h1>
+<section id="precipitación-acumulada" class="level2">
+<h2 class="anchored" data-anchor-id="precipitación-acumulada">3.1 Precipitación acumulada</h2>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>pp <span class="op">=</span> ds[<span class="st">"RAINC"</span>] <span class="op">+</span> ds[<span class="st">"RAINNC"</span>]</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>pp.name <span class="op">=</span> <span class="st">"PP"</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="velocidad-del-viento-a-10-m" class="level2">
+<h2 class="anchored" data-anchor-id="velocidad-del-viento-a-10-m">3.2 Velocidad del viento a 10 m</h2>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>wspd10 <span class="op">=</span> wrf_diags.wind_speed(ds[<span class="st">"U10"</span>], ds[<span class="st">"V10"</span>])</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>wspd10.name <span class="op">=</span> <span class="st">"wspd10"</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="sst-en-grados-celsius-si-existe" class="level2">
+<h2 class="anchored" data-anchor-id="sst-en-grados-celsius-si-existe">3.3 SST en grados Celsius (si existe)</h2>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="st">"SSTSK"</span> <span class="kw">in</span> ds:</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    sst <span class="op">=</span> utils.to_celsius(ds[<span class="st">"SSTSK"</span>])</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    sst.name <span class="op">=</span> <span class="st">"SST_C"</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<hr>
+</section>
+</section>
+<section id="agregación-temporal-diaria" class="level1">
+<h1>4. Agregación temporal (diaria)</h1>
+<p>En tu versión antigua tenías:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>dd <span class="op">=</span> temp_scales.dmy_var(...)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Ahora se usa un flujo más simple y universal con <code>time_ops</code>:</p>
+<section id="agrupar-por-día" class="level2">
+<h2 class="anchored" data-anchor-id="agrupar-por-día">4.1 Agrupar por día</h2>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Precipitación diaria (suma)</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>pp_daily <span class="op">=</span> pp.resample(time<span class="op">=</span><span class="st">"1D"</span>).<span class="bu">sum</span>()</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Viento diario (promedio)</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>wspd10_daily <span class="op">=</span> wspd10.resample(time<span class="op">=</span><span class="st">"1D"</span>).mean()</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># SST diaria (mediana)</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="st">"SSTSK"</span> <span class="kw">in</span> ds:</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    sst_daily <span class="op">=</span> sst.resample(time<span class="op">=</span><span class="st">"1D"</span>).median()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Agrupar así permite un control claro y reproducible.</p>
+<p>Puedes combinarlo en un solo Dataset:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>ds_daily <span class="op">=</span> xr.Dataset(</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">"PP"</span>: pp_daily,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">"wspd10"</span>: wspd10_daily,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"SST_C"</span>: sst_daily <span class="cf">if</span> <span class="st">"SSTSK"</span> <span class="kw">in</span> ds <span class="cf">else</span> <span class="va">None</span>,</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>ds_daily</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<hr>
+</section>
+</section>
+<section id="visualización-básica" class="level1">
+<h1>5. Visualización básica</h1>
+<p>Para trazar un día específico:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>day0 <span class="op">=</span> ds_daily.sel(time<span class="op">=</span><span class="st">"2023-03-01"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Mapa simple:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>day0[<span class="st">"PP"</span>].plot(</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">"lon"</span>, y<span class="op">=</span><span class="st">"lat"</span>,</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    cmap<span class="op">=</span><span class="st">"Blues"</span>,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    cbar_kwargs<span class="op">=</span>{<span class="st">"label"</span>: <span class="st">"Precipitación diaria (mm)"</span>}</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Precipitación diaria – 1 marzo 2023 (WRF)"</span>)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<hr>
+</section>
+<section id="visualización-usando-funciones-de-scahpy" class="level1">
+<h1>6. Visualización usando funciones de SCAHpy</h1>
+<p>Si deseas usar funciones de <code>components.plots</code>, por ejemplo para 1 variable:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>maps.map_1var(</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    ds<span class="op">=</span>ds_daily,</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    var_name<span class="op">=</span><span class="st">"PP"</span>,</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    time_index<span class="op">=</span><span class="dv">0</span>,</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    cmap<span class="op">=</span><span class="st">"Blues"</span>,</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="st">"Precipitación diaria acumulada"</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

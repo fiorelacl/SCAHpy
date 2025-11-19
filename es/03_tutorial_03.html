@@ -234,14 +234,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Contenido</h2>
    
   <ul>
-  <li><a href="#pressure-levels-variables" id="toc-pressure-levels-variables" class="nav-link active" data-scroll-target="#pressure-levels-variables">Pressure levels variables</a>
+  <li><a href="#tutorial-3-variables-en-niveles-de-presión-y-secciones-verticales" id="toc-tutorial-3-variables-en-niveles-de-presión-y-secciones-verticales" class="nav-link active" data-scroll-target="#tutorial-3-variables-en-niveles-de-presión-y-secciones-verticales">Tutorial 3: Variables en niveles de presión y secciones verticales</a></li>
+  <li><a href="#importación-de-librerías" id="toc-importación-de-librerías" class="nav-link" data-scroll-target="#importación-de-librerías">1. Importación de librerías</a></li>
+  <li><a href="#lectura-de-múltiples-archivos-wrf" id="toc-lectura-de-múltiples-archivos-wrf" class="nav-link" data-scroll-target="#lectura-de-múltiples-archivos-wrf">2. Lectura de múltiples archivos WRF</a>
   <ul class="collapse">
-  <li><a href="#step-1-reading-wrf-data" id="toc-step-1-reading-wrf-data" class="nav-link" data-scroll-target="#step-1-reading-wrf-data">Step 1: Reading WRF Data</a></li>
-  <li><a href="#step-2-calculating-specific-humidity-and-total-pressure" id="toc-step-2-calculating-specific-humidity-and-total-pressure" class="nav-link" data-scroll-target="#step-2-calculating-specific-humidity-and-total-pressure">Step 2: Calculating Specific Humidity and Total pressure</a></li>
-  <li><a href="#step-3-aggregating-the-data" id="toc-step-3-aggregating-the-data" class="nav-link" data-scroll-target="#step-3-aggregating-the-data">Step 3: Aggregating the Data</a></li>
-  <li><a href="#step-4-interpolation-to-vertical-levels" id="toc-step-4-interpolation-to-vertical-levels" class="nav-link" data-scroll-target="#step-4-interpolation-to-vertical-levels">Step 4: Interpolation to vertical levels</a></li>
-  <li><a href="#step-5-plotting-precipitation-maps" id="toc-step-5-plotting-precipitation-maps" class="nav-link" data-scroll-target="#step-5-plotting-precipitation-maps">Step 5: Plotting Precipitation Maps</a></li>
+  <li><a href="#lectura-con-scahpy" id="toc-lectura-con-scahpy" class="nav-link" data-scroll-target="#lectura-con-scahpy">Lectura con SCAHpy</a></li>
   </ul></li>
+  <li><a href="#cálculo-de-humedad-específica-qe-y-presión-total-ptot" id="toc-cálculo-de-humedad-específica-qe-y-presión-total-ptot" class="nav-link" data-scroll-target="#cálculo-de-humedad-específica-qe-y-presión-total-ptot">3. Cálculo de humedad específica (QE) y presión total (Ptot)</a>
+  <ul class="collapse">
+  <li><a href="#humedad-específica-qe" id="toc-humedad-específica-qe" class="nav-link" data-scroll-target="#humedad-específica-qe">3.1 Humedad específica (QE)</a></li>
+  <li><a href="#presión-total-en-hpa" id="toc-presión-total-en-hpa" class="nav-link" data-scroll-target="#presión-total-en-hpa">3.2 Presión total (en hPa)</a></li>
+  </ul></li>
+  <li><a href="#agregación-temporal-diaria" id="toc-agregación-temporal-diaria" class="nav-link" data-scroll-target="#agregación-temporal-diaria">4. Agregación temporal (diaria)</a>
+  <ul class="collapse">
+  <li><a href="#promedio-diario" id="toc-promedio-diario" class="nav-link" data-scroll-target="#promedio-diario">4.1 Promedio diario</a></li>
+  </ul></li>
+  <li><a href="#interpolación-a-niveles-de-presión-estándar" id="toc-interpolación-a-niveles-de-presión-estándar" class="nav-link" data-scroll-target="#interpolación-a-niveles-de-presión-estándar">5. Interpolación a niveles de presión estándar</a>
+  <ul class="collapse">
+  <li><a href="#niveles-estándar-por-defecto-siempre-en-hpa" id="toc-niveles-estándar-por-defecto-siempre-en-hpa" class="nav-link" data-scroll-target="#niveles-estándar-por-defecto-siempre-en-hpa">Niveles estándar por defecto (siempre en hPa):</a></li>
+  <li><a href="#interpolación" id="toc-interpolación" class="nav-link" data-scroll-target="#interpolación">Interpolación:</a></li>
+  </ul></li>
+  <li><a href="#sección-vertical-xz-lat-fija" id="toc-sección-vertical-xz-lat-fija" class="nav-link" data-scroll-target="#sección-vertical-xz-lat-fija">6. Sección vertical X–Z (lat fija)</a></li>
+  <li><a href="#gráfico-de-sección-vertical-xz" id="toc-gráfico-de-sección-vertical-xz" class="nav-link" data-scroll-target="#gráfico-de-sección-vertical-xz">7. Gráfico de sección vertical (X–Z)</a></li>
   </ul>
 </nav>
     </div>
@@ -255,51 +269,179 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="pressure-levels-variables" class="level1 unnumbered">
-<h1 class="unnumbered">Pressure levels variables</h1>
-<p>In this tutorial, we will guide you through the process of analyzing multiple output dataset from the WRF (Weather Research and Forecasting) model and creating Cross section graphs featuring specific humidity and wind variables using the <code>scahpy</code> package. To begin, let’s import the <code>glob</code> package to manage files and paths, as well as the <code>scahpy</code> package.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scahpy <span class="im">import</span> <span class="op">*</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> glob</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<section id="step-1-reading-wrf-data" class="level2">
-<h2 class="anchored" data-anchor-id="step-1-reading-wrf-data">Step 1: Reading WRF Data</h2>
-<p>We initiate the process by listing all the files we want to read using the <code>glob</code> package and assigning them to the variable <code>list_files</code>.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>list_files <span class="op">=</span> <span class="bu">sorted</span>(glob.glob(<span class="st">'/data/datos/COW/OUT_DIAG_WRF/wrfouts/wrfout_d01_*'</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Given the capability to specify excluded variables when reading netCDF files using the <code>drop_variables</code> argument (refer to xarray functions <code>open_dataset</code> and <code>open_mfdataset</code>), we utilize the <code>_drop_vars</code> function from the module <code>in_out</code>. This function takes the list of variables we require and generates a list containing all variables present in the output file, subsequently removing those we are not interested in (such as <em>‘P’, ‘PB’, ‘U’, ‘W’, ‘QVAPOR’</em>). For this purpose, we use the first file from our list of files, assigning it to the variable <code>dvars</code>.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dvars <span class="op">=</span> in_out._drop_vars(list_files[<span class="dv">0</span>], [<span class="st">'P'</span>, <span class="st">'PB'</span>, <span class="st">'U'</span>, <span class="st">'W'</span>, <span class="st">'QVAPOR'</span>], model<span class="op">=</span><span class="st">'wrf'</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Subsequently, we utilize the <code>read_wrf_multi</code> function to selectively read the variables of interest. This function accepts the input path (<code>file_name</code> in this case), the list of variables to be excluded (<code>dvars</code>), any required time difference (e.g., <code>'5 hours'</code>), and the corresponding sign of the time difference (<code>-1</code> for negative, <code>1</code> for positive). The outcome is an <code>xarray.Dataset</code> containing longitude, latitude, bottom_top, time, and the specified variables. Optionally, you can designate a save path to export the netCDF.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> in_out.read_wrf_multi(list_files, dvars, <span class="st">'5 hours'</span>, <span class="op">-</span><span class="dv">1</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="tutorial-3-variables-en-niveles-de-presión-y-secciones-verticales" class="level1">
+<h1>Tutorial 3: Variables en niveles de presión y secciones verticales</h1>
+<p>En este tutorial aprenderás a:</p>
+<ol type="1">
+<li>Leer múltiples archivos WRF.<br>
+</li>
+<li>Calcular humedad específica y presión total.<br>
+</li>
+<li>Agregar datos a escala diaria.<br>
+</li>
+<li>Interpolar variables a niveles estándar de presión (hPa).<br>
+</li>
+<li>Crear una sección vertical (X–Z) de humedad y viento.</li>
+</ol>
+<p>Este tipo de análisis es fundamental cuando se trabaja con perfiles atmosféricos y cortes verticales, especialmente para estudios sinópticos y validaciones climatológicas.</p>
+<hr>
 </section>
-<section id="step-2-calculating-specific-humidity-and-total-pressure" class="level2">
-<h2 class="anchored" data-anchor-id="step-2-calculating-specific-humidity-and-total-pressure">Step 2: Calculating Specific Humidity and Total pressure</h2>
-<p>In this step, we will utilize the <code>met_diag</code> module to calculate specific humidity (<code>calc_qe</code>), and total pressure (<code>calc_pres</code>). Whe have the option of the parameter <code>elim</code>that can be set to True or False in order to remove some variables used to calculate the final variable.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ds_lvl <span class="op">=</span> met_vars.calc_qe(ds, elim<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>ds_lvl <span class="op">=</span> met_vars.calc_pres(ds_lvl, elim<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>By running these commands, we ensure that our dataset <code>ds_lvl</code> now contains calculated specific humidity and total pressure, ready for further analysis or visualization.</p>
+<section id="importación-de-librerías" class="level1">
+<h1>1. Importación de librerías</h1>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scahpy <span class="im">as</span> sph</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scahpy.components.atmos <span class="im">import</span> wrf_io, wrf_diags</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scahpy.components.core <span class="im">import</span> (</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    time_ops,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    vertical,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    utils</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scahpy.components.plots <span class="im">import</span> sections</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> xarray <span class="im">as</span> xr</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> glob</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<hr>
 </section>
-<section id="step-3-aggregating-the-data" class="level2">
-<h2 class="anchored" data-anchor-id="step-3-aggregating-the-data">Step 3: Aggregating the Data</h2>
-<p>Now, we’ll aggregate the data to operate on a daily time scale instead of hourly. To achieve this, we’ll utilize the <code>dmy_var</code> function from the <code>temp_scales</code> module. This function takes an <code>xarray.Dataset</code> as input, where we specify the desired time scale (e.g., ‘1D’ for daily, ‘ME’ for monthly, ‘YE’ for yearly). Additionally, we can specify which variables should be aggregated by sum, average, or median by providing lists for each aggregation method.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>dd <span class="op">=</span> temp_scales.dmy_var(ds_lvl, tiempo<span class="op">=</span><span class="st">'1D'</span>, accum<span class="op">=</span><span class="va">None</span>, avg<span class="op">=</span>[<span class="st">'Presion'</span>,<span class="st">'U'</span>,<span class="st">'W'</span>,<span class="st">'QE'</span>], mediana<span class="op">=</span><span class="va">None</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>By executing this code, we’ll have our data aggregated to a daily time scale, with variables averaged according to our specifications.</p>
+<section id="lectura-de-múltiples-archivos-wrf" class="level1">
+<h1>2. Lectura de múltiples archivos WRF</h1>
+<p>Al igual que en el tutorial anterior, listamos archivos usando <code>glob</code>.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>list_files <span class="op">=</span> <span class="bu">sorted</span>(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    glob.glob(<span class="st">"/data/datos/COW/OUT_DIAG_WRF/wrfouts/wrfout_d01_2023-03-*.nc"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>list_files[:<span class="dv">3</span>]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="lectura-con-scahpy" class="level2">
+<h2 class="anchored" data-anchor-id="lectura-con-scahpy">Lectura con SCAHpy</h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> wrf_io.read_wrf(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    paths<span class="op">=</span>list_files,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    drop_vars<span class="op">=</span>[<span class="st">"TKE"</span>],           <span class="co"># opcional</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    time_offset_hours<span class="op">=-</span><span class="dv">5</span>         <span class="co"># convertir UTC → hora local Perú</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>ds</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Salida típica:</p>
+<ul>
+<li><code>time</code>: concatenado automáticamente</li>
+<li><code>lat</code>, <code>lon</code></li>
+<li><code>bottom_top</code>: niveles sigma</li>
+<li>Variables como <code>T</code>, <code>P</code>, <code>PB</code>, <code>QVAPOR</code>, <code>U</code>, <code>W</code></li>
+</ul>
+<hr>
 </section>
-<section id="step-4-interpolation-to-vertical-levels" class="level2">
-<h2 class="anchored" data-anchor-id="step-4-interpolation-to-vertical-levels">Step 4: Interpolation to vertical levels</h2>
-<p>We use the function<code>vert_levs</code> from <code>spatial_scales</code>module to interpolate the data to same pressure levels, when we do not specify the levels, by default the interpolation is to: 1000,975,950,925,900,850,800,700,600,500,400,300,200 hPa. The dataset <code>dd</code> should contain the total pressure and the variables we are interested in.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>dd2<span class="op">=</span>vert_levs(dd,[<span class="st">'U'</span>,<span class="st">'W'</span>,<span class="st">'QE'</span>],lvls<span class="op">=</span><span class="va">None</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="step-5-plotting-precipitation-maps" class="level2">
-<h2 class="anchored" data-anchor-id="step-5-plotting-precipitation-maps">Step 5: Plotting Precipitation Maps</h2>
-<p>Next, we’ll generate cross section plots with specific humidity contours and wind vectors using the <code>cross_section_xz</code> function from the <code>map_plots</code> module. This function takes the dataset with specific humidity, total pressure and wind components, humidity levels, exportation settings, output path, temporal scale (‘H’ for hourly, ‘D’ for daily, ‘M’ for monthly, ‘Y’ for yearly) and vector speed.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example usage</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>levs<span class="op">=</span>[<span class="dv">0</span>,<span class="fl">0.2</span>,<span class="fl">0.4</span>,<span class="fl">0.6</span>,<span class="fl">0.8</span>,<span class="dv">1</span>,<span class="fl">1.5</span>,<span class="dv">2</span>,<span class="fl">2.5</span>,<span class="dv">5</span>,<span class="fl">7.5</span>,<span class="dv">10</span>,<span class="dv">12</span>,<span class="dv">15</span>,<span class="dv">18</span>]</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>cmaps<span class="op">=</span>cmocean.tools.lighten(matplotlib.colormaps[<span class="st">'rainbow'</span>],<span class="fl">0.90</span>)<span class="co"># 1d</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>df<span class="op">=</span>dd2.sel(lat<span class="op">=-</span><span class="dv">5</span>,method<span class="op">=</span><span class="st">'nearest'</span>).sel(lon<span class="op">=</span><span class="bu">slice</span>(<span class="op">-</span><span class="dv">90</span>,<span class="op">-</span><span class="dv">80</span>),time<span class="op">=</span><span class="bu">slice</span>(<span class="st">'2023-03-10'</span>,<span class="st">'2023-03-13'</span>))</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'QE'</span>]<span class="op">=</span>df[<span class="st">'QE'</span>]<span class="op">*</span><span class="dv">1000</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>cross_section_xz(df,<span class="st">'QE'</span>,levs,cmaps,<span class="st">'QE'</span>,quiverkey_speed<span class="op">=</span><span class="dv">8</span>, output_path<span class="op">=</span><span class="va">None</span>, freq<span class="op">=</span><span class="st">'D'</span>,</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>                           save_maps<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="cálculo-de-humedad-específica-qe-y-presión-total-ptot" class="level1">
+<h1>3. Cálculo de humedad específica (QE) y presión total (Ptot)</h1>
+<p>En tu tutorial antiguo esto se hacía con <code>met_vars</code>. Ahora existe un flujo más claro usando <strong>wrf_diags</strong> y operaciones básicas.</p>
+<section id="humedad-específica-qe" class="level2">
+<h2 class="anchored" data-anchor-id="humedad-específica-qe">3.1 Humedad específica (QE)</h2>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>qe <span class="op">=</span> wrf_diags.qe(</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    qv<span class="op">=</span>ds[<span class="st">"QVAPOR"</span>],</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    p<span class="op">=</span>ds[<span class="st">"P"</span>],</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    pb<span class="op">=</span>ds[<span class="st">"PB"</span>]</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>qe.name <span class="op">=</span> <span class="st">"QE"</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="presión-total-en-hpa" class="level2">
+<h2 class="anchored" data-anchor-id="presión-total-en-hpa">3.2 Presión total (en hPa)</h2>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ptot <span class="op">=</span> wrf_diags.total_pressure(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    p<span class="op">=</span>ds[<span class="st">"P"</span>],</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    pb<span class="op">=</span>ds[<span class="st">"PB"</span>]</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>) <span class="op">/</span> <span class="fl">100.0</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>ptot.name <span class="op">=</span> <span class="st">"pressure"</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Podemos combinarlo en un solo dataset:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ds_lvl <span class="op">=</span> xr.Dataset({</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"QE"</span>: qe,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"pressure"</span>: ptot,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"U"</span>: ds[<span class="st">"U"</span>],</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"W"</span>: ds[<span class="st">"W"</span>],</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<hr>
+</section>
+</section>
+<section id="agregación-temporal-diaria" class="level1">
+<h1>4. Agregación temporal (diaria)</h1>
+<p>Antes usabas <code>temp_scales.dmy_var</code>. Ahora se reemplaza por <code>resample</code> directamente con xarray.</p>
+<section id="promedio-diario" class="level3">
+<h3 class="anchored" data-anchor-id="promedio-diario">4.1 Promedio diario</h3>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>ds_daily <span class="op">=</span> ds_lvl.resample(time<span class="op">=</span><span class="st">"1D"</span>).mean()</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>ds_daily</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<hr>
+</section>
+</section>
+<section id="interpolación-a-niveles-de-presión-estándar" class="level1">
+<h1>5. Interpolación a niveles de presión estándar</h1>
+<p>SCAHpy permite interpolar verticalmente usando:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>vertical.vertical_interp()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="niveles-estándar-por-defecto-siempre-en-hpa" class="level3">
+<h3 class="anchored" data-anchor-id="niveles-estándar-por-defecto-siempre-en-hpa">Niveles estándar por defecto (siempre en hPa):</h3>
+<pre><code>1000, 975, 950, 925, 900,
+850, 800, 700, 600, 500,
+400, 300, 200</code></pre>
+</section>
+<section id="interpolación" class="level3">
+<h3 class="anchored" data-anchor-id="interpolación">Interpolación:</h3>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>new_levels <span class="op">=</span> [<span class="dv">1000</span>, <span class="dv">925</span>, <span class="dv">850</span>, <span class="dv">700</span>, <span class="dv">500</span>, <span class="dv">300</span>]</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>qe_p <span class="op">=</span> vertical.vertical_interp(</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    da<span class="op">=</span>ds_daily[<span class="st">"QE"</span>],</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    coord_in<span class="op">=</span>ds_daily[<span class="st">"pressure"</span>],</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    new_levels<span class="op">=</span>new_levels,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    dim<span class="op">=</span><span class="st">"bottom_top"</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>qe_p.name <span class="op">=</span> <span class="st">"QE_p"</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>u_p <span class="op">=</span> vertical.vertical_interp(</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    da<span class="op">=</span>ds_daily[<span class="st">"U"</span>],</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    coord_in<span class="op">=</span>ds_daily[<span class="st">"pressure"</span>],</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    new_levels<span class="op">=</span>new_levels,</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    dim<span class="op">=</span><span class="st">"bottom_top"</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>w_p <span class="op">=</span> vertical.vertical_interp(</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>    da<span class="op">=</span>ds_daily[<span class="st">"W"</span>],</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>    coord_in<span class="op">=</span>ds_daily[<span class="st">"pressure"</span>],</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>    new_levels<span class="op">=</span>new_levels,</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>    dim<span class="op">=</span><span class="st">"bottom_top"</span></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Creamos un dataset interpolado:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>ds_p <span class="op">=</span> xr.Dataset({</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"QE"</span>: qe_p,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"U"</span>: u_p,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"W"</span>: w_p,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<hr>
+</section>
+</section>
+<section id="sección-vertical-xz-lat-fija" class="level1">
+<h1>6. Sección vertical X–Z (lat fija)</h1>
+<p>Para una sección vertical, por ejemplo a <strong>latitud -5°</strong>:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>section <span class="op">=</span> ds_p.sel(lat<span class="op">=-</span><span class="dv">5</span>, method<span class="op">=</span><span class="st">"nearest"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Y limitamos en longitud:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>section <span class="op">=</span> section.sel(lon<span class="op">=</span><span class="bu">slice</span>(<span class="op">-</span><span class="dv">90</span>, <span class="op">-</span><span class="dv">80</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Opcionalmente escogemos un rango de días:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>section <span class="op">=</span> section.sel(time<span class="op">=</span><span class="bu">slice</span>(<span class="st">"2023-03-10"</span>, <span class="st">"2023-03-13"</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>La humedad a veces se expresa en g/kg:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>section[<span class="st">"QE"</span>] <span class="op">=</span> section[<span class="st">"QE"</span>] <span class="op">*</span> <span class="fl">1000.0</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<hr>
+</section>
+<section id="gráfico-de-sección-vertical-xz" class="level1">
+<h1>7. Gráfico de sección vertical (X–Z)</h1>
+<p>Para graficar, usamos:</p>
+<pre><code>sections.section_xz_1var()</code></pre>
+<p>Ejemplo:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>levels_qe <span class="op">=</span> [<span class="dv">0</span>, <span class="fl">0.2</span>, <span class="fl">0.4</span>, <span class="fl">0.6</span>, <span class="fl">0.8</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">10</span>]</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>sections.section_xz_1var(</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    ds<span class="op">=</span>section,</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    var_name<span class="op">=</span><span class="st">"QE"</span>,</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    time_index<span class="op">=</span><span class="dv">0</span>,</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    cmap<span class="op">=</span><span class="st">"viridis"</span>,</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    quiver_var_u<span class="op">=</span><span class="st">"U"</span>,</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    quiver_var_w<span class="op">=</span><span class="st">"W"</span>,</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    quiver_scale<span class="op">=</span><span class="dv">100</span>,</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="st">"Sección vertical X–Z de humedad específica"</span>,</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

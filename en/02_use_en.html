@@ -117,7 +117,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <a class="flex-grow-1 no-decor" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-          <h1 class="quarto-secondary-nav-title">Usage</h1>
+          <h1 class="quarto-secondary-nav-title"></h1>
         </a>     
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
@@ -234,9 +234,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Contents</h2>
    
   <ul>
-  <li><a href="#importing-the-package" id="toc-importing-the-package" class="nav-link active" data-scroll-target="#importing-the-package">Importing the Package</a></li>
-  <li><a href="#reading-wrf-outputs-files" id="toc-reading-wrf-outputs-files" class="nav-link" data-scroll-target="#reading-wrf-outputs-files">Reading WRF outputs files</a></li>
-  <li><a href="#calculating-precipitation" id="toc-calculating-precipitation" class="nav-link" data-scroll-target="#calculating-precipitation">Calculating Precipitation</a></li>
+  <li><a href="#using-scahpy" id="toc-using-scahpy" class="nav-link active" data-scroll-target="#using-scahpy">Using SCAHpy</a>
+  <ul class="collapse">
+  <li><a href="#general-workflow" id="toc-general-workflow" class="nav-link" data-scroll-target="#general-workflow">1. General Workflow</a></li>
+  <li><a href="#package-organization" id="toc-package-organization" class="nav-link" data-scroll-target="#package-organization">2. Package Organization</a></li>
+  <li><a href="#importing-the-package" id="toc-importing-the-package" class="nav-link" data-scroll-target="#importing-the-package">3. Importing the Package</a>
+  <ul class="collapse">
+  <li><a href="#basic-import" id="toc-basic-import" class="nav-link" data-scroll-target="#basic-import">Basic Import</a></li>
+  <li><a href="#explicit-import-recommended" id="toc-explicit-import-recommended" class="nav-link" data-scroll-target="#explicit-import-recommended">Explicit Import (recommended)</a></li>
+  <li><a href="#importing-common-dependencies" id="toc-importing-common-dependencies" class="nav-link" data-scroll-target="#importing-common-dependencies">Importing Common Dependencies</a></li>
+  </ul></li>
+  <li><a href="#reading-data" id="toc-reading-data" class="nav-link" data-scroll-target="#reading-data">4. Reading Data</a>
+  <ul class="collapse">
+  <li><a href="#reading-wrf-files" id="toc-reading-wrf-files" class="nav-link" data-scroll-target="#reading-wrf-files">4.1 Reading WRF Files</a></li>
+  <li><a href="#reading-croco-files" id="toc-reading-croco-files" class="nav-link" data-scroll-target="#reading-croco-files">4.2 Reading CROCO Files</a></li>
+  </ul></li>
+  <li><a href="#oceanatmosphere-diagnostics" id="toc-oceanatmosphere-diagnostics" class="nav-link" data-scroll-target="#oceanatmosphere-diagnostics">5. Ocean–Atmosphere Diagnostics</a>
+  <ul class="collapse">
+  <li><a href="#wrf-diagnostics" id="toc-wrf-diagnostics" class="nav-link" data-scroll-target="#wrf-diagnostics">5.1 WRF Diagnostics</a></li>
+  <li><a href="#croco-diagnostics" id="toc-croco-diagnostics" class="nav-link" data-scroll-target="#croco-diagnostics">5.2 CROCO Diagnostics</a></li>
+  </ul></li>
+  <li><a href="#visualization" id="toc-visualization" class="nav-link" data-scroll-target="#visualization">6. Visualization</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -247,56 +266,203 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <small>Algunos contenidos pueden estar en revisión · Some sections may be under revision.</small>
 </div>
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title d-none d-lg-block">Usage</h1>
-</div>
 
 
 
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
-<p>An overview of <code>scahpy</code> capabilities will be displayed.</p>
+<section id="using-scahpy" class="level1">
+<h1>Using SCAHpy</h1>
+<p>This section presents the internal organization of the package and the essential steps for using SCAHpy to analyze oceanic (CROCO) and atmospheric (WRF) data from the coupled <em>IGP RESM-COW</em> model. The emphasis is on illustrating the general workflow and the capabilities of the package, while specific details are developed in subsequent tutorials.</p>
+<section id="general-workflow" class="level2">
+<h2 class="anchored" data-anchor-id="general-workflow">1. General Workflow</h2>
+<p>SCAHpy is designed following a modular structure that allows users to:</p>
+<ol type="1">
+<li><strong>Read and standardize coordinates and dimensions</strong> from the atmospheric model WRF and the ocean model CROCO.</li>
+<li><strong>Apply diagnostics</strong> for atmospheric or oceanic variables.</li>
+<li><strong>Visualize results</strong> through specialized functions for maps, cross-sections, and time series.</li>
+</ol>
+<p>The conceptual workflow is:</p>
+<pre class="text"><code>WRF / CROCO ──▶ Reading ──▶ Diagnostics ──▶ Visualization</code></pre>
+<p>This workflow aims to facilitate reproducible analysis, particularly in environments handling large data volumes, such as multi-year simulations from the <em>IGP RESM-COW</em> system.</p>
+</section>
+<section id="package-organization" class="level2">
+<h2 class="anchored" data-anchor-id="package-organization">2. Package Organization</h2>
+<p><strong>SCAHpy</strong> is structured into modules that reflect the logical components of the system:</p>
+<table class="table">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 30%">
+<col style="width: 53%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Module</th>
+<th>Description</th>
+<th>Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>components.atmos</code></td>
+<td>Reading and diagnostics for WRF</td>
+<td><code>wrf_io</code>, <code>wrf_coords</code>, <code>wrf_diags</code></td>
+</tr>
+<tr class="even">
+<td><code>components.ocean</code></td>
+<td>Reading and diagnostics for CROCO</td>
+<td><code>croco_io</code>, <code>croco_coords</code>, <code>croco_diags</code></td>
+</tr>
+<tr class="odd">
+<td><code>core</code></td>
+<td>Model-independent common operations</td>
+<td><code>coords</code>, <code>io</code>, <code>time_ops</code>, <code>spatial_ops</code>, <code>vertical</code>, <code>utils</code></td>
+</tr>
+<tr class="even">
+<td><code>plots</code></td>
+<td>Visualization functions</td>
+<td><code>maps</code>, <code>sections</code>, <code>timeseries</code></td>
+</tr>
+</tbody>
+</table>
+<p>The aim is to maintain functions organized either by physical domain (atmosphere, ocean) or by type of operation (temporal, spatial, vertical).</p>
+</section>
 <section id="importing-the-package" class="level2">
-<h2 class="anchored" data-anchor-id="importing-the-package">Importing the Package</h2>
-<p>To import all the modules in <code>scahpy</code> we can use the <code>*</code> cd as for example:</p>
-<div id="dc0032b0" class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scahpy <span class="im">import</span> <span class="op">*</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>To import specific modules from the package, we can specify their names:</p>
-<div id="fd3ca714" class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scahpy <span class="im">import</span> in_out, met_vars</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<h2 class="anchored" data-anchor-id="importing-the-package">3. Importing the Package</h2>
+<p>SCAHpy can be imported in several ways, depending on the desired level of clarity and control in your workflow. The most common approaches are shown below.</p>
+<section id="basic-import" class="level3">
+<h3 class="anchored" data-anchor-id="basic-import">Basic Import</h3>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scahpy</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>scahpy.components.atmos.wrf_io.read_wrf()</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>scahpy.read_wrf()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You may also abbreviate the package name:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scahpy <span class="im">as</span> sc</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>sc.read_wrf()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="reading-wrf-outputs-files" class="level2">
-<h2 class="anchored" data-anchor-id="reading-wrf-outputs-files">Reading WRF outputs files</h2>
-<p>The WRF model can generate outputs either with one time per file or multiple times in a single file. <code>scahpy</code> is capable of handling both scenarios. For reading multiple wrfout files, you can utilize the <code>read_wrf_multi</code> function, while for reading a single file, you can use the <code>read_wrf_single</code> function.</p>
-<div id="33ca1adc" class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example: Reading and processing multiple WRF datasets</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>sfc <span class="op">=</span> in_out._drop_vars(<span class="st">'/datos/wrfout_d01_2024-01-01_03:00:00'</span>,[<span class="st">'RAINC'</span>, <span class="st">'RAINNC'</span>, <span class="st">'RAINSH'</span>, <span class="st">'U10'</span>, <span class="st">'V10'</span>, <span class="st">'SSTSK'</span>], model<span class="op">=</span><span class="st">'wrf'</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>files <span class="op">=</span> <span class="bu">sorted</span>(glob.glob(<span class="st">'/datos/wrfout_d01*'</span>))</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> in_out.read_wrf_multi(files, sfc, <span class="st">'5 hours'</span>, <span class="op">-</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<section id="explicit-import-recommended" class="level3">
+<h3 class="anchored" data-anchor-id="explicit-import-recommended">Explicit Import (recommended)</h3>
+<p>For greater clarity—particularly in scientific projects and reproducible scripts—explicit imports are recommended:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scahpy <span class="im">import</span> plots</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>plots.map_1var_winds()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Or importing specific modules:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scahpy.components.atmos <span class="im">import</span> wrf_io, wrf_diags</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>wrf_io.read_wrf()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="calculating-precipitation" class="level2">
-<h2 class="anchored" data-anchor-id="calculating-precipitation">Calculating Precipitation</h2>
-<p><code>scahpy</code> has a module called <code>met_vars</code> designed specifically for calculating various diagnostic variables, such as precipitation, using the <code>calc_pp</code> function.</p>
-<div id="2994f341" class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example: Calculating precipitation using diagnostics module</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>ds2 <span class="op">=</span> met_vars.calc_pp(ds,vars_to_sum<span class="op">=</span>[<span class="st">'RAINC'</span>, <span class="st">'RAINNC'</span>, <span class="st">'RAINSH'</span>],<span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="importing-common-dependencies" class="level3">
+<h3 class="anchored" data-anchor-id="importing-common-dependencies">Importing Common Dependencies</h3>
+<p>In many examples and tutorials you will work with commonly used libraries such as:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> glob</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> xarray <span class="im">as</span> xr</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="reading-data" class="level2">
+<h2 class="anchored" data-anchor-id="reading-data">4. Reading Data</h2>
+<p>Reading is the first fundamental step. SCAHpy provides specialized functions for WRF and CROCO that:</p>
+<ul>
+<li>accept file paths as lists,</li>
+<li>standardize coordinates (<code>lat</code>, <code>lon</code>, <code>time</code>),</li>
+<li>correct local/UTC time,</li>
+<li>apply <em>destaggering</em> when needed,</li>
+<li>compute internal auxiliary variables.</li>
+</ul>
+<section id="reading-wrf-files" class="level3">
+<h3 class="anchored" data-anchor-id="reading-wrf-files">4.1 Reading WRF Files</h3>
+<p>Assuming the package was imported as <code>{python} import scahpy as sc</code>:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>WRF_files  <span class="op">=</span> <span class="bu">sorted</span>(glob.glob(<span class="st">"/data/users/fcastillon/wrf/wrfout_d01_2017*"</span>))</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>vars_wrf <span class="op">=</span> sc.drop_vars(WRF_files[<span class="dv">0</span>], sel_vars <span class="op">=</span> [<span class="st">'SST'</span>,<span class="st">'LANDMASK'</span>,<span class="st">'U10'</span>,<span class="st">'V10'</span>], model<span class="op">=</span><span class="st">'WRF'</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>ds_wrf <span class="op">=</span> sc.read_wrf(WRF_files, drop_vars <span class="op">=</span> vars_wrf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-01" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-01-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/fig_01.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-01-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: ds_wrf
+</figcaption>
+</figure>
+</div>
+<p>Output:</p>
+<ul>
+<li>Dataset with homogenized coordinates</li>
+<li>Concatenated time dimension</li>
+<li>Optional: you may use <code>{python} destag = True</code> if required, as well as <code>{python} save_path = 'output_path/file.nc'</code> to save the generated NetCDF file.</li>
+</ul>
+</section>
+<section id="reading-croco-files" class="level3">
+<h3 class="anchored" data-anchor-id="reading-croco-files">4.2 Reading CROCO Files</h3>
+<p>Assuming the package was imported as <code>{python} import scahpy as sc</code>:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>CROCO_files <span class="op">=</span> <span class="bu">sorted</span>(glob.glob(<span class="st">"/data/users/fcastillon/croco/croco_avg_Y2017*.nc"</span>))</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>vars_croco <span class="op">=</span> sc.drop_vars(CROCO_files[<span class="dv">0</span>], sel_vars <span class="op">=</span> [<span class="st">'temp'</span>,<span class="st">'mask_rho'</span>,<span class="st">'ubar'</span>,<span class="st">'vbar'</span>], model<span class="op">=</span><span class="st">'CROCO'</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>ds_croco <span class="op">=</span> sc.read_croco(CROCO_files, drop_vars <span class="op">=</span> vars_croco)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-02" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-02-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/fig_02.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-02-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: ds_croco
+</figcaption>
+</figure>
+</div>
+<p>Output:</p>
+<ul>
+<li>Dataset with homogenized coordinates</li>
+<li>Concatenated time dimension</li>
+<li>Renamed coordinates: <code>time</code>, <code>lat</code>, <code>lon</code>, <code>levels</code></li>
+</ul>
+</section>
+</section>
+<section id="oceanatmosphere-diagnostics" class="level2">
+<h2 class="anchored" data-anchor-id="oceanatmosphere-diagnostics">5. Ocean–Atmosphere Diagnostics</h2>
+<section id="wrf-diagnostics" class="level3">
+<h3 class="anchored" data-anchor-id="wrf-diagnostics">5.1 WRF Diagnostics</h3>
+<p>Diagnostics produce an <code>xr.DataArray</code>:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>da_rh <span class="op">=</span> sc.rh(ds_wrf.T, ds_wrf.P, ds_wrf.PB, ds_wrf.QVAPOR)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>However, assigning it directly to <code>ds_wrf</code> incorporates it into an <code>xr.Dataset</code>:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>ds_wrf[<span class="st">'RH'</span>] <span class="op">=</span> sc.rh(ds_wrf.T, ds_wrf.P, ds_wrf.PB, ds_wrf.QVAPOR)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="croco-diagnostics" class="level3">
+<h3 class="anchored" data-anchor-id="croco-diagnostics">5.2 CROCO Diagnostics</h3>
+<p>One of the included diagnostics is surface vorticity:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>ds_croco[<span class="st">'vort_sfc'</span>] <span class="op">=</span> sc.vorticity_sfc(</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    u <span class="op">=</span> ds_croco.u.isel(level<span class="op">=-</span><span class="dv">1</span>),</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    v <span class="op">=</span> ds_croco.v.isel(level<span class="op">=-</span><span class="dv">1</span>),</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    pm <span class="op">=</span> ds_croco.pm,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    pn <span class="op">=</span> ds_croco.pn,</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    mask <span class="op">=</span> ds_croco.mask_rho,</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    f <span class="op">=</span> ds_croco.f,</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    normalize_by_f <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="visualization" class="level2">
+<h2 class="anchored" data-anchor-id="visualization">6. Visualization</h2>
+<p>The <code>components.plots</code> module contains ready-to-use functions for producing high-quality scientific graphics. One of the most common visualizations is the map plot:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>maps.map_1var_winds(</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    ds<span class="op">=</span>ds_wrf.SST,</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    U<span class="op">=</span>ds_wrf.U10,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    V<span class="op">=</span>ds_wrf.V10,</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    levels<span class="op">=</span>np.arange(<span class="dv">16</span>,<span class="dv">31</span>,<span class="dv">1</span>),</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    cmap<span class="op">=</span><span class="st">"thermal"</span>,</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    time<span class="op">=</span><span class="st">'2017-01-02T12'</span>,</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="st">"SST + 10m Winds"</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-03" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-03-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/fig_03.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-03-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: ds_maps
+</figcaption>
+</figure>
 </div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

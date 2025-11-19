@@ -234,12 +234,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Contenido</h2>
    
   <ul>
-  <li><a href="#reading-a-single-file" id="toc-reading-a-single-file" class="nav-link active" data-scroll-target="#reading-a-single-file">Reading a Single File</a>
+  <li><a href="#tutorial-1-lectura-de-un-archivo-wrf" id="toc-tutorial-1-lectura-de-un-archivo-wrf" class="nav-link active" data-scroll-target="#tutorial-1-lectura-de-un-archivo-wrf">Tutorial 1: Lectura de un archivo WRF</a></li>
+  <li><a href="#importación-del-paquete" id="toc-importación-del-paquete" class="nav-link" data-scroll-target="#importación-del-paquete">1. Importación del paquete</a></li>
+  <li><a href="#lectura-de-un-archivo-wrf" id="toc-lectura-de-un-archivo-wrf" class="nav-link" data-scroll-target="#lectura-de-un-archivo-wrf">2. Lectura de un archivo WRF</a>
   <ul class="collapse">
-  <li><a href="#step-1-reading-wrf-data" id="toc-step-1-reading-wrf-data" class="nav-link" data-scroll-target="#step-1-reading-wrf-data">Step 1: Reading WRF Data</a></li>
-  <li><a href="#step-2-calculating-precipitation-and-wind-speed" id="toc-step-2-calculating-precipitation-and-wind-speed" class="nav-link" data-scroll-target="#step-2-calculating-precipitation-and-wind-speed">Step 2: Calculating Precipitation and Wind Speed</a></li>
-  <li><a href="#step-3-plotting-precipitation-maps" id="toc-step-3-plotting-precipitation-maps" class="nav-link" data-scroll-target="#step-3-plotting-precipitation-maps">Step 3: Plotting Precipitation Maps</a></li>
+  <li><a href="#lectura-del-archivo" id="toc-lectura-del-archivo" class="nav-link" data-scroll-target="#lectura-del-archivo">2.1 Lectura del archivo</a></li>
   </ul></li>
+  <li><a href="#cálculo-de-precipitación-viento-y-sst" id="toc-cálculo-de-precipitación-viento-y-sst" class="nav-link" data-scroll-target="#cálculo-de-precipitación-viento-y-sst">3. Cálculo de precipitación, viento y SST</a>
+  <ul class="collapse">
+  <li><a href="#precipitación-acumulada" id="toc-precipitación-acumulada" class="nav-link" data-scroll-target="#precipitación-acumulada">3.1 Precipitación acumulada</a></li>
+  <li><a href="#velocidad-del-viento-a-10-m" id="toc-velocidad-del-viento-a-10-m" class="nav-link" data-scroll-target="#velocidad-del-viento-a-10-m">3.2 Velocidad del viento a 10 m</a></li>
+  <li><a href="#temperatura-del-mar-en-c-si-existe-sst-en-el-archivo" id="toc-temperatura-del-mar-en-c-si-existe-sst-en-el-archivo" class="nav-link" data-scroll-target="#temperatura-del-mar-en-c-si-existe-sst-en-el-archivo">3.3 Temperatura del mar en °C (si existe SST en el archivo)</a></li>
+  </ul></li>
+  <li><a href="#visualización-mapa-2d-simple" id="toc-visualización-mapa-2d-simple" class="nav-link" data-scroll-target="#visualización-mapa-2d-simple">4. Visualización: mapa 2D simple</a>
+  <ul class="collapse">
+  <li><a href="#preparación-de-la-figura" id="toc-preparación-de-la-figura" class="nav-link" data-scroll-target="#preparación-de-la-figura">4.1 Preparación de la figura</a></li>
+  </ul></li>
+  <li><a href="#visualización-multivariable-con-función-scahpy" id="toc-visualización-multivariable-con-función-scahpy" class="nav-link" data-scroll-target="#visualización-multivariable-con-función-scahpy">5. Visualización multivariable con función SCAHpy</a></li>
+  <li><a href="#tutorial-1-lectura-de-un-archivo-croco" id="toc-tutorial-1-lectura-de-un-archivo-croco" class="nav-link" data-scroll-target="#tutorial-1-lectura-de-un-archivo-croco">Tutorial 1: Lectura de un archivo CROCO</a></li>
+  <li><a href="#lectura-rápida-de-un-archivo-croco" id="toc-lectura-rápida-de-un-archivo-croco" class="nav-link" data-scroll-target="#lectura-rápida-de-un-archivo-croco">5. Lectura rápida de un archivo CROCO</a>
+  <ul class="collapse">
+  <li><a href="#definir-la-ruta-del-archivo-croco" id="toc-definir-la-ruta-del-archivo-croco" class="nav-link" data-scroll-target="#definir-la-ruta-del-archivo-croco">5.1 Definir la ruta del archivo CROCO</a></li>
+  </ul></li>
+  <li><a href="#mapa-simple-de-sst-con-croco" id="toc-mapa-simple-de-sst-con-croco" class="nav-link" data-scroll-target="#mapa-simple-de-sst-con-croco">6. Mapa simple de SST con CROCO</a></li>
   </ul>
 </nav>
     </div>
@@ -253,41 +270,174 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="reading-a-single-file" class="level1 unnumbered">
-<h1 class="unnumbered">Reading a Single File</h1>
-<p>In this tutorial, we will guide you through the process of analyzing output data from the WRF (Weather Research and Forecasting) model and creating 2D maps featuring rainfall and wind variables using the <code>scahpy</code> package. To begin, let’s import the package.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scahpy <span class="im">import</span> <span class="op">*</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<section id="step-1-reading-wrf-data" class="level2">
-<h2 class="anchored" data-anchor-id="step-1-reading-wrf-data">Step 1: Reading WRF Data</h2>
-<p>We begin by setting the absolute path of the output file we intend to work with and assign it to a variable, in this case, <code>file_name</code>.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>file_name <span class="op">=</span> <span class="st">'/data/datos/COW/OUT_DIAG_WRF/wrfouts/wrfout_d01_2023-03-10_03:00:00'</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Since we have the flexibility to specify which variables to exclude when reading netCDF files using the <code>drop_variables</code> argument (see xarray functions open_dataset and open_mfdataset), we leverage the <code>_drop_wrf_vars</code> function from the module <code>in_out</code>. This function takes the list of variables we require and generates a list containing all variables present in the output file, subsequently removing those we are not interested in (such as <em>‘RAINC’, ‘RAINNC’, ‘RAINSH’, ‘U10’, ‘V10’, ‘SSTSK’</em>).</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dvars <span class="op">=</span> in_out._drop_vars(file_name, [<span class="st">'RAINC'</span>, <span class="st">'RAINNC'</span>, <span class="st">'RAINSH'</span>, <span class="st">'U10'</span>, <span class="st">'V10'</span>, <span class="st">'SSTSK'</span>], model<span class="op">=</span><span class="st">'wrf'</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Subsequently, we utilize the <code>read_wrf_single</code> function to selectively read the variables of interest. This function accepts the input path (<code>file_name</code> in this case), the list of variables to be excluded (<code>vars</code>), any required time difference (e.g., <code>'5 hours'</code>), and the corresponding sign of the time difference (<code>-1</code> for negative, <code>1</code> for positive). The outcome is an <code>xarray.Dataset</code> containing longitude, latitude, time, and the specified variables. Optionally, you can designate a save path to export the netCDF.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> in_out.read_wrf_single(file_name, dvars, <span class="st">'5 hours'</span>, <span class="op">-</span><span class="dv">1</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="tutorial-1-lectura-de-un-archivo-wrf" class="level1">
+<h1>Tutorial 1: Lectura de un archivo WRF</h1>
+<p>En este tutorial aprenderás a:</p>
+<ol type="1">
+<li>Leer un único archivo del modelo <strong>WRF</strong> usando SCAHpy.<br>
+</li>
+<li>Realizar cálculos básicos como precipitación total y velocidad del viento.<br>
+</li>
+<li>Generar un mapa 2D sencillo con variables meteorológicas.</li>
+</ol>
+<p>Este flujo es ideal para comenzar a trabajar con salidas puntuales del sistema <strong>IGP RESM-COW</strong> o de cualquier simulación WRF compatible con CF-Conventions.</p>
 </section>
-<section id="step-2-calculating-precipitation-and-wind-speed" class="level2">
-<h2 class="anchored" data-anchor-id="step-2-calculating-precipitation-and-wind-speed">Step 2: Calculating Precipitation and Wind Speed</h2>
-<p>In this step, we will utilize the <code>met_vars</code> module to calculate precipitation (<code>calc_pp</code>), wind speed (<code>calc_wsp</code>), and convert sea surface temperature from Kelvin to Celsius (<code>calc_celsius</code>).</p>
-<p>The <code>calc_pp</code> function has an optional argument <code>vars_to_sum</code>, allowing users to specify which variables to sum to obtain total precipitation. If no variables are provided, it will default to summing the three variables: <code>RAINC</code>, <code>RAINNC</code>, and <code>RAINSH</code>.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ds_sfc <span class="op">=</span> met_vars.calc_pp(ds, vars_to_sum<span class="op">=</span>[<span class="st">'RAINC'</span>, <span class="st">'RAINNC'</span>, <span class="st">'RAINSH'</span>], elim<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>ds_sfc <span class="op">=</span> met_vars.calc_wsp(ds_sfc, elim<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>ds_sfc <span class="op">=</span> met_vars.calc_celsius(ds_sfc, <span class="st">'SSTSK'</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>By running these commands, we ensure that our dataset <code>ds_sfc</code> now contains calculated precipitation, wind speed, and sea surface temperature in Celsius, ready for further analysis or visualization.</p>
+<section id="importación-del-paquete" class="level1">
+<h1>1. Importación del paquete</h1>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scahpy <span class="im">as</span> sph</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scahpy.components.atmos <span class="im">import</span> wrf_io, wrf_diags</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scahpy.components.core <span class="im">import</span> utils</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scahpy.components.plots <span class="im">import</span> maps</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> xarray <span class="im">as</span> xr</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="step-3-plotting-precipitation-maps" class="level2">
-<h2 class="anchored" data-anchor-id="step-3-plotting-precipitation-maps">Step 3: Plotting Precipitation Maps</h2>
-<p>Next, we’ll generate precipitation maps with SST contours and wind vectors using the <code>map_pp_uv10_sst</code> function from the <code>map_plots</code> module. This function takes the rainfall (PP) variable as input, followed by the dataset with SST and wind components, precipitation levels, SST contours, optional shapefile, exportation settings, output path, temporal scale (‘H’ for hourly, ‘D’ for daily, ‘M’ for monthly, ‘Y’ for yearly), vector speed, and plot extent ([x1, x2, y1, y2]).</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example usage</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>precipitation_levels <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">11</span>, <span class="dv">15</span>, <span class="dv">20</span>, <span class="dv">25</span>, <span class="dv">30</span>, <span class="dv">35</span>, <span class="dv">40</span>, <span class="dv">45</span>, <span class="dv">50</span>, <span class="dv">55</span>, <span class="dv">60</span>]</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>sst_contour_levels <span class="op">=</span> [<span class="dv">26</span>, <span class="dv">27</span>, <span class="dv">28</span>]</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>map_plots.map_pp_uv10_sst(ds_sfc[<span class="st">'PP'</span>], ds_sfc, precipitation_levels, sst_contour_levels, shapefile<span class="op">=</span><span class="va">None</span>, </span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>                           output_path<span class="op">=</span><span class="st">'.'</span>, save_maps<span class="op">=</span><span class="va">True</span>, freq<span class="op">=</span><span class="st">'H'</span>,</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>                           quiverkey_speed<span class="op">=</span><span class="dv">10</span>, extent<span class="op">=</span><span class="va">None</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="lectura-de-un-archivo-wrf" class="level1">
+<h1>2. Lectura de un archivo WRF</h1>
+<p>Primero definimos la ruta absoluta del archivo WRF que deseamos analizar.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>file_path <span class="op">=</span> Path(<span class="st">"/data/datos/COW/OUT_DIAG_WRF/wrfouts/wrfout_d01_2023-03-10_03:00:00"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="lectura-del-archivo" class="level2">
+<h2 class="anchored" data-anchor-id="lectura-del-archivo">2.1 Lectura del archivo</h2>
+<p>Usamos <code>wrf_io.read_wrf()</code> para abrir <strong>un solo archivo</strong>. Esta función:</p>
+<ul>
+<li>estandariza coordenadas,</li>
+<li>convierte el tiempo a formato datetime,</li>
+<li>aplica <em>destaggering</em> cuando corresponde,</li>
+<li>permite descartar variables innecesarias.</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> wrf_io.read_wrf(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    paths<span class="op">=</span>file_path,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    drop_vars<span class="op">=</span>[<span class="st">"TKE"</span>],          <span class="co"># opcional</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    time_offset_hours<span class="op">=-</span><span class="dv">5</span>        <span class="co"># conversión a hora local (UTC−5)</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>ds</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Resultado:</p>
+<ul>
+<li><code>time</code>: un único tiempo del archivo</li>
+<li><code>lat</code>, <code>lon</code>: grilla</li>
+<li>Variables atmosféricas como <code>T2</code>, <code>U10</code>, <code>V10</code>, humedades, etc.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="cálculo-de-precipitación-viento-y-sst" class="level1">
+<h1>3. Cálculo de precipitación, viento y SST</h1>
+<p>En tu versión anterior existían funciones como <code>calc_pp</code>, <code>calc_wsp</code>, <code>calc_celsius</code>. Ahora estas operaciones se hacen mediante:</p>
+<ul>
+<li><code>wrf_diags</code> (diagnósticos atmosféricos)</li>
+<li><code>utils</code> (conversión de unidades)</li>
+</ul>
+<section id="precipitación-acumulada" class="level2">
+<h2 class="anchored" data-anchor-id="precipitación-acumulada">3.1 Precipitación acumulada</h2>
+<p>Precipitación total = <code>RAINC</code> + <code>RAINNC</code>:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>pp <span class="op">=</span> ds[<span class="st">"RAINC"</span>] <span class="op">+</span> ds[<span class="st">"RAINNC"</span>]</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>pp.name <span class="op">=</span> <span class="st">"PP"</span>     <span class="co"># renombramos para plot</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="velocidad-del-viento-a-10-m" class="level2">
+<h2 class="anchored" data-anchor-id="velocidad-del-viento-a-10-m">3.2 Velocidad del viento a 10 m</h2>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>wind10 <span class="op">=</span> wrf_diags.wind_speed(ds[<span class="st">"U10"</span>], ds[<span class="st">"V10"</span>])</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>wind10.name <span class="op">=</span> <span class="st">"wspd10"</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="temperatura-del-mar-en-c-si-existe-sst-en-el-archivo" class="level2">
+<h2 class="anchored" data-anchor-id="temperatura-del-mar-en-c-si-existe-sst-en-el-archivo">3.3 Temperatura del mar en °C (si existe SST en el archivo)</h2>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="st">"SSTSK"</span> <span class="kw">in</span> ds:</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    sst <span class="op">=</span> utils.to_celsius(ds[<span class="st">"SSTSK"</span>])</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    sst.name <span class="op">=</span> <span class="st">"SST_C"</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<hr>
+</section>
+</section>
+<section id="visualización-mapa-2d-simple" class="level1">
+<h1>4. Visualización: mapa 2D simple</h1>
+<p>El módulo <code>scahpy.components.plots.maps</code> contiene funciones base para visualizar variables atmosféricas y oceánicas.</p>
+<p>Aquí generamos una figura de precipitación, viento y SST conjunta, similar en espíritu a tu función antigua <code>map_pp_uv10_sst</code>.</p>
+<section id="preparación-de-la-figura" class="level2">
+<h2 class="anchored" data-anchor-id="preparación-de-la-figura">4.1 Preparación de la figura</h2>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>pp.isel(time<span class="op">=</span><span class="dv">0</span>).plot(</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    ax<span class="op">=</span>ax,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">"lon"</span>, y<span class="op">=</span><span class="st">"lat"</span>,</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    cmap<span class="op">=</span><span class="st">"Blues"</span>,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    cbar_kwargs<span class="op">=</span>{<span class="st">"label"</span>: <span class="st">"Precipitación (mm)"</span>}</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Precipitación – WRF single file"</span>)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<hr>
+</section>
+</section>
+<section id="visualización-multivariable-con-función-scahpy" class="level1">
+<h1>5. Visualización multivariable con función SCAHpy</h1>
+<p>Si deseas combinar precipitación, viento y SST, puedes usar una función dedicada del módulo <code>plots.maps</code> (ejemplo genérico):</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>maps.map_1var(</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    ds<span class="op">=</span>ds,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    var_name<span class="op">=</span><span class="st">"T2"</span>,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    time_index<span class="op">=</span><span class="dv">0</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    cmap<span class="op">=</span><span class="st">"coolwarm"</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="st">"Temperatura a 2 m"</span>,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>En caso de querer un plot compuesto (PP + viento + SST), podría usarse una versión adaptada como:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>maps.map_pp_uv_sst(</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    pp<span class="op">=</span>pp,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    u10<span class="op">=</span>ds[<span class="st">"U10"</span>],</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    v10<span class="op">=</span>ds[<span class="st">"V10"</span>],</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    sst<span class="op">=</span>sst,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    time_index<span class="op">=</span><span class="dv">0</span>,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    cmap<span class="op">=</span><span class="st">"Blues"</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="tutorial-1-lectura-de-un-archivo-croco" class="level1">
+<h1>Tutorial 1: Lectura de un archivo CROCO</h1>
+</section>
+<section id="lectura-rápida-de-un-archivo-croco" class="level1">
+<h1>5. Lectura rápida de un archivo CROCO</h1>
+<p>Además de WRF, SCAHpy permite trabajar con salidas del modelo oceánico <strong>CROCO</strong>, utilizado en el componente marino del IGP RESM-COW.</p>
+<section id="definir-la-ruta-del-archivo-croco" class="level2">
+<h2 class="anchored" data-anchor-id="definir-la-ruta-del-archivo-croco">5.1 Definir la ruta del archivo CROCO</h2>
+<p>Como ejemplo:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>croco_file <span class="op">=</span> <span class="st">"/data/datos/COW/OUT_DIAG_CROCO/croco_avg_Y2000M01.nc"</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Nuevamente usaremos una lista, aunque solo haya un archivo:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>ds_croco <span class="op">=</span> croco_io.read_croco(</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    paths<span class="op">=</span>[croco_file],   <span class="co"># lista con un único archivo</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    destag<span class="op">=</span><span class="va">True</span>,          <span class="co"># pasar de grilla C a grilla centrada</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    keep_vertical<span class="op">=</span><span class="va">True</span>    <span class="co"># conservar niveles sigma</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>ds_croco</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>El resultado suele incluir:</p>
+<ul>
+<li><code>time</code>: tiempos diarios o subdiarios,</li>
+<li><code>eta_rho</code>, <code>xi_rho</code> o equivalentes convertidos a <code>lat</code>, <code>lon</code>,</li>
+<li><code>s_rho</code> o niveles sigma,</li>
+<li>Variables oceánicas: <code>temp</code>, <code>salt</code>, <code>u</code>, <code>v</code>, etc.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="mapa-simple-de-sst-con-croco" class="level1">
+<h1>6. Mapa simple de SST con CROCO</h1>
+<p>Suponiendo que la variable de temperatura se llama <code>temp</code> y que el último nivel vertical corresponde aproximadamente a la superficie:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>sst <span class="op">=</span> ds_croco[<span class="st">"temp"</span>].isel(s_rho<span class="op">=-</span><span class="dv">1</span>)  <span class="co"># último nivel = superficie</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>sst.name <span class="op">=</span> <span class="st">"SST"</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Tomamos, por ejemplo, el primer tiempo:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>sst.isel(time<span class="op">=</span><span class="dv">0</span>).plot(</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">"lon"</span>, y<span class="op">=</span><span class="st">"lat"</span>,</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    cmap<span class="op">=</span><span class="st">"viridis"</span>,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    cbar_kwargs<span class="op">=</span>{<span class="st">"label"</span>: <span class="st">"SST (°C)"</span>}</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Temperatura superficial del mar – CROCO (archivo único)"</span>)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>También puedes usar la función de SCAHpy:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>maps.map_1var(</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    ds<span class="op">=</span>ds_croco,</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    var_name<span class="op">=</span><span class="st">"temp"</span>,</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    time_index<span class="op">=</span><span class="dv">0</span>,</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    level_index<span class="op">=-</span><span class="dv">1</span>,    <span class="co"># superficie</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="st">"SST – CROCO (archivo único)"</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
