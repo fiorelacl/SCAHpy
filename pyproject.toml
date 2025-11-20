@@ -1,5 +1,5 @@
 # ===============================
-# pyproject.toml — SCAHpy v2.0.0
+# pyproject.toml — SCAHpy v2.0.4
 # ===============================
 
 [build-system]
@@ -8,15 +8,15 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "scahpy"
-version = "2.0.0"
+version = "2.0.4"
 description = "SCAHpy — System for Coupled Atmosphere–Hydrosphere Analysis in Python"
 readme = "README.md"
 authors = [{ name = "Fiorela Castillón Lucas", email = "fv.castillon@gmail.com" }]
-license = { file = "LICENSE" }
+license = "GPL-3.0-or-later"
+license-files = ['LICENSE']
 requires-python = ">=3.10"
 
 classifiers = [
-  "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3.11",
   "Intended Audience :: Science/Research",

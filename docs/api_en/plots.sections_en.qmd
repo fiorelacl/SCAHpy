@@ -1,0 +1,182 @@
+# plots.sections { #scahpy.plots.sections }
+
+`plots.sections`
+
+
+
+## Functions
+
+| Name | Description |
+| --- | --- |
+| [section_xz_1var](#scahpy.plots.sections.section_xz_1var) | Plot an X–Z vertical section at a fixed latitude (lon vs vertical). |
+| [section_xz_1var_winds](#scahpy.plots.sections.section_xz_1var_winds) | Plot an X–Z section (fixed latitude) of a scalar field and overlay wind vectors (U, W). |
+| [section_yz_1var](#scahpy.plots.sections.section_yz_1var) | Plot a Y–Z vertical section at a fixed longitude (lat vs vertical). |
+| [section_yz_1var_winds](#scahpy.plots.sections.section_yz_1var_winds) | Plot a Y–Z section (fixed longitude) of a scalar field and overlay wind vectors (V, W). |
+
+### section_xz_1var { #scahpy.plots.sections.section_xz_1var }
+
+```python
+plots.sections.section_xz_1var(
+    da,
+    *,
+    lat,
+    levels,
+    cmap='thermal',
+    time=None,
+    month=None,
+    title=None,
+    colorbar_label=None,
+    output_path=None,
+)
+```
+
+Plot an X–Z vertical section at a fixed latitude (lon vs vertical).
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name           | Type              | Description                                                            | Default     |
+|----------------|-------------------|------------------------------------------------------------------------|-------------|
+| da             | xarray.DataArray  | Scalar variable with coordinates (time\|month?, z, lat, lon).          | _required_  |
+| lat            | float             | Fixed latitude at which the section is extracted (nearest selection).  | _required_  |
+| levels         | iterable of float | Discrete color levels for the filled section.                          | _required_  |
+| cmap           | str               | cmocean colormap name (lightened internally).                          | `'thermal'` |
+| time           | int or str        | Select a single `time` frame if available (index or timestamp string). | `None`      |
+| month          | int               | Select a single `month` if available (1–12) for climatologies.         | `None`      |
+| title          | str               | Figure title.                                                          | `None`      |
+| colorbar_label | str               | Label for the colorbar; defaults to `da.units` if present.             | `None`      |
+| output_path    | str or None       | If provided, the figure is saved; otherwise it is shown.               | `None`      |
+
+### section_xz_1var_winds { #scahpy.plots.sections.section_xz_1var_winds }
+
+```python
+plots.sections.section_xz_1var_winds(
+    da,
+    U,
+    W,
+    *,
+    lat,
+    levels,
+    cmap='thermal',
+    time=None,
+    month=None,
+    w_scale=1000.0,
+    quiver_density=4,
+    quiver_scale=170.0,
+    quiverkey_speed=5.0,
+    title=None,
+    colorbar_label=None,
+    output_path=None,
+)
+```
+
+Plot an X–Z section (fixed latitude) of a scalar field and overlay wind vectors (U, W).
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name            | Type              | Description                                                                                | Default     |
+|-----------------|-------------------|--------------------------------------------------------------------------------------------|-------------|
+| da              | xarray.DataArray  | Scalar field (time\|month?, z, lat, lon).                                                  | _required_  |
+| U               | xarray.DataArray  | Zonal wind component on the same grid (time\|month?, z, lat, lon).                         | _required_  |
+| W               | xarray.DataArray  | Vertical wind component on the same grid; will be scaled by `w_scale`.                     | _required_  |
+| lat             | float             | Fixed latitude for the section (nearest selection).                                        | _required_  |
+| levels          | iterable of float | Discrete color levels for the filled section.                                              | _required_  |
+| cmap            | str               | cmocean colormap name (lightened internally).                                              | `'thermal'` |
+| time            | optional          | Uniform temporal selector applied to all inputs.                                           | `None`      |
+| month           | optional          | Uniform temporal selector applied to all inputs.                                           | `None`      |
+| w_scale         | float             | Multiplicative factor for W (e.g., 1000 to convert m/s to mm/s for better visual balance). | `1000.0`    |
+| quiver_density  | int               | Subsampling step for the quiver field (larger -> fewer arrows).                            | `4`         |
+| quiver_scale    | float             | Matplotlib quiver scaling parameter.                                                       | `170.0`     |
+| quiverkey_speed | float             | Reference speed (m/s) shown in the quiver key.                                             | `5.0`       |
+| title           | Optional\[str\]   | See `section_xz_1var`.                                                                     | `None`      |
+| colorbar_label  | Optional\[str\]   | See `section_xz_1var`.                                                                     | `None`      |
+| output_path     | Optional\[str\]   | See `section_xz_1var`.                                                                     | `None`      |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type   | Description   |
+|--------|--------|---------------|
+|        | None   |               |
+
+### section_yz_1var { #scahpy.plots.sections.section_yz_1var }
+
+```python
+plots.sections.section_yz_1var(
+    da,
+    *,
+    lon,
+    levels,
+    cmap='thermal',
+    time=None,
+    month=None,
+    title=None,
+    colorbar_label=None,
+    output_path=None,
+)
+```
+
+Plot a Y–Z vertical section at a fixed longitude (lat vs vertical).
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name           | Type              | Description                                                            | Default     |
+|----------------|-------------------|------------------------------------------------------------------------|-------------|
+| da             | xarray.DataArray  | Scalar variable with coordinates (time\|month?, z, lat, lon).          | _required_  |
+| lon            | float             | Fixed longitude at which the section is extracted (nearest selection). | _required_  |
+| levels         | iterable of float | Discrete color levels for the filled section.                          | _required_  |
+| cmap           | str               | cmocean colormap name (lightened internally).                          | `'thermal'` |
+| time           |                   | See `section_xz_1var`.                                                 | `None`      |
+| month          |                   | See `section_xz_1var`.                                                 | `None`      |
+| title          |                   | See `section_xz_1var`.                                                 | `None`      |
+| colorbar_label |                   | See `section_xz_1var`.                                                 | `None`      |
+| output_path    |                   | See `section_xz_1var`.                                                 | `None`      |
+
+### section_yz_1var_winds { #scahpy.plots.sections.section_yz_1var_winds }
+
+```python
+plots.sections.section_yz_1var_winds(
+    da,
+    V,
+    W,
+    *,
+    lon,
+    levels,
+    cmap='thermal',
+    time=None,
+    month=None,
+    w_scale=1000.0,
+    quiver_density=4,
+    quiver_scale=170.0,
+    quiverkey_speed=5.0,
+    title=None,
+    colorbar_label=None,
+    output_path=None,
+)
+```
+
+Plot a Y–Z section (fixed longitude) of a scalar field and overlay wind vectors (V, W).
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name            | Type              | Description                                                             | Default     |
+|-----------------|-------------------|-------------------------------------------------------------------------|-------------|
+| da              | xarray.DataArray  | Scalar field (time\|month?, z, lat, lon).                               | _required_  |
+| V               | xarray.DataArray  | Meridional wind component on the same grid (time\|month?, z, lat, lon). | _required_  |
+| W               | xarray.DataArray  | Vertical wind component on the same grid; scaled by `w_scale`.          | _required_  |
+| lon             | float             | Fixed longitude for the section (nearest selection).                    | _required_  |
+| levels          | iterable of float | Discrete color levels for the filled section.                           | _required_  |
+| cmap            | str               | cmocean colormap name (lightened internally).                           | `'thermal'` |
+| time            |                   | See `section_xz_1var_winds`.                                            | `None`      |
+| month           |                   | See `section_xz_1var_winds`.                                            | `None`      |
+| w_scale         |                   | See `section_xz_1var_winds`.                                            | `None`      |
+| quiver_density  |                   | See `section_xz_1var_winds`.                                            | `None`      |
+| quiver_scale    |                   | See `section_xz_1var_winds`.                                            | `None`      |
+| quiverkey_speed |                   | See `section_xz_1var_winds`.                                            | `None`      |
+| title           | Optional\[str\]   | See `section_xz_1var`.                                                  | `None`      |
+| colorbar_label  | Optional\[str\]   | See `section_xz_1var`.                                                  | `None`      |
+| output_path     | Optional\[str\]   | See `section_xz_1var`.                                                  | `None`      |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type   | Description   |
+|--------|--------|---------------|
+|        | None   |               |

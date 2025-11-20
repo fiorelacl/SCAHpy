@@ -1,0 +1,95 @@
+# core.time_ops { #scahpy.core.time_ops }
+
+`core.time_ops`
+
+
+
+## Functions
+
+| Name | Description |
+| --- | --- |
+| [anomalies](#scahpy.core.time_ops.anomalies) | Compute anomalies relative to a provided climatology. |
+| [monthly_climatology](#scahpy.core.time_ops.monthly_climatology) | Compute a 12-month climatology using groupby on calendar months. |
+| [monthly_to_daily_climatology](#scahpy.core.time_ops.monthly_to_daily_climatology) | Upsample a monthly climatology to daily frequency for DataArray or Dataset. |
+
+### anomalies { #scahpy.core.time_ops.anomalies }
+
+```python
+core.time_ops.anomalies(data, clim, *, kind='monthly')
+```
+
+Compute anomalies relative to a provided climatology.
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name   | Type                       | Description                                                      | Default     |
+|--------|----------------------------|------------------------------------------------------------------|-------------|
+| data   | xr.DataArray or xr.Dataset | Original data with time dimension.                               | _required_  |
+| clim   | xr.DataArray or xr.Dataset | Climatology with coord 'month' (monthly) or 'dayofyear' (daily). | _required_  |
+| kind   | (monthly, daily)           | Controls the grouping key used to match climatology to data.     | `"monthly"` |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type                       | Description                                            |
+|--------|----------------------------|--------------------------------------------------------|
+|        | xr.DataArray or xr.Dataset | Anomalies with the same structure and units as `data`. |
+
+### monthly_climatology { #scahpy.core.time_ops.monthly_climatology }
+
+```python
+core.time_ops.monthly_climatology(data, *, calendar=None, freq='D')
+```
+
+Compute a 12-month climatology using groupby on calendar months.
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name     | Type                                      | Description                                                                                                                                | Default      |
+|----------|-------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|--------------|
+| data     | xr.DataArray or xr.Dataset                | Input object with a ``time`` dimension.                                                                                                    | _required_   |
+| calendar | (standard, noleap, all_leap, \'360_day\') | If provided, converts the time index to the specified CF calendar using ``xr.cftime_range``.                                               | `"standard"` |
+| freq     | str                                       | Temporal frequency (e.g., 'D' for daily, 'H' for hourly, 'MS' for monthly start). Used only when a CF calendar is applied. Default is 'D'. | `'D'`        |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type                       | Description                                                                                   |
+|--------|----------------------------|-----------------------------------------------------------------------------------------------|
+|        | xr.DataArray or xr.Dataset | 12-step climatology indexed by ``month`` (1–12), preserving variable attributes and metadata. |
+
+### monthly_to_daily_climatology { #scahpy.core.time_ops.monthly_to_daily_climatology }
+
+```python
+core.time_ops.monthly_to_daily_climatology(
+    data,
+    *,
+    method='harmonic',
+    harmonics=2,
+    target_year=None,
+    start=None,
+    end=None,
+)
+```
+
+Upsample a monthly climatology to daily frequency for DataArray or Dataset.
+
+Supports two methods:
+  1) ``method='linear'`` – time-based linear interpolation using pandas/xarray.
+  2) ``method='harmonic'`` – fit a seasonal cycle with a small set of harmonics
+     (annual, semiannual, etc.) via least squares using NumPy only.
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name        | Type                       | Description                                                                    | Default    |
+|-------------|----------------------------|--------------------------------------------------------------------------------|------------|
+| data        | xr.DataArray or xr.Dataset | Monthly time series with a ``time`` coordinate. Can be multi-year.             | _required_ |
+| method      | (linear, harmonic)         | Interpolation method.                                                          | `"linear"` |
+| harmonics   | int                        | Number of harmonics used by the seasonal fit (ignored if ``linear``).          | `2`        |
+| target_year | int                        | If provided, return a daily series for that calendar year.                     | `None`     |
+| start       | str or pandas.Timestamp    | Explicit start/end dates for daily output (used when ``target_year`` is None). | `None`     |
+| end         | str or pandas.Timestamp    | Explicit start/end dates for daily output (used when ``target_year`` is None). | `None`     |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type                       | Description                                                           |
+|--------|----------------------------|-----------------------------------------------------------------------|
+|        | xr.DataArray or xr.Dataset | Daily climatology with the same structure as input and updated attrs. |

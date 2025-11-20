@@ -1,0 +1,53 @@
+# components.atmos.wrf_coords { #scahpy.components.atmos.wrf_coords }
+
+`components.atmos.wrf_coords`
+
+
+
+## Functions
+
+| Name | Description |
+| --- | --- |
+| [vert_levs](#scahpy.components.atmos.wrf_coords.vert_levs) | Interpolate WRF variables from model (sigma) levels to fixed |
+
+### vert_levs { #scahpy.components.atmos.wrf_coords.vert_levs }
+
+```python
+components.atmos.wrf_coords.vert_levs(
+    ds,
+    varis,
+    lvls=None,
+    coord_kind='pressure',
+    vert_dim='bottom_top',
+    new_dim='levels',
+    mask_outside=True,
+    persist=False,
+)
+```
+
+Interpolate WRF variables from model (sigma) levels to fixed
+pressure or height levels.
+
+This function performs a 1D vertical interpolation for one or more
+3-D variables contained in a WRF dataset. The vertical coordinate can be
+total pressure (P + PB) or geopotential height ((PH + PHB)/g), and the
+interpolation is handled through `interp1d_along_dim` from `scahpy.core.vertical`.
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name         | Type               | Description                                                                                                                                                                                      | Default        |
+|--------------|--------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------|
+| ds           | xr.Dataset         | WRF dataset containing 3-D fields and native vertical coordinates (P, PB, PH, PHB, etc.).                                                                                                        | _required_     |
+| varis        | sequence of str    | Names of variables to interpolate vertically.                                                                                                                                                    | _required_     |
+| lvls         | sequence of float  | Target levels. If ``None``, a default list is used depending on ``coord_kind``:     - For ``"pressure"`` → [1000, 975, 950, ..., 200] hPa       - For ``"height"``   → [0, 50, 100, ..., 5000] m | `None`         |
+| coord_kind   | (pressure, height) | Type of target coordinate: - ``"pressure"`` → interpolates to isobaric levels (hPa) - ``"height"`` → interpolates to constant height levels (m a.s.l.)                                           | `"pressure"`   |
+| vert_dim     | str                | Name of the native WRF vertical dimension.                                                                                                                                                       | `"bottom_top"` |
+| new_dim      | str                | Name of the new vertical dimension for the interpolated fields.                                                                                                                                  | `"levels"`     |
+| mask_outside | bool               | If True, sets to NaN values outside the valid range between local minimum and maximum of the native coordinate (avoids extrapolation).                                                           | `True`         |
+| persist      | bool               | If True, calls ``.persist()`` on output arrays (useful when working with Dask-backed datasets).                                                                                                  | `False`        |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type       | Description                                                                                                                                                                              |
+|--------|------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|        | xr.Dataset | Dataset containing all requested variables interpolated to the new vertical coordinate ``new_dim``, with propagated ``lat``, ``lon`` and ``time`` coordinates and CF-compliant metadata. |

@@ -70,9 +70,9 @@ Community contributions are welcome!
 
 ## **Tutorials**
 
-- **[Reading a single file](03_tutorial_01_en.qmd)**
-- **[Reading multiple files](03_tutorial_02_en.qmd)**
-- **[Pressure-level variables](03_tutorial_03_en.qmd)**
+- **[Reading WRF outputs](03_tutorial_01_en.qmd)**
+- **[Reading CROCO outputs](03_tutorial_02_en.qmd)**
+- **[Case Study: ENSO 2017](03_tutorial_03_en.qmd)**
 
 ---
 

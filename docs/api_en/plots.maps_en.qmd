@@ -1,0 +1,231 @@
+# plots.maps { #scahpy.plots.maps }
+
+`plots.maps`
+
+
+
+## Functions
+
+| Name | Description |
+| --- | --- |
+| [map_1var](#scahpy.plots.maps.map_1var) | Draw a filled map of a single scalar variable. |
+| [map_1var_winds](#scahpy.plots.maps.map_1var_winds) | Draw a filled map of a scalar variable and overlay wind vectors (U, V). |
+| [map_2var_contours](#scahpy.plots.maps.map_2var_contours) | Draw a filled map of a scalar variable and overlay contours |
+| [map_2vars_winds](#scahpy.plots.maps.map_2vars_winds) | Draw a filled map (1 variable) + contour overlays (another variable) |
+
+### map_1var { #scahpy.plots.maps.map_1var }
+
+```python
+plots.maps.map_1var(
+    da,
+    *,
+    levels,
+    cmap='rain',
+    shapefile=None,
+    extent=None,
+    xticks=None,
+    yticks=None,
+    tick_step=(5, 5),
+    draw_grid=False,
+    time=None,
+    month=None,
+    title=None,
+    colorbar_label=None,
+    output_path=None,
+)
+```
+
+Draw a filled map of a single scalar variable.
+
+The same temporal selection is applied to the data via:
+    - `month` (for climatological datasets with a `month` coordinate), or
+    - `time` (for datasets with a `time` coordinate; can be int index or str timestamp).
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name           | Type               | Description                                                                      | Default    |
+|----------------|--------------------|----------------------------------------------------------------------------------|------------|
+| da             | xarray.DataArray   | Scalar field with coordinates `(lat, lon)` and optionally `time` or `month`.     | _required_ |
+| levels         | iterable of float  | Discrete color levels for the filled contours.                                   | _required_ |
+| cmap           | str                | Name of the cmocean colormap to use (lightened internally).                      | `'rain'`   |
+| shapefile      | str or None        | Path to a custom shapefile. If None, uses the default South America shape.       | `None`     |
+| extent         | tuple or None      | Map extent `(lon_min, lon_max, lat_min, lat_max)`. If None, uses DEFAULT_EXTENT. | `None`     |
+| time           | int or str or None | If dataset has `time`, selects a single frame: index (int) or timestamp (str).   | `None`     |
+| month          | int or None        | If dataset has `month`, selects that month (1-12).                               | `None`     |
+| title          | str or None        | Figure title. If None, uses `long_name` or variable name.                        | `None`     |
+| colorbar_label | str or None        | Colorbar label. If None, uses `da.units` if available.                           | `None`     |
+| output_path    | str or None        | If provided, saves the figure to disk; otherwise shows the figure.               | `None`     |
+
+### map_1var_winds { #scahpy.plots.maps.map_1var_winds }
+
+```python
+plots.maps.map_1var_winds(
+    da,
+    U,
+    V,
+    *,
+    levels,
+    cmap='rain',
+    shapefile=None,
+    extent=None,
+    xticks=None,
+    yticks=None,
+    tick_step=(5, 5),
+    draw_grid=False,
+    time=None,
+    month=None,
+    quiver_subsample=7,
+    quiverkey_speed=5.0,
+    title=None,
+    colorbar_label=None,
+    output_path=None,
+)
+```
+
+Draw a filled map of a scalar variable and overlay wind vectors (U, V).
+
+The same temporal selection (`time` or `month`) is applied uniformly to `da`, `U`, and `V`.
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name             | Type              | Description                                                   | Default    |
+|------------------|-------------------|---------------------------------------------------------------|------------|
+| da               | xarray.DataArray  | Scalar field with `(lat, lon)` and optionally `time`/`month`. | _required_ |
+| U                | xarray.DataArray  | Vector components with the same horizontal grid as `da`.      | _required_ |
+| V                | xarray.DataArray  | Vector components with the same horizontal grid as `da`.      | _required_ |
+| levels           | iterable of float | Discrete color levels for the filled contours.                | _required_ |
+| cmap             | str               | Name of the cmocean colormap (lightened internally).          | `'rain'`   |
+| shapefile        | str or None       | Custom shapefile path; None uses default SA shapefile.        | `None`     |
+| extent           | tuple or None     | Map extent `(lon_min, lon_max, lat_min, lat_max)`.            | `None`     |
+| time             | see `map_1var`    | Temporal selector (applied to all inputs).                    | `None`     |
+| month            | see `map_1var`    | Temporal selector (applied to all inputs).                    | `None`     |
+| quiver_subsample | int               | Arrow subsampling step to reduce density.                     | `7`        |
+| quiverkey_speed  | float             | Reference speed (m/s) shown in the quiver key.                | `5.0`      |
+| title            | see `map_1var`.   |                                                               | `None`     |
+| colorbar_label   | see `map_1var`.   |                                                               | `None`     |
+| output_path      | see `map_1var`.   |                                                               | `None`     |
+
+### map_2var_contours { #scahpy.plots.maps.map_2var_contours }
+
+```python
+plots.maps.map_2var_contours(
+    da_fill,
+    da_contour,
+    *,
+    levels_fill,
+    levels_contour,
+    cmap_fill='rain',
+    colors_contour=('k',),
+    linewidths_contour=(1.4,),
+    alpha_contour=0.9,
+    shapefile=None,
+    extent=None,
+    xticks=None,
+    yticks=None,
+    tick_step=(5, 5),
+    draw_grid=False,
+    time=None,
+    month=None,
+    label_levels=True,
+    title=None,
+    colorbar_label=None,
+    output_path=None,
+)
+```
+
+Draw a filled map of a scalar variable and overlay contours
+(either of the same variable or another one).
+
+The same temporal selection (`time` or `month`) is applied to both layers.
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name               | Type              | Description                                                        | Default    |
+|--------------------|-------------------|--------------------------------------------------------------------|------------|
+| da_fill            | xarray.DataArray  | Scalar field for filled contours (background).                     | _required_ |
+| da_contour         | xarray.DataArray  | Field for line contours.                                           | _required_ |
+| levels_fill        | iterable of float | Levels for filled contours.                                        | _required_ |
+| levels_contour     | iterable of float | Levels for the contour lines.                                      | _required_ |
+| cmap_fill          | str               | cmocean colormap name for the filled layer (lightened internally). | `'rain'`   |
+| colors_contour     | tuple             | Colors for contour lines.                                          | `('k',)`   |
+| linewidths_contour | tuple             | Line widths for contour lines.                                     | `(1.4,)`   |
+| alpha_contour      | float             | Alpha for contour lines.                                           | `0.9`      |
+| shapefile          | Optional\[str\]   | See `map_1var`.                                                    | `None`     |
+| extent             | Optional\[str\]   | See `map_1var`.                                                    | `None`     |
+| time               | Optional\[str\]   | See `map_1var`.                                                    | `None`     |
+| month              | Optional\[str\]   | See `map_1var`.                                                    | `None`     |
+| title              | Optional\[str\]   | See `map_1var`.                                                    | `None`     |
+| colorbar_label     | Optional\[str\]   | See `map_1var`.                                                    | `None`     |
+| output_path        | Optional\[str\]   | See `map_1var`.                                                    | `None`     |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type   | Description   |
+|--------|--------|---------------|
+|        | None   |               |
+
+### map_2vars_winds { #scahpy.plots.maps.map_2vars_winds }
+
+```python
+plots.maps.map_2vars_winds(
+    da_fill,
+    da_contour,
+    U,
+    V,
+    *,
+    levels_fill,
+    levels_contour,
+    cmap_fill='rain',
+    colors_contour=('#F29727', '#C70039', '#511F73'),
+    linewidths_contour=(1.5, 1.6, 1.8),
+    alpha_contour=0.45,
+    quiver_subsample=7,
+    quiverkey_speed=5.0,
+    shapefile=None,
+    extent=None,
+    xticks=None,
+    yticks=None,
+    tick_step=(5, 5),
+    draw_grid=False,
+    time=None,
+    month=None,
+    title=None,
+    colorbar_label=None,
+    output_path=None,
+)
+```
+
+Draw a filled map (1 variable) + contour overlays (another variable)
++ wind vectors (U, V) — ideal for ocean–atmosphere mixed maps.
+
+The same temporal selection (`time` or `month`) is applied uniformly to all layers.
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name               | Type              | Description                                                        | Default                             |
+|--------------------|-------------------|--------------------------------------------------------------------|-------------------------------------|
+| da_fill            | xarray.DataArray  | Scalar field for the filled layer (background).                    | _required_                          |
+| da_contour         | xarray.DataArray  | Field for contour lines.                                           | _required_                          |
+| U                  | xarray.DataArray  | Vector components (same horizontal grid).                          | _required_                          |
+| V                  | xarray.DataArray  | Vector components (same horizontal grid).                          | _required_                          |
+| levels_fill        | iterable of float | Levels for background and contour lines respectively.              | _required_                          |
+| levels_contour     | iterable of float | Levels for background and contour lines respectively.              | _required_                          |
+| cmap_fill          | str               | cmocean colormap name for the filled layer (lightened internally). | `'rain'`                            |
+| colors_contour     |                   | Style parameters for contour lines.                                | `('#F29727', '#C70039', '#511F73')` |
+| linewidths_contour |                   | Style parameters for contour lines.                                | `('#F29727', '#C70039', '#511F73')` |
+| alpha_contour      |                   | Style parameters for contour lines.                                | `('#F29727', '#C70039', '#511F73')` |
+| quiver_subsample   | int               | Arrow subsampling step.                                            | `7`                                 |
+| quiverkey_speed    | float             | Reference speed (m/s) shown in the quiver key.                     | `5.0`                               |
+| shapefile          | Optional\[str\]   | See `map_1var`.                                                    | `None`                              |
+| extent             | Optional\[str\]   | See `map_1var`.                                                    | `None`                              |
+| time               | Optional\[str\]   | See `map_1var`.                                                    | `None`                              |
+| month              | Optional\[str\]   | See `map_1var`.                                                    | `None`                              |
+| title              | Optional\[str\]   | See `map_1var`.                                                    | `None`                              |
+| colorbar_label     | Optional\[str\]   | See `map_1var`.                                                    | `None`                              |
+| output_path        | Optional\[str\]   | See `map_1var`.                                                    | `None`                              |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type   | Description   |
+|--------|--------|---------------|
+|        | None   |               |

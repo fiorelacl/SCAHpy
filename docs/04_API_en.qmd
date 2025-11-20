@@ -2,4 +2,4 @@
 
 Here are the main functions of **SCAHpy**:
 
-{{< include api/index.qmd >}}
+{{< include api_en/index.qmd >}}

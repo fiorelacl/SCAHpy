@@ -1,0 +1,34 @@
+# core.coords { #scahpy.core.coords }
+
+`core.coords`
+
+
+
+## Functions
+
+| Name | Description |
+| --- | --- |
+| [destagger_array](#scahpy.core.coords.destagger_array) | Removes staggering along a given dimension by averaging adjacent values. |
+
+### destagger_array { #scahpy.core.coords.destagger_array }
+
+```python
+core.coords.destagger_array(da, axis, pad=False)
+```
+
+Removes staggering along a given dimension by averaging adjacent values.
+Optionally (CROCO) expands the coordinate by one step on each side before averaging.
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name   | Type         | Description                                                                                                       | Default    |
+|--------|--------------|-------------------------------------------------------------------------------------------------------------------|------------|
+| da     | xr.DataArray | Staggered variable to be destaggered.                                                                             | _required_ |
+| axis   | str          | Name of the staggered dimension (e.g., 'xi_u', 'eta_v', 's_w').                                                   | _required_ |
+| pad    | bool         | If True, expands the coordinate by one inferred step on each edge and fills new points with NaN (default: False). | `False`    |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type         | Description                                                                                           |
+|--------|--------------|-------------------------------------------------------------------------------------------------------|
+|        | xr.DataArray | Destaggered array with the specified dimension reduced by one and coordinate reassigned to midpoints. |

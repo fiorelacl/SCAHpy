@@ -1,0 +1,65 @@
+# core.io { #scahpy.core.io }
+
+`core.io`
+
+
+
+## Functions
+
+| Name | Description |
+| --- | --- |
+| [drop_vars](#scahpy.core.io.drop_vars) | Identifies variables in a NetCDF dataset that are not included  |
+| [get_metadata_vars](#scahpy.core.io.get_metadata_vars) | Extracts metadata for each variable in a NetCDF dataset produced by |
+
+### drop_vars { #scahpy.core.io.drop_vars }
+
+```python
+core.io.drop_vars(file0, sel_vars, model='WRF', engine='netcdf4')
+```
+
+Identifies variables in a NetCDF dataset that are not included 
+in the user-specified selection `sel_vars`.
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name     | Type              | Description                                          | Default     |
+|----------|-------------------|------------------------------------------------------|-------------|
+| file0    | str \| xr.Dataset | Path to the NetCDF output file or an xarray.Dataset. | _required_  |
+| sel_vars | list\[str\]       | List of variable names the user wants to keep.       | _required_  |
+| model    | (WRF, CROCO)      | Model that generated the dataset.                    | `'WRF'`     |
+| engine   | str or None       |                                                      | `'netcdf4'` |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type        | Description                                                                           |
+|--------|-------------|---------------------------------------------------------------------------------------|
+|        | list\[str\] | List of variable names that are present in the dataset but not included in `sel_vars` |
+
+### get_metadata_vars { #scahpy.core.io.get_metadata_vars }
+
+```python
+core.io.get_metadata_vars(
+    dataset,
+    model='WRF',
+    print_all=False,
+    engine='netcdf4',
+)
+```
+
+Extracts metadata for each variable in a NetCDF dataset produced by
+the WRF or CROCO models.
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name      | Type              | Description                                                    | Default     |
+|-----------|-------------------|----------------------------------------------------------------|-------------|
+| dataset   | str \| xr.Dataset | Path to a NetCDF file or an already opened xarray Dataset.     | _required_  |
+| model     | (WRF, CROCO)      | The model that produced the dataset. Accepts 'WRF' or 'CROCO'. | `'WRF'`     |
+| print_all | bool              | If True, prints the metadata for each variable.                | `False`     |
+| engine    | str or None       |                                                                | `'netcdf4'` |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type              | Description                                                                                                                                                                                                                                                                                                                                               |
+|--------|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|        | dict\[str, list\] | A dictionary where each key is a variable name and the value is  a list containing:  For WRF:     - dimensions (tuple of str)     - units (str or None)     - stagger (str or None)     - description (str or None)  For CROCO:     - dimensions (tuple of str)     - units (str or None)     - long_name (str or None)     - standard_name (str or None) |

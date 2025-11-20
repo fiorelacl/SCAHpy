@@ -13,12 +13,12 @@ Includes:
 from .wrf_io import read_wrf
 from .wrf_coords import vert_levs
 from .wrf_diags import (
-    wind_speed, pressure, geopotential, geop_height, t_pot, t_air, rh
+    precipitation, wind_speed, pressure, geopotential, geop_height, t_pot, t_air, rh
 )
 
 __all__ = [
     "read_wrf",
     "vert_levs",
-    "wind_speed", "pressure", "geopotential", "geop_height",
+    "precipitation", "wind_speed", "pressure", "geopotential", "geop_height",
     "t_pot", "t_air", "rh",
 ]

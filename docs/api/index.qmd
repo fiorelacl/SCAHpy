@@ -1,12 +1,27 @@
 # Function reference {.doc .doc-index}
 
+## Core (Operaciones esenciales)
+
+Operaciones comunes de coordenadas, tiempo, vertical y utilidades.
+
+| | |
+| --- | --- |
+| [core.coords](api/core.coords.html) |  |
+| [core.io](api/core.io.html) |  |
+| [core.spatial_ops](api/core.spatial_ops.html) |  |
+| [core.time_ops](api/core.time_ops.html) |  |
+| [core.utils](api/core.utils.html) |  |
+| [core.vertical](api/core.vertical.html) |  |
+
 ## IO Atmosférico (WRF)
 
 Funciones para lectura, manejo de coordenadas y diagnósticos atmosféricos WRF.
 
 | | |
 | --- | --- |
-| [components.atmos](api/components.atmos.html) | SCAHpy Atmos Component |
+| [components.atmos.wrf_diags](api/components.atmos.wrf_diags.html) |  |
+| [components.atmos.wrf_coords](api/components.atmos.wrf_coords.html) |  |
+| [components.atmos.wrf_io](api/components.atmos.wrf_io.html) |  |
 
 ## IO Oceánico (CROCO)
 
@@ -14,15 +29,9 @@ Funciones para lectura, coordenadas y diagnósticos del modelo oceánico CROCO.
 
 | | |
 | --- | --- |
-| [components.ocean](api/components.ocean.html) | SCAHpy Ocean Component |
-
-## Core (Operaciones esenciales)
-
-Operaciones comunes de coordenadas, tiempo, vertical y utilidades.
-
-| | |
-| --- | --- |
-| [core](api/core.html) | SCAHpy Core |
+| [components.ocean.croco_coords](api/components.ocean.croco_coords.html) |  |
+| [components.ocean.croco_io](api/components.ocean.croco_io.html) |  |
+| [components.ocean.croco_diags](api/components.ocean.croco_diags.html) |  |
 
 ## Plotting
 
@@ -30,4 +39,6 @@ Funciones de visualización para mapas, secciones y series de tiempo.
 
 | | |
 | --- | --- |
-| [plots](api/plots.html) | SCAHpy Plots |
+| [plots.maps](api/plots.maps.html) |  |
+| [plots.sections](api/plots.sections.html) |  |
+| [plots.timeseries](api/plots.timeseries.html) |  |

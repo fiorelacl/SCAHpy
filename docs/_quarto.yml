@@ -8,32 +8,46 @@ quartodoc:
   style: pkgdown
   dir: api
   package: scahpy
+  options:
+    sidebar: true
   sections:
+    - title: "Core (Operaciones esenciales)"
+      desc: "Operaciones comunes de coordenadas, tiempo, vertical y utilidades."
+      contents:
+        - core.coords
+        - core.io
+        - core.spatial_ops
+        - core.time_ops
+        - core.utils
+        - core.vertical
+
     - title: "IO Atmosférico (WRF)"
       desc: "Funciones para lectura, manejo de coordenadas y diagnósticos atmosféricos WRF."
       contents:
-        - components.atmos
+        - components.atmos.wrf_diags
+        - components.atmos.wrf_coords
+        - components.atmos.wrf_io
 
     - title: "IO Oceánico (CROCO)"
       desc: "Funciones para lectura, coordenadas y diagnósticos del modelo oceánico CROCO."
       contents:
-        - components.ocean
-
-    - title: "Core (Operaciones esenciales)"
-      desc: "Operaciones comunes de coordenadas, tiempo, vertical y utilidades."
-      contents:
-        - core
+        - components.ocean.croco_coords
+        - components.ocean.croco_io
+        - components.ocean.croco_diags
 
     - title: "Plotting"
       desc: "Funciones de visualización para mapas, secciones y series de tiempo."
       contents:
-        - plots
+        - plots.maps
+        - plots.sections
+        - plots.timeseries
 
 website:
   title: 'SCAHpy'
   favicon: assets/logo.png
   page-footer: "Copyright 2025, Fiorela Castillón"
   bread-crumbs: false
+  page-navigation: true
   sidebar:
     tools:
       - icon: filetype-py

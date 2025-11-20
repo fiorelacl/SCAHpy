@@ -6,7 +6,7 @@
 .quarto-cache/
 **/_freeze/
 **/cache/
-
+.api/
 # ─────────────────────────────────────────────
 # ARCHIVOS DE NOTEBOOKS O CONVERSIÓN
 # ─────────────────────────────────────────────

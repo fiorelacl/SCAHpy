@@ -1,0 +1,44 @@
+# components.atmos.wrf_io { #scahpy.components.atmos.wrf_io }
+
+`components.atmos.wrf_io`
+
+
+
+## Functions
+
+| Name | Description |
+| --- | --- |
+| [read_wrf](#scahpy.components.atmos.wrf_io.read_wrf) | Read WRF outputs, fix/standardize the time coordinate, (optionally) destagger |
+
+### read_wrf { #scahpy.components.atmos.wrf_io.read_wrf }
+
+```python
+components.atmos.wrf_io.read_wrf(
+    file_paths,
+    drop_vars,
+    dif_hours=0,
+    sign=1,
+    destag=True,
+    save_path=None,
+)
+```
+
+Read WRF outputs, fix/standardize the time coordinate, (optionally) destagger
+variables, and attach 2D lat/lon coordinates.
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name       | Type        | Description                                                | Default    |
+|------------|-------------|------------------------------------------------------------|------------|
+| file_paths | list of str | Paths to WRF NetCDF files (same domain).                   | _required_ |
+| drop_vars  | list of str | Variable names to drop at open time (memory-friendly).     | _required_ |
+| dif_hours  | int         | Time offset (in hours) to apply to the 'time' coordinate.  | `0`        |
+| sign       | (1, -1)     | Sign of the time offset (+1 add hours, -1 subtract hours). | `1`        |
+| destag     | bool        | If True, destagger U, V, W, and other *_stag variables.    | `True`     |
+| save_path  | str or None | If provided, writes the resulting dataset to NetCDF.       | `None`     |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type       | Description                                                    |
+|--------|------------|----------------------------------------------------------------|
+|        | xr.Dataset | Merged, time-unique WRF dataset with standardized coordinates. |

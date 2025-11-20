@@ -1,66 +1,251 @@
-# Reading Multiple File {.unnumbered}
+# Tutorial 2: Lectura y análisis de múltiples archivos WRF
 
-In this tutorial, we will guide you through the process of analyzing multiple output dataset from the WRF (Weather Research and Forecasting) model and creating 2D maps featuring rainfall and wind variables using the `scahpy` package. To begin, let's import the `glob` package to manage files and paths, as well as the `scahpy` package.
+En este tutorial aprenderás a:
 
-``` python
-from scahpy import *
+1. Leer **varios archivos WRF** (multi-tiempo) usando SCAHpy.  
+2. Calcular precipitación total, viento 10 m y SST.  
+3. Agregar datos a escala diaria.  
+4. Realizar una visualización básica.
+
+Este flujo es esencial para procesar días, meses o años de simulación del sistema **IGP RESM-COW**.
+
+---
+
+# 1. Importación del paquete
+
+Como en el tutorial anterior, importamos los módulos necesarios:
+
+```python
+import scahpy as sph
+
+from scahpy.components.atmos import wrf_io, wrf_diags
+from scahpy.components.core import (
+    time_ops,
+    utils
+)
+from scahpy.components.plots import maps
+
+import xarray as xr
+import matplotlib.pyplot as plt
 import glob
+````
+
+---
+
+# 2. Lectura de múltiples archivos WRF
+
+## 2.1 Listar archivos
+
+Como mencionaste, por ahora prefieres usar `glob`:
+
+```python
+list_files = sorted(
+    glob.glob("/data/datos/COW/OUT_DIAG_WRF/wrfouts/wrfout_d01_2023-03-*.nc")
+)
+list_files[:3]
 ```
 
-## Step 1: Reading WRF Data
+Ejemplo de salida:
 
-We initiate the process by listing all the files we want to read using the `glob` package and assigning them to the variable `list_files`.
-
-``` python
-list_files = sorted(glob.glob('/data/datos/COW/OUT_DIAG_WRF/wrfouts/wrfout_d01_*'))
+```
+['wrfout_d01_2023-03-01_00:00:00',
+ 'wrfout_d01_2023-03-01_03:00:00',
+ 'wrfout_d01_2023-03-01_06:00:00',
+ ...]
 ```
 
-Given the capability to specify excluded variables when reading netCDF files using the `drop_variables` argument (refer to xarray functions `open_dataset` and `open_mfdataset`), we utilize the `_drop_vars` function from the module `in_out`. This function takes the list of variables we require and generates a list containing all variables present in the output file, subsequently removing those we are not interested in (such as *'RAINC', 'RAINNC', 'RAINSH', 'U10', 'V10', 'SSTSK'*). For this purpose, we use the first file from our list of files, assigning it to the variable `dvars`.
+## 2.2 Leer todos los archivos concatenados
 
-``` python
-dvars = in_out._drop_vars(list_files[0], ['RAINC', 'RAINNC', 'RAINSH', 'U10', 'V10', 'SSTSK'], model='wrf')
+Antes usabas:
+
+```python
+ds = in_out.read_wrf_multi(...)
 ```
 
-Subsequently, we utilize the `read_wrf_multi` function to selectively read the variables of interest. This function accepts the input path (`file_name` in this case), the list of variables to be excluded (`vars`), any required time difference (e.g., `'5 hours'`), and the corresponding sign of the time difference (`-1` for negative, `1` for positive). The outcome is an `xarray.Dataset` containing longitude, latitude, time, and the specified variables. Optionally, you can designate a save path to export the netCDF.
+Ahora se reemplaza por **una sola función moderna**:
 
-``` python
-ds = in_out.read_wrf_multi(list_files, dvars, '5 hours', -1)
+```python
+ds = wrf_io.read_wrf(
+    paths=list_files,
+    drop_vars=["TKE"],
+    time_offset_hours=-5      # convertir UTC → hora local Perú
+)
+ds
 ```
 
-## Step 2: Calculating Precipitation and Wind Speed
+SCAHpy ahora:
 
-In this step, we will utilize the `met_vars` module to calculate precipitation (`calc_pp`), wind speed (`calc_wsp`), and convert sea surface temperature from Kelvin to Celsius (`calc_celsius`).
+* concatena el tiempo automáticamente,
+* estandariza coordenadas (`lat`, `lon`),
+* corrige tipos y atributos,
+* maneja destaggering cuando corresponde.
 
-The `calc_pp` function has an optional argument `vars_to_sum`, allowing users to specify which variables to sum to obtain total precipitation. If no variables are provided, it will default to summing the three variables: `RAINC`, `RAINNC`, and `RAINSH`.
+---
 
-``` python
-ds_sfc = met_vars.calc_pp(ds, vars_to_sum=['RAINC', 'RAINNC', 'RAINSH'], elim=True)
-ds_sfc = met_vars.calc_wsp(ds_sfc, elim=False)
-ds_sfc = met_vars.calc_celsius(ds_sfc, 'SSTSK')
+# 3. Cálculo de diagnósticos (precipitación, viento y SST)
+
+## 3.1 Precipitación acumulada
+
+```python
+pp = ds["RAINC"] + ds["RAINNC"]
+pp.name = "PP"
 ```
 
-By running these commands, we ensure that our dataset `ds_sfc` now contains calculated precipitation, wind speed, and sea surface temperature in Celsius, ready for further analysis or visualization.
+## 3.2 Velocidad del viento a 10 m
 
-## Step 3: Aggregating the Data
-
-Now, we'll aggregate the data to operate on a daily time scale instead of hourly. To achieve this, we'll utilize the `dmy_var` function from the `temp_scales` module. This function takes an `xarray.Dataset` as input, where we specify the desired time scale (e.g., '1D' for daily, 'ME' for monthly, 'YE' for yearly). Additionally, we can specify which variables should be aggregated by sum, average, or median by providing lists for each aggregation method.
-
-``` python
-dd = temp_scales.dmy_var(ds_sfc, tiempo='1D', accum=['PP'], avg=['U10', 'V10'], mediana=['SSTSK'])
+```python
+wspd10 = wrf_diags.wind_speed(ds["U10"], ds["V10"])
+wspd10.name = "wspd10"
 ```
 
-By executing this code, we'll have our data aggregated to a daily time scale, with certain variables summed, averaged, or median-calculated according to our specifications.
+## 3.3 SST en grados Celsius (si existe)
 
-## Step 4: Plotting Precipitation Maps
+```python
+if "SSTSK" in ds:
+    sst = utils.to_celsius(ds["SSTSK"])
+    sst.name = "SST_C"
+```
 
-Next, we'll generate precipitation maps with SST contours and wind vectors using the `map_pp_uv10_sst` function from the `map_plots` module. This function takes the rainfall (PP) variable as input, followed by the dataset with SST and wind components, precipitation levels, SST contours, optional shapefile, exportation settings, output path, temporal scale ('H' for hourly, 'D' for daily, 'M' for monthly, 'Y' for yearly), vector speed, and plot extent (\[x1, x2, y1, y2\]).
+---
 
-``` python
-# Example usage
-precipitation_levels = [1, 2, 3, 5, 7, 11, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60]
-sst_contour_levels = [26, 27, 28]
+# 4. Agregación temporal (diaria)
 
-map_plots.map_pp_uv10_sst(ds_sfc['PP'], ds_sfc, precipitation_levels, sst_contour_levels, shapefile=None, 
-                           output_path='.', save_maps=True, freq='H',
-                           quiverkey_speed=10, extent=None)
+En tu versión antigua tenías:
+
+```python
+dd = temp_scales.dmy_var(...)
+```
+
+Ahora se usa un flujo más simple y universal con `time_ops`:
+
+## 4.1 Agrupar por día
+
+```python
+# Precipitación diaria (suma)
+pp_daily = pp.resample(time="1D").sum()
+
+# Viento diario (promedio)
+wspd10_daily = wspd10.resample(time="1D").mean()
+
+# SST diaria (mediana)
+if "SSTSK" in ds:
+    sst_daily = sst.resample(time="1D").median()
+```
+
+Agrupar así permite un control claro y reproducible.
+
+Puedes combinarlo en un solo Dataset:
+
+```python
+ds_daily = xr.Dataset(
+    {
+        "PP": pp_daily,
+        "wspd10": wspd10_daily,
+        "SST_C": sst_daily if "SSTSK" in ds else None,
+    }
+)
+ds_daily
+```
+
+---
+
+# 5. Visualización básica
+
+Para trazar un día específico:
+
+```python
+day0 = ds_daily.sel(time="2023-03-01")
+```
+
+Mapa simple:
+
+```python
+day0["PP"].plot(
+    x="lon", y="lat",
+    cmap="Blues",
+    cbar_kwargs={"label": "Precipitación diaria (mm)"}
+)
+plt.title("Precipitación diaria – 1 marzo 2023 (WRF)")
+plt.show()
+```
+
+---
+
+# 6. Visualización usando funciones de SCAHpy
+
+Si deseas usar funciones de `components.plots`, por ejemplo para 1 variable:
+
+```python
+maps.map_1var(
+    ds=ds_daily,
+    var_name="PP",
+    time_index=0,
+    cmap="Blues",
+    title="Precipitación diaria acumulada"
+)
+```
+# Tutorial 1: Lectura de un archivo CROCO
+# 5. Lectura rápida de un archivo CROCO
+
+Además de WRF, SCAHpy permite trabajar con salidas del modelo oceánico **CROCO**, utilizado en el componente marino del IGP RESM-COW.
+
+## 5.1 Definir la ruta del archivo CROCO
+
+Como ejemplo:
+
+```python
+croco_file = "/data/datos/COW/OUT_DIAG_CROCO/croco_avg_Y2000M01.nc"
+```
+
+Nuevamente usaremos una lista, aunque solo haya un archivo:
+
+```python
+ds_croco = croco_io.read_croco(
+    paths=[croco_file],   # lista con un único archivo
+    destag=True,          # pasar de grilla C a grilla centrada
+    keep_vertical=True    # conservar niveles sigma
+)
+ds_croco
+```
+
+El resultado suele incluir:
+
+* `time`: tiempos diarios o subdiarios,
+* `eta_rho`, `xi_rho` o equivalentes convertidos a `lat`, `lon`,
+* `s_rho` o niveles sigma,
+* Variables oceánicas: `temp`, `salt`, `u`, `v`, etc.
+
+---
+
+# 6. Mapa simple de SST con CROCO
+
+Suponiendo que la variable de temperatura se llama `temp` y que el último nivel vertical corresponde aproximadamente a la superficie:
+
+```python
+sst = ds_croco["temp"].isel(s_rho=-1)  # último nivel = superficie
+sst.name = "SST"
+```
+
+Tomamos, por ejemplo, el primer tiempo:
+
+```python
+sst.isel(time=0).plot(
+    x="lon", y="lat",
+    cmap="viridis",
+    cbar_kwargs={"label": "SST (°C)"}
+)
+plt.title("Temperatura superficial del mar – CROCO (archivo único)")
+plt.show()
+```
+
+También puedes usar la función de SCAHpy:
+
+```python
+maps.map_1var(
+    ds=ds_croco,
+    var_name="temp",
+    time_index=0,
+    level_index=-1,    # superficie
+    title="SST – CROCO (archivo único)"
+)
 ```

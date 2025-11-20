@@ -1,0 +1,44 @@
+# Function reference {.doc .doc-index}
+
+## Core (Operaciones esenciales)
+
+Operaciones comunes de coordenadas, tiempo, vertical y utilidades.
+
+| | |
+| --- | --- |
+| [core.coords](api/core.coords_en.html) |  |
+| [core.io](api/core.io_en.html) |  |
+| [core.spatial_ops](api/core.spatial_ops_en.html) |  |
+| [core.time_ops](api/core.time_ops_en.html) |  |
+| [core.utils](api/core.utils_en.html) |  |
+| [core.vertical](api/core.vertical_en.html) |  |
+
+## IO Atmosférico (WRF)
+
+Funciones para lectura, manejo de coordenadas y diagnósticos atmosféricos WRF.
+
+| | |
+| --- | --- |
+| [components.atmos.wrf_diags](api/components.atmos.wrf_diags_en.html) |  |
+| [components.atmos.wrf_coords](api/components.atmos.wrf_coords_en.html) |  |
+| [components.atmos.wrf_io](api/components.atmos.wrf_io_en.html) |  |
+
+## IO Oceánico (CROCO)
+
+Funciones para lectura, coordenadas y diagnósticos del modelo oceánico CROCO.
+
+| | |
+| --- | --- |
+| [components.ocean.croco_coords](api/components.ocean.croco_coords_en.html) |  |
+| [components.ocean.croco_io](api/components.ocean.croco_io_en.html) |  |
+| [components.ocean.croco_diags](api/components.ocean.croco_diags_en.html) |  |
+
+## Plotting
+
+Funciones de visualización para mapas, secciones y series de tiempo.
+
+| | |
+| --- | --- |
+| [plots.maps](api/plots.maps_en.html) |  |
+| [plots.sections](api/plots.sections_en.html) |  |
+| [plots.timeseries](api/plots.timeseries_en.html) |  |

@@ -3,7 +3,7 @@
 Esta sección describe los métodos recomendados para instalar **SCAHpy**, tanto en entornos locales como en clústeres de cómputo de alto rendimiento (HPC).  
 El paquete está desarrollado para funcionar sobre ecosistemas científicos modernos que utilizan principalmente *xarray*, *netCDF4*, *matplotlib*.
 
-## 1. Requisitos previos
+## Requisitos previos
 
 Antes de instalar SCAHpy, verifica lo siguiente:
 

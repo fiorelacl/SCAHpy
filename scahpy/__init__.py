@@ -6,7 +6,7 @@
 # the GNU General Public License v3.0 or later.
 # See the LICENSE file for details.
 
-__version__ = "2.0.0"
+__version__ = "2.0.4"
 
 """
 SCAHpy is a scientific Python package for the analysis and visualization
@@ -25,7 +25,7 @@ High-level API for reading, transforming and visualizing coupled OA data.
 from .core import (
     get_metadata_vars, drop_vars,
     destagger_array, extract_points,
-    monthly_climatology, anomalies, monthly_to_daily_climatology,
+    aggregate_dmy, monthly_climatology, anomalies, monthly_to_daily_climatology,
     vertical_interp,
     to_celsius, to_kelvin, to_hpa, to_pa,
     ddx, ddy, rotate_to_EN, apply_mask,
@@ -35,7 +35,7 @@ from .core import (
 from .components.atmos.wrf_io import read_wrf
 from .components.atmos.wrf_coords import vert_levs
 from .components.atmos.wrf_diags import (
-    wind_speed, pressure, geopotential, geop_height, t_pot, t_air, rh
+    precipitation, wind_speed, pressure, geopotential, geop_height, t_pot, t_air, rh
 )
 
 # === Ocean / CROCO === #
@@ -52,7 +52,7 @@ __all__ = [
     # Core
     "get_metadata_vars", "drop_vars",
     "destagger_array", "extract_points",
-    "monthly_climatology", "anomalies", "monthly_to_daily_climatology",
+    "aggregate_dmy", "monthly_climatology", "anomalies", "monthly_to_daily_climatology",
     "vertical_interp",
     "to_celsius", "to_kelvin", "to_hpa", "to_pa",
     "ddx", "ddy", "rotate_to_EN", "apply_mask",
@@ -61,7 +61,7 @@ __all__ = [
     # Coords/vertical components
     "vert_levs", "croco_depths", "crocointerp_sigma_to_z",
     # Diags
-    "wind_speed", "pressure", "geopotential", "geop_height", "t_pot", "t_air", "rh",
+    "precipitation", "wind_speed", "pressure", "geopotential", "geop_height", "t_pot", "t_air", "rh",
     "ke_sfc", "grad_sst", "vorticity_sfc",
     # Plots
     "map_1var", "map_1var_winds", "map_2var_contours", "map_2vars_winds",

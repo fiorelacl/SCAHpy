@@ -1,0 +1,50 @@
+# core.spatial_ops { #scahpy.core.spatial_ops }
+
+`core.spatial_ops`
+
+
+
+## Functions
+
+| Name | Description |
+| --- | --- |
+| [extract_points](#scahpy.core.spatial_ops.extract_points) | Extract data from a model output dataset (e.g., WRF/CROCO) at the nearest |
+
+### extract_points { #scahpy.core.spatial_ops.extract_points }
+
+```python
+core.spatial_ops.extract_points(
+    ds_out,
+    station,
+    lon_col,
+    lat_col,
+    name_col,
+    ds_lon_name='lon',
+    ds_lat_name='lat',
+    output_format='netcdf',
+    save_path=None,
+)
+```
+
+Extract data from a model output dataset (e.g., WRF/CROCO) at the nearest
+grid point(s) to a set of station locations provided via CSV or Shapefile.
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name          | Type                | Description                                                                                                                                                                                                                                                                                             | Default    |
+|---------------|---------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------|
+| ds_out        | xr.Dataset          | Model dataset already loaded in memory. The dataset must contain longitude and latitude variables whose names are provided via `ds_lon_name` and `ds_lat_name`. These may be 1D or 2D variables and will be promoted to coordinates if they are not already.                                            | _required_ |
+| station       | str                 | Path to a CSV ('.csv') or ESRI Shapefile ('.shp') with station metadata. The CSV/Shapefile must provide, at minimum, station name, longitude, and latitude columns as specified by `name_col`, `lon_col`, `lat_col`. For Shapefiles, the function reads the first point of each geometry as (lon, lat). | _required_ |
+| lon_col       | str                 | Column name in the stations file for longitudes (degrees East).                                                                                                                                                                                                                                         | _required_ |
+| lat_col       | str                 | Column name in the stations file for latitudes (degrees North).                                                                                                                                                                                                                                         | _required_ |
+| name_col      | str                 | Column name in the stations file for station identifiers.                                                                                                                                                                                                                                               | _required_ |
+| ds_lon_name   | str                 | Variable name of longitudes in `ds_out` (e.g., 'XLONG', 'lon_rho'). Default is 'lon'.                                                                                                                                                                                                                   | `'lon'`    |
+| ds_lat_name   | str                 | Variable name of latitudes in `ds_out` (e.g., 'XLAT', 'lat_rho'). Default is 'lat'.                                                                                                                                                                                                                     | `'lat'`    |
+| output_format | (netcdf, dataframe) | Output format. If 'dataframe', returns a tidy pandas.DataFrame; otherwise returns an xarray.Dataset. Default is 'netcdf'.                                                                                                                                                                               | `'netcdf'` |
+| save_path     | str                 | If provided, the result is written to disk. Uses CSV when `output_format='dataframe'` and NetCDF otherwise.                                                                                                                                                                                             | `None`     |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type                           | Description                                            |
+|--------|--------------------------------|--------------------------------------------------------|
+|        | xr.Dataset or pandas.DataFrame | Extracted data at nearest grid point for each station. |

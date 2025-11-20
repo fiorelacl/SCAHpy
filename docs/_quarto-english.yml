@@ -13,7 +13,7 @@ project:
     - 05_contrib_en.qmd
     - 06_references_en.qmd
     - index_en.qmd
-    - api/*.qmd
+    - api_en/*.qmd
 
 website:
   sidebar:

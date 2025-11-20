@@ -1,0 +1,96 @@
+# components.ocean.croco_coords { #scahpy.components.ocean.croco_coords }
+
+`components.ocean.croco_coords`
+
+
+
+## Functions
+
+| Name | Description |
+| --- | --- |
+| [croco_depths](#scahpy.components.ocean.croco_coords.croco_depths) | Compute physical depths (z, in meters) at rho or w points for CROCO/ROMS grids. |
+| [crocointerp_sigma_to_z](#scahpy.components.ocean.croco_coords.crocointerp_sigma_to_z) | Interpolate CROCO variables from sigma levels to fixed z levels (meters). |
+
+### croco_depths { #scahpy.components.ocean.croco_coords.croco_depths }
+
+```python
+components.ocean.croco_coords.croco_depths(
+    ds,
+    *,
+    which='rho',
+    levels_dim='levels',
+    wlevels_dim='s_w',
+    lat_dim='lat',
+    lon_dim='lon',
+    h_name='h',
+    zeta_name='zeta',
+    hc_name='hc',
+)
+```
+
+Compute physical depths (z, in meters) at rho or w points for CROCO/ROMS grids.
+
+This function is compatible with datasets produced by `read_croco` and
+computes the vertical coordinate transformation according to the model
+parameters, supporting both **Vtransform = 1** and **Vtransform = 2**.
+It does not create artificial dimensions and follows the original structure
+of the CROCO vertical grid.
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name        | Type       | Description                                                                                                                                                                        | Default    |
+|-------------|------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------|
+| ds          | xr.Dataset | CROCO dataset already standardized (as returned by `read_croco`).                                                                                                                  | _required_ |
+| which       | (rho, w)   | Defines the grid points where depths are computed: - `'rho'` → centers of vertical layers (used for T, S, U, V) - `'w'`   → interfaces between layers (used for vertical velocity) | `'rho'`    |
+| levels_dim  | str        | Name of the vertical dimension for rho-points (default: "levels").                                                                                                                 | `'levels'` |
+| wlevels_dim | str        | Name of the vertical dimension for w-points (default: "s_w").                                                                                                                      | `'s_w'`    |
+| lat_dim     | str        | Names of the horizontal dimensions (default: "lat", "lon").                                                                                                                        | `'lat'`    |
+| lon_dim     | str        | Names of the horizontal dimensions (default: "lat", "lon").                                                                                                                        | `'lat'`    |
+| h_name      | str        | Names of the bathymetry (`h`), free-surface elevation (`zeta`), and critical depth (`hc`) variables.                                                                               | `'h'`      |
+| zeta_name   | str        | Names of the bathymetry (`h`), free-surface elevation (`zeta`), and critical depth (`hc`) variables.                                                                               | `'h'`      |
+| hc_name     | str        | Names of the bathymetry (`h`), free-surface elevation (`zeta`), and critical depth (`hc`) variables.                                                                               | `'h'`      |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type         | Description                                                                                                                                                       |
+|--------|--------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|        | xr.DataArray | Physical depth (in meters) at either rho-points or w-points: - For `'rho'` → dimensions (time, levels, lat, lon) - For `'w'`   → dimensions (time, s_w, lat, lon) |
+
+### crocointerp_sigma_to_z { #scahpy.components.ocean.croco_coords.crocointerp_sigma_to_z }
+
+```python
+components.ocean.croco_coords.crocointerp_sigma_to_z(
+    ds,
+    var_names,
+    *,
+    which_z='rho',
+    z_levels=None,
+    z_units='m',
+    sigma_dim=None,
+    new_dim='z',
+    mask_outside=True,
+    persist=False,
+)
+```
+
+Interpolate CROCO variables from sigma levels to fixed z levels (meters).
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name         | Type                      | Description                                                                                            | Default     |
+|--------------|---------------------------|--------------------------------------------------------------------------------------------------------|-------------|
+| ds           | xr.Dataset                | CROCO Dataset con h, zeta, hc, s_{rho\|w}, Cs_{r\|w}.                                                  | _required_  |
+| var_names    | sequence of str           | Variables a interpolar (deben contener la dimensión sigma).                                            | _required_  |
+| which_z      | (rho, w)                  | Profundidades de referencia para la interpolación (z_r o z_w).                                         | `'rho','w'` |
+| z_levels     | sequence of float or None | Niveles objetivo en z. Si None, usa [0, -10, -20, -30, -50, -75, -100, -150, -200, -300, -500, -1000]. | `None`      |
+| z_units      | (m, km)                   | Unidades de z_levels.                                                                                  | `'m','km'`  |
+| sigma_dim    | str or None               | Nombre de la dimensión sigma; si None se infiere ('s_rho' o 's_w').                                    | `None`      |
+| new_dim      | str                       | Nombre de la nueva dimensión.                                                                          | `'z'`       |
+| mask_outside | bool                      | Enmascara con NaN los puntos fuera del rango vertical local.                                           | `True`      |
+| persist      | bool                      | Llama .persist() en salidas (útil con Dask).                                                           | `False`     |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type       | Description                                                 |
+|--------|------------|-------------------------------------------------------------|
+|        | xr.Dataset | Dataset con variables interpoladas en el eje `new_dim` (z). |

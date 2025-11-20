@@ -1,6 +1,76 @@
 import numpy as np
 import xarray as xr
 
+def precipitation(
+    *acc_vars: xr.DataArray,
+    name: str = "PP",
+    units: str = "mm",
+) -> xr.DataArray:
+    """
+    Compute de-accumulated precipitation from WRF accumulated variables.
+
+    WRF provides several accumulated precipitation components, such as:
+        - RAINC  : Accumulated precipitation from cumulus scheme (mm)
+        - RAINNC : Accumulated precipitation from microphysics (mm)
+        - RAINSH : Accumulated shallow convection precipitation (mm)
+
+    Parameters
+    ----------
+    *acc_vars : xr.DataArray
+        One or more accumulated precipitation variables that share the
+        same dimensions and coordinates (e.g., RAINC, RAINNC, RAINSH).
+        Units are assumed to be millimeters (WRF default).
+    name : str, optional
+        Name for the output de-accumulated precipitation variable.
+        Default is "PP".
+    units : {"mm", "kg m-2"}, optional
+        Output units. WRF precipitation is equivalent to mm or kg/m².
+        Default is "mm".
+
+    Returns
+    -------
+    xr.DataArray
+        De-accumulated precipitation with metadata included. The first
+        timestep is set to NaN because the accumulated difference is undefined.
+
+    Notes
+    -----
+    - The time coordinate is preserved.
+    - The function assumes precipitation is monotonically increasing
+      (WRF accumulation behavior).
+    - If one of the input arrays resets to zero (e.g., restart file),
+      the user must manually handle the discontinuity.
+
+    """
+
+    if len(acc_vars) == 0:
+        raise ValueError("At least one accumulated precipitation variable must be provided.")
+
+    total_acc = sum(acc_vars)
+    total_acc.name = "P_acc"
+
+    PP = total_acc.diff("time")
+
+    PP = PP.assign_coords(time=total_acc.time[1:])
+
+    first = xr.full_like(total_acc.isel(time=0), fill_value=np.nan)
+    PP = xr.concat([first, PP], dim="time")
+
+    dims = list(total_acc.dims)
+    if "time" in dims:
+        dims = ["time"] + [d for d in dims if d != "time"]
+        PP = PP.transpose(*dims)
+
+    PP.name = name
+    PP.attrs.update({
+        "units": units,
+        "long_name": "Instantaneous precipitation",
+        "standard_name": "precipitation_amount",
+        "description": "De-accumulated precipitation derived from WRF accumulated fields"
+    })
+
+    return PP
+
 def wind_speed(u: xr.DataArray, v: xr.DataArray, name: str = "WSP") -> xr.DataArray:
     """
     Compute horizontal wind speed (m s⁻¹) from zonal (U) and meridional (V) components.

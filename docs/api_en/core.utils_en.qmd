@@ -1,0 +1,229 @@
+# core.utils { #scahpy.core.utils }
+
+`core.utils`
+
+
+
+## Functions
+
+| Name | Description |
+| --- | --- |
+| [apply_mask](#scahpy.core.utils.apply_mask) | Apply a land–sea (and optionally lake) mask to the input variable. |
+| [central_diff](#scahpy.core.utils.central_diff) | Compute the centered finite difference along a given dimension. |
+| [ddx](#scahpy.core.utils.ddx) | Compute the partial derivative ∂(field)/∂x using a provided grid metric. |
+| [ddy](#scahpy.core.utils.ddy) | Compute the partial derivative ∂(field)/∂y using a provided grid metric. |
+| [rotate_to_EN](#scahpy.core.utils.rotate_to_EN) | Rotate horizontal velocity components from grid-relative to |
+| [to_celsius](#scahpy.core.utils.to_celsius) | Convert temperature from Kelvin to Celsius. |
+| [to_hpa](#scahpy.core.utils.to_hpa) | Convert pressure from Pascals (Pa) to hectoPascals (hPa). |
+| [to_kelvin](#scahpy.core.utils.to_kelvin) | Convert temperature from Celsius to Kelvin. |
+| [to_pa](#scahpy.core.utils.to_pa) | Convert pressure from hectoPascals (hPa) to Pascals (Pa). |
+
+### apply_mask { #scahpy.core.utils.apply_mask }
+
+```python
+core.utils.apply_mask(
+    da,
+    mask,
+    *,
+    sea_is_one=True,
+    lakemask=None,
+    exclude_lakes=True,
+)
+```
+
+Apply a land–sea (and optionally lake) mask to the input variable.
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name          | Type         | Description                                                                                                           | Default    |
+|---------------|--------------|-----------------------------------------------------------------------------------------------------------------------|------------|
+| da            | xr.DataArray | Variable to which the mask is applied.                                                                                | _required_ |
+| mask          | xr.DataArray | Land–sea mask. May follow either convention: - CROCO/ROMS: 1 = ocean, 0 = land - WRF:       1 = land, 0 = ocean       | _required_ |
+| sea_is_one    | bool         | True  →  mask==1 means ocean (ROMS style). False →  mask==1 means land  (WRF style).                                  | `True`     |
+| lakemask      | xr.DataArray | Lake mask (1 = lake, 0 = not lake). If provided and ``exclude_lakes=True``, those points will be masked (set to NaN). | `None`     |
+| exclude_lakes | bool         | If True and `lakemask` is available, mask out lakes as well.                                                          | `True`     |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type         | Description                                       |
+|--------|--------------|---------------------------------------------------|
+|        | xr.DataArray | Masked variable with non-ocean values set to NaN. |
+
+### central_diff { #scahpy.core.utils.central_diff }
+
+```python
+core.utils.central_diff(da, dim)
+```
+
+Compute the centered finite difference along a given dimension.
+
+This returns the simple centered stencil (f[i+1] - f[i-1]) / 2, i.e.
+without dividing by the grid spacing. The caller can later scale by
+metric coefficients (e.g., pm = 1/Δx, pn = 1/Δy).
+
+Edge handling:
+    The first and last points along `dim` are set to NaN because a
+    centered derivative is not defined there (missing neighbors).
+    Coordinates are preserved; only data values at the edges become NaN.
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name   | Type         | Description                                                  | Default    |
+|--------|--------------|--------------------------------------------------------------|------------|
+| da     | xr.DataArray | Input array. Must contain dimension `dim`.                   | _required_ |
+| dim    | str          | Name of the dimension along which to compute the derivative. | _required_ |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type         | Description                                                                                                                                                            |
+|--------|--------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|        | xr.DataArray | Centered difference with the same dimensions and coordinates as `da`, except that the two edge points along `dim` are NaN. Variable name and attributes are preserved. |
+
+### ddx { #scahpy.core.utils.ddx }
+
+```python
+core.utils.ddx(field, metric_x, *, x_dim='x')
+```
+
+Compute the partial derivative ∂(field)/∂x using a provided grid metric.
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name     | Type                  | Description                                                                                                             | Default    |
+|----------|-----------------------|-------------------------------------------------------------------------------------------------------------------------|------------|
+| field    | xr.DataArray          | Input variable defined on a rectilinear or curvilinear grid.                                                            | _required_ |
+| metric_x | xr.DataArray or float | Grid metric in the x-direction (typically 1/Δx). For CROCO/ROMS, this corresponds to `pm`; for WRF, to `mapfac_m / dx`. | _required_ |
+| x_dim    | str                   | Name of the x dimension. Default is "x".                                                                                | `'x'`      |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type         | Description                                        |
+|--------|--------------|----------------------------------------------------|
+|        | xr.DataArray | Zonal derivative scaled by the x-direction metric. |
+
+### ddy { #scahpy.core.utils.ddy }
+
+```python
+core.utils.ddy(field, metric_y, *, y_dim='y')
+```
+
+Compute the partial derivative ∂(field)/∂y using a provided grid metric.
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name     | Type                  | Description                                                                                                             | Default    |
+|----------|-----------------------|-------------------------------------------------------------------------------------------------------------------------|------------|
+| field    | xr.DataArray          | Input variable defined on a rectilinear or curvilinear grid.                                                            | _required_ |
+| metric_y | xr.DataArray or float | Grid metric in the y-direction (typically 1/Δy). For CROCO/ROMS, this corresponds to `pn`; for WRF, to `mapfac_n / dy`. | _required_ |
+| y_dim    | str                   | Name of the y dimension. Default is "y".                                                                                | `'y'`      |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type         | Description                                             |
+|--------|--------------|---------------------------------------------------------|
+|        | xr.DataArray | Meridional derivative scaled by the y-direction metric. |
+
+### rotate_to_EN { #scahpy.core.utils.rotate_to_EN }
+
+```python
+core.utils.rotate_to_EN(u, v, *, angle=None, cosang=None, sinang=None)
+```
+
+Rotate horizontal velocity components from grid-relative to
+East–North coordinates.
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name   | Type         | Description                                             | Default    |
+|--------|--------------|---------------------------------------------------------|------------|
+| u      | xr.DataArray | Zonal and meridional components on the model grid.      | _required_ |
+| v      | xr.DataArray | Zonal and meridional components on the model grid.      | _required_ |
+| angle  | xr.DataArray | Grid orientation angle in radians (used in CROCO/ROMS). | `None`     |
+| cosang | xr.DataArray | Cosine and sine of the grid angle (used in WRF).        | `None`     |
+| sinang | xr.DataArray | Cosine and sine of the grid angle (used in WRF).        | `None`     |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type                                      | Description                                                   |
+|--------|-------------------------------------------|---------------------------------------------------------------|
+|        | (u_east, v_north) : tuple of xr.DataArray | Velocity components rotated into true east–north coordinates. |
+
+### to_celsius { #scahpy.core.utils.to_celsius }
+
+```python
+core.utils.to_celsius(temp)
+```
+
+Convert temperature from Kelvin to Celsius.
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name   | Type                                | Description            | Default    |
+|--------|-------------------------------------|------------------------|------------|
+| temp   | float \| np.ndarray \| xr.DataArray | Temperature in Kelvin. | _required_ |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type                                | Description                                                          |
+|--------|-------------------------------------|----------------------------------------------------------------------|
+|        | float \| np.ndarray \| xr.DataArray | Temperature in Celsius, preserving attributes if input is DataArray. |
+
+### to_hpa { #scahpy.core.utils.to_hpa }
+
+```python
+core.utils.to_hpa(pres)
+```
+
+Convert pressure from Pascals (Pa) to hectoPascals (hPa).
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name   | Type                                | Description          | Default    |
+|--------|-------------------------------------|----------------------|------------|
+| pres   | float \| np.ndarray \| xr.DataArray | Pressure in Pascals. | _required_ |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type                                | Description                                                            |
+|--------|-------------------------------------|------------------------------------------------------------------------|
+|        | float \| np.ndarray \| xr.DataArray | Pressure in hectoPascals, preserving attributes if input is DataArray. |
+
+### to_kelvin { #scahpy.core.utils.to_kelvin }
+
+```python
+core.utils.to_kelvin(temp)
+```
+
+Convert temperature from Celsius to Kelvin.
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name   | Type                                | Description             | Default    |
+|--------|-------------------------------------|-------------------------|------------|
+| temp   | float \| np.ndarray \| xr.DataArray | Temperature in Celsius. | _required_ |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type                                | Description                                                         |
+|--------|-------------------------------------|---------------------------------------------------------------------|
+|        | float \| np.ndarray \| xr.DataArray | Temperature in Kelvin, preserving attributes if input is DataArray. |
+
+### to_pa { #scahpy.core.utils.to_pa }
+
+```python
+core.utils.to_pa(pres)
+```
+
+Convert pressure from hectoPascals (hPa) to Pascals (Pa).
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name   | Type                                | Description               | Default    |
+|--------|-------------------------------------|---------------------------|------------|
+| pres   | float \| np.ndarray \| xr.DataArray | Pressure in hectoPascals. | _required_ |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type                                | Description                                                       |
+|--------|-------------------------------------|-------------------------------------------------------------------|
+|        | float \| np.ndarray \| xr.DataArray | Pressure in Pascals, preserving attributes if input is DataArray. |

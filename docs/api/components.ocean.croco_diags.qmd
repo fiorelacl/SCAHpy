@@ -1,0 +1,128 @@
+# components.ocean.croco_diags { #scahpy.components.ocean.croco_diags }
+
+`components.ocean.croco_diags`
+
+
+
+## Functions
+
+| Name | Description |
+| --- | --- |
+| [grad_sst](#scahpy.components.ocean.croco_diags.grad_sst) | Magnitude of the horizontal SST gradient ``\|∇T\|``. |
+| [ke_sfc](#scahpy.components.ocean.croco_diags.ke_sfc) | Surface kinetic energy ``KE = 0.5 * (u**2 + v**2)``. |
+| [vorticity_sfc](#scahpy.components.ocean.croco_diags.vorticity_sfc) | Surface relative vorticity ``ζ = ∂v/∂x − ∂u/∂y``. |
+
+### grad_sst { #scahpy.components.ocean.croco_diags.grad_sst }
+
+```python
+components.ocean.croco_diags.grad_sst(
+    sst,
+    pm,
+    pn,
+    *,
+    x_dim='lon',
+    y_dim='lat',
+    mask=None,
+    to_per_100km=True,
+    name='grad_sst_mag',
+)
+```
+
+Magnitude of the horizontal SST gradient ``|∇T|``.
+
+Uses centered differences and CROCO/ROMS metric coefficients ``pm=1/Δx`` and
+``pn=1/Δy``. Units are °C per 100 km by default (set ``to_per_100km=False``
+to keep °C m⁻¹).
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name         | Type         | Description                                                        | Default          |
+|--------------|--------------|--------------------------------------------------------------------|------------------|
+| sst          | xr.DataArray | Sea surface temperature (°C or K) on the ρ-grid.                   | _required_       |
+| pm           | xr.DataArray | Metric coefficients 1/Δx and 1/Δy (m⁻¹), broadcastable to ``sst``. | _required_       |
+| pn           | xr.DataArray | Metric coefficients 1/Δx and 1/Δy (m⁻¹), broadcastable to ``sst``. | _required_       |
+| x_dim        | str          | Names of horizontal dimensions.                                    | `("lon", "lat")` |
+| y_dim        | str          | Names of horizontal dimensions.                                    | `("lon", "lat")` |
+| mask         | xr.DataArray | Ocean mask (1=sea, 0=land) to apply to the result.                 | `None`           |
+| to_per_100km | bool         | If True, scales the magnitude to per 100 km.                       | `True`           |
+| name         | str          | Output variable name.                                              | `"grad_sst_mag"` |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type         | Description                                      |
+|--------|--------------|--------------------------------------------------|
+|        | xr.DataArray | ``\|∇T\|`` in °C per 100 km (default) or °C m⁻¹. |
+
+### ke_sfc { #scahpy.components.ocean.croco_diags.ke_sfc }
+
+```python
+components.ocean.croco_diags.ke_sfc(u, v, *, mask=None, name='ke_sfc')
+```
+
+Surface kinetic energy ``KE = 0.5 * (u**2 + v**2)``.
+
+Assumes that ``u`` and ``v`` are already on the same unstaggered grid and in
+earth-relative coordinates if needed (East–North). For purely scalar KE this
+rotation is not strictly necessary (KE is rotation-invariant), but ensure
+consistent pre-processing if you plan to overlay quivers.
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name   | Type         | Description                                            | Default    |
+|--------|--------------|--------------------------------------------------------|------------|
+| u      | xr.DataArray | Horizontal velocity components at the surface (m s⁻¹). | _required_ |
+| v      | xr.DataArray | Horizontal velocity components at the surface (m s⁻¹). | _required_ |
+| mask   | xr.DataArray | Ocean mask (1=sea, 0=land) to apply to the result.     | `None`     |
+| name   | str          | Output variable name.                                  | `"ke_sfc"` |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type         | Description                                                              |
+|--------|--------------|--------------------------------------------------------------------------|
+|        | xr.DataArray | Surface kinetic energy (m² s⁻²) with the same dimensions as ``u``/``v``. |
+
+### vorticity_sfc { #scahpy.components.ocean.croco_diags.vorticity_sfc }
+
+```python
+components.ocean.croco_diags.vorticity_sfc(
+    u,
+    v,
+    pm,
+    pn,
+    *,
+    x_dim='lon',
+    y_dim='lat',
+    mask=None,
+    f=None,
+    normalize_by_f=False,
+    name=None,
+)
+```
+
+Surface relative vorticity ``ζ = ∂v/∂x − ∂u/∂y``.
+
+Derivatives are computed with centered differences and multiplied by the
+metric coefficients (``pm``, ``pn``). If ``normalize_by_f=True`` the result
+is divided by the local Coriolis parameter ``f`` to obtain the adimensional
+quantity ``ζ/f``.
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name           | Type         | Description                                                             | Default          |
+|----------------|--------------|-------------------------------------------------------------------------|------------------|
+| u              | xr.DataArray | Horizontal velocity components at the surface (m s⁻¹).                  | _required_       |
+| v              | xr.DataArray | Horizontal velocity components at the surface (m s⁻¹).                  | _required_       |
+| pm             | xr.DataArray | Metric coefficients 1/Δx and 1/Δy (m⁻¹), broadcastable to ``u``/``v``.  | _required_       |
+| pn             | xr.DataArray | Metric coefficients 1/Δx and 1/Δy (m⁻¹), broadcastable to ``u``/``v``.  | _required_       |
+| x_dim          | str          | Names of horizontal dimensions.                                         | `("lon", "lat")` |
+| y_dim          | str          | Names of horizontal dimensions.                                         | `("lon", "lat")` |
+| mask           | xr.DataArray | Ocean mask (1=sea, 0=land) to apply to the result.                      | `None`           |
+| f              | xr.DataArray | Coriolis parameter (s⁻¹). Required if ``normalize_by_f=True``.          | `None`           |
+| normalize_by_f | bool         | If True, returns ``ζ/f`` (dimensionless).                               | `False`          |
+| name           | str          | Output variable name. Inferred from ``normalize_by_f`` if not provided. | `None`           |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type         | Description                                                               |
+|--------|--------------|---------------------------------------------------------------------------|
+|        | xr.DataArray | Relative vorticity (s⁻¹) or normalized vorticity ``ζ/f`` (dimensionless). |

@@ -3,6 +3,99 @@ import pandas as pd
 import xarray as xr
 from typing import Literal
 
+def aggregate_dmy(
+    ds: xr.Dataset,
+    tiempo: str = None,
+    accum: list | None = None,
+    avg: list | None = None,
+    mediana: list | None = None,
+) -> xr.Dataset:
+    """
+    Resample WRF hourly data to coarser time intervals using sum, mean, or median
+    operations for selected variables.
+
+    This function provides a flexible interface to resample a Dataset using any
+    time frequency supported by xarray's `.resample()` (e.g., "D" for daily,
+    "M" for monthly, "6H" for 6-hourly). Different groups of variables may be
+    aggregated with different operations like: sum, mean, or median.
+
+    Parameters
+    ----------
+    ds : xr.Dataset
+        Input Dataset containing time-dependent variables (typically hourly WRF outputs).
+    tiempo : str, optional
+        Resampling frequency string accepted by `Dataset.resample()`. Examples:
+        "D"  (daily), "M" (monthly), "3H" (3-hourly), "Y" (yearly).
+        If None, the function will return an error message.
+    accum : list of str, optional
+        List of variable names to aggregate using the sum over each resample interval.
+        Useful for accumulated or flux-like variables.
+    avg : list of str, optional
+        List of variable names to aggregate using the mean.
+    mediana : list of str, optional
+        List of variable names to aggregate using the median.
+    
+    Returns
+    -------
+    xr.Dataset
+        Dataset containing the resampled variables merged together.
+        The resulting Dataset includes only the variables specified in `accum`,
+        `avg`, and `mediana`.
+
+    Notes
+    -----
+    - If no variables are provided in `accum`, `avg`, or `mediana`, the function
+      returns `None` with a warning message.
+    - The function relies on xarray's `.resample()`, which requires the `time`
+      coordinate to be properly formatted as a datetime64 index.
+    - Each aggregation type is applied only to the variables specified in its
+      corresponding list.
+
+    Examples
+    --------
+    >>> # Daily sums of rainfall and daily means of temperature
+    >>> ds_daily = dmy_var(
+    ...     ds,
+    ...     tiempo="D",
+    ...     accum=["RAINC", "RAINNC"],
+    ...     avg=["T2"]
+    ... )
+    
+    >>> # Monthly means for several atmospheric variables
+    >>> ds_month = dmy_var(ds, tiempo="M", avg=["U10", "V10", "T2"])
+
+    """
+    
+    if tiempo is None:
+        print("Please provide a valid resampling frequency (e.g., 'D', 'M', '3H').")
+        return None
+
+    datasets = []
+
+    if accum:
+        ds_ac = ds[accum].resample(time=tiempo).sum()
+        datasets.append(ds_ac)
+
+    if avg:
+        ds_avg = ds[avg].resample(time=tiempo).mean()
+        datasets.append(ds_avg)
+
+    if mediana:
+        ds_med = ds[mediana].resample(time=tiempo).median()
+        datasets.append(ds_med)
+
+    if not datasets:
+        print("Please specify at least one group of variables (accum, avg, mediana).")
+        return None
+
+    try:
+        ds_all = xr.merge(datasets)
+    except ValueError:
+        print("Invalid resampling frequency or misaligned time coordinate.")
+        return None
+
+    return ds_all
+
 def monthly_climatology(
     data: xr.DataArray | xr.Dataset,
     *,

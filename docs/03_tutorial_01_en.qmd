@@ -1,55 +1,417 @@
-# Reading a Single File {.unnumbered}
+# Tutorial 01: WRF Model Outputs
 
-In this tutorial, we will guide you through the process of analyzing output data from the WRF (Weather Research and Forecasting) model and creating 2D maps featuring rainfall and wind variables using the `scahpy` package. To begin, let's import the package.
+In this tutorial, you will learn how to:
 
-``` python
-from scahpy import *
+1. Read a single file or multiple files from the **WRF** model using SCAHpy.
+2. Perform basic diagnostics such as computing wind speed and precipitation.
+3. Generate a 2D map and a simple time series using meteorological variables.
+
+This workflow is ideal for getting started with the atmospheric component outputs of the coupled *IGP RESM-COW* model, or with any compatible WRF simulation.
+
+## Reading a WRF File
+
+In this first section we begin by working with **a single WRF file**, which allows us to understand the dataset structure and the use of the main functions. Later, we will extend these concepts to the case of **multiple-input reading**.
+
+### 1. Importing Packages
+
+We import the modules required for path handling, WRF file reading, and numerical operations:
+
+```python
+import scahpy as sc
+import numpy as np
+import glob
 ```
 
-## Step 1: Reading WRF Data
+### 2. Defining the WRF File
 
-We begin by setting the absolute path of the output file we intend to work with and assign it to a variable, in this case, `file_name`.
+SCAHpy’s reading functions require file paths to be provided as a *list of strings*.
+There are two ways to accomplish this:
 
-``` python
-file_name = '/data/datos/COW/OUT_DIAG_WRF/wrfouts/wrfout_d01_2023-03-10_03:00:00'
+**a) Manually placing the file inside square brackets:**
+
+```python
+file_name = ['/data/users/fcastillon/COW_outs/diagnos/C2O5W4_SF2/wrf/wrfout_d01_2017-01-14_03:00:00']
 ```
 
-Since we have the flexibility to specify which variables to exclude when reading netCDF files using the `drop_variables` argument (see xarray functions open_dataset and open_mfdataset), we leverage the `_drop_wrf_vars` function from the module `in_out`. This function takes the list of variables we require and generates a list containing all variables present in the output file, subsequently removing those we are not interested in (such as *'RAINC', 'RAINNC', 'RAINSH', 'U10', 'V10', 'SSTSK'*).
+**b) Using `glob.glob`, which already returns a list:**
 
-``` python
-dvars = in_out._drop_vars(file_name, ['RAINC', 'RAINNC', 'RAINSH', 'U10', 'V10', 'SSTSK'], model='wrf')
+```python
+file_name = glob.glob('/data/users/fcastillon/COW_outs/diagnos/C2O5W4_SF2/wrf/wrfout_d01_2017-01-14_03:00:00')
 ```
 
-Subsequently, we utilize the `read_wrf_single` function to selectively read the variables of interest. This function accepts the input path (`file_name` in this case), the list of variables to be excluded (`vars`), any required time difference (e.g., `'5 hours'`), and the corresponding sign of the time difference (`-1` for negative, `1` for positive). The outcome is an `xarray.Dataset` containing longitude, latitude, time, and the specified variables. Optionally, you can designate a save path to export the netCDF.
+Both methods produce the correct format required by SCAHpy.
 
-``` python
-ds = in_out.read_wrf_single(file_name, dvars, '5 hours', -1)
+### 3. Selecting Variables with `drop_vars`
+
+To optimize the reading process, we can specify which variables to exclude from the WRF file.
+This is particularly useful when working with heavy simulations or multiple files.
+
+The function `drop_vars` has an important requirement:
+
+> **It always requires a single file (`file0`) in string format even when working with multiple files.**
+> This is because the function inspects the typical structure and metadata of a WRF file to identify variables that should be excluded.
+
+Therefore, even if `file_name` contains more than one file, we use:
+
+```python
+file_name[0]
 ```
 
-## Step 2: Calculating Precipitation and Wind Speed
+In this example, we will work with only four variables: `LANDMASK`, `LAKEMASK`, `U10`, and `V10`.
 
-In this step, we will utilize the `met_vars` module to calculate precipitation (`calc_pp`), wind speed (`calc_wsp`), and convert sea surface temperature from Kelvin to Celsius (`calc_celsius`).
-
-The `calc_pp` function has an optional argument `vars_to_sum`, allowing users to specify which variables to sum to obtain total precipitation. If no variables are provided, it will default to summing the three variables: `RAINC`, `RAINNC`, and `RAINSH`.
-
-``` python
-ds_sfc = met_vars.calc_pp(ds, vars_to_sum=['RAINC', 'RAINNC', 'RAINSH'], elim=True)
-ds_sfc = met_vars.calc_wsp(ds_sfc, elim=False)
-ds_sfc = met_vars.calc_celsius(ds_sfc, 'SSTSK')
+```python
+vars_wrf = sc.drop_vars(
+    file0 = file_name[0],
+    sel_vars = ['LANDMASK', 'LAKEMASK', 'U10', 'V10'],
+    model = 'WRF'
+)
 ```
 
-By running these commands, we ensure that our dataset `ds_sfc` now contains calculated precipitation, wind speed, and sea surface temperature in Celsius, ready for further analysis or visualization.
+### 4. Reading the File with `read_wrf`
 
-## Step 3: Plotting Precipitation Maps
+We now read the file using the `read_wrf` function, passing the main options:
 
-Next, we'll generate precipitation maps with SST contours and wind vectors using the `map_pp_uv10_sst` function from the `map_plots` module. This function takes the rainfall (PP) variable as input, followed by the dataset with SST and wind components, precipitation levels, SST contours, optional shapefile, exportation settings, output path, temporal scale ('H' for hourly, 'D' for daily, 'M' for monthly, 'Y' for yearly), vector speed, and plot extent (\[x1, x2, y1, y2\]).
+* **`drop_vars`**: variables to exclude (obtained previously).
+* **`dif_hours` and `sign`**: time-zone adjustment (e.g., Peru = UTC−5 → `dif_hours=5`, `sign=-1`).
+* **`destag`**: whether destaggering is required; for this example it is not.
+* **`save_path`**: optional output path to save the processed file.
 
-``` python
-# Example usage
-precipitation_levels = [1, 2, 3, 5, 7, 11, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60]
-sst_contour_levels = [26, 27, 28]
-
-map_plots.map_pp_uv10_sst(ds_sfc['PP'], ds_sfc, precipitation_levels, sst_contour_levels, shapefile=None, 
-                           output_path='.', save_maps=True, freq='H',
-                           quiverkey_speed=10, extent=None)
+```python
+ds_wrf = sc.read_wrf(
+    file_paths = file_name,
+    drop_vars = vars_wrf,
+    dif_hours = 5,
+    sign = -1,
+    destag = False,
+    save_path = None
+)
 ```
+
+### 5. Computing Wind Speed
+
+Using the horizontal components `U10` and `V10`, we compute the magnitude of the surface wind:
+
+```python
+ds_wrf['WSP'] = sc.wind_speed(ds_wrf.U10, ds_wrf.V10)
+```
+
+### 6. 2D Map: Wind Speed with Vectors
+
+The function `map_1var_winds` belongs to the module: `scahpy.plots.maps`.
+
+This function allows plotting a scalar field together with a vector field.
+The most relevant parameters used here are:
+
+* **`da`**: scalar variable to plot (WSP).
+* **`U`, `V`**: wind components.
+* **`levels`**: contour levels.
+* **`cmap`**: color palette.
+* **`quiver_subsample`**: subsampling frequency for vectors.
+* **`quiverkey_speed`**: reference vector magnitude.
+* **`time`**: timestamp for the plot.
+* **`output_path`**: optional output path to save the figure.
+
+For more details on each parameter, see the [API Reference](04_API.qmd).
+
+```python
+sc.map_1var_winds(
+    da = ds_wrf.WSP,
+    U = ds_wrf.U10,
+    V = ds_wrf.V10,
+    levels = np.arange(0, 11, 1),
+    cmap = 'rain',
+    shapefile = None,
+    extent = None,
+    xticks = None,
+    yticks = None,
+    tick_step = (5, 5),
+    draw_grid = False,
+    time = '2017-01-14T13',
+    month = None,
+    quiver_subsample = 7,
+    quiverkey_speed = 5.0,
+    title = 'Wind Speed',
+    colorbar_label = 'm/s',
+    output_path = None
+)
+```
+
+![ds_maps](figs/fig_04.png){#fig-04 fig-align="center" width="75%"}
+
+### 7. Applying a Mask to Extract Land Areas
+
+If we wish to plot only the **continental region**, we can use `apply_mask`, which belongs to the module `scahpy.core`.
+
+An important note:
+
+> Although `LANDMASK` distinguishes land from ocean, WRF may *incorrectly interpolate variables over lake surfaces*, such as Lake Titicaca.
+> Therefore, it is advisable to *exclude lakes* when working with masks.
+
+In this example, we retain only land areas, so we use `sea_is_one = True` and `exclude_lakes = False`.
+
+```python
+ds_wrf['WSP_land'] = sc.apply_mask(
+    da = ds_wrf.WSP,
+    mask = ds_wrf.LANDMASK,
+    sea_is_one = True,
+    lakemask = ds_wrf.LAKEMASK,
+    exclude_lakes = False
+)
+
+ds_wrf['U10_land'] = sc.apply_mask(
+    ds_wrf.U10,
+    ds_wrf.LANDMASK,
+    sea_is_one = True,
+    lakemask = ds_wrf.LAKEMASK,
+    exclude_lakes = False
+)
+
+ds_wrf['V10_land'] = sc.apply_mask(
+    ds_wrf.V10,
+    ds_wrf.LANDMASK,
+    sea_is_one = True,
+    lakemask = ds_wrf.LAKEMASK,
+    exclude_lakes = False
+)
+```
+
+### 8. New Map with the Applied Mask
+
+```python
+sc.map_1var_winds(
+    da = ds_wrf.WSP_land,
+    U = ds_wrf.U10_land,
+    V = ds_wrf.V10_land,
+    levels = np.arange(0, 11, 1),
+    cmap = 'rain',
+    time = '2017-01-14T13',
+    title = 'Wind Speed',
+    colorbar_label = 'm/s'
+)
+```
+
+![ds_maps](figs/fig_05.png){#fig-05 fig-align="center" width="75%"}
+
+## Reading Multiple WRF Files
+
+In this section, we extend the previous procedure to work with **multiple WRF files** from the same simulation.
+
+### 1. Importing Packages
+
+We start by importing the modules needed:
+
+```python
+import scahpy as sc
+import numpy as np
+import glob
+```
+
+### 2. Listing WRF Files
+
+To read multiple files, we use `glob.glob`, which directly returns a sorted list of file paths.
+In this example, we filter all `wrfout` files from the year 2017:
+
+```python
+WRF_files = sorted(glob.glob("/data/users/fcastillon/COW_outs/diagnos/C2O5W4_SF2/wrf/wrfout_d01_2017*"))
+```
+
+> *Important:* Even when working with multiple files, the function `drop_vars` always requires a single file (`file0`) to identify the generic WRF metadata.
+> Therefore, we use `WRF_files[0]`.
+
+### 3. Selecting Variables
+
+We select only the variables needed for this example:
+
+* `U10`, `V10`: 10 m wind components,
+* `RAINC`, `RAINNC`: accumulated convective and large-scale precipitation,
+* `LANDMASK`, `LAKEMASK`: geographic masks for later filtering.
+
+```python
+vars_WRF = sc.drop_vars(
+    WRF_files[0],
+    sel_vars=['LAKEMASK', 'LANDMASK', 'U10', 'V10', 'RAINC', 'RAINNC']
+)
+```
+
+### 4. Reading All Files with `read_wrf`
+
+We read all files at once. The function automatically concatenates the time dimension and adjusts coordinates and metadata.
+
+```python
+ds_WRF = sc.read_wrf(
+    WRF_files,
+    drop_vars = vars_WRF
+)
+```
+
+### 5. Computing De-accumulated Precipitation
+
+The variables `RAINC` and `RAINNC` are **time-accumulated**, so we use the `precipitation` function to compute total precipitation per time step:
+
+```python
+ds_WRF['PP'] = sc.precipitation(
+    ds_WRF["RAINC"],
+    ds_WRF["RAINNC"],
+    name = 'PP',
+    units = 'mm'
+)
+```
+
+### 6. Applying a Mask: Ocean Only
+
+In this case, we keep only *ocean* values, using:
+
+* `sea_is_one = False` (land is 1, ocean is 0 in LANDMASK),
+* `exclude_lakes = True` to avoid interpolation artifacts over lakes (e.g., Lake Titicaca), where WRF may generate undesirable values.
+
+```python
+ds_WRF['U10_land'] = sc.apply_mask(
+    ds_WRF.U10,
+    ds_WRF.LANDMASK,
+    sea_is_one = False,
+    lakemask = ds_WRF.LAKEMASK,
+    exclude_lakes = True
+)
+
+ds_WRF['V10_land'] = sc.apply_mask(
+    ds_WRF.V10,
+    ds_WRF.LANDMASK,
+    sea_is_one = False,
+    lakemask = ds_WRF.LAKEMASK,
+    exclude_lakes = True
+)
+```
+
+### 7. Monthly Aggregation
+
+We use the function `aggregate_dmy` (from the module `core.time_ops`) to compute:
+
+* Monthly accumulated precipitation (`accum=['PP']`),
+* Monthly mean 10 m winds (`avg=['U10_land','V10_land']`).
+
+```python
+ds_WRF_m = sc.aggregate_dmy(
+    ds = ds_WRF[['PP','U10_land','V10_land']],
+    tiempo = 'ME',
+    accum = ['PP'],
+    avg = ['U10_land','V10_land'],
+    mediana = None
+)
+```
+
+### 8. Monthly Map: Accumulated Precipitation + Wind
+
+Finally, we generate a monthly map using the function `map_1var_winds` from the `scahpy.plots.maps` module.
+
+We represent the accumulated precipitation for the month and the mean 10 m winds (surface level):
+
+```python
+sc.map_1var_winds(
+    da = ds_WRF_m.PP,
+    U = ds_WRF_m.U10_land,
+    V = ds_WRF_m.V10_land,
+    levels = np.arange(0, 500, 10),
+    cmap = 'rain',
+    shapefile = None,
+    extent = None,
+    xticks = None,
+    yticks = None,
+    tick_step = (5, 5),
+    draw_grid = False,
+    time = '2017-03',
+    month = None,
+    quiver_subsample = 7,
+    quiverkey_speed = 5.0,
+    title = 'Precipitation + Winds at 10m',
+    colorbar_label = 'm/s',
+    output_path = None
+)
+```
+
+![ds_maps](figs/fig_06.png){#fig-06 fig-align="center" width="75%"}
+
+## Notes on Memory Usage and Performance
+
+When working with WRF outputs—especially when reading *multiple files*—it is important to consider memory usage and the type of computations being performed. SCAHpy relies on `xarray` + `dask`, meaning that many operations are executed *lazily* until methods such as `.compute()` or `.persist()` are explicitly called.
+
+Below are some practical recommendations:
+
+### How many files should be read at once?
+
+There is no single correct number; it depends on:
+
+* The size of each WRF file (number of levels, variables, spatial resolution).
+* The amount of available RAM.
+* The number of variables actually loaded (controlled via `drop_vars`).
+
+As a general rule:
+
+* On a desktop environment with limited memory, it is safer to:
+
+  * *Read data in time blocks* (e.g., one or several months) rather than an entire multi-year period.
+  * Reduce the number of variables using `drop_vars` before performing heavy diagnostics.
+
+* On a cluster or high-memory server:
+
+  * It is reasonable to read an entire year of simulation as long as:
+
+    * Only essential variables are included.
+    * Processing remains lazy (avoid calling `.compute()` over the full domain at every step).
+
+If the system begins using *swap* or becomes noticeably slow during an operation, this is a clear sign that the workload should be *split into fewer files or a shorter time range*.
+
+### When should `.compute()` be used?
+
+Use `.compute()` when:
+
+* You have defined the full processing chain and need the complete result in memory in order to:
+
+  * Plot a specific figure.
+  * Save a final, relatively small product (e.g., a monthly mean or a climatology already reduced in time).
+  * Inspect numerical values directly (e.g., `ds.isel(time=0).PP.values`).
+
+In general:
+
+* Avoid calling `.compute()` on very large datasets during intermediate processing steps.
+* Prefer to:
+
+  * Reduce dimensions first (e.g., temporal means, spatial cropping).
+  * Apply `.compute()` only on the final, already “summarized” output.
+
+### When should `.persist()` be used?
+
+`.persist()` is helpful when:
+
+* You have performed an expensive preprocessing step (e.g., computing several diagnostic variables, masks, or calendar adjustments) that you plan to reuse multiple times.
+* You want to keep the dataset *in distributed memory* (in RAM) without converting everything to `numpy`, while still avoiding repeated recalculations.
+
+Typical example:
+
+```python
+ds_proc = ds_WRF[['PP', 'U10_land', 'V10_land']].persist()
+```
+
+From `ds_proc` you can:
+
+* Compute various temporal aggregates (`aggregate_dmy`, seasonal means, etc.).
+* Generate multiple plots without recalculating the entire initial processing chain.
+
+There is no need to use `.persist()` if the computation is small or will only be done once; in those cases, a final `.compute()` is usually sufficient.
+
+### Additional Recommendations
+
+* **Filter early and filter aggressively**:
+
+  * Use `drop_vars` at the beginning to reduce the number of variables.
+  * Crop the region of interest (`.sel(lat=..., lon=...)`) before applying expensive operations.
+
+* **Avoid explicit Python loops**:
+
+  * Whenever possible, let `xarray`/`dask` handle hidden loops over time or other dimensions.
+
+* **Test with a subset**:
+
+  * Before processing an entire year, test with 2–3 files to confirm that:
+
+    * The workflow functions correctly.
+    * Memory usage is reasonable.

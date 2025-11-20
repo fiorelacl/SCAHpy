@@ -1,0 +1,56 @@
+# core.vertical { #scahpy.core.vertical }
+
+`core.vertical`
+
+
+
+## Functions
+
+| Name | Description |
+| --- | --- |
+| [vertical_interp](#scahpy.core.vertical.vertical_interp) | Generic 1D interpolation along a given dimension. |
+
+### vertical_interp { #scahpy.core.vertical.vertical_interp }
+
+```python
+core.vertical.vertical_interp(
+    da,
+    coord,
+    new_levels,
+    dim,
+    new_dim=None,
+    *,
+    keep_attrs=True,
+    allow_rechunk=False,
+)
+```
+
+Generic 1D interpolation along a given dimension.
+
+#### Notes {.doc-section .doc-section-notes}
+
+- Values outside the range of `coord` return NaN (no extrapolation).
+- When working with Dask, if you get the error:
+  "dimension ... consists of multiple chunks, but is also a 
+  core dimension",
+  use:
+    `da = da.chunk({dim: -1}); coord = coord.chunk({dim: -1})`
+  or pass `allow_rechunk=True`.
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name          | Type         | Description                                                           | Default    |
+|---------------|--------------|-----------------------------------------------------------------------|------------|
+| da            | xr.DataArray | Variable to interpolate.                                              | _required_ |
+| coord         | xr.DataArray | Coordinate array (must share dimension `dim` with `da`).              | _required_ |
+| new_levels    | array - like | Target levels for interpolation.                                      | _required_ |
+| dim           | str          | Dimension of `da` along which to interpolate.                         | _required_ |
+| new_dim       | str          | Name of the new dimension. If None, `dim` is reused (overwritten).    | `None`     |
+| keep_attrs    | bool         | If True, preserve attributes and name of the input DataArray.         | `True`     |
+| allow_rechunk | bool         | If True, allows internal rechunking in `apply_ufunc` for Dask arrays. | `False`    |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type         | Description                                      |
+|--------|--------------|--------------------------------------------------|
+|        | xr.DataArray | Interpolated DataArray with dimension `new_dim`. |

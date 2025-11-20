@@ -1,8 +1,0 @@
-# core { #scahpy.core }
-
-`core`
-
-SCAHpy Core
-===========
-
-Core utilities for I/O, coordinates, spatial/temporal ops, and vertical interpolation.

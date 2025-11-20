@@ -1,0 +1,148 @@
+# plots.timeseries { #scahpy.plots.timeseries }
+
+`plots.timeseries`
+
+
+
+## Functions
+
+| Name | Description |
+| --- | --- |
+| [ts_area_1var](#scahpy.plots.timeseries.ts_area_1var) | Plot a time series (or monthly climatological cycle) averaged over a lat–lon box. |
+| [ts_area_multi](#scahpy.plots.timeseries.ts_area_multi) | Plot multiple series averaged over the same lat–lon box. |
+| [ts_point_1var](#scahpy.plots.timeseries.ts_point_1var) | Plot one or multiple point series (time or monthly) from a DataArray. |
+
+### ts_area_1var { #scahpy.plots.timeseries.ts_area_1var }
+
+```python
+plots.timeseries.ts_area_1var(
+    da,
+    *,
+    lat_range=None,
+    lon_range=None,
+    time=None,
+    month=None,
+    resample=None,
+    label='Series',
+    color='#1b9e77',
+    linestyle='-',
+    linewidth=1.8,
+    title=None,
+    ylabel=None,
+    output_path=None,
+)
+```
+
+Plot a time series (or monthly climatological cycle) averaged over a lat–lon box.
+
+#### Notes {.doc-section .doc-section-notes}
+
+This function DOES NOT perform any temporal subsetting. It uses the full
+series provided by the user. Any prior selection (e.g., time ranges,
+month filtering, anomalies, climatologies) must be done upstream.
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name        | Type           | Description                                                        | Default    |
+|-------------|----------------|--------------------------------------------------------------------|------------|
+| da          | xr.DataArray   | Input data array with 'time' or 'month' coordinate.                | _required_ |
+| lat_range   | tuple of float | Latitude/longitude bounds (min, max) for area averaging.           | `None`     |
+| lon_range   | tuple of float | Latitude/longitude bounds (min, max) for area averaging.           | `None`     |
+| resample    | str            | Resampling frequency (e.g., 'M', 'Y', 'Q'). Only if 'time' exists. | `None`     |
+| label       | optional       | Plot styling and output controls.                                  | `'Series'` |
+| color       | optional       | Plot styling and output controls.                                  | `'Series'` |
+| linestyle   | optional       | Plot styling and output controls.                                  | `'Series'` |
+| linewidth   | optional       | Plot styling and output controls.                                  | `'Series'` |
+| title       | optional       | Plot styling and output controls.                                  | `'Series'` |
+| ylabel      | optional       | Plot styling and output controls.                                  | `'Series'` |
+| output_path | optional       | Plot styling and output controls.                                  | `'Series'` |
+
+#### Deprecated Parameters {.doc-section .doc-section-deprecated-parameters}
+
+time, month
+    Ignored. Kept for backward compatibility to avoid breaking old calls.
+
+### ts_area_multi { #scahpy.plots.timeseries.ts_area_multi }
+
+```python
+plots.timeseries.ts_area_multi(
+    series,
+    *,
+    lat_range=None,
+    lon_range=None,
+    time=None,
+    month=None,
+    resample=None,
+    title=None,
+    ylabel=None,
+    output_path=None,
+)
+```
+
+Plot multiple series averaged over the same lat–lon box.
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name        | Type           | Description                                                                                                    | Default    |
+|-------------|----------------|----------------------------------------------------------------------------------------------------------------|------------|
+| series      | list of dict   | Each item must include {"da": DataArray, "label": str?, "color": str?, "linestyle": str?, "linewidth": float?} | _required_ |
+| lat_range   | tuple of float | Latitude/longitude bounds (min, max) for area averaging.                                                       | `None`     |
+| lon_range   | tuple of float | Latitude/longitude bounds (min, max) for area averaging.                                                       | `None`     |
+| resample    | str            | Resampling frequency (e.g., 'M', 'Y', 'Q').                                                                    | `None`     |
+| title       | optional       | Plot styling and output controls.                                                                              | `None`     |
+| ylabel      | optional       | Plot styling and output controls.                                                                              | `None`     |
+| output_path | optional       | Plot styling and output controls.                                                                              | `None`     |
+
+#### Deprecated Parameters {.doc-section .doc-section-deprecated-parameters}
+
+time, month
+    Ignored. Kept for backward compatibility to avoid breaking old calls.
+
+### ts_point_1var { #scahpy.plots.timeseries.ts_point_1var }
+
+```python
+plots.timeseries.ts_point_1var(
+    da,
+    *,
+    lat,
+    lon=None,
+    time=None,
+    month=None,
+    resample=None,
+    labels=None,
+    colors=None,
+    linestyles=None,
+    linewidth=1.8,
+    title=None,
+    ylabel=None,
+    output_path=None,
+)
+```
+
+Plot one or multiple point series (time or monthly) from a DataArray.
+
+#### Notes {.doc-section .doc-section-notes}
+
+No temporal subsetting is performed here; the full input series is used.
+To subset in time or compute climatologies/anomalies, do it upstream.
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name        | Type                           | Description                                                                                  | Default    |
+|-------------|--------------------------------|----------------------------------------------------------------------------------------------|------------|
+| da          | xr.DataArray                   | Input data array with 'time' or 'month' coordinate.                                          | _required_ |
+| lat         | float \| list \| list\[tuple\] | - Single point: lat=float and lon=float - Multiple points: [(lat1, lon1), (lat2, lon2), ...] | _required_ |
+| lon         | float \| list \| list\[tuple\] | - Single point: lat=float and lon=float - Multiple points: [(lat1, lon1), (lat2, lon2), ...] | _required_ |
+| resample    | str                            | Resampling frequency (e.g., 'M', 'Y', 'Q'). Only if 'time' exists.                           | `None`     |
+| labels      | list                           | Styling per point series. Defaults will be generated if not provided.                        | `None`     |
+| colors      | list                           | Styling per point series. Defaults will be generated if not provided.                        | `None`     |
+| linestyles  | list                           | Styling per point series. Defaults will be generated if not provided.                        | `None`     |
+| linewidth   | optional                       | Plot styling and output controls.                                                            | `1.8`      |
+| title       | optional                       | Plot styling and output controls.                                                            | `1.8`      |
+| ylabel      | optional                       | Plot styling and output controls.                                                            | `1.8`      |
+| output_path | optional                       | Plot styling and output controls.                                                            | `1.8`      |
+
+#### Deprecated Parameters {.doc-section .doc-section-deprecated-parameters}
+
+time, month
+    Ignored. Kept for backward compatibility to avoid breaking old calls.

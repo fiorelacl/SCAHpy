@@ -1,37 +1,180 @@
-# Usage {.unnumbered}
+# Using SCAHpy
 
-An overview of `scahpy` capabilities will be displayed.
+This section presents the internal organization of the package and the essential steps for using SCAHpy to analyze oceanic (CROCO) and atmospheric (WRF) data from the coupled *IGP RESM-COW* model.
+The emphasis is on illustrating the general workflow and the capabilities of the package, while specific details are developed in subsequent tutorials.
 
-## Importing the Package
+## 1. General Workflow
 
-To import all the modules in `scahpy` we can use the `*` cd as for example:
+SCAHpy is designed following a modular structure that allows users to:
 
-```{python, eval=FALSE}
-from scahpy import *
+1. **Read and standardize coordinates and dimensions** from the atmospheric model WRF and the ocean model CROCO.
+2. **Apply diagnostics** for atmospheric or oceanic variables.
+3. **Visualize results** through specialized functions for maps, cross-sections, and time series.
+
+The conceptual workflow is:
+
+```text
+WRF / CROCO ──▶ Reading ──▶ Diagnostics ──▶ Visualization
 ```
 
-To import specific modules from the package, we can specify their names:
+This workflow aims to facilitate reproducible analysis, particularly in environments handling large data volumes, such as multi-year simulations from the *IGP RESM-COW* system.
 
-```{python, eval=FALSE}
-from scahpy import in_out, met_vars
+## 2. Package Organization
+
+**SCAHpy** is structured into modules that reflect the logical components of the system:
+
+| Module             | Description                         | Examples                                                       |
+| ------------------ | ----------------------------------- | -------------------------------------------------------------- |
+| `components.atmos` | Reading and diagnostics for WRF     | `wrf_io`, `wrf_coords`, `wrf_diags`                            |
+| `components.ocean` | Reading and diagnostics for CROCO   | `croco_io`, `croco_coords`, `croco_diags`                      |
+| `core`             | Model-independent common operations | `coords`, `io`, `time_ops`, `spatial_ops`, `vertical`, `utils` |
+| `plots`            | Visualization functions             | `maps`, `sections`, `timeseries`                               |
+
+The aim is to maintain functions organized either by physical domain (atmosphere, ocean) or by type of operation (temporal, spatial, vertical).
+
+## 3. Importing the Package
+
+SCAHpy can be imported in several ways, depending on the desired level of clarity and control in your workflow. The most common approaches are shown below.
+
+### Basic Import
+
+```python
+import scahpy
+
+scahpy.components.atmos.wrf_io.read_wrf()
+scahpy.read_wrf()
 ```
 
-## Reading WRF outputs files
+You may also abbreviate the package name:
 
-The WRF model can generate outputs either with one time per file or multiple times in a single file. `scahpy` is capable of handling both scenarios. For reading multiple wrfout files, you can utilize the `read_wrf_multi` function, while for reading a single file, you can use the `read_wrf_single` function.
+```python
+import scahpy as sc
 
-```{python, eval=FALSE}
-# Example: Reading and processing multiple WRF datasets
-sfc = in_out._drop_vars('/datos/wrfout_d01_2024-01-01_03:00:00',['RAINC', 'RAINNC', 'RAINSH', 'U10', 'V10', 'SSTSK'], model='wrf')
-files = sorted(glob.glob('/datos/wrfout_d01*'))
-ds = in_out.read_wrf_multi(files, sfc, '5 hours', -1)
+sc.read_wrf()
 ```
 
-## Calculating Precipitation
+### Explicit Import (recommended)
 
-`scahpy` has a module called `met_vars` designed specifically for calculating various diagnostic variables, such as precipitation, using the `calc_pp` function.
+For greater clarity—particularly in scientific projects and reproducible scripts—explicit imports are recommended:
 
-```{python, eval=FALSE}
-# Example: Calculating precipitation using diagnostics module
-ds2 = met_vars.calc_pp(ds,vars_to_sum=['RAINC', 'RAINNC', 'RAINSH'],True)
+```python
+from scahpy import plots
+
+plots.map_1var_winds()
 ```
+
+Or importing specific modules:
+
+```python
+from scahpy.components.atmos import wrf_io, wrf_diags
+
+wrf_io.read_wrf()
+```
+
+### Importing Common Dependencies
+
+In many examples and tutorials you will work with commonly used libraries such as:
+
+```python
+import glob
+import xarray as xr
+import matplotlib.pyplot as plt
+```
+
+## 4. Reading Data
+
+Reading is the first fundamental step. SCAHpy provides specialized functions for WRF and CROCO that:
+
+* accept file paths as lists,
+* standardize coordinates (`lat`, `lon`, `time`),
+* correct local/UTC time,
+* apply *destaggering* when needed,
+* compute internal auxiliary variables.
+
+### 4.1 Reading WRF Files
+
+Assuming the package was imported as `{python} import scahpy as sc`:
+
+```python
+WRF_files  = sorted(glob.glob("/data/users/fcastillon/wrf/wrfout_d01_2017*"))
+vars_wrf = sc.drop_vars(WRF_files[0], sel_vars = ['SST','LANDMASK','U10','V10','T2'], model='WRF')
+ds_wrf = sc.read_wrf(WRF_files, drop_vars = vars_wrf)
+```
+
+![ds_wrf](figs/fig_01.png){#fig-01 fig-align="center" width="75%"}
+
+Output:
+
+* Dataset with homogenized coordinates
+* Concatenated time dimension
+* Optional: you may use `{python} destag = True` if required, as well as
+  `{python} save_path = 'output_path/file.nc'` to save the generated NetCDF file.
+
+### 4.2 Reading CROCO Files
+
+Assuming the package was imported as `{python} import scahpy as sc`:
+
+```python
+CROCO_files = sorted(glob.glob("/data/users/fcastillon/croco/croco_avg_Y2017*.nc"))
+vars_croco = sc.drop_vars(CROCO_files[0], sel_vars = ['temp','mask_rho','ubar','vbar'], model='CROCO')
+ds_croco = sc.read_croco(CROCO_files, drop_vars = vars_croco)
+```
+
+![ds_croco](figs/fig_02.png){#fig-02 fig-align="center" width="75%"}
+
+Output:
+
+* Dataset with homogenized coordinates
+* Concatenated time dimension
+* Renamed coordinates: `time`, `lat`, `lon`, `levels`
+
+## 5. Ocean–Atmosphere Diagnostics
+
+### 5.1 WRF Diagnostics
+
+Diagnostics produce an `xr.DataArray`:
+
+```python
+da_rh = sc.rh(ds_wrf.T, ds_wrf.P, ds_wrf.PB, ds_wrf.QVAPOR)
+```
+
+However, assigning it directly to `ds_wrf` incorporates it into an `xr.Dataset`:
+
+```python
+ds_wrf['RH'] = sc.rh(ds_wrf.T, ds_wrf.P, ds_wrf.PB, ds_wrf.QVAPOR)
+```
+
+### 5.2 CROCO Diagnostics
+
+One of the included diagnostics is surface vorticity:
+
+```python
+ds_croco['vort_sfc'] = sc.vorticity_sfc(
+    u = ds_croco.u.isel(level=-1),
+    v = ds_croco.v.isel(level=-1),
+    pm = ds_croco.pm,
+    pn = ds_croco.pn,
+    mask = ds_croco.mask_rho,
+    f = ds_croco.f,
+    normalize_by_f = False
+)
+```
+
+## 6. Visualization
+
+The `components.plots` module contains ready-to-use functions for producing high-quality scientific graphics.
+One of the most common visualizations is the map plot:
+
+```python
+maps.map_1var_winds(
+    ds=ds_wrf.T2,
+    U=ds_wrf.U10,
+    V=ds_wrf.V10,
+    levels=np.arange(16,31,1),
+    cmap="thermal",
+    time='2017-01-02T12',
+    title="T2 + 10m Winds"
+)
+```
+
+![ds_maps](figs/fig_03.png){#fig-03 fig-align="center" width="75%"}

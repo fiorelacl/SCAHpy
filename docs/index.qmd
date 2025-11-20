@@ -65,9 +65,9 @@ SCAHpy ha sido desarrollado y validado principalmente con salidas del sistema **
 
 ## **Tutoriales**
 
-- **[Lectura de archivos individuales](03_tutorial_01.qmd)**
-- **[Lectura de múltiples archivos](03_tutorial_02.qmd)**
-- **[Variables en niveles de presión](03_tutorial_03.qmd)**
+- **[Lectura de archivos WRF](03_tutorial_01.qmd)**
+- **[Lectura de archivos CROCO](03_tutorial_02.qmd)**
+- **[Estudio de Caso: ENSO 2017](03_tutorial_03.qmd)**
 
 ---
 

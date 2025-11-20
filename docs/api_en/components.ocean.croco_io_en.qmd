@@ -1,0 +1,41 @@
+# components.ocean.croco_io { #scahpy.components.ocean.croco_io }
+
+`components.ocean.croco_io`
+
+
+
+## Functions
+
+| Name | Description |
+| --- | --- |
+| [read_croco](#scahpy.components.ocean.croco_io.read_croco) | Reads and processes multiple CROCO NetCDF output files as a merged dataset. |
+
+### read_croco { #scahpy.components.ocean.croco_io.read_croco }
+
+```python
+components.ocean.croco_io.read_croco(
+    file_paths,
+    drop_vars,
+    destag=True,
+    save_path=None,
+)
+```
+
+Reads and processes multiple CROCO NetCDF output files as a merged dataset.
+
+Applies optional destaggering, coordinate standardization, and conversion of model time.
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name       | Type        | Description                                                   | Default    |
+|------------|-------------|---------------------------------------------------------------|------------|
+| file_paths | list\[str\] | List of paths to CROCO NetCDF files (e.g., 'croco_avg_*.nc'). | _required_ |
+| drop_vars  | list\[str\] | List of variable names to drop during loading.                | _required_ |
+| destag     | bool        | Whether to perform destaggering and coordinate re-alignment.  | `True`     |
+| save_path  | str or None | Optional path to save the final dataset as NetCDF.            | `None`     |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type       | Description                              |
+|--------|------------|------------------------------------------|
+|        | xr.Dataset | Combined and standardized CROCO dataset. |

@@ -1,0 +1,215 @@
+# components.atmos.wrf_diags { #scahpy.components.atmos.wrf_diags }
+
+`components.atmos.wrf_diags`
+
+
+
+## Functions
+
+| Name | Description |
+| --- | --- |
+| [geop_height](#scahpy.components.atmos.wrf_diags.geop_height) | Compute geopotential height (Z) from total geopotential divided by gravity. |
+| [geopotential](#scahpy.components.atmos.wrf_diags.geopotential) | Compute total geopotential (Φ) from perturbation and base-state components. |
+| [pressure](#scahpy.components.atmos.wrf_diags.pressure) | Compute total atmospheric pressure from perturbation (P) and base-state (PB) components. |
+| [rh](#scahpy.components.atmos.wrf_diags.rh) | Compute relative humidity (%) from perturbation temperature (T), |
+| [t_air](#scahpy.components.atmos.wrf_diags.t_air) | Compute absolute air temperature (T_air) from perturbation potential temperature (T) |
+| [t_pot](#scahpy.components.atmos.wrf_diags.t_pot) | Compute potential temperature (θ) from the WRF perturbation potential temperature. |
+| [wind_speed](#scahpy.components.atmos.wrf_diags.wind_speed) | Compute horizontal wind speed (m s⁻¹) from zonal (U) and meridional (V) components. |
+
+### geop_height { #scahpy.components.atmos.wrf_diags.geop_height }
+
+```python
+components.atmos.wrf_diags.geop_height(ph, phb, units='m', name='Z')
+```
+
+Compute geopotential height (Z) from total geopotential divided by gravity.
+
+The WRF model defines:
+    Z = (PH + PHB) / g
+
+where g = 9.81 m s⁻².
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name   | Type         | Description                                       | Default    |
+|--------|--------------|---------------------------------------------------|------------|
+| ph     | xr.DataArray | Perturbation geopotential (m² s⁻²).               | _required_ |
+| phb    | xr.DataArray | Base-state geopotential (m² s⁻²).                 | _required_ |
+| units  | (m, km)      | Output units. Default is meters ("m").            | `"m"`      |
+| name   | str          | Name for the resulting DataArray. Default is "Z". | `'Z'`      |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type         | Description                                    |
+|--------|--------------|------------------------------------------------|
+|        | xr.DataArray | Geopotential height (m or km above sea level). |
+
+### geopotential { #scahpy.components.atmos.wrf_diags.geopotential }
+
+```python
+components.atmos.wrf_diags.geopotential(ph, phb, name='PHI')
+```
+
+Compute total geopotential (Φ) from perturbation and base-state components.
+
+The WRF model provides geopotential in two parts:
+- PH  : perturbation geopotential (m² s⁻²)
+- PHB : base-state geopotential (m² s⁻²)
+
+The total geopotential is given by:
+    Φ = PH + PHB
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name   | Type         | Description                                         | Default    |
+|--------|--------------|-----------------------------------------------------|------------|
+| ph     | xr.DataArray | Perturbation geopotential (m² s⁻²).                 | _required_ |
+| phb    | xr.DataArray | Base-state geopotential (m² s⁻²).                   | _required_ |
+| name   | str          | Name for the resulting DataArray. Default is "PHI". | `'PHI'`    |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type         | Description                  |
+|--------|--------------|------------------------------|
+|        | xr.DataArray | Total geopotential (m² s⁻²). |
+
+### pressure { #scahpy.components.atmos.wrf_diags.pressure }
+
+```python
+components.atmos.wrf_diags.pressure(p, pb, units='Pa', name='Pressure')
+```
+
+Compute total atmospheric pressure from perturbation (P) and base-state (PB) components.
+
+The WRF model outputs pressure as the sum of two fields:
+- `P`: perturbation pressure (Pa)
+- `PB`: base-state pressure (Pa)
+
+The total pressure is given by:
+    P_total = P + PB
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name   | Type         | Description                                               | Default      |
+|--------|--------------|-----------------------------------------------------------|--------------|
+| p      | xr.DataArray | Perturbation pressure (Pa).                               | _required_   |
+| pb     | xr.DataArray | Base-state pressure (Pa).                                 | _required_   |
+| units  | (Pa, hPa)    | Output units for the resulting pressure. Default is "Pa". | `"Pa"`       |
+| name   | str          | Name for the resulting DataArray. Default is "Pressure".  | `'Pressure'` |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type         | Description                                         |
+|--------|--------------|-----------------------------------------------------|
+|        | xr.DataArray | Total pressure with appropriate metadata and units. |
+
+### rh { #scahpy.components.atmos.wrf_diags.rh }
+
+```python
+components.atmos.wrf_diags.rh(Tpert, P, PB, QVAPOR, *, clip=True)
+```
+
+Compute relative humidity (%) from perturbation temperature (T),
+pressure components (P, PB), and specific humidity (QVAPOR).
+
+Internally, the function calls `t_air()` to compute the absolute air
+temperature and then applies a Bolton-type formulation for saturation
+vapor pressure over water:
+
+    e_s(hPa) = 6.112 * exp(17.67 * (T - 273.15) / (T - 29.65))
+    e(hPa)   = qv * p(hPa) / (0.622 + qv)
+    RH(%)    = 100 * e / e_s
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name   | Type         | Description                                                           | Default    |
+|--------|--------------|-----------------------------------------------------------------------|------------|
+| Tpert  | xr.DataArray | Perturbation potential temperature (K) from WRF output variable "T".  | _required_ |
+| P      | xr.DataArray | Perturbation pressure (Pa) from WRF output variable "P".              | _required_ |
+| PB     | xr.DataArray | Base-state pressure (Pa) from WRF output variable "PB".               | _required_ |
+| QVAPOR | xr.DataArray | Water vapor mixing ratio (kg kg⁻¹) from WRF output variable "QVAPOR". | _required_ |
+| clip   | bool         | If True (default), clip RH to [0, 100] %.                             | `True`     |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type         | Description                                                   |
+|--------|--------------|---------------------------------------------------------------|
+|        | xr.DataArray | Relative humidity in percent (%), with CF-compliant metadata. |
+
+### t_air { #scahpy.components.atmos.wrf_diags.t_air }
+
+```python
+components.atmos.wrf_diags.t_air(Tpert, P, PB, *, celsius=False)
+```
+
+Compute absolute air temperature (T_air) from perturbation potential temperature (T)
+and total pressure using the Poisson equation.
+
+    θ = T + 300
+    T_air = θ * (p / 1000) ** κ
+
+where:
+    κ = 0.286  (R_d / c_p)
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name    | Type         | Description                                                                | Default    |
+|---------|--------------|----------------------------------------------------------------------------|------------|
+| Tpert   | xr.DataArray | Perturbation potential temperature (K) from WRF output variable "T".       | _required_ |
+| P       | xr.DataArray | Perturbation pressure (Pa) from WRF output variable "P".                   | _required_ |
+| PB      | xr.DataArray | Base-state pressure (Pa) from WRF output variable "PB".                    | _required_ |
+| celsius | bool         | If True, convert air temperature from Kelvin to Celsius. Default is False. | `False`    |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type         | Description                                                     |
+|--------|--------------|-----------------------------------------------------------------|
+|        | xr.DataArray | Absolute air temperature (K or °C), with CF-compliant metadata. |
+
+### t_pot { #scahpy.components.atmos.wrf_diags.t_pot }
+
+```python
+components.atmos.wrf_diags.t_pot(Tpert, celsius=False, name='theta')
+```
+
+Compute potential temperature (θ) from the WRF perturbation potential temperature.
+
+In WRF outputs:
+    θ = T + 300
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name    | Type         | Description                                                | Default    |
+|---------|--------------|------------------------------------------------------------|------------|
+| Tpert   | xr.DataArray | Perturbation potential temperature (K).                    | _required_ |
+| celsius | bool         | If True, convert from Kelvin to Celsius. Default is False. | `False`    |
+| name    | str          | Name for the resulting DataArray. Default is "theta".      | `'theta'`  |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type         | Description                                                  |
+|--------|--------------|--------------------------------------------------------------|
+|        | xr.DataArray | Potential temperature (K or °C depending on `celsius` flag). |
+
+### wind_speed { #scahpy.components.atmos.wrf_diags.wind_speed }
+
+```python
+components.atmos.wrf_diags.wind_speed(u, v, name='WSP')
+```
+
+Compute horizontal wind speed (m s⁻¹) from zonal (U) and meridional (V) components.
+sqrt(u² + v²)
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name   | Type         | Description                                                                        | Default    |
+|--------|--------------|------------------------------------------------------------------------------------|------------|
+| u      | xr.DataArray | Zonal wind component (m s⁻¹). Must share the same dimensions and grid as `v`.      | _required_ |
+| v      | xr.DataArray | Meridional wind component (m s⁻¹). Must share the same dimensions and grid as `u`. | _required_ |
+| name   | str          | Name for the resulting DataArray. Default is "WSP".                                | `'WSP'`    |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type         | Description                                              |
+|--------|--------------|----------------------------------------------------------|
+|        | xr.DataArray | Wind speed magnitude (m s⁻¹) with CF-compliant metadata. |
