@@ -8,8 +8,6 @@ quartodoc:
   style: pkgdown
   dir: api
   package: scahpy
-  options:
-    sidebar: true
   sections:
     - title: "Core (Operaciones esenciales)"
       desc: "Operaciones comunes de coordenadas, tiempo, vertical y utilidades."

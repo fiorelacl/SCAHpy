@@ -1,0 +1,853 @@
+[
+  {
+    "objectID": "api_en/plots.timeseries_en.html",
+    "href": "api_en/plots.timeseries_en.html",
+    "title": "plots.timeseries",
+    "section": "",
+    "text": "⚠️ Actualizando documentación / Updating documentation (v1 → v2)\n  Algunos contenidos pueden estar en revisión · Some sections may be under revision."
+  },
+  {
+    "objectID": "api_en/plots.timeseries_en.html#functions",
+    "href": "api_en/plots.timeseries_en.html#functions",
+    "title": "plots.timeseries",
+    "section": "Functions",
+    "text": "Functions\n\n\n\nName\nDescription\n\n\n\n\nts_area_1var\nPlot a time series (or monthly climatological cycle) averaged over a lat–lon box.\n\n\nts_area_multi\nPlot multiple series averaged over the same lat–lon box.\n\n\nts_point_1var\nPlot one or multiple point series (time or monthly) from a DataArray.\n\n\n\n\nts_area_1var\nplots.timeseries.ts_area_1var(\n    da,\n    *,\n    lat_range=None,\n    lon_range=None,\n    time=None,\n    month=None,\n    resample=None,\n    label='Series',\n    color='#1b9e77',\n    linestyle='-',\n    linewidth=1.8,\n    title=None,\n    ylabel=None,\n    output_path=None,\n)\nPlot a time series (or monthly climatological cycle) averaged over a lat–lon box.\n\nNotes\nThis function DOES NOT perform any temporal subsetting. It uses the full series provided by the user. Any prior selection (e.g., time ranges, month filtering, anomalies, climatologies) must be done upstream.\n\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nda\nxr.DataArray\nInput data array with ‘time’ or ‘month’ coordinate.\nrequired\n\n\nlat_range\ntuple of float\nLatitude/longitude bounds (min, max) for area averaging.\nNone\n\n\nlon_range\ntuple of float\nLatitude/longitude bounds (min, max) for area averaging.\nNone\n\n\nresample\nstr\nResampling frequency (e.g., ‘M’, ‘Y’, ‘Q’). Only if ‘time’ exists.\nNone\n\n\nlabel\noptional\nPlot styling and output controls.\n'Series'\n\n\ncolor\noptional\nPlot styling and output controls.\n'Series'\n\n\nlinestyle\noptional\nPlot styling and output controls.\n'Series'\n\n\nlinewidth\noptional\nPlot styling and output controls.\n'Series'\n\n\ntitle\noptional\nPlot styling and output controls.\n'Series'\n\n\nylabel\noptional\nPlot styling and output controls.\n'Series'\n\n\noutput_path\noptional\nPlot styling and output controls.\n'Series'\n\n\n\n\n\nDeprecated Parameters\ntime, month Ignored. Kept for backward compatibility to avoid breaking old calls.\n\n\n\nts_area_multi\nplots.timeseries.ts_area_multi(\n    series,\n    *,\n    lat_range=None,\n    lon_range=None,\n    time=None,\n    month=None,\n    resample=None,\n    title=None,\n    ylabel=None,\n    output_path=None,\n)\nPlot multiple series averaged over the same lat–lon box.\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nseries\nlist of dict\nEach item must include {“da”: DataArray, “label”: str?, “color”: str?, “linestyle”: str?, “linewidth”: float?}\nrequired\n\n\nlat_range\ntuple of float\nLatitude/longitude bounds (min, max) for area averaging.\nNone\n\n\nlon_range\ntuple of float\nLatitude/longitude bounds (min, max) for area averaging.\nNone\n\n\nresample\nstr\nResampling frequency (e.g., ‘M’, ‘Y’, ‘Q’).\nNone\n\n\ntitle\noptional\nPlot styling and output controls.\nNone\n\n\nylabel\noptional\nPlot styling and output controls.\nNone\n\n\noutput_path\noptional\nPlot styling and output controls.\nNone\n\n\n\n\n\nDeprecated Parameters\ntime, month Ignored. Kept for backward compatibility to avoid breaking old calls.\n\n\n\nts_point_1var\nplots.timeseries.ts_point_1var(\n    da,\n    *,\n    lat,\n    lon=None,\n    time=None,\n    month=None,\n    resample=None,\n    labels=None,\n    colors=None,\n    linestyles=None,\n    linewidth=1.8,\n    title=None,\n    ylabel=None,\n    output_path=None,\n)\nPlot one or multiple point series (time or monthly) from a DataArray.\n\nNotes\nNo temporal subsetting is performed here; the full input series is used. To subset in time or compute climatologies/anomalies, do it upstream.\n\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nda\nxr.DataArray\nInput data array with ‘time’ or ‘month’ coordinate.\nrequired\n\n\nlat\nfloat | list | list[tuple]\n- Single point: lat=float and lon=float - Multiple points: [(lat1, lon1), (lat2, lon2), …]\nrequired\n\n\nlon\nfloat | list | list[tuple]\n- Single point: lat=float and lon=float - Multiple points: [(lat1, lon1), (lat2, lon2), …]\nrequired\n\n\nresample\nstr\nResampling frequency (e.g., ‘M’, ‘Y’, ‘Q’). Only if ‘time’ exists.\nNone\n\n\nlabels\nlist\nStyling per point series. Defaults will be generated if not provided.\nNone\n\n\ncolors\nlist\nStyling per point series. Defaults will be generated if not provided.\nNone\n\n\nlinestyles\nlist\nStyling per point series. Defaults will be generated if not provided.\nNone\n\n\nlinewidth\noptional\nPlot styling and output controls.\n1.8\n\n\ntitle\noptional\nPlot styling and output controls.\n1.8\n\n\nylabel\noptional\nPlot styling and output controls.\n1.8\n\n\noutput_path\noptional\nPlot styling and output controls.\n1.8\n\n\n\n\n\nDeprecated Parameters\ntime, month Ignored. Kept for backward compatibility to avoid breaking old calls."
+  },
+  {
+    "objectID": "api_en/plots.maps_en.html",
+    "href": "api_en/plots.maps_en.html",
+    "title": "plots.maps",
+    "section": "",
+    "text": "⚠️ Actualizando documentación / Updating documentation (v1 → v2)\n  Algunos contenidos pueden estar en revisión · Some sections may be under revision."
+  },
+  {
+    "objectID": "api_en/plots.maps_en.html#functions",
+    "href": "api_en/plots.maps_en.html#functions",
+    "title": "plots.maps",
+    "section": "Functions",
+    "text": "Functions\n\n\n\nName\nDescription\n\n\n\n\nmap_1var\nDraw a filled map of a single scalar variable.\n\n\nmap_1var_winds\nDraw a filled map of a scalar variable and overlay wind vectors (U, V).\n\n\nmap_2var_contours\nDraw a filled map of a scalar variable and overlay contours\n\n\nmap_2vars_winds\nDraw a filled map (1 variable) + contour overlays (another variable)\n\n\n\n\nmap_1var\nplots.maps.map_1var(\n    da,\n    *,\n    levels,\n    cmap='rain',\n    shapefile=None,\n    extent=None,\n    xticks=None,\n    yticks=None,\n    tick_step=(5, 5),\n    draw_grid=False,\n    time=None,\n    month=None,\n    title=None,\n    colorbar_label=None,\n    output_path=None,\n)\nDraw a filled map of a single scalar variable.\nThe same temporal selection is applied to the data via: - month (for climatological datasets with a month coordinate), or - time (for datasets with a time coordinate; can be int index or str timestamp).\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nda\nxarray.DataArray\nScalar field with coordinates (lat, lon) and optionally time or month.\nrequired\n\n\nlevels\niterable of float\nDiscrete color levels for the filled contours.\nrequired\n\n\ncmap\nstr\nName of the cmocean colormap to use (lightened internally).\n'rain'\n\n\nshapefile\nstr or None\nPath to a custom shapefile. If None, uses the default South America shape.\nNone\n\n\nextent\ntuple or None\nMap extent (lon_min, lon_max, lat_min, lat_max). If None, uses DEFAULT_EXTENT.\nNone\n\n\ntime\nint or str or None\nIf dataset has time, selects a single frame: index (int) or timestamp (str).\nNone\n\n\nmonth\nint or None\nIf dataset has month, selects that month (1-12).\nNone\n\n\ntitle\nstr or None\nFigure title. If None, uses long_name or variable name.\nNone\n\n\ncolorbar_label\nstr or None\nColorbar label. If None, uses da.units if available.\nNone\n\n\noutput_path\nstr or None\nIf provided, saves the figure to disk; otherwise shows the figure.\nNone\n\n\n\n\n\n\nmap_1var_winds\nplots.maps.map_1var_winds(\n    da,\n    U,\n    V,\n    *,\n    levels,\n    cmap='rain',\n    shapefile=None,\n    extent=None,\n    xticks=None,\n    yticks=None,\n    tick_step=(5, 5),\n    draw_grid=False,\n    time=None,\n    month=None,\n    quiver_subsample=7,\n    quiverkey_speed=5.0,\n    title=None,\n    colorbar_label=None,\n    output_path=None,\n)\nDraw a filled map of a scalar variable and overlay wind vectors (U, V).\nThe same temporal selection (time or month) is applied uniformly to da, U, and V.\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nda\nxarray.DataArray\nScalar field with (lat, lon) and optionally time/month.\nrequired\n\n\nU\nxarray.DataArray\nVector components with the same horizontal grid as da.\nrequired\n\n\nV\nxarray.DataArray\nVector components with the same horizontal grid as da.\nrequired\n\n\nlevels\niterable of float\nDiscrete color levels for the filled contours.\nrequired\n\n\ncmap\nstr\nName of the cmocean colormap (lightened internally).\n'rain'\n\n\nshapefile\nstr or None\nCustom shapefile path; None uses default SA shapefile.\nNone\n\n\nextent\ntuple or None\nMap extent (lon_min, lon_max, lat_min, lat_max).\nNone\n\n\ntime\nsee map_1var\nTemporal selector (applied to all inputs).\nNone\n\n\nmonth\nsee map_1var\nTemporal selector (applied to all inputs).\nNone\n\n\nquiver_subsample\nint\nArrow subsampling step to reduce density.\n7\n\n\nquiverkey_speed\nfloat\nReference speed (m/s) shown in the quiver key.\n5.0\n\n\ntitle\nsee map_1var.\n\nNone\n\n\ncolorbar_label\nsee map_1var.\n\nNone\n\n\noutput_path\nsee map_1var.\n\nNone\n\n\n\n\n\n\nmap_2var_contours\nplots.maps.map_2var_contours(\n    da_fill,\n    da_contour,\n    *,\n    levels_fill,\n    levels_contour,\n    cmap_fill='rain',\n    colors_contour=('k',),\n    linewidths_contour=(1.4,),\n    alpha_contour=0.9,\n    shapefile=None,\n    extent=None,\n    xticks=None,\n    yticks=None,\n    tick_step=(5, 5),\n    draw_grid=False,\n    time=None,\n    month=None,\n    label_levels=True,\n    title=None,\n    colorbar_label=None,\n    output_path=None,\n)\nDraw a filled map of a scalar variable and overlay contours (either of the same variable or another one).\nThe same temporal selection (time or month) is applied to both layers.\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nda_fill\nxarray.DataArray\nScalar field for filled contours (background).\nrequired\n\n\nda_contour\nxarray.DataArray\nField for line contours.\nrequired\n\n\nlevels_fill\niterable of float\nLevels for filled contours.\nrequired\n\n\nlevels_contour\niterable of float\nLevels for the contour lines.\nrequired\n\n\ncmap_fill\nstr\ncmocean colormap name for the filled layer (lightened internally).\n'rain'\n\n\ncolors_contour\ntuple\nColors for contour lines.\n('k',)\n\n\nlinewidths_contour\ntuple\nLine widths for contour lines.\n(1.4,)\n\n\nalpha_contour\nfloat\nAlpha for contour lines.\n0.9\n\n\nshapefile\nOptional[str]\nSee map_1var.\nNone\n\n\nextent\nOptional[str]\nSee map_1var.\nNone\n\n\ntime\nOptional[str]\nSee map_1var.\nNone\n\n\nmonth\nOptional[str]\nSee map_1var.\nNone\n\n\ntitle\nOptional[str]\nSee map_1var.\nNone\n\n\ncolorbar_label\nOptional[str]\nSee map_1var.\nNone\n\n\noutput_path\nOptional[str]\nSee map_1var.\nNone\n\n\n\n\n\nReturns\n\n\n\nName\nType\nDescription\n\n\n\n\n\nNone\n\n\n\n\n\n\n\nmap_2vars_winds\nplots.maps.map_2vars_winds(\n    da_fill,\n    da_contour,\n    U,\n    V,\n    *,\n    levels_fill,\n    levels_contour,\n    cmap_fill='rain',\n    colors_contour=('#F29727', '#C70039', '#511F73'),\n    linewidths_contour=(1.5, 1.6, 1.8),\n    alpha_contour=0.45,\n    quiver_subsample=7,\n    quiverkey_speed=5.0,\n    shapefile=None,\n    extent=None,\n    xticks=None,\n    yticks=None,\n    tick_step=(5, 5),\n    draw_grid=False,\n    time=None,\n    month=None,\n    title=None,\n    colorbar_label=None,\n    output_path=None,\n)\nDraw a filled map (1 variable) + contour overlays (another variable) + wind vectors (U, V) — ideal for ocean–atmosphere mixed maps.\nThe same temporal selection (time or month) is applied uniformly to all layers.\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nda_fill\nxarray.DataArray\nScalar field for the filled layer (background).\nrequired\n\n\nda_contour\nxarray.DataArray\nField for contour lines.\nrequired\n\n\nU\nxarray.DataArray\nVector components (same horizontal grid).\nrequired\n\n\nV\nxarray.DataArray\nVector components (same horizontal grid).\nrequired\n\n\nlevels_fill\niterable of float\nLevels for background and contour lines respectively.\nrequired\n\n\nlevels_contour\niterable of float\nLevels for background and contour lines respectively.\nrequired\n\n\ncmap_fill\nstr\ncmocean colormap name for the filled layer (lightened internally).\n'rain'\n\n\ncolors_contour\n\nStyle parameters for contour lines.\n('#F29727', '#C70039', '#511F73')\n\n\nlinewidths_contour\n\nStyle parameters for contour lines.\n('#F29727', '#C70039', '#511F73')\n\n\nalpha_contour\n\nStyle parameters for contour lines.\n('#F29727', '#C70039', '#511F73')\n\n\nquiver_subsample\nint\nArrow subsampling step.\n7\n\n\nquiverkey_speed\nfloat\nReference speed (m/s) shown in the quiver key.\n5.0\n\n\nshapefile\nOptional[str]\nSee map_1var.\nNone\n\n\nextent\nOptional[str]\nSee map_1var.\nNone\n\n\ntime\nOptional[str]\nSee map_1var.\nNone\n\n\nmonth\nOptional[str]\nSee map_1var.\nNone\n\n\ntitle\nOptional[str]\nSee map_1var.\nNone\n\n\ncolorbar_label\nOptional[str]\nSee map_1var.\nNone\n\n\noutput_path\nOptional[str]\nSee map_1var.\nNone\n\n\n\n\n\nReturns\n\n\n\nName\nType\nDescription\n\n\n\n\n\nNone"
+  },
+  {
+    "objectID": "api_en/core.vertical_en.html",
+    "href": "api_en/core.vertical_en.html",
+    "title": "core.vertical",
+    "section": "",
+    "text": "⚠️ Actualizando documentación / Updating documentation (v1 → v2)\n  Algunos contenidos pueden estar en revisión · Some sections may be under revision."
+  },
+  {
+    "objectID": "api_en/core.vertical_en.html#functions",
+    "href": "api_en/core.vertical_en.html#functions",
+    "title": "core.vertical",
+    "section": "Functions",
+    "text": "Functions\n\n\n\nName\nDescription\n\n\n\n\nvertical_interp\nGeneric 1D interpolation along a given dimension.\n\n\n\n\nvertical_interp\ncore.vertical.vertical_interp(\n    da,\n    coord,\n    new_levels,\n    dim,\n    new_dim=None,\n    *,\n    keep_attrs=True,\n    allow_rechunk=False,\n)\nGeneric 1D interpolation along a given dimension.\n\nNotes\n\nValues outside the range of coord return NaN (no extrapolation).\nWhen working with Dask, if you get the error: “dimension … consists of multiple chunks, but is also a core dimension”, use: da = da.chunk({dim: -1}); coord = coord.chunk({dim: -1}) or pass allow_rechunk=True.\n\n\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nda\nxr.DataArray\nVariable to interpolate.\nrequired\n\n\ncoord\nxr.DataArray\nCoordinate array (must share dimension dim with da).\nrequired\n\n\nnew_levels\narray - like\nTarget levels for interpolation.\nrequired\n\n\ndim\nstr\nDimension of da along which to interpolate.\nrequired\n\n\nnew_dim\nstr\nName of the new dimension. If None, dim is reused (overwritten).\nNone\n\n\nkeep_attrs\nbool\nIf True, preserve attributes and name of the input DataArray.\nTrue\n\n\nallow_rechunk\nbool\nIf True, allows internal rechunking in apply_ufunc for Dask arrays.\nFalse\n\n\n\n\n\nReturns\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nxr.DataArray\nInterpolated DataArray with dimension new_dim."
+  },
+  {
+    "objectID": "api_en/core.time_ops_en.html",
+    "href": "api_en/core.time_ops_en.html",
+    "title": "core.time_ops",
+    "section": "",
+    "text": "⚠️ Actualizando documentación / Updating documentation (v1 → v2)\n  Algunos contenidos pueden estar en revisión · Some sections may be under revision."
+  },
+  {
+    "objectID": "api_en/core.time_ops_en.html#functions",
+    "href": "api_en/core.time_ops_en.html#functions",
+    "title": "core.time_ops",
+    "section": "Functions",
+    "text": "Functions\n\n\n\nName\nDescription\n\n\n\n\naggregate_dmy\nResample WRF hourly data to coarser time intervals using sum, mean, or median\n\n\nanomalies\nCompute anomalies relative to a provided climatology.\n\n\nmonthly_climatology\nCompute a 12-month climatology using groupby on calendar months.\n\n\nmonthly_to_daily_climatology\nUpsample a monthly climatology to daily frequency for DataArray or Dataset.\n\n\n\n\naggregate_dmy\ncore.time_ops.aggregate_dmy(ds, tiempo=None, accum=None, avg=None, mediana=None)\nResample WRF hourly data to coarser time intervals using sum, mean, or median operations for selected variables.\nThis function provides a flexible interface to resample a Dataset using any time frequency supported by xarray’s .resample() (e.g., “D” for daily, “M” for monthly, “6H” for 6-hourly). Different groups of variables may be aggregated with different operations like: sum, mean, or median.\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nds\nxr.Dataset\nInput Dataset containing time-dependent variables (typically hourly WRF outputs).\nrequired\n\n\ntiempo\nstr\nResampling frequency string accepted by Dataset.resample(). Examples: “D” (daily), “M” (monthly), “3H” (3-hourly), “Y” (yearly). If None, the function will return an error message.\nNone\n\n\naccum\nlist of str\nList of variable names to aggregate using the sum over each resample interval. Useful for accumulated or flux-like variables.\nNone\n\n\navg\nlist of str\nList of variable names to aggregate using the mean.\nNone\n\n\nmediana\nlist of str\nList of variable names to aggregate using the median.\nNone\n\n\n\n\n\nReturns\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nxr.Dataset\nDataset containing the resampled variables merged together. The resulting Dataset includes only the variables specified in accum, avg, and mediana.\n\n\n\n\n\nNotes\n\nIf no variables are provided in accum, avg, or mediana, the function returns None with a warning message.\nThe function relies on xarray’s .resample(), which requires the time coordinate to be properly formatted as a datetime64 index.\nEach aggregation type is applied only to the variables specified in its corresponding list.\n\n\n\nExamples\n&gt;&gt;&gt; # Daily sums of rainfall and daily means of temperature\n&gt;&gt;&gt; ds_daily = dmy_var(\n...     ds,\n...     tiempo=\"D\",\n...     accum=[\"RAINC\", \"RAINNC\"],\n...     avg=[\"T2\"]\n... )\n&gt;&gt;&gt; # Monthly means for several atmospheric variables\n&gt;&gt;&gt; ds_month = dmy_var(ds, tiempo=\"M\", avg=[\"U10\", \"V10\", \"T2\"])\n\n\n\nanomalies\ncore.time_ops.anomalies(data, clim, *, kind='monthly')\nCompute anomalies relative to a provided climatology.\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ndata\nxr.DataArray or xr.Dataset\nOriginal data with time dimension.\nrequired\n\n\nclim\nxr.DataArray or xr.Dataset\nClimatology with coord ‘month’ (monthly) or ‘dayofyear’ (daily).\nrequired\n\n\nkind\n(monthly, daily)\nControls the grouping key used to match climatology to data.\n\"monthly\"\n\n\n\n\n\nReturns\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nxr.DataArray or xr.Dataset\nAnomalies with the same structure and units as data.\n\n\n\n\n\n\nmonthly_climatology\ncore.time_ops.monthly_climatology(data, *, calendar=None, freq='D')\nCompute a 12-month climatology using groupby on calendar months.\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ndata\nxr.DataArray or xr.Dataset\nInput object with a time dimension.\nrequired\n\n\ncalendar\n(standard, noleap, all_leap, '360_day')\nIf provided, converts the time index to the specified CF calendar using xr.cftime_range.\n\"standard\"\n\n\nfreq\nstr\nTemporal frequency (e.g., ‘D’ for daily, ‘H’ for hourly, ‘MS’ for monthly start). Used only when a CF calendar is applied. Default is ‘D’.\n'D'\n\n\n\n\n\nReturns\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nxr.DataArray or xr.Dataset\n12-step climatology indexed by month (1–12), preserving variable attributes and metadata.\n\n\n\n\n\n\nmonthly_to_daily_climatology\ncore.time_ops.monthly_to_daily_climatology(\n    data,\n    *,\n    method='harmonic',\n    harmonics=2,\n    target_year=None,\n    start=None,\n    end=None,\n)\nUpsample a monthly climatology to daily frequency for DataArray or Dataset.\nSupports two methods: 1) method='linear' – time-based linear interpolation using pandas/xarray. 2) method='harmonic' – fit a seasonal cycle with a small set of harmonics (annual, semiannual, etc.) via least squares using NumPy only.\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ndata\nxr.DataArray or xr.Dataset\nMonthly time series with a time coordinate. Can be multi-year.\nrequired\n\n\nmethod\n(linear, harmonic)\nInterpolation method.\n\"linear\"\n\n\nharmonics\nint\nNumber of harmonics used by the seasonal fit (ignored if linear).\n2\n\n\ntarget_year\nint\nIf provided, return a daily series for that calendar year.\nNone\n\n\nstart\nstr or pandas.Timestamp\nExplicit start/end dates for daily output (used when target_year is None).\nNone\n\n\nend\nstr or pandas.Timestamp\nExplicit start/end dates for daily output (used when target_year is None).\nNone\n\n\n\n\n\nReturns\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nxr.DataArray or xr.Dataset\nDaily climatology with the same structure as input and updated attrs."
+  },
+  {
+    "objectID": "api_en/core.io_en.html",
+    "href": "api_en/core.io_en.html",
+    "title": "core.io",
+    "section": "",
+    "text": "⚠️ Actualizando documentación / Updating documentation (v1 → v2)\n  Algunos contenidos pueden estar en revisión · Some sections may be under revision."
+  },
+  {
+    "objectID": "api_en/core.io_en.html#functions",
+    "href": "api_en/core.io_en.html#functions",
+    "title": "core.io",
+    "section": "Functions",
+    "text": "Functions\n\n\n\nName\nDescription\n\n\n\n\ndrop_vars\nIdentifies variables in a NetCDF dataset that are not included\n\n\nget_metadata_vars\nExtracts metadata for each variable in a NetCDF dataset produced by\n\n\n\n\ndrop_vars\ncore.io.drop_vars(file0, sel_vars, model='WRF', engine='netcdf4')\nIdentifies variables in a NetCDF dataset that are not included in the user-specified selection sel_vars.\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nfile0\nstr | xr.Dataset\nPath to the NetCDF output file or an xarray.Dataset.\nrequired\n\n\nsel_vars\nlist[str]\nList of variable names the user wants to keep.\nrequired\n\n\nmodel\n(WRF, CROCO)\nModel that generated the dataset.\n'WRF'\n\n\nengine\nstr or None\n\n'netcdf4'\n\n\n\n\n\nReturns\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nlist[str]\nList of variable names that are present in the dataset but not included in sel_vars\n\n\n\n\n\n\nget_metadata_vars\ncore.io.get_metadata_vars(\n    dataset,\n    model='WRF',\n    print_all=False,\n    engine='netcdf4',\n)\nExtracts metadata for each variable in a NetCDF dataset produced by the WRF or CROCO models.\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ndataset\nstr | xr.Dataset\nPath to a NetCDF file or an already opened xarray Dataset.\nrequired\n\n\nmodel\n(WRF, CROCO)\nThe model that produced the dataset. Accepts ‘WRF’ or ‘CROCO’.\n'WRF'\n\n\nprint_all\nbool\nIf True, prints the metadata for each variable.\nFalse\n\n\nengine\nstr or None\n\n'netcdf4'\n\n\n\n\n\nReturns\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\ndict[str, list]\nA dictionary where each key is a variable name and the value is a list containing: For WRF: - dimensions (tuple of str) - units (str or None) - stagger (str or None) - description (str or None) For CROCO: - dimensions (tuple of str) - units (str or None) - long_name (str or None) - standard_name (str or None)"
+  },
+  {
+    "objectID": "api_en/components.ocean.croco_io_en.html",
+    "href": "api_en/components.ocean.croco_io_en.html",
+    "title": "components.ocean.croco_io",
+    "section": "",
+    "text": "⚠️ Actualizando documentación / Updating documentation (v1 → v2)\n  Algunos contenidos pueden estar en revisión · Some sections may be under revision."
+  },
+  {
+    "objectID": "api_en/components.ocean.croco_io_en.html#functions",
+    "href": "api_en/components.ocean.croco_io_en.html#functions",
+    "title": "components.ocean.croco_io",
+    "section": "Functions",
+    "text": "Functions\n\n\n\nName\nDescription\n\n\n\n\nread_croco\nReads and processes multiple CROCO NetCDF output files as a merged dataset.\n\n\n\n\nread_croco\ncomponents.ocean.croco_io.read_croco(\n    file_paths,\n    drop_vars,\n    destag=True,\n    save_path=None,\n)\nReads and processes multiple CROCO NetCDF output files as a merged dataset.\nApplies optional destaggering, coordinate standardization, and conversion of model time.\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nfile_paths\nlist[str]\nList of paths to CROCO NetCDF files (e.g., ’croco_avg_*.nc’).\nrequired\n\n\ndrop_vars\nlist[str]\nList of variable names to drop during loading.\nrequired\n\n\ndestag\nbool\nWhether to perform destaggering and coordinate re-alignment.\nTrue\n\n\nsave_path\nstr or None\nOptional path to save the final dataset as NetCDF.\nNone\n\n\n\n\n\nReturns\n\n\n\nName\nType\nDescription\n\n\n\n\n\nxr.Dataset\nCombined and standardized CROCO dataset."
+  },
+  {
+    "objectID": "api_en/components.ocean.croco_coords_en.html",
+    "href": "api_en/components.ocean.croco_coords_en.html",
+    "title": "components.ocean.croco_coords",
+    "section": "",
+    "text": "⚠️ Actualizando documentación / Updating documentation (v1 → v2)\n  Algunos contenidos pueden estar en revisión · Some sections may be under revision."
+  },
+  {
+    "objectID": "api_en/components.ocean.croco_coords_en.html#functions",
+    "href": "api_en/components.ocean.croco_coords_en.html#functions",
+    "title": "components.ocean.croco_coords",
+    "section": "Functions",
+    "text": "Functions\n\n\n\nName\nDescription\n\n\n\n\ncroco_depths\nCompute physical depths (z, in meters) at rho or w points for CROCO/ROMS grids.\n\n\ncrocointerp_sigma_to_z\nInterpolate CROCO variables from sigma levels to fixed z levels (meters).\n\n\n\n\ncroco_depths\ncomponents.ocean.croco_coords.croco_depths(\n    ds,\n    *,\n    which='rho',\n    levels_dim='levels',\n    wlevels_dim='s_w',\n    lat_dim='lat',\n    lon_dim='lon',\n    h_name='h',\n    zeta_name='zeta',\n    hc_name='hc',\n)\nCompute physical depths (z, in meters) at rho or w points for CROCO/ROMS grids.\nThis function is compatible with datasets produced by read_croco and computes the vertical coordinate transformation according to the model parameters, supporting both Vtransform = 1 and Vtransform = 2. It does not create artificial dimensions and follows the original structure of the CROCO vertical grid.\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nds\nxr.Dataset\nCROCO dataset already standardized (as returned by read_croco).\nrequired\n\n\nwhich\n(rho, w)\nDefines the grid points where depths are computed: - 'rho' → centers of vertical layers (used for T, S, U, V) - 'w' → interfaces between layers (used for vertical velocity)\n'rho'\n\n\nlevels_dim\nstr\nName of the vertical dimension for rho-points (default: “levels”).\n'levels'\n\n\nwlevels_dim\nstr\nName of the vertical dimension for w-points (default: “s_w”).\n's_w'\n\n\nlat_dim\nstr\nNames of the horizontal dimensions (default: “lat”, “lon”).\n'lat'\n\n\nlon_dim\nstr\nNames of the horizontal dimensions (default: “lat”, “lon”).\n'lat'\n\n\nh_name\nstr\nNames of the bathymetry (h), free-surface elevation (zeta), and critical depth (hc) variables.\n'h'\n\n\nzeta_name\nstr\nNames of the bathymetry (h), free-surface elevation (zeta), and critical depth (hc) variables.\n'h'\n\n\nhc_name\nstr\nNames of the bathymetry (h), free-surface elevation (zeta), and critical depth (hc) variables.\n'h'\n\n\n\n\n\nReturns\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nxr.DataArray\nPhysical depth (in meters) at either rho-points or w-points: - For 'rho' → dimensions (time, levels, lat, lon) - For 'w' → dimensions (time, s_w, lat, lon)\n\n\n\n\n\n\ncrocointerp_sigma_to_z\ncomponents.ocean.croco_coords.crocointerp_sigma_to_z(\n    ds,\n    var_names,\n    *,\n    which_z='rho',\n    z_levels=None,\n    z_units='m',\n    sigma_dim=None,\n    new_dim='z',\n    mask_outside=True,\n    persist=False,\n)\nInterpolate CROCO variables from sigma levels to fixed z levels (meters).\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nds\nxr.Dataset\nCROCO Dataset con h, zeta, hc, s_{rho|w}, Cs_{r|w}.\nrequired\n\n\nvar_names\nsequence of str\nVariables a interpolar (deben contener la dimensión sigma).\nrequired\n\n\nwhich_z\n(rho, w)\nProfundidades de referencia para la interpolación (z_r o z_w).\n'rho','w'\n\n\nz_levels\nsequence of float or None\nNiveles objetivo en z. Si None, usa [0, -10, -20, -30, -50, -75, -100, -150, -200, -300, -500, -1000].\nNone\n\n\nz_units\n(m, km)\nUnidades de z_levels.\n'm','km'\n\n\nsigma_dim\nstr or None\nNombre de la dimensión sigma; si None se infiere (‘s_rho’ o ‘s_w’).\nNone\n\n\nnew_dim\nstr\nNombre de la nueva dimensión.\n'z'\n\n\nmask_outside\nbool\nEnmascara con NaN los puntos fuera del rango vertical local.\nTrue\n\n\npersist\nbool\nLlama .persist() en salidas (útil con Dask).\nFalse\n\n\n\n\n\nReturns\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nxr.Dataset\nDataset con variables interpoladas en el eje new_dim (z)."
+  },
+  {
+    "objectID": "api_en/components.atmos.wrf_diags_en.html",
+    "href": "api_en/components.atmos.wrf_diags_en.html",
+    "title": "components.atmos.wrf_diags",
+    "section": "",
+    "text": "⚠️ Actualizando documentación / Updating documentation (v1 → v2)\n  Algunos contenidos pueden estar en revisión · Some sections may be under revision."
+  },
+  {
+    "objectID": "api_en/components.atmos.wrf_diags_en.html#functions",
+    "href": "api_en/components.atmos.wrf_diags_en.html#functions",
+    "title": "components.atmos.wrf_diags",
+    "section": "Functions",
+    "text": "Functions\n\n\n\nName\nDescription\n\n\n\n\ngeop_height\nCompute geopotential height (Z) from total geopotential divided by gravity.\n\n\ngeopotential\nCompute total geopotential (Φ) from perturbation and base-state components.\n\n\nprecipitation\nCompute de-accumulated precipitation from WRF accumulated variables.\n\n\npressure\nCompute total atmospheric pressure from perturbation (P) and base-state (PB) components.\n\n\nrh\nCompute relative humidity (%) from perturbation temperature (T),\n\n\nt_air\nCompute absolute air temperature (T_air) from perturbation potential temperature (T)\n\n\nt_pot\nCompute potential temperature (θ) from the WRF perturbation potential temperature.\n\n\nwind_speed\nCompute horizontal wind speed (m s⁻¹) from zonal (U) and meridional (V) components.\n\n\n\n\ngeop_height\ncomponents.atmos.wrf_diags.geop_height(ph, phb, units='m', name='Z')\nCompute geopotential height (Z) from total geopotential divided by gravity.\nThe WRF model defines: Z = (PH + PHB) / g\nwhere g = 9.81 m s⁻².\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nph\nxr.DataArray\nPerturbation geopotential (m² s⁻²).\nrequired\n\n\nphb\nxr.DataArray\nBase-state geopotential (m² s⁻²).\nrequired\n\n\nunits\n(m, km)\nOutput units. Default is meters (“m”).\n\"m\"\n\n\nname\nstr\nName for the resulting DataArray. Default is “Z”.\n'Z'\n\n\n\n\n\nReturns\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nxr.DataArray\nGeopotential height (m or km above sea level).\n\n\n\n\n\n\ngeopotential\ncomponents.atmos.wrf_diags.geopotential(ph, phb, name='PHI')\nCompute total geopotential (Φ) from perturbation and base-state components.\nThe WRF model provides geopotential in two parts: - PH : perturbation geopotential (m² s⁻²) - PHB : base-state geopotential (m² s⁻²)\nThe total geopotential is given by: Φ = PH + PHB\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nph\nxr.DataArray\nPerturbation geopotential (m² s⁻²).\nrequired\n\n\nphb\nxr.DataArray\nBase-state geopotential (m² s⁻²).\nrequired\n\n\nname\nstr\nName for the resulting DataArray. Default is “PHI”.\n'PHI'\n\n\n\n\n\nReturns\n\n\n\nName\nType\nDescription\n\n\n\n\n\nxr.DataArray\nTotal geopotential (m² s⁻²).\n\n\n\n\n\n\nprecipitation\ncomponents.atmos.wrf_diags.precipitation(*acc_vars, name='PP', units='mm')\nCompute de-accumulated precipitation from WRF accumulated variables.\nWRF provides several accumulated precipitation components, such as: - RAINC : Accumulated precipitation from cumulus scheme (mm) - RAINNC : Accumulated precipitation from microphysics (mm) - RAINSH : Accumulated shallow convection precipitation (mm)\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\n*acc_vars\nxr.DataArray\nOne or more accumulated precipitation variables that share the same dimensions and coordinates (e.g., RAINC, RAINNC, RAINSH). Units are assumed to be millimeters (WRF default).\n()\n\n\nname\nstr\nName for the output de-accumulated precipitation variable. Default is “PP”.\n'PP'\n\n\nunits\n(mm, 'kg m-2')\nOutput units. WRF precipitation is equivalent to mm or kg/m². Default is “mm”.\n\"mm\"\n\n\n\n\n\nReturns\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nxr.DataArray\nDe-accumulated precipitation with metadata included. The first timestep is set to NaN because the accumulated difference is undefined.\n\n\n\n\n\nNotes\n\nThe time coordinate is preserved.\nThe function assumes precipitation is monotonically increasing (WRF accumulation behavior).\nIf one of the input arrays resets to zero (e.g., restart file), the user must manually handle the discontinuity.\n\n\n\n\npressure\ncomponents.atmos.wrf_diags.pressure(p, pb, units='Pa', name='Pressure')\nCompute total atmospheric pressure from perturbation (P) and base-state (PB) components.\nThe WRF model outputs pressure as the sum of two fields: - P: perturbation pressure (Pa) - PB: base-state pressure (Pa)\nThe total pressure is given by: P_total = P + PB\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\np\nxr.DataArray\nPerturbation pressure (Pa).\nrequired\n\n\npb\nxr.DataArray\nBase-state pressure (Pa).\nrequired\n\n\nunits\n(Pa, hPa)\nOutput units for the resulting pressure. Default is “Pa”.\n\"Pa\"\n\n\nname\nstr\nName for the resulting DataArray. Default is “Pressure”.\n'Pressure'\n\n\n\n\n\nReturns\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nxr.DataArray\nTotal pressure with appropriate metadata and units.\n\n\n\n\n\n\nrh\ncomponents.atmos.wrf_diags.rh(Tpert, P, PB, QVAPOR, *, clip=True)\nCompute relative humidity (%) from perturbation temperature (T), pressure components (P, PB), and specific humidity (QVAPOR).\nInternally, the function calls t_air() to compute the absolute air temperature and then applies a Bolton-type formulation for saturation vapor pressure over water:\ne_s(hPa) = 6.112 * exp(17.67 * (T - 273.15) / (T - 29.65))\ne(hPa)   = qv * p(hPa) / (0.622 + qv)\nRH(%)    = 100 * e / e_s\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nTpert\nxr.DataArray\nPerturbation potential temperature (K) from WRF output variable “T”.\nrequired\n\n\nP\nxr.DataArray\nPerturbation pressure (Pa) from WRF output variable “P”.\nrequired\n\n\nPB\nxr.DataArray\nBase-state pressure (Pa) from WRF output variable “PB”.\nrequired\n\n\nQVAPOR\nxr.DataArray\nWater vapor mixing ratio (kg kg⁻¹) from WRF output variable “QVAPOR”.\nrequired\n\n\nclip\nbool\nIf True (default), clip RH to [0, 100] %.\nTrue\n\n\n\n\n\nReturns\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nxr.DataArray\nRelative humidity in percent (%), with CF-compliant metadata.\n\n\n\n\n\n\nt_air\ncomponents.atmos.wrf_diags.t_air(Tpert, P, PB, *, celsius=False)\nCompute absolute air temperature (T_air) from perturbation potential temperature (T) and total pressure using the Poisson equation.\nθ = T + 300\nT_air = θ * (p / 1000) ** κ\nwhere: κ = 0.286 (R_d / c_p)\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nTpert\nxr.DataArray\nPerturbation potential temperature (K) from WRF output variable “T”.\nrequired\n\n\nP\nxr.DataArray\nPerturbation pressure (Pa) from WRF output variable “P”.\nrequired\n\n\nPB\nxr.DataArray\nBase-state pressure (Pa) from WRF output variable “PB”.\nrequired\n\n\ncelsius\nbool\nIf True, convert air temperature from Kelvin to Celsius. Default is False.\nFalse\n\n\n\n\n\nReturns\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nxr.DataArray\nAbsolute air temperature (K or °C), with CF-compliant metadata.\n\n\n\n\n\n\nt_pot\ncomponents.atmos.wrf_diags.t_pot(Tpert, celsius=False, name='theta')\nCompute potential temperature (θ) from the WRF perturbation potential temperature.\nIn WRF outputs: θ = T + 300\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nTpert\nxr.DataArray\nPerturbation potential temperature (K).\nrequired\n\n\ncelsius\nbool\nIf True, convert from Kelvin to Celsius. Default is False.\nFalse\n\n\nname\nstr\nName for the resulting DataArray. Default is “theta”.\n'theta'\n\n\n\n\n\nReturns\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nxr.DataArray\nPotential temperature (K or °C depending on celsius flag).\n\n\n\n\n\n\nwind_speed\ncomponents.atmos.wrf_diags.wind_speed(u, v, name='WSP')\nCompute horizontal wind speed (m s⁻¹) from zonal (U) and meridional (V) components. sqrt(u² + v²)\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nu\nxr.DataArray\nZonal wind component (m s⁻¹). Must share the same dimensions and grid as v.\nrequired\n\n\nv\nxr.DataArray\nMeridional wind component (m s⁻¹). Must share the same dimensions and grid as u.\nrequired\n\n\nname\nstr\nName for the resulting DataArray. Default is “WSP”.\n'WSP'\n\n\n\n\n\nReturns\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nxr.DataArray\nWind speed magnitude (m s⁻¹) with CF-compliant metadata."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "SCAHpy",
+    "section": "",
+    "text": "⚠️ Actualizando documentación / Updating documentation (v1 → v2)\n  Algunos contenidos pueden estar en revisión · Some sections may be under revision.",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "index.html#welcome",
+    "href": "index.html#welcome",
+    "title": "SCAHpy",
+    "section": "WELCOME ✨!!",
+    "text": "WELCOME ✨!!",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "index.html#what-is-scahpy",
+    "href": "index.html#what-is-scahpy",
+    "title": "SCAHpy",
+    "section": "What is SCAHpy?",
+    "text": "What is SCAHpy?\nSCAHpy (System for Coupled Atmosphere–Hydrosphere Analysis in Python) is an open-source Python package designed to facilitate the analysis, diagnostics, and visualization of the Regional Earth System Model implemented by the Instituto Geofísico del Perú (IGP RESM-COW), a coupled ocean atmosphere system over the Peruvian territory and the eastern Pacific.\nThe IGP RESM-COW system integrates: the atmospheric model WRF, the ocean model CROCO and, the coupler OASIS,\n\n\n\nThis modeling system supports scientific research at the IGP by providing high-resolution simulations for studies of oceanic dynamics, atmospheric processes, and climate variability along the Peruvian region.\nTechnical documentation of the IGP RESM-COW system (in Spanish, IGP institutional reports):\n\nRegional atmospheric modeling and WRF configuration\n\nRegional ocean configuration using CROCO\n\nImplementation and validation of the coupled system\n\nApplications to coastal climate studies in Peru",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "index.html#why-scahpy",
+    "href": "index.html#why-scahpy",
+    "title": "SCAHpy",
+    "section": "Why SCAHpy?",
+    "text": "Why SCAHpy?\nThe atmospheric and oceanic components of the IGP RESM-COW produce massive amounts of NetCDF data, often distributed across daily, monthly, or multi-year simulation files.\nProcessing these outputs can be challenging due to:\n\nheterogeneous dimensions and coordinate conventions,\n\ndifferent vertical representations (sigma, pressure levels),\n\ncalendar and timezone handling (UTC/local time),\n\ntemporal concatenation of multiple files,\n\nextraction of vertical and horizontal sections,\n\nthe need for reproducible scientific workflows.\n\nSCAHpy addresses these challenges by providing:\n\nstandardized functions to read WRF and CROCO outputs,\n\nrobust handling of coordinates and dimensions,\n\nvertical transformations (sigma → pressure levels),\n\natmospheric and oceanic diagnostics,\n\nhigh-level visualization tools (maps, vertical sections, time series),\n\nreproducible workflows both locally and in HPC environments.\n\nSCAHpy significantly reduces the time required for scientific post-processing, allowing researchers to focus on physical interpretation rather than data handling.",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "index.html#how-to-use-scahpy",
+    "href": "index.html#how-to-use-scahpy",
+    "title": "SCAHpy",
+    "section": "How to use SCAHpy?",
+    "text": "How to use SCAHpy?\nTo begin, visit the Usage page and the tutorials listed below.\n\n\n\n\n\n\nNote\n\n\n\nSCAHpy has been developed and validated primarily with outputs from the IGP RESM-COW system; however, it is compatible with any WRF, CROCO, or NetCDF dataset following CF-Conventions.\nCommunity contributions are welcome!",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "index.html#getting-started",
+    "href": "index.html#getting-started",
+    "title": "SCAHpy",
+    "section": "Getting Started",
+    "text": "Getting Started\n\nInstallation\nUsage",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "index.html#tutorials",
+    "href": "index.html#tutorials",
+    "title": "SCAHpy",
+    "section": "Tutorials",
+    "text": "Tutorials\n\nReading WRF outputs\nReading CROCO outputs\nCase Study: ENSO 2017",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "index.html#help-and-references",
+    "href": "index.html#help-and-references",
+    "title": "SCAHpy",
+    "section": "Help and References",
+    "text": "Help and References\n\nAPI Reference\nContributing",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "05_contrib_en.html",
+    "href": "05_contrib_en.html",
+    "title": "Contribution",
+    "section": "",
+    "text": "⚠️ Actualizando documentación / Updating documentation (v1 → v2)\n  Algunos contenidos pueden estar en revisión · Some sections may be under revision.",
+    "crumbs": [
+      "Help & References",
+      "Contributing"
+    ]
+  },
+  {
+    "objectID": "05_contrib_en.html#ways-to-contribute",
+    "href": "05_contrib_en.html#ways-to-contribute",
+    "title": "Contribution",
+    "section": "1. Ways to Contribute",
+    "text": "1. Ways to Contribute\nYou can contribute to SCAHpy in several ways:\n\nReporting bugs.\nProposing new features or enhancements.\nImproving the documentation (text, examples, tutorials).\nAdding or improving automated tests.\nOptimizing performance or compatibility with new environments/models.\n\nAll contributions—large or small—are valuable ☆.",
+    "crumbs": [
+      "Help & References",
+      "Contributing"
+    ]
+  },
+  {
+    "objectID": "05_contrib_en.html#general-workflow",
+    "href": "05_contrib_en.html#general-workflow",
+    "title": "Contribution",
+    "section": "2. General Workflow",
+    "text": "2. General Workflow\nThe standard workflow for contributing code is:\n\nFork the repository on GitHub: https://github.com/fiorelacl/SCAHpy\nClone the fork to your local machine:\ngit clone https://github.com/YOUR_USERNAME/SCAHpy.git\ncd SCAHpy\nCreate and activate the development environment (e.g., using environment.yml):\nmamba env create -f environment.yml -n scahpy_dev\nmamba activate scahpy_dev\nCreate a new branch for your changes:\ngit checkout -b feature/my-new-function\nImplement your changes in the code and/or documentation.\nRun the existing tests (if available) and verify that everything works.\nMake descriptive commits and push your branch to your fork:\ngit add .\ngit commit -m \"Add function for ...\"\ngit push origin feature/my-new-function\nOpen a Pull Request (PR) to the main repository, explaining:\n\nthe purpose of the changes,\nhow to test them,\nwhether they introduce new dependencies or break backward compatibility.",
+    "crumbs": [
+      "Help & References",
+      "Contributing"
+    ]
+  },
+  {
+    "objectID": "05_contrib_en.html#repository-structure",
+    "href": "05_contrib_en.html#repository-structure",
+    "title": "Contribution",
+    "section": "3. Repository Structure",
+    "text": "3. Repository Structure\nThe general structure of the SCAHpy repository (subject to change over time) is:\nSCAHpy/\n├── scahpy/                          # Package source code\n│   ├── components/                  # Main scientific components\n│   │   ├── atmos/                   # Atmospheric functions (WRF)\n│   │   │   ├── wrf_coords.py\n│   │   │   ├── wrf_diags.py\n│   │   │   └── wrf_io.py\n│   │   ├── ocean/                   # Oceanic functions (CROCO)\n│   │   │   ├── croco_coords.py\n│   │   │   ├── croco_diags.py\n│   │   │   └── croco_io.py\n│   │   ├── core/                    # Common operations (coords, time, space)\n│   │   │   ├── coords.py\n│   │   │   ├── io.py\n│   │   │   ├── spatial_ops.py\n│   │   │   ├── time_ops.py\n│   │   │   ├── utils.py\n│   │   │   └── vertical.py\n│   │   ├── data/                    # Built-in datasets / data utilities\n│   │   └── plots/                   # Visualization functions\n│   │       ├── _helpers.py\n│   │       ├── maps.py\n│   │       ├── sections.py\n│   │       └── timeseries.py\n│   └── ...\n├── docs/                            # Documentation (Quarto, ES/EN site)\n│   ├── es/\n│   └── en/\n├── tests/                           # Automated tests\n├── environment.yml                  # Recommended development environment\n├── pyproject.toml / setup.cfg       # Packaging configuration\n└── README.md                        # Main project description\nBefore adding new code, look for the most appropriate module for your contribution (e.g., atmos, ocean, io, plots).",
+    "crumbs": [
+      "Help & References",
+      "Contributing"
+    ]
+  },
+  {
+    "objectID": "05_contrib_en.html#code-style-and-best-practices",
+    "href": "05_contrib_en.html#code-style-and-best-practices",
+    "title": "Contribution",
+    "section": "4. Code Style and Best Practices",
+    "text": "4. Code Style and Best Practices\nTo keep the project consistent and readable:\n\nFollow PEP 8 style guidelines (indentation, variable names, line length, etc.).\nWrite descriptive function and variable names, in English.\nAdd docstrings to all functions, including:\n\npurpose,\nparameters,\nreturn type,\nunits (when applicable),\nscientific references when relevant.\n\n\nExample docstring:\ndef compute_sst_anomaly(ds, climatology):\n    \"\"\"\n    Compute sea surface temperature anomalies.\n\n    Parameters\n    ----------\n    ds : xarray.Dataset\n        Input dataset containing sea surface temperature.\n    climatology : xarray.DataArray\n        Climatological mean SST for the same region and period.\n\n    Returns\n    -------\n    xarray.DataArray\n        SST anomaly (K).\n    \"\"\"\n    ...",
+    "crumbs": [
+      "Help & References",
+      "Contributing"
+    ]
+  },
+  {
+    "objectID": "05_contrib_en.html#tests-and-examples",
+    "href": "05_contrib_en.html#tests-and-examples",
+    "title": "Contribution",
+    "section": "5. Tests and Examples",
+    "text": "5. Tests and Examples\nWhen adding or modifying functions:\n\nInclude tests in the tests/ folder whenever possible.\nTry to ensure your tests:\n\nrun quickly (avoid very large files),\nrely on synthetic or small sample datasets,\ncover typical and simple edge cases.\n\n\nExample command to run tests (if using pytest):\npytest -v\nAdditionally, it is very helpful to:\n\nAdd short examples in the documentation or docstrings.\nUpdate tutorials if your changes affect the workflow.",
+    "crumbs": [
+      "Help & References",
+      "Contributing"
+    ]
+  },
+  {
+    "objectID": "05_contrib_en.html#reporting-bugs-issues",
+    "href": "05_contrib_en.html#reporting-bugs-issues",
+    "title": "Contribution",
+    "section": "6. Reporting Bugs (Issues)",
+    "text": "6. Reporting Bugs (Issues)\nIf you encounter an issue, please open a GitHub issue:\nhttps://github.com/fiorelacl/SCAHpy/issues\nTry to include:\n\nA clear description of the problem.\nSteps to reproduce it (ideally a minimal working example).\nEnvironment information:\n\nSCAHpy version,\nPython version,\noperating system,\ninstallation method (pip/conda/mamba/HPC),\nrelevant error messages.\n\n\nThis greatly helps with reproducing and fixing the issue.",
+    "crumbs": [
+      "Help & References",
+      "Contributing"
+    ]
+  },
+  {
+    "objectID": "05_contrib_en.html#proposing-new-features",
+    "href": "05_contrib_en.html#proposing-new-features",
+    "title": "Contribution",
+    "section": "7. Proposing New Features",
+    "text": "7. Proposing New Features\nIf you want to propose a new feature:\n\nOpen an enhancement issue describing:\n\nthe scientific or technical need,\nexpected inputs and outputs,\npotential modules where it could be integrated.\n\nDiscuss the design briefly before writing a large amount of code; this helps maintain consistency within the package.",
+    "crumbs": [
+      "Help & References",
+      "Contributing"
+    ]
+  },
+  {
+    "objectID": "05_contrib_en.html#documentation",
+    "href": "05_contrib_en.html#documentation",
+    "title": "Contribution",
+    "section": "8. Documentation",
+    "text": "8. Documentation\nDocumentation improvements are especially welcome:\n\nFixing typos or errors.\nClarifying explanations.\nAdding new usage examples, especially for:\n\natmospheric applications (WRF),\noceanic applications (CROCO),\nworkflows using the IGP RESM-COW system.\n\n\nThe documentation is written in Quarto in two languages (ES/EN). If you add a new section in Spanish, ideally include its English version as well.",
+    "crumbs": [
+      "Help & References",
+      "Contributing"
+    ]
+  },
+  {
+    "objectID": "05_contrib_en.html#code-of-conduct",
+    "href": "05_contrib_en.html#code-of-conduct",
+    "title": "Contribution",
+    "section": "9. Code of Conduct",
+    "text": "9. Code of Conduct\nAll interactions related to SCAHpy (issues, PRs, discussions) are expected to remain:\n\nrespectful and collaborative,\ninclusive of people with different experience levels,\noriented toward constructive problem-solving.",
+    "crumbs": [
+      "Help & References",
+      "Contributing"
+    ]
+  },
+  {
+    "objectID": "05_contrib_en.html#acknowledgements",
+    "href": "05_contrib_en.html#acknowledgements",
+    "title": "Contribution",
+    "section": "10. Acknowledgements",
+    "text": "10. Acknowledgements\nSCAHpy is developed within the scientific activities of the Instituto Geofísico del Perú (IGP), along with individual contributions from the community. Every contribution—from fixing a typo to implementing new physical diagnostics—helps strengthen the tool and broaden its impact on ocean–atmosphere research ♡.\nIf you use SCAHpy in your thesis, article, or technical report, please consider:\n\nciting the package in the Methods section, and\nsharing links to your work through issues or PRs so they may be included as usage examples.",
+    "crumbs": [
+      "Help & References",
+      "Contributing"
+    ]
+  },
+  {
+    "objectID": "03_tutorial_03_en.html",
+    "href": "03_tutorial_03_en.html",
+    "title": "Pressure levels variables",
+    "section": "",
+    "text": "⚠️ Actualizando documentación / Updating documentation (v1 → v2)\n  Algunos contenidos pueden estar en revisión · Some sections may be under revision.",
+    "crumbs": [
+      "Tutorials",
+      "Tutorial 3: Basic Plots"
+    ]
+  },
+  {
+    "objectID": "03_tutorial_03_en.html#step-1-reading-wrf-data",
+    "href": "03_tutorial_03_en.html#step-1-reading-wrf-data",
+    "title": "Pressure levels variables",
+    "section": "Step 1: Reading WRF Data",
+    "text": "Step 1: Reading WRF Data\nWe initiate the process by listing all the files we want to read using the glob package and assigning them to the variable list_files.\nlist_files = sorted(glob.glob('/data/datos/COW/OUT_DIAG_WRF/wrfouts/wrfout_d01_*'))\nGiven the capability to specify excluded variables when reading netCDF files using the drop_variables argument (refer to xarray functions open_dataset and open_mfdataset), we utilize the _drop_vars function from the module in_out. This function takes the list of variables we require and generates a list containing all variables present in the output file, subsequently removing those we are not interested in (such as ‘P’, ‘PB’, ‘U’, ‘W’, ‘QVAPOR’). For this purpose, we use the first file from our list of files, assigning it to the variable dvars.\ndvars = in_out._drop_vars(list_files[0], ['P', 'PB', 'U', 'W', 'QVAPOR'], model='wrf')\nSubsequently, we utilize the read_wrf_multi function to selectively read the variables of interest. This function accepts the input path (file_name in this case), the list of variables to be excluded (dvars), any required time difference (e.g., '5 hours'), and the corresponding sign of the time difference (-1 for negative, 1 for positive). The outcome is an xarray.Dataset containing longitude, latitude, bottom_top, time, and the specified variables. Optionally, you can designate a save path to export the netCDF.\nds = in_out.read_wrf_multi(list_files, dvars, '5 hours', -1)",
+    "crumbs": [
+      "Tutorials",
+      "Tutorial 3: Basic Plots"
+    ]
+  },
+  {
+    "objectID": "03_tutorial_03_en.html#step-2-calculating-specific-humidity-and-total-pressure",
+    "href": "03_tutorial_03_en.html#step-2-calculating-specific-humidity-and-total-pressure",
+    "title": "Pressure levels variables",
+    "section": "Step 2: Calculating Specific Humidity and Total pressure",
+    "text": "Step 2: Calculating Specific Humidity and Total pressure\nIn this step, we will utilize the met_diag module to calculate specific humidity (calc_qe), and total pressure (calc_pres). Whe have the option of the parameter elimthat can be set to True or False in order to remove some variables used to calculate the final variable.\nds_lvl = met_vars.calc_qe(ds, elim=True)\nds_lvl = met_vars.calc_pres(ds_lvl, elim=True)\nBy running these commands, we ensure that our dataset ds_lvl now contains calculated specific humidity and total pressure, ready for further analysis or visualization.",
+    "crumbs": [
+      "Tutorials",
+      "Tutorial 3: Basic Plots"
+    ]
+  },
+  {
+    "objectID": "03_tutorial_03_en.html#step-3-aggregating-the-data",
+    "href": "03_tutorial_03_en.html#step-3-aggregating-the-data",
+    "title": "Pressure levels variables",
+    "section": "Step 3: Aggregating the Data",
+    "text": "Step 3: Aggregating the Data\nNow, we’ll aggregate the data to operate on a daily time scale instead of hourly. To achieve this, we’ll utilize the dmy_var function from the temp_scales module. This function takes an xarray.Dataset as input, where we specify the desired time scale (e.g., ‘1D’ for daily, ‘ME’ for monthly, ‘YE’ for yearly). Additionally, we can specify which variables should be aggregated by sum, average, or median by providing lists for each aggregation method.\ndd = temp_scales.dmy_var(ds_lvl, tiempo='1D', accum=None, avg=['Presion','U','W','QE'], mediana=None)\nBy executing this code, we’ll have our data aggregated to a daily time scale, with variables averaged according to our specifications.",
+    "crumbs": [
+      "Tutorials",
+      "Tutorial 3: Basic Plots"
+    ]
+  },
+  {
+    "objectID": "03_tutorial_03_en.html#step-4-interpolation-to-vertical-levels",
+    "href": "03_tutorial_03_en.html#step-4-interpolation-to-vertical-levels",
+    "title": "Pressure levels variables",
+    "section": "Step 4: Interpolation to vertical levels",
+    "text": "Step 4: Interpolation to vertical levels\nWe use the functionvert_levs from spatial_scalesmodule to interpolate the data to same pressure levels, when we do not specify the levels, by default the interpolation is to: 1000,975,950,925,900,850,800,700,600,500,400,300,200 hPa. The dataset dd should contain the total pressure and the variables we are interested in.\ndd2=vert_levs(dd,['U','W','QE'],lvls=None)",
+    "crumbs": [
+      "Tutorials",
+      "Tutorial 3: Basic Plots"
+    ]
+  },
+  {
+    "objectID": "03_tutorial_03_en.html#step-5-plotting-precipitation-maps",
+    "href": "03_tutorial_03_en.html#step-5-plotting-precipitation-maps",
+    "title": "Pressure levels variables",
+    "section": "Step 5: Plotting Precipitation Maps",
+    "text": "Step 5: Plotting Precipitation Maps\nNext, we’ll generate cross section plots with specific humidity contours and wind vectors using the cross_section_xz function from the map_plots module. This function takes the dataset with specific humidity, total pressure and wind components, humidity levels, exportation settings, output path, temporal scale (‘H’ for hourly, ‘D’ for daily, ‘M’ for monthly, ‘Y’ for yearly) and vector speed.\n# Example usage\nlevs=[0,0.2,0.4,0.6,0.8,1,1.5,2,2.5,5,7.5,10,12,15,18]\ncmaps=cmocean.tools.lighten(matplotlib.colormaps['rainbow'],0.90)# 1d\ndf=dd2.sel(lat=-5,method='nearest').sel(lon=slice(-90,-80),time=slice('2023-03-10','2023-03-13'))\ndf['QE']=df['QE']*1000\ncross_section_xz(df,'QE',levs,cmaps,'QE',quiverkey_speed=8, output_path=None, freq='D',\n                           save_maps=False)",
+    "crumbs": [
+      "Tutorials",
+      "Tutorial 3: Basic Plots"
+    ]
+  },
+  {
+    "objectID": "03_tutorial_01_en.html",
+    "href": "03_tutorial_01_en.html",
+    "title": "Tutorial 01: WRF Model Outputs",
+    "section": "",
+    "text": "⚠️ Actualizando documentación / Updating documentation (v1 → v2)\n  Algunos contenidos pueden estar en revisión · Some sections may be under revision.",
+    "crumbs": [
+      "Tutorials",
+      "Tutorial 1: Reading WRF"
+    ]
+  },
+  {
+    "objectID": "03_tutorial_01_en.html#reading-a-wrf-file",
+    "href": "03_tutorial_01_en.html#reading-a-wrf-file",
+    "title": "Tutorial 01: WRF Model Outputs",
+    "section": "Reading a WRF File",
+    "text": "Reading a WRF File\nIn this first section we begin by working with a single WRF file, which allows us to understand the dataset structure and the use of the main functions. Later, we will extend these concepts to the case of multiple-input reading.\n\n1. Importing Packages\nWe import the modules required for path handling, WRF file reading, and numerical operations:\nimport scahpy as sc\nimport numpy as np\nimport glob\n\n\n2. Defining the WRF File\nSCAHpy’s reading functions require file paths to be provided as a list of strings. There are two ways to accomplish this:\na) Manually placing the file inside square brackets:\nfile_name = ['/data/users/fcastillon/COW_outs/diagnos/C2O5W4_SF2/wrf/wrfout_d01_2017-01-14_03:00:00']\nb) Using glob.glob, which already returns a list:\nfile_name = glob.glob('/data/users/fcastillon/COW_outs/diagnos/C2O5W4_SF2/wrf/wrfout_d01_2017-01-14_03:00:00')\nBoth methods produce the correct format required by SCAHpy.\n\n\n3. Selecting Variables with drop_vars\nTo optimize the reading process, we can specify which variables to exclude from the WRF file. This is particularly useful when working with heavy simulations or multiple files.\nThe function drop_vars has an important requirement:\n\nIt always requires a single file (file0) in string format even when working with multiple files. This is because the function inspects the typical structure and metadata of a WRF file to identify variables that should be excluded.\n\nTherefore, even if file_name contains more than one file, we use:\nfile_name[0]\nIn this example, we will work with only four variables: LANDMASK, LAKEMASK, U10, and V10.\nvars_wrf = sc.drop_vars(\n    file0 = file_name[0],\n    sel_vars = ['LANDMASK', 'LAKEMASK', 'U10', 'V10'],\n    model = 'WRF'\n)\n\n\n4. Reading the File with read_wrf\nWe now read the file using the read_wrf function, passing the main options:\n\ndrop_vars: variables to exclude (obtained previously).\ndif_hours and sign: time-zone adjustment (e.g., Peru = UTC−5 → dif_hours=5, sign=-1).\ndestag: whether destaggering is required; for this example it is not.\nsave_path: optional output path to save the processed file.\n\nds_wrf = sc.read_wrf(\n    file_paths = file_name,\n    drop_vars = vars_wrf,\n    dif_hours = 5,\n    sign = -1,\n    destag = False,\n    save_path = None\n)\n\n\n5. Computing Wind Speed\nUsing the horizontal components U10 and V10, we compute the magnitude of the surface wind:\nds_wrf['WSP'] = sc.wind_speed(ds_wrf.U10, ds_wrf.V10)\n\n\n6. 2D Map: Wind Speed with Vectors\nThe function map_1var_winds belongs to the module: scahpy.plots.maps.\nThis function allows plotting a scalar field together with a vector field. The most relevant parameters used here are:\n\nda: scalar variable to plot (WSP).\nU, V: wind components.\nlevels: contour levels.\ncmap: color palette.\nquiver_subsample: subsampling frequency for vectors.\nquiverkey_speed: reference vector magnitude.\ntime: timestamp for the plot.\noutput_path: optional output path to save the figure.\n\nFor more details on each parameter, see the API Reference.\nsc.map_1var_winds(\n    da = ds_wrf.WSP,\n    U = ds_wrf.U10,\n    V = ds_wrf.V10,\n    levels = np.arange(0, 11, 1),\n    cmap = 'rain',\n    shapefile = None,\n    extent = None,\n    xticks = None,\n    yticks = None,\n    tick_step = (5, 5),\n    draw_grid = False,\n    time = '2017-01-14T13',\n    month = None,\n    quiver_subsample = 7,\n    quiverkey_speed = 5.0,\n    title = 'Wind Speed',\n    colorbar_label = 'm/s',\n    output_path = None\n)\n\n\n\n\n\n\nFigure 1: ds_maps\n\n\n\n\n\n7. Applying a Mask to Extract Land Areas\nIf we wish to plot only the continental region, we can use apply_mask, which belongs to the module scahpy.core.\nAn important note:\n\nAlthough LANDMASK distinguishes land from ocean, WRF may incorrectly interpolate variables over lake surfaces, such as Lake Titicaca. Therefore, it is advisable to exclude lakes when working with masks.\n\nIn this example, we retain only land areas, so we use sea_is_one = True and exclude_lakes = False.\nds_wrf['WSP_land'] = sc.apply_mask(\n    da = ds_wrf.WSP,\n    mask = ds_wrf.LANDMASK,\n    sea_is_one = True,\n    lakemask = ds_wrf.LAKEMASK,\n    exclude_lakes = False\n)\n\nds_wrf['U10_land'] = sc.apply_mask(\n    ds_wrf.U10,\n    ds_wrf.LANDMASK,\n    sea_is_one = True,\n    lakemask = ds_wrf.LAKEMASK,\n    exclude_lakes = False\n)\n\nds_wrf['V10_land'] = sc.apply_mask(\n    ds_wrf.V10,\n    ds_wrf.LANDMASK,\n    sea_is_one = True,\n    lakemask = ds_wrf.LAKEMASK,\n    exclude_lakes = False\n)\n\n\n8. New Map with the Applied Mask\nsc.map_1var_winds(\n    da = ds_wrf.WSP_land,\n    U = ds_wrf.U10_land,\n    V = ds_wrf.V10_land,\n    levels = np.arange(0, 11, 1),\n    cmap = 'rain',\n    time = '2017-01-14T13',\n    title = 'Wind Speed',\n    colorbar_label = 'm/s'\n)\n\n\n\n\n\n\nFigure 2: ds_maps",
+    "crumbs": [
+      "Tutorials",
+      "Tutorial 1: Reading WRF"
+    ]
+  },
+  {
+    "objectID": "03_tutorial_01_en.html#reading-multiple-wrf-files",
+    "href": "03_tutorial_01_en.html#reading-multiple-wrf-files",
+    "title": "Tutorial 01: WRF Model Outputs",
+    "section": "Reading Multiple WRF Files",
+    "text": "Reading Multiple WRF Files\nIn this section, we extend the previous procedure to work with multiple WRF files from the same simulation.\n\n1. Importing Packages\nWe start by importing the modules needed:\nimport scahpy as sc\nimport numpy as np\nimport glob\n\n\n2. Listing WRF Files\nTo read multiple files, we use glob.glob, which directly returns a sorted list of file paths. In this example, we filter all wrfout files from the year 2017:\nWRF_files = sorted(glob.glob(\"/data/users/fcastillon/COW_outs/diagnos/C2O5W4_SF2/wrf/wrfout_d01_2017*\"))\n\nImportant: Even when working with multiple files, the function drop_vars always requires a single file (file0) to identify the generic WRF metadata. Therefore, we use WRF_files[0].\n\n\n\n3. Selecting Variables\nWe select only the variables needed for this example:\n\nU10, V10: 10 m wind components,\nRAINC, RAINNC: accumulated convective and large-scale precipitation,\nLANDMASK, LAKEMASK: geographic masks for later filtering.\n\nvars_WRF = sc.drop_vars(\n    WRF_files[0],\n    sel_vars=['LAKEMASK', 'LANDMASK', 'U10', 'V10', 'RAINC', 'RAINNC']\n)\n\n\n4. Reading All Files with read_wrf\nWe read all files at once. The function automatically concatenates the time dimension and adjusts coordinates and metadata.\nds_WRF = sc.read_wrf(\n    WRF_files,\n    drop_vars = vars_WRF\n)\n\n\n5. Computing De-accumulated Precipitation\nThe variables RAINC and RAINNC are time-accumulated, so we use the precipitation function to compute total precipitation per time step:\nds_WRF['PP'] = sc.precipitation(\n    ds_WRF[\"RAINC\"],\n    ds_WRF[\"RAINNC\"],\n    name = 'PP',\n    units = 'mm'\n)\n\n\n6. Applying a Mask: Ocean Only\nIn this case, we keep only ocean values, using:\n\nsea_is_one = False (land is 1, ocean is 0 in LANDMASK),\nexclude_lakes = True to avoid interpolation artifacts over lakes (e.g., Lake Titicaca), where WRF may generate undesirable values.\n\nds_WRF['U10_land'] = sc.apply_mask(\n    ds_WRF.U10,\n    ds_WRF.LANDMASK,\n    sea_is_one = False,\n    lakemask = ds_WRF.LAKEMASK,\n    exclude_lakes = True\n)\n\nds_WRF['V10_land'] = sc.apply_mask(\n    ds_WRF.V10,\n    ds_WRF.LANDMASK,\n    sea_is_one = False,\n    lakemask = ds_WRF.LAKEMASK,\n    exclude_lakes = True\n)\n\n\n7. Monthly Aggregation\nWe use the function aggregate_dmy (from the module core.time_ops) to compute:\n\nMonthly accumulated precipitation (accum=['PP']),\nMonthly mean 10 m winds (avg=['U10_land','V10_land']).\n\nds_WRF_m = sc.aggregate_dmy(\n    ds = ds_WRF[['PP','U10_land','V10_land']],\n    tiempo = 'ME',\n    accum = ['PP'],\n    avg = ['U10_land','V10_land'],\n    mediana = None\n)\n\n\n8. Monthly Map: Accumulated Precipitation + Wind\nFinally, we generate a monthly map using the function map_1var_winds from the scahpy.plots.maps module.\nWe represent the accumulated precipitation for the month and the mean 10 m winds (surface level):\nsc.map_1var_winds(\n    da = ds_WRF_m.PP,\n    U = ds_WRF_m.U10_land,\n    V = ds_WRF_m.V10_land,\n    levels = np.arange(0, 500, 10),\n    cmap = 'rain',\n    shapefile = None,\n    extent = None,\n    xticks = None,\n    yticks = None,\n    tick_step = (5, 5),\n    draw_grid = False,\n    time = '2017-03',\n    month = None,\n    quiver_subsample = 7,\n    quiverkey_speed = 5.0,\n    title = 'Precipitation + Winds at 10m',\n    colorbar_label = 'm/s',\n    output_path = None\n)\n\n\n\n\n\n\nFigure 3: ds_maps",
+    "crumbs": [
+      "Tutorials",
+      "Tutorial 1: Reading WRF"
+    ]
+  },
+  {
+    "objectID": "03_tutorial_01_en.html#notes-on-memory-usage-and-performance",
+    "href": "03_tutorial_01_en.html#notes-on-memory-usage-and-performance",
+    "title": "Tutorial 01: WRF Model Outputs",
+    "section": "Notes on Memory Usage and Performance",
+    "text": "Notes on Memory Usage and Performance\nWhen working with WRF outputs—especially when reading multiple files—it is important to consider memory usage and the type of computations being performed. SCAHpy relies on xarray + dask, meaning that many operations are executed lazily until methods such as .compute() or .persist() are explicitly called.\nBelow are some practical recommendations:\n\nHow many files should be read at once?\nThere is no single correct number; it depends on:\n\nThe size of each WRF file (number of levels, variables, spatial resolution).\nThe amount of available RAM.\nThe number of variables actually loaded (controlled via drop_vars).\n\nAs a general rule:\n\nOn a desktop environment with limited memory, it is safer to:\n\nRead data in time blocks (e.g., one or several months) rather than an entire multi-year period.\nReduce the number of variables using drop_vars before performing heavy diagnostics.\n\nOn a cluster or high-memory server:\n\nIt is reasonable to read an entire year of simulation as long as:\n\nOnly essential variables are included.\nProcessing remains lazy (avoid calling .compute() over the full domain at every step).\n\n\n\nIf the system begins using swap or becomes noticeably slow during an operation, this is a clear sign that the workload should be split into fewer files or a shorter time range.\n\n\nWhen should .compute() be used?\nUse .compute() when:\n\nYou have defined the full processing chain and need the complete result in memory in order to:\n\nPlot a specific figure.\nSave a final, relatively small product (e.g., a monthly mean or a climatology already reduced in time).\nInspect numerical values directly (e.g., ds.isel(time=0).PP.values).\n\n\nIn general:\n\nAvoid calling .compute() on very large datasets during intermediate processing steps.\nPrefer to:\n\nReduce dimensions first (e.g., temporal means, spatial cropping).\nApply .compute() only on the final, already “summarized” output.\n\n\n\n\nWhen should .persist() be used?\n.persist() is helpful when:\n\nYou have performed an expensive preprocessing step (e.g., computing several diagnostic variables, masks, or calendar adjustments) that you plan to reuse multiple times.\nYou want to keep the dataset in distributed memory (in RAM) without converting everything to numpy, while still avoiding repeated recalculations.\n\nTypical example:\nds_proc = ds_WRF[['PP', 'U10_land', 'V10_land']].persist()\nFrom ds_proc you can:\n\nCompute various temporal aggregates (aggregate_dmy, seasonal means, etc.).\nGenerate multiple plots without recalculating the entire initial processing chain.\n\nThere is no need to use .persist() if the computation is small or will only be done once; in those cases, a final .compute() is usually sufficient.\n\n\nAdditional Recommendations\n\nFilter early and filter aggressively:\n\nUse drop_vars at the beginning to reduce the number of variables.\nCrop the region of interest (.sel(lat=..., lon=...)) before applying expensive operations.\n\nAvoid explicit Python loops:\n\nWhenever possible, let xarray/dask handle hidden loops over time or other dimensions.\n\nTest with a subset:\n\nBefore processing an entire year, test with 2–3 files to confirm that:\n\nThe workflow functions correctly.\nMemory usage is reasonable.",
+    "crumbs": [
+      "Tutorials",
+      "Tutorial 1: Reading WRF"
+    ]
+  },
+  {
+    "objectID": "01_install_en.html",
+    "href": "01_install_en.html",
+    "title": "Installation",
+    "section": "",
+    "text": "⚠️ Actualizando documentación / Updating documentation (v1 → v2)\n  Algunos contenidos pueden estar en revisión · Some sections may be under revision.",
+    "crumbs": [
+      "Installation"
+    ]
+  },
+  {
+    "objectID": "01_install_en.html#prerequisites",
+    "href": "01_install_en.html#prerequisites",
+    "title": "Installation",
+    "section": "Prerequisites",
+    "text": "Prerequisites\nBefore installing SCAHpy, verify the following:\n\nPython version 3.9 or higher\nmamba or conda installed (recommended)\nInternet access to download dependencies from conda-forge or PyPI\nOn HPC systems, make sure to install in your HOME directory (avoid system paths)\n\nOptional packages:\n\ncartopy for geographic visualization\ndask for parallel processing (highly recommended on HPC)\njupyterlab for interactive environments",
+    "crumbs": [
+      "Installation"
+    ]
+  },
+  {
+    "objectID": "01_install_en.html#step-by-step-instructions",
+    "href": "01_install_en.html#step-by-step-instructions",
+    "title": "Installation",
+    "section": "Step-by-step instructions",
+    "text": "Step-by-step instructions\nThese instructions should work across most operating systems, including Windows, macOS, and Linux, as Conda and Miniforge are designed to be cross-platform. However, slight differences in installation steps or command syntax may occur depending on the system.\nTo ensure clarity and compatibility across all platforms, consider the following:\n\nWindows\n\nYou may need to open the terminal or Command Prompt as an administrator to execute certain commands.\nPaths in the terminal must use backslashes (\\) instead of slashes (/).\n\n\n\nmacOS\n\nUsers may need to install the Command Line Developer Tools if they have not already done so. This can be done by running xcode-select --install in the terminal.\nEnsure the user has permission to execute scripts and install packages.\n\n\n\nLinux\n\nSome Linux distributions may require additional dependencies or configurations for Conda or Miniforge to work correctly. It is advisable to check the documentation of the specific distribution.",
+    "crumbs": [
+      "Installation"
+    ]
+  },
+  {
+    "objectID": "01_install_en.html#using-conda",
+    "href": "01_install_en.html#using-conda",
+    "title": "Installation",
+    "section": "Using Conda",
+    "text": "Using Conda\n\n1. Download and install Miniforge\n\nBefore installing scahpy, ensure that Conda is installed on your system. Miniforge is a minimal Conda distribution that includes the essential tools for environment and package management.\nVisit the Miniforge GitHub page and follow the instructions to download and install the version appropriate for your operating system.\n\n\n\n2. Create a new Conda environment and install SCAHpy\n\nOnce Conda is installed, you can create a dedicated environment for scahpy and its dependencies. This is done using an environment.yml file, which contains the list of packages and versions required for SCAHpy.\nDownload the environment.yml file from the SCAHpy GitHub repository.\nOpen a terminal and navigate to the directory where the environment.yml file is located.\nRun the following command to create a Conda environment named scahpy_env and install all required dependencies:\n\nconda env create --file environment.yml -n scahpy_env\n\nThis command will create the new environment and install all packages listed in environment.yml.\nOnce created, activate the environment:\n\nconda activate scahpy_env\nAfter this, scahpy and all its dependencies will be installed and ready to use in your Conda environment.",
+    "crumbs": [
+      "Installation"
+    ]
+  },
+  {
+    "objectID": "01_install_en.html#using-mamba",
+    "href": "01_install_en.html#using-mamba",
+    "title": "Installation",
+    "section": "Using Mamba",
+    "text": "Using Mamba\n\n1. Download and install Mamba\nBefore installing scahpy, ensure that Mamba is installed. Mamba is a very fast package manager compatible with Conda and can be installed via Miniforge.\n\nVisit the Miniforge GitHub page and download the appropriate version for your operating system.\n\n\n\n2. Install SCAHpy and dependencies\n\nThe recommended approach to install scahpy together with all required dependencies is to use the environment.yml file.\nDownload the file from the SCAHpy GitHub repository.\nFrom the terminal, navigate to the directory where the file is located and run:\n\nmamba env create --file environment.yml -n scahpy_env\n\nThis will create a Conda environment called scahpy_env and install all necessary packages.\n\nOnce the process completes, the environment will be ready to run scahpy.",
+    "crumbs": [
+      "Installation"
+    ]
+  },
+  {
+    "objectID": "01_install_en.html#using-pip",
+    "href": "01_install_en.html#using-pip",
+    "title": "Installation",
+    "section": "Using pip",
+    "text": "Using pip\n\nFirst, make sure you have Python and pip installed. You can download Python from the official Python website; pip is usually included by default.\nThe simplest way to install scahpy and its dependencies using pip is to create a virtual environment and install the packages using a requirements.txt file.\n\nIn the terminal:\n# Create a virtual environment (optional but recommended)\npython -m venv scahpy_env\n\n# Activate the virtual environment\n# On Windows:\nscahpy_env\\Scripts\\activate\n# On macOS/Linux:\nsource scahpy_env/bin/activate\n\n# Install scahpy and dependencies from requirements.txt\npip install -r requirements.txt\nIn this example, requirements.txt should contain the list of dependencies—including scahpy—with their corresponding versions. This file must be created beforehand; you may use the previously provided environment.yml as reference.",
+    "crumbs": [
+      "Installation"
+    ]
+  },
+  {
+    "objectID": "02_use_en.html",
+    "href": "02_use_en.html",
+    "title": "Using SCAHpy",
+    "section": "",
+    "text": "⚠️ Actualizando documentación / Updating documentation (v1 → v2)\n  Algunos contenidos pueden estar en revisión · Some sections may be under revision.",
+    "crumbs": [
+      "Usage"
+    ]
+  },
+  {
+    "objectID": "02_use_en.html#general-workflow",
+    "href": "02_use_en.html#general-workflow",
+    "title": "Using SCAHpy",
+    "section": "1. General Workflow",
+    "text": "1. General Workflow\nSCAHpy is designed following a modular structure that allows users to:\n\nRead and standardize coordinates and dimensions from the atmospheric model WRF and the ocean model CROCO.\nApply diagnostics for atmospheric or oceanic variables.\nVisualize results through specialized functions for maps, cross-sections, and time series.\n\nThe conceptual workflow is:\nWRF / CROCO ──▶ Reading ──▶ Diagnostics ──▶ Visualization\nThis workflow aims to facilitate reproducible analysis, particularly in environments handling large data volumes, such as multi-year simulations from the IGP RESM-COW system.",
+    "crumbs": [
+      "Usage"
+    ]
+  },
+  {
+    "objectID": "02_use_en.html#package-organization",
+    "href": "02_use_en.html#package-organization",
+    "title": "Using SCAHpy",
+    "section": "2. Package Organization",
+    "text": "2. Package Organization\nSCAHpy is structured into modules that reflect the logical components of the system:\n\n\n\n\n\n\n\n\nModule\nDescription\nExamples\n\n\n\n\ncomponents.atmos\nReading and diagnostics for WRF\nwrf_io, wrf_coords, wrf_diags\n\n\ncomponents.ocean\nReading and diagnostics for CROCO\ncroco_io, croco_coords, croco_diags\n\n\ncore\nModel-independent common operations\ncoords, io, time_ops, spatial_ops, vertical, utils\n\n\nplots\nVisualization functions\nmaps, sections, timeseries\n\n\n\nThe aim is to maintain functions organized either by physical domain (atmosphere, ocean) or by type of operation (temporal, spatial, vertical).",
+    "crumbs": [
+      "Usage"
+    ]
+  },
+  {
+    "objectID": "02_use_en.html#importing-the-package",
+    "href": "02_use_en.html#importing-the-package",
+    "title": "Using SCAHpy",
+    "section": "3. Importing the Package",
+    "text": "3. Importing the Package\nSCAHpy can be imported in several ways, depending on the desired level of clarity and control in your workflow. The most common approaches are shown below.\n\nBasic Import\nimport scahpy\n\nscahpy.components.atmos.wrf_io.read_wrf()\nscahpy.read_wrf()\nYou may also abbreviate the package name:\nimport scahpy as sc\n\nsc.read_wrf()\n\n\nExplicit Import (recommended)\nFor greater clarity—particularly in scientific projects and reproducible scripts—explicit imports are recommended:\nfrom scahpy import plots\n\nplots.map_1var_winds()\nOr importing specific modules:\nfrom scahpy.components.atmos import wrf_io, wrf_diags\n\nwrf_io.read_wrf()\n\n\nImporting Common Dependencies\nIn many examples and tutorials you will work with commonly used libraries such as:\nimport glob\nimport xarray as xr\nimport matplotlib.pyplot as plt",
+    "crumbs": [
+      "Usage"
+    ]
+  },
+  {
+    "objectID": "02_use_en.html#reading-data",
+    "href": "02_use_en.html#reading-data",
+    "title": "Using SCAHpy",
+    "section": "4. Reading Data",
+    "text": "4. Reading Data\nReading is the first fundamental step. SCAHpy provides specialized functions for WRF and CROCO that:\n\naccept file paths as lists,\nstandardize coordinates (lat, lon, time),\ncorrect local/UTC time,\napply destaggering when needed,\ncompute internal auxiliary variables.\n\n\n4.1 Reading WRF Files\nAssuming the package was imported as {python} import scahpy as sc:\nWRF_files  = sorted(glob.glob(\"/data/users/fcastillon/wrf/wrfout_d01_2017*\"))\nvars_wrf = sc.drop_vars(WRF_files[0], sel_vars = ['SST','LANDMASK','U10','V10','T2'], model='WRF')\nds_wrf = sc.read_wrf(WRF_files, drop_vars = vars_wrf)\n\n\n\n\n\n\nFigure 1: ds_wrf\n\n\n\nOutput:\n\nDataset with homogenized coordinates\nConcatenated time dimension\nOptional: you may use {python} destag = True if required, as well as {python} save_path = 'output_path/file.nc' to save the generated NetCDF file.\n\n\n\n4.2 Reading CROCO Files\nAssuming the package was imported as {python} import scahpy as sc:\nCROCO_files = sorted(glob.glob(\"/data/users/fcastillon/croco/croco_avg_Y2017*.nc\"))\nvars_croco = sc.drop_vars(CROCO_files[0], sel_vars = ['temp','mask_rho','ubar','vbar'], model='CROCO')\nds_croco = sc.read_croco(CROCO_files, drop_vars = vars_croco)\n\n\n\n\n\n\nFigure 2: ds_croco\n\n\n\nOutput:\n\nDataset with homogenized coordinates\nConcatenated time dimension\nRenamed coordinates: time, lat, lon, levels",
+    "crumbs": [
+      "Usage"
+    ]
+  },
+  {
+    "objectID": "02_use_en.html#oceanatmosphere-diagnostics",
+    "href": "02_use_en.html#oceanatmosphere-diagnostics",
+    "title": "Using SCAHpy",
+    "section": "5. Ocean–Atmosphere Diagnostics",
+    "text": "5. Ocean–Atmosphere Diagnostics\n\n5.1 WRF Diagnostics\nDiagnostics produce an xr.DataArray:\nda_rh = sc.rh(ds_wrf.T, ds_wrf.P, ds_wrf.PB, ds_wrf.QVAPOR)\nHowever, assigning it directly to ds_wrf incorporates it into an xr.Dataset:\nds_wrf['RH'] = sc.rh(ds_wrf.T, ds_wrf.P, ds_wrf.PB, ds_wrf.QVAPOR)\n\n\n5.2 CROCO Diagnostics\nOne of the included diagnostics is surface vorticity:\nds_croco['vort_sfc'] = sc.vorticity_sfc(\n    u = ds_croco.u.isel(level=-1),\n    v = ds_croco.v.isel(level=-1),\n    pm = ds_croco.pm,\n    pn = ds_croco.pn,\n    mask = ds_croco.mask_rho,\n    f = ds_croco.f,\n    normalize_by_f = False\n)",
+    "crumbs": [
+      "Usage"
+    ]
+  },
+  {
+    "objectID": "02_use_en.html#visualization",
+    "href": "02_use_en.html#visualization",
+    "title": "Using SCAHpy",
+    "section": "6. Visualization",
+    "text": "6. Visualization\nThe components.plots module contains ready-to-use functions for producing high-quality scientific graphics. One of the most common visualizations is the map plot:\nmaps.map_1var_winds(\n    ds=ds_wrf.T2,\n    U=ds_wrf.U10,\n    V=ds_wrf.V10,\n    levels=np.arange(16,31,1),\n    cmap=\"thermal\",\n    time='2017-01-02T12',\n    title=\"T2 + 10m Winds\"\n)\n\n\n\n\n\n\nFigure 3: ds_maps",
+    "crumbs": [
+      "Usage"
+    ]
+  },
+  {
+    "objectID": "03_tutorial_02_en.html",
+    "href": "03_tutorial_02_en.html",
+    "title": "Reading Multiple File",
+    "section": "",
+    "text": "⚠️ Actualizando documentación / Updating documentation (v1 → v2)\n  Algunos contenidos pueden estar en revisión · Some sections may be under revision.",
+    "crumbs": [
+      "Tutorials",
+      "Tutorial 2: Reading CROCO"
+    ]
+  },
+  {
+    "objectID": "03_tutorial_02_en.html#step-1-reading-wrf-data",
+    "href": "03_tutorial_02_en.html#step-1-reading-wrf-data",
+    "title": "Reading Multiple File",
+    "section": "Step 1: Reading WRF Data",
+    "text": "Step 1: Reading WRF Data\nWe initiate the process by listing all the files we want to read using the glob package and assigning them to the variable list_files.\nlist_files = sorted(glob.glob('/data/datos/COW/OUT_DIAG_WRF/wrfouts/wrfout_d01_*'))\nGiven the capability to specify excluded variables when reading netCDF files using the drop_variables argument (refer to xarray functions open_dataset and open_mfdataset), we utilize the _drop_vars function from the module in_out. This function takes the list of variables we require and generates a list containing all variables present in the output file, subsequently removing those we are not interested in (such as ‘RAINC’, ‘RAINNC’, ‘RAINSH’, ‘U10’, ‘V10’, ‘SSTSK’). For this purpose, we use the first file from our list of files, assigning it to the variable dvars.\ndvars = in_out._drop_vars(list_files[0], ['RAINC', 'RAINNC', 'RAINSH', 'U10', 'V10', 'SSTSK'], model='wrf')\nSubsequently, we utilize the read_wrf_multi function to selectively read the variables of interest. This function accepts the input path (file_name in this case), the list of variables to be excluded (vars), any required time difference (e.g., '5 hours'), and the corresponding sign of the time difference (-1 for negative, 1 for positive). The outcome is an xarray.Dataset containing longitude, latitude, time, and the specified variables. Optionally, you can designate a save path to export the netCDF.\nds = in_out.read_wrf_multi(list_files, dvars, '5 hours', -1)",
+    "crumbs": [
+      "Tutorials",
+      "Tutorial 2: Reading CROCO"
+    ]
+  },
+  {
+    "objectID": "03_tutorial_02_en.html#step-2-calculating-precipitation-and-wind-speed",
+    "href": "03_tutorial_02_en.html#step-2-calculating-precipitation-and-wind-speed",
+    "title": "Reading Multiple File",
+    "section": "Step 2: Calculating Precipitation and Wind Speed",
+    "text": "Step 2: Calculating Precipitation and Wind Speed\nIn this step, we will utilize the met_vars module to calculate precipitation (calc_pp), wind speed (calc_wsp), and convert sea surface temperature from Kelvin to Celsius (calc_celsius).\nThe calc_pp function has an optional argument vars_to_sum, allowing users to specify which variables to sum to obtain total precipitation. If no variables are provided, it will default to summing the three variables: RAINC, RAINNC, and RAINSH.\nds_sfc = met_vars.calc_pp(ds, vars_to_sum=['RAINC', 'RAINNC', 'RAINSH'], elim=True)\nds_sfc = met_vars.calc_wsp(ds_sfc, elim=False)\nds_sfc = met_vars.calc_celsius(ds_sfc, 'SSTSK')\nBy running these commands, we ensure that our dataset ds_sfc now contains calculated precipitation, wind speed, and sea surface temperature in Celsius, ready for further analysis or visualization.",
+    "crumbs": [
+      "Tutorials",
+      "Tutorial 2: Reading CROCO"
+    ]
+  },
+  {
+    "objectID": "03_tutorial_02_en.html#step-3-aggregating-the-data",
+    "href": "03_tutorial_02_en.html#step-3-aggregating-the-data",
+    "title": "Reading Multiple File",
+    "section": "Step 3: Aggregating the Data",
+    "text": "Step 3: Aggregating the Data\nNow, we’ll aggregate the data to operate on a daily time scale instead of hourly. To achieve this, we’ll utilize the dmy_var function from the temp_scales module. This function takes an xarray.Dataset as input, where we specify the desired time scale (e.g., ‘1D’ for daily, ‘ME’ for monthly, ‘YE’ for yearly). Additionally, we can specify which variables should be aggregated by sum, average, or median by providing lists for each aggregation method.\ndd = temp_scales.dmy_var(ds_sfc, tiempo='1D', accum=['PP'], avg=['U10', 'V10'], mediana=['SSTSK'])\nBy executing this code, we’ll have our data aggregated to a daily time scale, with certain variables summed, averaged, or median-calculated according to our specifications.",
+    "crumbs": [
+      "Tutorials",
+      "Tutorial 2: Reading CROCO"
+    ]
+  },
+  {
+    "objectID": "03_tutorial_02_en.html#step-4-plotting-precipitation-maps",
+    "href": "03_tutorial_02_en.html#step-4-plotting-precipitation-maps",
+    "title": "Reading Multiple File",
+    "section": "Step 4: Plotting Precipitation Maps",
+    "text": "Step 4: Plotting Precipitation Maps\nNext, we’ll generate precipitation maps with SST contours and wind vectors using the map_pp_uv10_sst function from the map_plots module. This function takes the rainfall (PP) variable as input, followed by the dataset with SST and wind components, precipitation levels, SST contours, optional shapefile, exportation settings, output path, temporal scale (‘H’ for hourly, ‘D’ for daily, ‘M’ for monthly, ‘Y’ for yearly), vector speed, and plot extent ([x1, x2, y1, y2]).\n# Example usage\nprecipitation_levels = [1, 2, 3, 5, 7, 11, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60]\nsst_contour_levels = [26, 27, 28]\n\nmap_plots.map_pp_uv10_sst(ds_sfc['PP'], ds_sfc, precipitation_levels, sst_contour_levels, shapefile=None, \n                           output_path='.', save_maps=True, freq='H',\n                           quiverkey_speed=10, extent=None)",
+    "crumbs": [
+      "Tutorials",
+      "Tutorial 2: Reading CROCO"
+    ]
+  },
+  {
+    "objectID": "04_API_en.html",
+    "href": "04_API_en.html",
+    "title": "API reference",
+    "section": "",
+    "text": "⚠️ Actualizando documentación / Updating documentation (v1 → v2)\n  Algunos contenidos pueden estar en revisión · Some sections may be under revision.",
+    "crumbs": [
+      "Help & References",
+      "API Reference"
+    ]
+  },
+  {
+    "objectID": "04_API_en.html#core-operaciones-esenciales",
+    "href": "04_API_en.html#core-operaciones-esenciales",
+    "title": "API reference",
+    "section": "Core (Operaciones esenciales)",
+    "text": "Core (Operaciones esenciales)\nOperaciones comunes de coordenadas, tiempo, vertical y utilidades.\n\n\n\ncore.coords\n\n\n\ncore.io\n\n\n\ncore.spatial_ops\n\n\n\ncore.time_ops\n\n\n\ncore.utils\n\n\n\ncore.vertical",
+    "crumbs": [
+      "Help & References",
+      "API Reference"
+    ]
+  },
+  {
+    "objectID": "04_API_en.html#io-atmosférico-wrf",
+    "href": "04_API_en.html#io-atmosférico-wrf",
+    "title": "API reference",
+    "section": "IO Atmosférico (WRF)",
+    "text": "IO Atmosférico (WRF)\nFunciones para lectura, manejo de coordenadas y diagnósticos atmosféricos WRF.\n\n\n\ncomponents.atmos.wrf_diags\n\n\n\ncomponents.atmos.wrf_coords\n\n\n\ncomponents.atmos.wrf_io",
+    "crumbs": [
+      "Help & References",
+      "API Reference"
+    ]
+  },
+  {
+    "objectID": "04_API_en.html#io-oceánico-croco",
+    "href": "04_API_en.html#io-oceánico-croco",
+    "title": "API reference",
+    "section": "IO Oceánico (CROCO)",
+    "text": "IO Oceánico (CROCO)\nFunciones para lectura, coordenadas y diagnósticos del modelo oceánico CROCO.\n\n\n\ncomponents.ocean.croco_coords\n\n\n\ncomponents.ocean.croco_io\n\n\n\ncomponents.ocean.croco_diags",
+    "crumbs": [
+      "Help & References",
+      "API Reference"
+    ]
+  },
+  {
+    "objectID": "04_API_en.html#plotting",
+    "href": "04_API_en.html#plotting",
+    "title": "API reference",
+    "section": "Plotting",
+    "text": "Plotting\nFunciones de visualización para mapas, secciones y series de tiempo.\n\n\n\nplots.maps\n\n\n\nplots.sections\n\n\n\nplots.timeseries",
+    "crumbs": [
+      "Help & References",
+      "API Reference"
+    ]
+  },
+  {
+    "objectID": "06_references_en.html",
+    "href": "06_references_en.html",
+    "title": "References",
+    "section": "",
+    "text": "⚠️ Actualizando documentación / Updating documentation (v1 → v2)\n  Algunos contenidos pueden estar en revisión · Some sections may be under revision.",
+    "crumbs": [
+      "Help & References",
+      "References"
+    ]
+  },
+  {
+    "objectID": "06_references_en.html#how-to-cite-scahpy",
+    "href": "06_references_en.html#how-to-cite-scahpy",
+    "title": "References",
+    "section": "How to Cite SCAHpy",
+    "text": "How to Cite SCAHpy\nIf you wish to cite SCAHpy in academic work, we currently recommend using the following Research Advance published in the IGP Scientific Bulletin:\n\nCastillón, F., & Montes, I. (2024). Herramienta para el posprocesamiento de los datos numéricos de modelos regionales: SCAHpy. Boletín Científico El Niño, Instituto Geofísico del Perú, 11(03), 13–17. http://hdl.handle.net/20.500.12816/5707\n\nA formal paper is coming soon! ;)",
+    "crumbs": [
+      "Help & References",
+      "References"
+    ]
+  },
+  {
+    "objectID": "06_references_en.html#references-for-the-igp-resm-cow-system",
+    "href": "06_references_en.html#references-for-the-igp-resm-cow-system",
+    "title": "References",
+    "section": "References for the IGP RESM-COW System",
+    "text": "References for the IGP RESM-COW System\nThe following institutional documents may be consulted:\n\nCastillón, F., Berlin, S., & Montes, I. (2023). Validación de la componente atmosférica del sistema acoplado regional océano-atmósfera del Pacífico sudeste. Boletín Científico El Niño, Instituto Geofísico del Perú, 10(1), 9–12. http://hdl.handle.net/20.500.12816/5406\nSegura, B., Montes, I., Castillón, F., Manay, R., & Takahashi, K. (2023). Implementación del componente acoplado océano-atmósfera del Modelo Regional del Sistema Tierra (RESM) en modo pronóstico para el territorio peruano y el océano Pacífico oriental: periodo enero–julio 2023. Boletín Científico El Niño, Instituto Geofísico del Perú, 10(11), 10–13. http://hdl.handle.net/20.500.12816/5568\nSegura, B., & Montes, I. (2021). Análisis de sensibilidad del sistema acoplado regional COW para el Pacífico sudeste. Boletín Científico El Niño, Instituto Geofísico del Perú, 8(2), 12–17. http://hdl.handle.net/20.500.12816/5327\nSegura, B., Montes, I., & Mosquera, K. (2014). Evolución del Sistema Computacional de Alto Rendimiento en el IGP para un mejor pronóstico y estudio de los fenómenos climáticos. Boletín Técnico: Generación de modelos climáticos para el pronóstico de la ocurrencia del Fenómeno El Niño, Instituto Geofísico del Perú, 1(11), 8–9. http://hdl.handle.net/20.500.12816/4647",
+    "crumbs": [
+      "Help & References",
+      "References"
+    ]
+  },
+  {
+    "objectID": "06_references_en.html#references-for-numerical-models",
+    "href": "06_references_en.html#references-for-numerical-models",
+    "title": "References",
+    "section": "References for Numerical Models",
+    "text": "References for Numerical Models\n\nWRF Model\nCROCO Model\nOasis Coupler",
+    "crumbs": [
+      "Help & References",
+      "References"
+    ]
+  },
+  {
+    "objectID": "06_references_en.html#scientific-software-used",
+    "href": "06_references_en.html#scientific-software-used",
+    "title": "References",
+    "section": "Scientific Software Used",
+    "text": "Scientific Software Used\nSCAHpy relies on the following core Python packages:\n\nxarray\ndask\nnetCDF4\nnumpy\nmatplotlib\npandas\ncartopy\npyshp\ncmocean and crameri (optional, for high-quality scientific colormaps)",
+    "crumbs": [
+      "Help & References",
+      "References"
+    ]
+  },
+  {
+    "objectID": "api_en/components.atmos.wrf_coords_en.html",
+    "href": "api_en/components.atmos.wrf_coords_en.html",
+    "title": "components.atmos.wrf_coords",
+    "section": "",
+    "text": "⚠️ Actualizando documentación / Updating documentation (v1 → v2)\n  Algunos contenidos pueden estar en revisión · Some sections may be under revision."
+  },
+  {
+    "objectID": "api_en/components.atmos.wrf_coords_en.html#functions",
+    "href": "api_en/components.atmos.wrf_coords_en.html#functions",
+    "title": "components.atmos.wrf_coords",
+    "section": "Functions",
+    "text": "Functions\n\n\n\nName\nDescription\n\n\n\n\nvert_levs\nInterpolate WRF variables from model (sigma) levels to fixed\n\n\n\n\nvert_levs\ncomponents.atmos.wrf_coords.vert_levs(\n    ds,\n    varis,\n    lvls=None,\n    coord_kind='pressure',\n    vert_dim='bottom_top',\n    new_dim='levels',\n    mask_outside=True,\n    persist=False,\n)\nInterpolate WRF variables from model (sigma) levels to fixed pressure or height levels.\nThis function performs a 1D vertical interpolation for one or more 3-D variables contained in a WRF dataset. The vertical coordinate can be total pressure (P + PB) or geopotential height ((PH + PHB)/g), and the interpolation is handled through interp1d_along_dim from scahpy.core.vertical.\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nds\nxr.Dataset\nWRF dataset containing 3-D fields and native vertical coordinates (P, PB, PH, PHB, etc.).\nrequired\n\n\nvaris\nsequence of str\nNames of variables to interpolate vertically.\nrequired\n\n\nlvls\nsequence of float\nTarget levels. If None, a default list is used depending on coord_kind: - For \"pressure\" → [1000, 975, 950, …, 200] hPa - For \"height\" → [0, 50, 100, …, 5000] m\nNone\n\n\ncoord_kind\n(pressure, height)\nType of target coordinate: - \"pressure\" → interpolates to isobaric levels (hPa) - \"height\" → interpolates to constant height levels (m a.s.l.)\n\"pressure\"\n\n\nvert_dim\nstr\nName of the native WRF vertical dimension.\n\"bottom_top\"\n\n\nnew_dim\nstr\nName of the new vertical dimension for the interpolated fields.\n\"levels\"\n\n\nmask_outside\nbool\nIf True, sets to NaN values outside the valid range between local minimum and maximum of the native coordinate (avoids extrapolation).\nTrue\n\n\npersist\nbool\nIf True, calls .persist() on output arrays (useful when working with Dask-backed datasets).\nFalse\n\n\n\n\n\nReturns\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nxr.Dataset\nDataset containing all requested variables interpolated to the new vertical coordinate new_dim, with propagated lat, lon and time coordinates and CF-compliant metadata."
+  },
+  {
+    "objectID": "api_en/components.atmos.wrf_io_en.html",
+    "href": "api_en/components.atmos.wrf_io_en.html",
+    "title": "components.atmos.wrf_io",
+    "section": "",
+    "text": "⚠️ Actualizando documentación / Updating documentation (v1 → v2)\n  Algunos contenidos pueden estar en revisión · Some sections may be under revision."
+  },
+  {
+    "objectID": "api_en/components.atmos.wrf_io_en.html#functions",
+    "href": "api_en/components.atmos.wrf_io_en.html#functions",
+    "title": "components.atmos.wrf_io",
+    "section": "Functions",
+    "text": "Functions\n\n\n\nName\nDescription\n\n\n\n\nread_wrf\nRead WRF outputs, fix/standardize the time coordinate, (optionally) destagger\n\n\n\n\nread_wrf\ncomponents.atmos.wrf_io.read_wrf(\n    file_paths,\n    drop_vars,\n    dif_hours=0,\n    sign=1,\n    destag=True,\n    save_path=None,\n)\nRead WRF outputs, fix/standardize the time coordinate, (optionally) destagger variables, and attach 2D lat/lon coordinates.\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nfile_paths\nlist of str\nPaths to WRF NetCDF files (same domain).\nrequired\n\n\ndrop_vars\nlist of str\nVariable names to drop at open time (memory-friendly).\nrequired\n\n\ndif_hours\nint\nTime offset (in hours) to apply to the ‘time’ coordinate.\n0\n\n\nsign\n(1, -1)\nSign of the time offset (+1 add hours, -1 subtract hours).\n1\n\n\ndestag\nbool\nIf True, destagger U, V, W, and other *_stag variables.\nTrue\n\n\nsave_path\nstr or None\nIf provided, writes the resulting dataset to NetCDF.\nNone\n\n\n\n\n\nReturns\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nxr.Dataset\nMerged, time-unique WRF dataset with standardized coordinates."
+  },
+  {
+    "objectID": "api_en/components.ocean.croco_diags_en.html",
+    "href": "api_en/components.ocean.croco_diags_en.html",
+    "title": "components.ocean.croco_diags",
+    "section": "",
+    "text": "⚠️ Actualizando documentación / Updating documentation (v1 → v2)\n  Algunos contenidos pueden estar en revisión · Some sections may be under revision."
+  },
+  {
+    "objectID": "api_en/components.ocean.croco_diags_en.html#functions",
+    "href": "api_en/components.ocean.croco_diags_en.html#functions",
+    "title": "components.ocean.croco_diags",
+    "section": "Functions",
+    "text": "Functions\n\n\n\nName\nDescription\n\n\n\n\ngrad_sst\nMagnitude of the horizontal SST gradient \\|∇T\\|.\n\n\nke_sfc\nSurface kinetic energy KE = 0.5 * (u**2 + v**2).\n\n\nvorticity_sfc\nSurface relative vorticity ζ = ∂v/∂x − ∂u/∂y.\n\n\n\n\ngrad_sst\ncomponents.ocean.croco_diags.grad_sst(\n    sst,\n    pm,\n    pn,\n    *,\n    x_dim='lon',\n    y_dim='lat',\n    mask=None,\n    to_per_100km=True,\n    name='grad_sst_mag',\n)\nMagnitude of the horizontal SST gradient |∇T|.\nUses centered differences and CROCO/ROMS metric coefficients pm=1/Δx and pn=1/Δy. Units are °C per 100 km by default (set to_per_100km=False to keep °C m⁻¹).\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nsst\nxr.DataArray\nSea surface temperature (°C or K) on the ρ-grid.\nrequired\n\n\npm\nxr.DataArray\nMetric coefficients 1/Δx and 1/Δy (m⁻¹), broadcastable to sst.\nrequired\n\n\npn\nxr.DataArray\nMetric coefficients 1/Δx and 1/Δy (m⁻¹), broadcastable to sst.\nrequired\n\n\nx_dim\nstr\nNames of horizontal dimensions.\n(\"lon\", \"lat\")\n\n\ny_dim\nstr\nNames of horizontal dimensions.\n(\"lon\", \"lat\")\n\n\nmask\nxr.DataArray\nOcean mask (1=sea, 0=land) to apply to the result.\nNone\n\n\nto_per_100km\nbool\nIf True, scales the magnitude to per 100 km.\nTrue\n\n\nname\nstr\nOutput variable name.\n\"grad_sst_mag\"\n\n\n\n\n\nReturns\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nxr.DataArray\n\\|∇T\\| in °C per 100 km (default) or °C m⁻¹.\n\n\n\n\n\n\nke_sfc\ncomponents.ocean.croco_diags.ke_sfc(u, v, *, mask=None, name='ke_sfc')\nSurface kinetic energy KE = 0.5 * (u**2 + v**2).\nAssumes that u and v are already on the same unstaggered grid and in earth-relative coordinates if needed (East–North). For purely scalar KE this rotation is not strictly necessary (KE is rotation-invariant), but ensure consistent pre-processing if you plan to overlay quivers.\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nu\nxr.DataArray\nHorizontal velocity components at the surface (m s⁻¹).\nrequired\n\n\nv\nxr.DataArray\nHorizontal velocity components at the surface (m s⁻¹).\nrequired\n\n\nmask\nxr.DataArray\nOcean mask (1=sea, 0=land) to apply to the result.\nNone\n\n\nname\nstr\nOutput variable name.\n\"ke_sfc\"\n\n\n\n\n\nReturns\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nxr.DataArray\nSurface kinetic energy (m² s⁻²) with the same dimensions as u/v.\n\n\n\n\n\n\nvorticity_sfc\ncomponents.ocean.croco_diags.vorticity_sfc(\n    u,\n    v,\n    pm,\n    pn,\n    *,\n    x_dim='lon',\n    y_dim='lat',\n    mask=None,\n    f=None,\n    normalize_by_f=False,\n    name=None,\n)\nSurface relative vorticity ζ = ∂v/∂x − ∂u/∂y.\nDerivatives are computed with centered differences and multiplied by the metric coefficients (pm, pn). If normalize_by_f=True the result is divided by the local Coriolis parameter f to obtain the adimensional quantity ζ/f.\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nu\nxr.DataArray\nHorizontal velocity components at the surface (m s⁻¹).\nrequired\n\n\nv\nxr.DataArray\nHorizontal velocity components at the surface (m s⁻¹).\nrequired\n\n\npm\nxr.DataArray\nMetric coefficients 1/Δx and 1/Δy (m⁻¹), broadcastable to u/v.\nrequired\n\n\npn\nxr.DataArray\nMetric coefficients 1/Δx and 1/Δy (m⁻¹), broadcastable to u/v.\nrequired\n\n\nx_dim\nstr\nNames of horizontal dimensions.\n(\"lon\", \"lat\")\n\n\ny_dim\nstr\nNames of horizontal dimensions.\n(\"lon\", \"lat\")\n\n\nmask\nxr.DataArray\nOcean mask (1=sea, 0=land) to apply to the result.\nNone\n\n\nf\nxr.DataArray\nCoriolis parameter (s⁻¹). Required if normalize_by_f=True.\nNone\n\n\nnormalize_by_f\nbool\nIf True, returns ζ/f (dimensionless).\nFalse\n\n\nname\nstr\nOutput variable name. Inferred from normalize_by_f if not provided.\nNone\n\n\n\n\n\nReturns\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nxr.DataArray\nRelative vorticity (s⁻¹) or normalized vorticity ζ/f (dimensionless)."
+  },
+  {
+    "objectID": "api_en/core.coords_en.html",
+    "href": "api_en/core.coords_en.html",
+    "title": "core.coords",
+    "section": "",
+    "text": "⚠️ Actualizando documentación / Updating documentation (v1 → v2)\n  Algunos contenidos pueden estar en revisión · Some sections may be under revision."
+  },
+  {
+    "objectID": "api_en/core.coords_en.html#functions",
+    "href": "api_en/core.coords_en.html#functions",
+    "title": "core.coords",
+    "section": "Functions",
+    "text": "Functions\n\n\n\nName\nDescription\n\n\n\n\ndestagger_array\nRemoves staggering along a given dimension by averaging adjacent values.\n\n\n\n\ndestagger_array\ncore.coords.destagger_array(da, axis, pad=False)\nRemoves staggering along a given dimension by averaging adjacent values. Optionally (CROCO) expands the coordinate by one step on each side before averaging.\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nda\nxr.DataArray\nStaggered variable to be destaggered.\nrequired\n\n\naxis\nstr\nName of the staggered dimension (e.g., ‘xi_u’, ‘eta_v’, ‘s_w’).\nrequired\n\n\npad\nbool\nIf True, expands the coordinate by one inferred step on each edge and fills new points with NaN (default: False).\nFalse\n\n\n\n\n\nReturns\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nxr.DataArray\nDestaggered array with the specified dimension reduced by one and coordinate reassigned to midpoints."
+  },
+  {
+    "objectID": "api_en/core.spatial_ops_en.html",
+    "href": "api_en/core.spatial_ops_en.html",
+    "title": "core.spatial_ops",
+    "section": "",
+    "text": "⚠️ Actualizando documentación / Updating documentation (v1 → v2)\n  Algunos contenidos pueden estar en revisión · Some sections may be under revision."
+  },
+  {
+    "objectID": "api_en/core.spatial_ops_en.html#functions",
+    "href": "api_en/core.spatial_ops_en.html#functions",
+    "title": "core.spatial_ops",
+    "section": "Functions",
+    "text": "Functions\n\n\n\nName\nDescription\n\n\n\n\nextract_points\nExtract data from a model output dataset (e.g., WRF/CROCO) at the nearest\n\n\n\n\nextract_points\ncore.spatial_ops.extract_points(\n    ds_out,\n    station,\n    lon_col,\n    lat_col,\n    name_col,\n    ds_lon_name='lon',\n    ds_lat_name='lat',\n    output_format='netcdf',\n    save_path=None,\n)\nExtract data from a model output dataset (e.g., WRF/CROCO) at the nearest grid point(s) to a set of station locations provided via CSV or Shapefile.\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nds_out\nxr.Dataset\nModel dataset already loaded in memory. The dataset must contain longitude and latitude variables whose names are provided via ds_lon_name and ds_lat_name. These may be 1D or 2D variables and will be promoted to coordinates if they are not already.\nrequired\n\n\nstation\nstr\nPath to a CSV (‘.csv’) or ESRI Shapefile (‘.shp’) with station metadata. The CSV/Shapefile must provide, at minimum, station name, longitude, and latitude columns as specified by name_col, lon_col, lat_col. For Shapefiles, the function reads the first point of each geometry as (lon, lat).\nrequired\n\n\nlon_col\nstr\nColumn name in the stations file for longitudes (degrees East).\nrequired\n\n\nlat_col\nstr\nColumn name in the stations file for latitudes (degrees North).\nrequired\n\n\nname_col\nstr\nColumn name in the stations file for station identifiers.\nrequired\n\n\nds_lon_name\nstr\nVariable name of longitudes in ds_out (e.g., ‘XLONG’, ‘lon_rho’). Default is ‘lon’.\n'lon'\n\n\nds_lat_name\nstr\nVariable name of latitudes in ds_out (e.g., ‘XLAT’, ‘lat_rho’). Default is ‘lat’.\n'lat'\n\n\noutput_format\n(netcdf, dataframe)\nOutput format. If ‘dataframe’, returns a tidy pandas.DataFrame; otherwise returns an xarray.Dataset. Default is ‘netcdf’.\n'netcdf'\n\n\nsave_path\nstr\nIf provided, the result is written to disk. Uses CSV when output_format='dataframe' and NetCDF otherwise.\nNone\n\n\n\n\n\nReturns\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nxr.Dataset or pandas.DataFrame\nExtracted data at nearest grid point for each station."
+  },
+  {
+    "objectID": "api_en/core.utils_en.html",
+    "href": "api_en/core.utils_en.html",
+    "title": "core.utils",
+    "section": "",
+    "text": "⚠️ Actualizando documentación / Updating documentation (v1 → v2)\n  Algunos contenidos pueden estar en revisión · Some sections may be under revision."
+  },
+  {
+    "objectID": "api_en/core.utils_en.html#functions",
+    "href": "api_en/core.utils_en.html#functions",
+    "title": "core.utils",
+    "section": "Functions",
+    "text": "Functions\n\n\n\nName\nDescription\n\n\n\n\napply_mask\nApply a land–sea (and optionally lake) mask to the input variable.\n\n\ncentral_diff\nCompute the centered finite difference along a given dimension.\n\n\nddx\nCompute the partial derivative ∂(field)/∂x using a provided grid metric.\n\n\nddy\nCompute the partial derivative ∂(field)/∂y using a provided grid metric.\n\n\nrotate_to_EN\nRotate horizontal velocity components from grid-relative to\n\n\nto_celsius\nConvert temperature from Kelvin to Celsius.\n\n\nto_hpa\nConvert pressure from Pascals (Pa) to hectoPascals (hPa).\n\n\nto_kelvin\nConvert temperature from Celsius to Kelvin.\n\n\nto_pa\nConvert pressure from hectoPascals (hPa) to Pascals (Pa).\n\n\n\n\napply_mask\ncore.utils.apply_mask(\n    da,\n    mask,\n    *,\n    sea_is_one=True,\n    lakemask=None,\n    exclude_lakes=True,\n)\nApply a land–sea (and optionally lake) mask to the input variable.\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nda\nxr.DataArray\nVariable to which the mask is applied.\nrequired\n\n\nmask\nxr.DataArray\nLand–sea mask. May follow either convention: - CROCO/ROMS: 1 = ocean, 0 = land - WRF: 1 = land, 0 = ocean\nrequired\n\n\nsea_is_one\nbool\nTrue → mask==1 means ocean (ROMS style). False → mask==1 means land (WRF style).\nTrue\n\n\nlakemask\nxr.DataArray\nLake mask (1 = lake, 0 = not lake). If provided and exclude_lakes=True, those points will be masked (set to NaN).\nNone\n\n\nexclude_lakes\nbool\nIf True and lakemask is available, mask out lakes as well.\nTrue\n\n\n\n\n\nReturns\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nxr.DataArray\nMasked variable with non-ocean values set to NaN.\n\n\n\n\n\n\ncentral_diff\ncore.utils.central_diff(da, dim)\nCompute the centered finite difference along a given dimension.\nThis returns the simple centered stencil (f[i+1] - f[i-1]) / 2, i.e. without dividing by the grid spacing. The caller can later scale by metric coefficients (e.g., pm = 1/Δx, pn = 1/Δy).\nEdge handling: The first and last points along dim are set to NaN because a centered derivative is not defined there (missing neighbors). Coordinates are preserved; only data values at the edges become NaN.\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nda\nxr.DataArray\nInput array. Must contain dimension dim.\nrequired\n\n\ndim\nstr\nName of the dimension along which to compute the derivative.\nrequired\n\n\n\n\n\nReturns\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nxr.DataArray\nCentered difference with the same dimensions and coordinates as da, except that the two edge points along dim are NaN. Variable name and attributes are preserved.\n\n\n\n\n\n\nddx\ncore.utils.ddx(field, metric_x, *, x_dim='x')\nCompute the partial derivative ∂(field)/∂x using a provided grid metric.\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nfield\nxr.DataArray\nInput variable defined on a rectilinear or curvilinear grid.\nrequired\n\n\nmetric_x\nxr.DataArray or float\nGrid metric in the x-direction (typically 1/Δx). For CROCO/ROMS, this corresponds to pm; for WRF, to mapfac_m / dx.\nrequired\n\n\nx_dim\nstr\nName of the x dimension. Default is “x”.\n'x'\n\n\n\n\n\nReturns\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nxr.DataArray\nZonal derivative scaled by the x-direction metric.\n\n\n\n\n\n\nddy\ncore.utils.ddy(field, metric_y, *, y_dim='y')\nCompute the partial derivative ∂(field)/∂y using a provided grid metric.\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nfield\nxr.DataArray\nInput variable defined on a rectilinear or curvilinear grid.\nrequired\n\n\nmetric_y\nxr.DataArray or float\nGrid metric in the y-direction (typically 1/Δy). For CROCO/ROMS, this corresponds to pn; for WRF, to mapfac_n / dy.\nrequired\n\n\ny_dim\nstr\nName of the y dimension. Default is “y”.\n'y'\n\n\n\n\n\nReturns\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nxr.DataArray\nMeridional derivative scaled by the y-direction metric.\n\n\n\n\n\n\nrotate_to_EN\ncore.utils.rotate_to_EN(u, v, *, angle=None, cosang=None, sinang=None)\nRotate horizontal velocity components from grid-relative to East–North coordinates.\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nu\nxr.DataArray\nZonal and meridional components on the model grid.\nrequired\n\n\nv\nxr.DataArray\nZonal and meridional components on the model grid.\nrequired\n\n\nangle\nxr.DataArray\nGrid orientation angle in radians (used in CROCO/ROMS).\nNone\n\n\ncosang\nxr.DataArray\nCosine and sine of the grid angle (used in WRF).\nNone\n\n\nsinang\nxr.DataArray\nCosine and sine of the grid angle (used in WRF).\nNone\n\n\n\n\n\nReturns\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\n(u_east, v_north) : tuple of xr.DataArray\nVelocity components rotated into true east–north coordinates.\n\n\n\n\n\n\nto_celsius\ncore.utils.to_celsius(temp)\nConvert temperature from Kelvin to Celsius.\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ntemp\nfloat | np.ndarray | xr.DataArray\nTemperature in Kelvin.\nrequired\n\n\n\n\n\nReturns\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nfloat | np.ndarray | xr.DataArray\nTemperature in Celsius, preserving attributes if input is DataArray.\n\n\n\n\n\n\nto_hpa\ncore.utils.to_hpa(pres)\nConvert pressure from Pascals (Pa) to hectoPascals (hPa).\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\npres\nfloat | np.ndarray | xr.DataArray\nPressure in Pascals.\nrequired\n\n\n\n\n\nReturns\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nfloat | np.ndarray | xr.DataArray\nPressure in hectoPascals, preserving attributes if input is DataArray.\n\n\n\n\n\n\nto_kelvin\ncore.utils.to_kelvin(temp)\nConvert temperature from Celsius to Kelvin.\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ntemp\nfloat | np.ndarray | xr.DataArray\nTemperature in Celsius.\nrequired\n\n\n\n\n\nReturns\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nfloat | np.ndarray | xr.DataArray\nTemperature in Kelvin, preserving attributes if input is DataArray.\n\n\n\n\n\n\nto_pa\ncore.utils.to_pa(pres)\nConvert pressure from hectoPascals (hPa) to Pascals (Pa).\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\npres\nfloat | np.ndarray | xr.DataArray\nPressure in hectoPascals.\nrequired\n\n\n\n\n\nReturns\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nfloat | np.ndarray | xr.DataArray\nPressure in Pascals, preserving attributes if input is DataArray."
+  },
+  {
+    "objectID": "api_en/index.html",
+    "href": "api_en/index.html",
+    "title": "Function reference",
+    "section": "",
+    "text": "⚠️ Actualizando documentación / Updating documentation (v1 → v2)\n  Algunos contenidos pueden estar en revisión · Some sections may be under revision."
+  },
+  {
+    "objectID": "api_en/index.html#core-operaciones-esenciales",
+    "href": "api_en/index.html#core-operaciones-esenciales",
+    "title": "Function reference",
+    "section": "Core (Operaciones esenciales)",
+    "text": "Core (Operaciones esenciales)\nOperaciones comunes de coordenadas, tiempo, vertical y utilidades.\n\n\n\ncore.coords\n\n\n\ncore.io\n\n\n\ncore.spatial_ops\n\n\n\ncore.time_ops\n\n\n\ncore.utils\n\n\n\ncore.vertical"
+  },
+  {
+    "objectID": "api_en/index.html#io-atmosférico-wrf",
+    "href": "api_en/index.html#io-atmosférico-wrf",
+    "title": "Function reference",
+    "section": "IO Atmosférico (WRF)",
+    "text": "IO Atmosférico (WRF)\nFunciones para lectura, manejo de coordenadas y diagnósticos atmosféricos WRF.\n\n\n\ncomponents.atmos.wrf_diags\n\n\n\ncomponents.atmos.wrf_coords\n\n\n\ncomponents.atmos.wrf_io"
+  },
+  {
+    "objectID": "api_en/index.html#io-oceánico-croco",
+    "href": "api_en/index.html#io-oceánico-croco",
+    "title": "Function reference",
+    "section": "IO Oceánico (CROCO)",
+    "text": "IO Oceánico (CROCO)\nFunciones para lectura, coordenadas y diagnósticos del modelo oceánico CROCO.\n\n\n\ncomponents.ocean.croco_coords\n\n\n\ncomponents.ocean.croco_io\n\n\n\ncomponents.ocean.croco_diags"
+  },
+  {
+    "objectID": "api_en/index.html#plotting",
+    "href": "api_en/index.html#plotting",
+    "title": "Function reference",
+    "section": "Plotting",
+    "text": "Plotting\nFunciones de visualización para mapas, secciones y series de tiempo.\n\n\n\nplots.maps\n\n\n\nplots.sections\n\n\n\nplots.timeseries"
+  },
+  {
+    "objectID": "api_en/plots.sections_en.html",
+    "href": "api_en/plots.sections_en.html",
+    "title": "plots.sections",
+    "section": "",
+    "text": "⚠️ Actualizando documentación / Updating documentation (v1 → v2)\n  Algunos contenidos pueden estar en revisión · Some sections may be under revision."
+  },
+  {
+    "objectID": "api_en/plots.sections_en.html#functions",
+    "href": "api_en/plots.sections_en.html#functions",
+    "title": "plots.sections",
+    "section": "Functions",
+    "text": "Functions\n\n\n\nName\nDescription\n\n\n\n\nsection_xz_1var\nPlot an X–Z vertical section at a fixed latitude (lon vs vertical).\n\n\nsection_xz_1var_winds\nPlot an X–Z section (fixed latitude) of a scalar field and overlay wind vectors (U, W).\n\n\nsection_yz_1var\nPlot a Y–Z vertical section at a fixed longitude (lat vs vertical).\n\n\nsection_yz_1var_winds\nPlot a Y–Z section (fixed longitude) of a scalar field and overlay wind vectors (V, W).\n\n\n\n\nsection_xz_1var\nplots.sections.section_xz_1var(\n    da,\n    *,\n    lat,\n    levels,\n    cmap='thermal',\n    time=None,\n    month=None,\n    title=None,\n    colorbar_label=None,\n    output_path=None,\n)\nPlot an X–Z vertical section at a fixed latitude (lon vs vertical).\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nda\nxarray.DataArray\nScalar variable with coordinates (time|month?, z, lat, lon).\nrequired\n\n\nlat\nfloat\nFixed latitude at which the section is extracted (nearest selection).\nrequired\n\n\nlevels\niterable of float\nDiscrete color levels for the filled section.\nrequired\n\n\ncmap\nstr\ncmocean colormap name (lightened internally).\n'thermal'\n\n\ntime\nint or str\nSelect a single time frame if available (index or timestamp string).\nNone\n\n\nmonth\nint\nSelect a single month if available (1–12) for climatologies.\nNone\n\n\ntitle\nstr\nFigure title.\nNone\n\n\ncolorbar_label\nstr\nLabel for the colorbar; defaults to da.units if present.\nNone\n\n\noutput_path\nstr or None\nIf provided, the figure is saved; otherwise it is shown.\nNone\n\n\n\n\n\n\nsection_xz_1var_winds\nplots.sections.section_xz_1var_winds(\n    da,\n    U,\n    W,\n    *,\n    lat,\n    levels,\n    cmap='thermal',\n    time=None,\n    month=None,\n    w_scale=1000.0,\n    quiver_density=4,\n    quiver_scale=170.0,\n    quiverkey_speed=5.0,\n    title=None,\n    colorbar_label=None,\n    output_path=None,\n)\nPlot an X–Z section (fixed latitude) of a scalar field and overlay wind vectors (U, W).\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nda\nxarray.DataArray\nScalar field (time|month?, z, lat, lon).\nrequired\n\n\nU\nxarray.DataArray\nZonal wind component on the same grid (time|month?, z, lat, lon).\nrequired\n\n\nW\nxarray.DataArray\nVertical wind component on the same grid; will be scaled by w_scale.\nrequired\n\n\nlat\nfloat\nFixed latitude for the section (nearest selection).\nrequired\n\n\nlevels\niterable of float\nDiscrete color levels for the filled section.\nrequired\n\n\ncmap\nstr\ncmocean colormap name (lightened internally).\n'thermal'\n\n\ntime\noptional\nUniform temporal selector applied to all inputs.\nNone\n\n\nmonth\noptional\nUniform temporal selector applied to all inputs.\nNone\n\n\nw_scale\nfloat\nMultiplicative factor for W (e.g., 1000 to convert m/s to mm/s for better visual balance).\n1000.0\n\n\nquiver_density\nint\nSubsampling step for the quiver field (larger -&gt; fewer arrows).\n4\n\n\nquiver_scale\nfloat\nMatplotlib quiver scaling parameter.\n170.0\n\n\nquiverkey_speed\nfloat\nReference speed (m/s) shown in the quiver key.\n5.0\n\n\ntitle\nOptional[str]\nSee section_xz_1var.\nNone\n\n\ncolorbar_label\nOptional[str]\nSee section_xz_1var.\nNone\n\n\noutput_path\nOptional[str]\nSee section_xz_1var.\nNone\n\n\n\n\n\nReturns\n\n\n\nName\nType\nDescription\n\n\n\n\n\nNone\n\n\n\n\n\n\n\nsection_yz_1var\nplots.sections.section_yz_1var(\n    da,\n    *,\n    lon,\n    levels,\n    cmap='thermal',\n    time=None,\n    month=None,\n    title=None,\n    colorbar_label=None,\n    output_path=None,\n)\nPlot a Y–Z vertical section at a fixed longitude (lat vs vertical).\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nda\nxarray.DataArray\nScalar variable with coordinates (time|month?, z, lat, lon).\nrequired\n\n\nlon\nfloat\nFixed longitude at which the section is extracted (nearest selection).\nrequired\n\n\nlevels\niterable of float\nDiscrete color levels for the filled section.\nrequired\n\n\ncmap\nstr\ncmocean colormap name (lightened internally).\n'thermal'\n\n\ntime\n\nSee section_xz_1var.\nNone\n\n\nmonth\n\nSee section_xz_1var.\nNone\n\n\ntitle\n\nSee section_xz_1var.\nNone\n\n\ncolorbar_label\n\nSee section_xz_1var.\nNone\n\n\noutput_path\n\nSee section_xz_1var.\nNone\n\n\n\n\n\n\nsection_yz_1var_winds\nplots.sections.section_yz_1var_winds(\n    da,\n    V,\n    W,\n    *,\n    lon,\n    levels,\n    cmap='thermal',\n    time=None,\n    month=None,\n    w_scale=1000.0,\n    quiver_density=4,\n    quiver_scale=170.0,\n    quiverkey_speed=5.0,\n    title=None,\n    colorbar_label=None,\n    output_path=None,\n)\nPlot a Y–Z section (fixed longitude) of a scalar field and overlay wind vectors (V, W).\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nda\nxarray.DataArray\nScalar field (time|month?, z, lat, lon).\nrequired\n\n\nV\nxarray.DataArray\nMeridional wind component on the same grid (time|month?, z, lat, lon).\nrequired\n\n\nW\nxarray.DataArray\nVertical wind component on the same grid; scaled by w_scale.\nrequired\n\n\nlon\nfloat\nFixed longitude for the section (nearest selection).\nrequired\n\n\nlevels\niterable of float\nDiscrete color levels for the filled section.\nrequired\n\n\ncmap\nstr\ncmocean colormap name (lightened internally).\n'thermal'\n\n\ntime\n\nSee section_xz_1var_winds.\nNone\n\n\nmonth\n\nSee section_xz_1var_winds.\nNone\n\n\nw_scale\n\nSee section_xz_1var_winds.\nNone\n\n\nquiver_density\n\nSee section_xz_1var_winds.\nNone\n\n\nquiver_scale\n\nSee section_xz_1var_winds.\nNone\n\n\nquiverkey_speed\n\nSee section_xz_1var_winds.\nNone\n\n\ntitle\nOptional[str]\nSee section_xz_1var.\nNone\n\n\ncolorbar_label\nOptional[str]\nSee section_xz_1var.\nNone\n\n\noutput_path\nOptional[str]\nSee section_xz_1var.\nNone\n\n\n\n\n\nReturns\n\n\n\nName\nType\nDescription\n\n\n\n\n\nNone"
+  }
+]

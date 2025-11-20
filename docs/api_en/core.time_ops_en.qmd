@@ -8,9 +8,66 @@
 
 | Name | Description |
 | --- | --- |
+| [aggregate_dmy](#scahpy.core.time_ops.aggregate_dmy) | Resample WRF hourly data to coarser time intervals using sum, mean, or median |
 | [anomalies](#scahpy.core.time_ops.anomalies) | Compute anomalies relative to a provided climatology. |
 | [monthly_climatology](#scahpy.core.time_ops.monthly_climatology) | Compute a 12-month climatology using groupby on calendar months. |
 | [monthly_to_daily_climatology](#scahpy.core.time_ops.monthly_to_daily_climatology) | Upsample a monthly climatology to daily frequency for DataArray or Dataset. |
+
+### aggregate_dmy { #scahpy.core.time_ops.aggregate_dmy }
+
+```python
+core.time_ops.aggregate_dmy(ds, tiempo=None, accum=None, avg=None, mediana=None)
+```
+
+Resample WRF hourly data to coarser time intervals using sum, mean, or median
+operations for selected variables.
+
+This function provides a flexible interface to resample a Dataset using any
+time frequency supported by xarray's `.resample()` (e.g., "D" for daily,
+"M" for monthly, "6H" for 6-hourly). Different groups of variables may be
+aggregated with different operations like: sum, mean, or median.
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name    | Type        | Description                                                                                                                                                                             | Default    |
+|---------|-------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------|
+| ds      | xr.Dataset  | Input Dataset containing time-dependent variables (typically hourly WRF outputs).                                                                                                       | _required_ |
+| tiempo  | str         | Resampling frequency string accepted by `Dataset.resample()`. Examples: "D"  (daily), "M" (monthly), "3H" (3-hourly), "Y" (yearly). If None, the function will return an error message. | `None`     |
+| accum   | list of str | List of variable names to aggregate using the sum over each resample interval. Useful for accumulated or flux-like variables.                                                           | `None`     |
+| avg     | list of str | List of variable names to aggregate using the mean.                                                                                                                                     | `None`     |
+| mediana | list of str | List of variable names to aggregate using the median.                                                                                                                                   | `None`     |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type       | Description                                                                                                                                               |
+|--------|------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
+|        | xr.Dataset | Dataset containing the resampled variables merged together. The resulting Dataset includes only the variables specified in `accum`, `avg`, and `mediana`. |
+
+#### Notes {.doc-section .doc-section-notes}
+
+- If no variables are provided in `accum`, `avg`, or `mediana`, the function
+  returns `None` with a warning message.
+- The function relies on xarray's `.resample()`, which requires the `time`
+  coordinate to be properly formatted as a datetime64 index.
+- Each aggregation type is applied only to the variables specified in its
+  corresponding list.
+
+#### Examples {.doc-section .doc-section-examples}
+
+```python
+>>> # Daily sums of rainfall and daily means of temperature
+>>> ds_daily = dmy_var(
+...     ds,
+...     tiempo="D",
+...     accum=["RAINC", "RAINNC"],
+...     avg=["T2"]
+... )
+```
+
+```python
+>>> # Monthly means for several atmospheric variables
+>>> ds_month = dmy_var(ds, tiempo="M", avg=["U10", "V10", "T2"])
+```
 
 ### anomalies { #scahpy.core.time_ops.anomalies }
 

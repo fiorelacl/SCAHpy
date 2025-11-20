@@ -10,6 +10,7 @@
 | --- | --- |
 | [geop_height](#scahpy.components.atmos.wrf_diags.geop_height) | Compute geopotential height (Z) from total geopotential divided by gravity. |
 | [geopotential](#scahpy.components.atmos.wrf_diags.geopotential) | Compute total geopotential (Φ) from perturbation and base-state components. |
+| [precipitation](#scahpy.components.atmos.wrf_diags.precipitation) | Compute de-accumulated precipitation from WRF accumulated variables. |
 | [pressure](#scahpy.components.atmos.wrf_diags.pressure) | Compute total atmospheric pressure from perturbation (P) and base-state (PB) components. |
 | [rh](#scahpy.components.atmos.wrf_diags.rh) | Compute relative humidity (%) from perturbation temperature (T), |
 | [t_air](#scahpy.components.atmos.wrf_diags.t_air) | Compute absolute air temperature (T_air) from perturbation potential temperature (T) |
@@ -72,6 +73,41 @@ The total geopotential is given by:
 | Name   | Type         | Description                  |
 |--------|--------------|------------------------------|
 |        | xr.DataArray | Total geopotential (m² s⁻²). |
+
+### precipitation { #scahpy.components.atmos.wrf_diags.precipitation }
+
+```python
+components.atmos.wrf_diags.precipitation(*acc_vars, name='PP', units='mm')
+```
+
+Compute de-accumulated precipitation from WRF accumulated variables.
+
+WRF provides several accumulated precipitation components, such as:
+    - RAINC  : Accumulated precipitation from cumulus scheme (mm)
+    - RAINNC : Accumulated precipitation from microphysics (mm)
+    - RAINSH : Accumulated shallow convection precipitation (mm)
+
+#### Parameters {.doc-section .doc-section-parameters}
+
+| Name      | Type             | Description                                                                                                                                                                      | Default   |
+|-----------|------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------|
+| *acc_vars | xr.DataArray     | One or more accumulated precipitation variables that share the same dimensions and coordinates (e.g., RAINC, RAINNC, RAINSH). Units are assumed to be millimeters (WRF default). | `()`      |
+| name      | str              | Name for the output de-accumulated precipitation variable. Default is "PP".                                                                                                      | `'PP'`    |
+| units     | (mm, \'kg m-2\') | Output units. WRF precipitation is equivalent to mm or kg/m². Default is "mm".                                                                                                   | `"mm"`    |
+
+#### Returns {.doc-section .doc-section-returns}
+
+| Name   | Type         | Description                                                                                                                            |
+|--------|--------------|----------------------------------------------------------------------------------------------------------------------------------------|
+|        | xr.DataArray | De-accumulated precipitation with metadata included. The first timestep is set to NaN because the accumulated difference is undefined. |
+
+#### Notes {.doc-section .doc-section-notes}
+
+- The time coordinate is preserved.
+- The function assumes precipitation is monotonically increasing
+  (WRF accumulation behavior).
+- If one of the input arrays resets to zero (e.g., restart file),
+  the user must manually handle the discontinuity.
 
 ### pressure { #scahpy.components.atmos.wrf_diags.pressure }
 

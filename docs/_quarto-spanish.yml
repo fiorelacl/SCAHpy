@@ -39,7 +39,7 @@ website:
             href: 03_tutorial_01.qmd
           - text: "Tutorial 2: Lectura de CROCO"
             href: 03_tutorial_02.qmd
-          - text: "Tutorial 3: Gráficos básicos"
+          - text: "Tutorial 3: ENSO 2017"
             href: 03_tutorial_03.qmd
 
       - section: "Ayuda y referencias"

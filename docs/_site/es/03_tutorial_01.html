@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es-PE" xml:lang="es-PE"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.537">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>SCAHpy</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./03_tutorial_02.html" rel="next">
+<link href="./02_use.html" rel="prev">
+<link href="./assets/logo.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Sin resultados",
+    "search-matching-documents-text": "documentos coincidentes",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Limpiar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <a class="flex-grow-1 no-decor" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+          <h1 class="quarto-secondary-nav-title"></h1>
+        </a>     
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      <img src="./assets/cover.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">DOCUMENTACIÓN</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://pypi.org/project/scahpy/" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-filetype-py"></i></a>
+    <a href="https://github.com/fiorelacl/SCAHpy/" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Buscar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introducción</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_install.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Instalación</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_use.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Uso</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Tutoriales</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_tutorial_01.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Tutorial 1: Lectura de WRF</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_tutorial_02.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tutorial 2: Lectura de CROCO</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_tutorial_03.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tutorial 3: Gráficos básicos</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false">
+ <span class="menu-text">Ayuda y referencias</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04_API.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Referencia de la API</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05_contrib.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Contribuir</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06_references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Referencias</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contenido</h2>
+   
+  <ul>
+  <li><a href="#tutorial-01-salidas-del-modelo-wrf" id="toc-tutorial-01-salidas-del-modelo-wrf" class="nav-link active" data-scroll-target="#tutorial-01-salidas-del-modelo-wrf">Tutorial 01: Salidas del modelo WRF</a>
+  <ul class="collapse">
+  <li><a href="#lectura-de-un-archivo-wrf" id="toc-lectura-de-un-archivo-wrf" class="nav-link" data-scroll-target="#lectura-de-un-archivo-wrf">Lectura de un archivo WRF</a>
+  <ul class="collapse">
+  <li><a href="#importación-de-paquetes" id="toc-importación-de-paquetes" class="nav-link" data-scroll-target="#importación-de-paquetes">1. Importación de paquetes</a></li>
+  <li><a href="#definición-del-archivo-wrf" id="toc-definición-del-archivo-wrf" class="nav-link" data-scroll-target="#definición-del-archivo-wrf">2. Definición del archivo WRF</a></li>
+  <li><a href="#selección-de-variables-con-drop_vars" id="toc-selección-de-variables-con-drop_vars" class="nav-link" data-scroll-target="#selección-de-variables-con-drop_vars">3. Selección de variables con <code>drop_vars</code></a></li>
+  <li><a href="#lectura-del-archivo-con-read_wrf" id="toc-lectura-del-archivo-con-read_wrf" class="nav-link" data-scroll-target="#lectura-del-archivo-con-read_wrf">4. Lectura del archivo con <code>read_wrf</code></a></li>
+  <li><a href="#cálculo-de-la-velocidad-del-viento" id="toc-cálculo-de-la-velocidad-del-viento" class="nav-link" data-scroll-target="#cálculo-de-la-velocidad-del-viento">5. Cálculo de la velocidad del viento</a></li>
+  <li><a href="#mapa-2d-velocidad-del-viento-con-vectores" id="toc-mapa-2d-velocidad-del-viento-con-vectores" class="nav-link" data-scroll-target="#mapa-2d-velocidad-del-viento-con-vectores">6. Mapa 2D: velocidad del viento con vectores</a></li>
+  <li><a href="#aplicación-de-máscara-para-delimitar-continente" id="toc-aplicación-de-máscara-para-delimitar-continente" class="nav-link" data-scroll-target="#aplicación-de-máscara-para-delimitar-continente">7. Aplicación de máscara para delimitar continente</a></li>
+  <li><a href="#nuevo-mapa-con-la-máscara-aplicada" id="toc-nuevo-mapa-con-la-máscara-aplicada" class="nav-link" data-scroll-target="#nuevo-mapa-con-la-máscara-aplicada">8. Nuevo mapa con la máscara aplicada</a></li>
+  </ul></li>
+  <li><a href="#lectura-de-múltiples-archivos-wrf" id="toc-lectura-de-múltiples-archivos-wrf" class="nav-link" data-scroll-target="#lectura-de-múltiples-archivos-wrf">Lectura de múltiples archivos WRF</a>
+  <ul class="collapse">
+  <li><a href="#importación-de-paquetes-1" id="toc-importación-de-paquetes-1" class="nav-link" data-scroll-target="#importación-de-paquetes-1">1. Importación de paquetes</a></li>
+  <li><a href="#listado-de-archivos-wrf" id="toc-listado-de-archivos-wrf" class="nav-link" data-scroll-target="#listado-de-archivos-wrf">2. Listado de archivos WRF</a></li>
+  <li><a href="#selección-de-variables" id="toc-selección-de-variables" class="nav-link" data-scroll-target="#selección-de-variables">3. Selección de variables</a></li>
+  <li><a href="#lectura-de-todos-los-archivos-con-read_wrf" id="toc-lectura-de-todos-los-archivos-con-read_wrf" class="nav-link" data-scroll-target="#lectura-de-todos-los-archivos-con-read_wrf">4. Lectura de todos los archivos con <code>read_wrf</code></a></li>
+  <li><a href="#cálculo-de-la-precipitación-desacumulada" id="toc-cálculo-de-la-precipitación-desacumulada" class="nav-link" data-scroll-target="#cálculo-de-la-precipitación-desacumulada">5. Cálculo de la precipitación desacumulada</a></li>
+  <li><a href="#aplicación-de-máscara-solo-océano" id="toc-aplicación-de-máscara-solo-océano" class="nav-link" data-scroll-target="#aplicación-de-máscara-solo-océano">6. Aplicación de máscara: solo océano</a></li>
+  <li><a href="#agregación-mensual" id="toc-agregación-mensual" class="nav-link" data-scroll-target="#agregación-mensual">7. Agregación mensual</a></li>
+  <li><a href="#mapa-mensual-precipitación-acumulada-viento" id="toc-mapa-mensual-precipitación-acumulada-viento" class="nav-link" data-scroll-target="#mapa-mensual-precipitación-acumulada-viento">8. Mapa mensual: precipitación acumulada + viento</a></li>
+  </ul></li>
+  <li><a href="#nota-sobre-uso-de-memoria-y-rendimiento" id="toc-nota-sobre-uso-de-memoria-y-rendimiento" class="nav-link" data-scroll-target="#nota-sobre-uso-de-memoria-y-rendimiento">Nota sobre uso de memoria y rendimiento</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+<div class="update-banner">
+  ⚠️ Actualizando documentación / Updating documentation (v1 → v2)<br>
+  <small>Algunos contenidos pueden estar en revisión · Some sections may be under revision.</small>
+</div>
+
+
+
+
+<section id="tutorial-01-salidas-del-modelo-wrf" class="level1">
+<h1>Tutorial 01: Salidas del modelo WRF</h1>
+<p>En este tutorial aprenderás a:</p>
+<ol type="1">
+<li>Leer un único archivo o múltiples archivos del modelo <strong>WRF</strong> usando SCAHpy.<br>
+</li>
+<li>Realizar diagnósticos básicos como obtener la velocidad del viento y precipitación.<br>
+</li>
+<li>Generar un mapa 2D y una serie de tiempo sencilla con variables meteorológicas.</li>
+</ol>
+<p>Este flujo es ideal para comenzar a trabajar con las salidas de la componente atmosférica del modelo acoplado <em>IGP RESM-COW</em> o de cualquier simulación WRF compatible.</p>
+<section id="lectura-de-un-archivo-wrf" class="level2">
+<h2 class="anchored" data-anchor-id="lectura-de-un-archivo-wrf">Lectura de un archivo WRF</h2>
+<p>En esta primera parte comenzaremos trabajando con <strong>un solo archivo WRF</strong>, lo cual permite comprender la estructura básica del dataset y el uso de las funciones principales. Más adelante extenderemos estos conceptos para el caso de <strong>lecturas múltiples</strong>.</p>
+<section id="importación-de-paquetes" class="level3">
+<h3 class="anchored" data-anchor-id="importación-de-paquetes">1. Importación de paquetes</h3>
+<p>Importamos los módulos necesarios para el manejo de rutas, lectura de archivos WRF y operaciones numéricas:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scahpy <span class="im">as</span> sc</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> glob</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="definición-del-archivo-wrf" class="level3">
+<h3 class="anchored" data-anchor-id="definición-del-archivo-wrf">2. Definición del archivo WRF</h3>
+<p>Las funciones de lectura de SCAHpy requieren que las rutas de los archivos se proporcionen como <em>lista de strings</em>. Existen dos formas de lograrlo:</p>
+<p><strong>a) Colocar manualmente el archivo entre corchetes:</strong></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>file_name <span class="op">=</span> [<span class="st">'/data/users/fcastillon/COW_outs/diagnos/C2O5W4_SF2/wrf/wrfout_d01_2017-01-14_03:00:00'</span>]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>b) Utilizar <code>glob.glob</code>, que devuelve directamente una lista:</strong></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>file_name <span class="op">=</span> glob.glob(<span class="st">'/data/users/fcastillon/COW_outs/diagnos/C2O5W4_SF2/wrf/wrfout_d01_2017-01-14_03:00:00'</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Ambos métodos son equivalentes respecto al formato que necesita SCAHpy.</p>
+</section>
+<section id="selección-de-variables-con-drop_vars" class="level3">
+<h3 class="anchored" data-anchor-id="selección-de-variables-con-drop_vars">3. Selección de variables con <code>drop_vars</code></h3>
+<p>Para optimizar la lectura, podemos indicar qué variables excluir del archivo WRF. Esto es especialmente útil en simulaciones pesadas o cuando se trabaja con múltiples archivos.</p>
+<p>La función <code>drop_vars</code> tiene un punto importante:</p>
+<blockquote class="blockquote">
+<p><strong>Siempre requiere un único archivo (<code>file0</code>), en formato string, aun cuando trabajemos con múltiples archivos.</strong> Esto se debe a que la función analiza la estructura y <em>metadata</em> típica del archivo WRF para identificar las variables que deben excluirse.</p>
+</blockquote>
+<p>Por ello, incluso si <code>file_name</code> contiene más de un archivo, utilizamos:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>file_name[<span class="dv">0</span>]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>En este ejemplo trabajaremos solo con cuatro variables: <code>LANDMASK</code>, <code>LAKEMASK</code>, <code>U10</code> y <code>V10</code>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>vars_wrf <span class="op">=</span> sc.drop_vars(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    file0 <span class="op">=</span> file_name[<span class="dv">0</span>],</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    sel_vars <span class="op">=</span> [<span class="st">'LANDMASK'</span>, <span class="st">'LAKEMASK'</span>, <span class="st">'U10'</span>, <span class="st">'V10'</span>],</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> <span class="st">'WRF'</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="lectura-del-archivo-con-read_wrf" class="level3">
+<h3 class="anchored" data-anchor-id="lectura-del-archivo-con-read_wrf">4. Lectura del archivo con <code>read_wrf</code></h3>
+<p>A continuación, leemos el archivo usando la función <code>read_wrf</code>, pasando las opciones principales:</p>
+<ul>
+<li><strong><code>drop_vars</code></strong>: variables a excluir (obtenidas previamente).</li>
+<li><strong><code>dif_hours</code> y <code>sign</code></strong>: ajustes de huso horario (p.&nbsp;ej. Perú = UTC−5 → <code>dif_hours=5</code>, <code>sign=-1</code>).</li>
+<li><strong><code>destag</code></strong>: si se requiere destaggering; en este ejemplo no es necesario.</li>
+<li><strong><code>save_path</code></strong>: ruta opcional para guardar el archivo procesado.</li>
+</ul>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ds_wrf <span class="op">=</span> sc.read_wrf(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    file_paths <span class="op">=</span> file_name,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    drop_vars <span class="op">=</span> vars_wrf,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    dif_hours <span class="op">=</span> <span class="dv">5</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    sign <span class="op">=</span> <span class="op">-</span><span class="dv">1</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    destag <span class="op">=</span> <span class="va">False</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    save_path <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="cálculo-de-la-velocidad-del-viento" class="level3">
+<h3 class="anchored" data-anchor-id="cálculo-de-la-velocidad-del-viento">5. Cálculo de la velocidad del viento</h3>
+<p>A partir de los componentes horizontales <code>U10</code> y <code>V10</code>, calculamos la magnitud del viento superficial:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>ds_wrf[<span class="st">'WSP'</span>] <span class="op">=</span> sc.wind_speed(ds_wrf.U10, ds_wrf.V10)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="mapa-2d-velocidad-del-viento-con-vectores" class="level3">
+<h3 class="anchored" data-anchor-id="mapa-2d-velocidad-del-viento-con-vectores">6. Mapa 2D: velocidad del viento con vectores</h3>
+<p>La función <code>map_1var_winds</code> pertenece al módulo: <code>scahpy.plots.maps</code></p>
+<p>Esta función permite graficar un campo escalar acompañado de un campo vectorial. Los parámetros más relevantes que utilizamos aquí son:</p>
+<ul>
+<li><strong><code>da</code></strong>: variable escalar a graficar (WSP).</li>
+<li><strong><code>U</code>, <code>V</code></strong>: componentes del viento.</li>
+<li><strong><code>levels</code></strong>: niveles del contorno.</li>
+<li><strong><code>cmap</code></strong>: paleta de colores.</li>
+<li><strong><code>quiver_subsample</code></strong>: frecuencia de muestreo para los vectores.</li>
+<li><strong><code>quiverkey_speed</code></strong>: escala de referencia.</li>
+<li><strong><code>time</code></strong>: tiempo a graficar.</li>
+<li><strong><code>output_path</code></strong>: ruta para guardar la figura (si se desea).</li>
+</ul>
+<p>Más detalles de cada parámetro, revisar la sección <a href="./04_API.html">Referencia de la API</a></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>sc.map_1var_winds(</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    da <span class="op">=</span> ds_wrf.WSP,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    U <span class="op">=</span> ds_wrf.U10,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    V <span class="op">=</span> ds_wrf.V10,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    levels <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="dv">11</span>, <span class="dv">1</span>),</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    cmap <span class="op">=</span> <span class="st">'rain'</span>,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    shapefile <span class="op">=</span> <span class="va">None</span>,</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    extent <span class="op">=</span> <span class="va">None</span>,</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    xticks <span class="op">=</span> <span class="va">None</span>,</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    yticks <span class="op">=</span> <span class="va">None</span>,</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    tick_step <span class="op">=</span> (<span class="dv">5</span>, <span class="dv">5</span>),</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    draw_grid <span class="op">=</span> <span class="va">False</span>,</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    time <span class="op">=</span> <span class="st">'2017-01-14T13'</span>,</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    month <span class="op">=</span> <span class="va">None</span>,</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    quiver_subsample <span class="op">=</span> <span class="dv">7</span>,</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    quiverkey_speed <span class="op">=</span> <span class="fl">5.0</span>,</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    title <span class="op">=</span> <span class="st">'Velocidad del Viento'</span>,</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    colorbar_label <span class="op">=</span> <span class="st">'m/s'</span>,</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    output_path <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-04" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-04-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/fig_04.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-04-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1: ds_maps
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="aplicación-de-máscara-para-delimitar-continente" class="level3">
+<h3 class="anchored" data-anchor-id="aplicación-de-máscara-para-delimitar-continente">7. Aplicación de máscara para delimitar continente</h3>
+<p>Si deseamos graficar solo la zona <strong>continental</strong>, podemos usar <code>apply_mask</code>, que pertenece al módulo: <code>scahpy.core</code></p>
+<p>Una nota importante:</p>
+<blockquote class="blockquote">
+<p>Aunque <code>LANDMASK</code> distingue mar y tierra, el modelo WRF puede <em>interpolar incorrectamente variables sobre lagos</em>, como el Lago Titicaca. Por ello, es recomendable <em>excluir lagos</em> al trabajar con máscaras.</p>
+</blockquote>
+<p>En este caso mantendremos únicamente superficie terrestre, por lo que usamos <code>sea_is_one = True</code> y <code>exclude_lakes = False</code>.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ds_wrf[<span class="st">'WSP_land'</span>] <span class="op">=</span> sc.apply_mask(</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    da <span class="op">=</span> ds_wrf.WSP,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    mask <span class="op">=</span> ds_wrf.LANDMASK,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    sea_is_one <span class="op">=</span> <span class="va">True</span>,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    lakemask <span class="op">=</span> ds_wrf.LAKEMASK,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    exclude_lakes <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>ds_wrf[<span class="st">'U10_land'</span>] <span class="op">=</span> sc.apply_mask(</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    ds_wrf.U10,</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    ds_wrf.LANDMASK,</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    sea_is_one <span class="op">=</span> <span class="va">True</span>,</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    lakemask <span class="op">=</span> ds_wrf.LAKEMASK,</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    exclude_lakes <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>ds_wrf[<span class="st">'V10_land'</span>] <span class="op">=</span> sc.apply_mask(</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    ds_wrf.V10,</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    ds_wrf.LANDMASK,</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    sea_is_one <span class="op">=</span> <span class="va">True</span>,</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>    lakemask <span class="op">=</span> ds_wrf.LAKEMASK,</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>    exclude_lakes <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="nuevo-mapa-con-la-máscara-aplicada" class="level3">
+<h3 class="anchored" data-anchor-id="nuevo-mapa-con-la-máscara-aplicada">8. Nuevo mapa con la máscara aplicada</h3>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>sc.map_1var_winds(</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    da <span class="op">=</span> ds_wrf.WSP_land,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    U <span class="op">=</span> ds_wrf.U10_land,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    V <span class="op">=</span> ds_wrf.V10_land,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    levels <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="dv">11</span>, <span class="dv">1</span>),</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    cmap <span class="op">=</span> <span class="st">'rain'</span>,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    time <span class="op">=</span> <span class="st">'2017-01-14T13'</span>,</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    title <span class="op">=</span> <span class="st">'Velocidad del Viento'</span>,</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    colorbar_label <span class="op">=</span> <span class="st">'m/s'</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-05" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-05-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/fig_05.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-05-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2: ds_maps
+</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="lectura-de-múltiples-archivos-wrf" class="level2">
+<h2 class="anchored" data-anchor-id="lectura-de-múltiples-archivos-wrf">Lectura de múltiples archivos WRF</h2>
+<p>En esta sección extenderemos el procedimiento anterior para trabajar con <strong>múltiples archivos WRF</strong> correspondientes a una misma simulación.</p>
+<section id="importación-de-paquetes-1" class="level3">
+<h3 class="anchored" data-anchor-id="importación-de-paquetes-1">1. Importación de paquetes</h3>
+<p>Comenzamos importando los módulos necesarios:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scahpy <span class="im">as</span> sc</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> glob</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="listado-de-archivos-wrf" class="level3">
+<h3 class="anchored" data-anchor-id="listado-de-archivos-wrf">2. Listado de archivos WRF</h3>
+<p>Para leer múltiples archivos, utilizamos <code>glob.glob</code>, que retorna directamente una lista ordenada de rutas. En este ejemplo filtramos todos los <code>wrfout</code> del año 2017:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>WRF_files <span class="op">=</span> <span class="bu">sorted</span>(glob.glob(<span class="st">"/data/users/fcastillon/COW_outs/diagnos/C2O5W4_SF2/wrf/wrfout_d01_2017*"</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<p><em>Importante:</em> Aunque trabajemos con múltiples archivos, la función <code>drop_vars</code> siempre requiere un solo archivo (<code>file0</code>) para identificar la metadata genérica del WRF. Por ello, empleamos <code>WRF_files[0]</code>.</p>
+</blockquote>
+</section>
+<section id="selección-de-variables" class="level3">
+<h3 class="anchored" data-anchor-id="selección-de-variables">3. Selección de variables</h3>
+<p>Seleccionamos únicamente las variables necesarias para este ejemplo:</p>
+<ul>
+<li><code>U10</code>, <code>V10</code>: viento a 10 m,</li>
+<li><code>RAINC</code>, <code>RAINNC</code>: precipitación acumulada convectiva y de gran escala,</li>
+<li><code>LANDMASK</code>, <code>LAKEMASK</code>: máscaras geográficas para filtrado posterior.</li>
+</ul>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>vars_WRF <span class="op">=</span> sc.drop_vars(</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    WRF_files[<span class="dv">0</span>],</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    sel_vars<span class="op">=</span>[<span class="st">'LAKEMASK'</span>, <span class="st">'LANDMASK'</span>, <span class="st">'U10'</span>, <span class="st">'V10'</span>, <span class="st">'RAINC'</span>, <span class="st">'RAINNC'</span>]</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="lectura-de-todos-los-archivos-con-read_wrf" class="level3">
+<h3 class="anchored" data-anchor-id="lectura-de-todos-los-archivos-con-read_wrf">4. Lectura de todos los archivos con <code>read_wrf</code></h3>
+<p>Leemos todos los archivos al mismo tiempo. La función concatena automáticamente la dimensión temporal y ajusta coordenadas y metadatos.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>ds_WRF <span class="op">=</span> sc.read_wrf(</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    WRF_files,</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    drop_vars <span class="op">=</span> vars_WRF</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="cálculo-de-la-precipitación-desacumulada" class="level3">
+<h3 class="anchored" data-anchor-id="cálculo-de-la-precipitación-desacumulada">5. Cálculo de la precipitación desacumulada</h3>
+<p>Las variables <code>RAINC</code> y <code>RAINNC</code> vienen <strong>acumuladas</strong> en el tiempo, por lo que utilizamos la función <code>precipitation</code> para obtener la precipitación total por paso temporal:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>ds_WRF[<span class="st">'PP'</span>] <span class="op">=</span> sc.precipitation(</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    ds_WRF[<span class="st">"RAINC"</span>],</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    ds_WRF[<span class="st">"RAINNC"</span>],</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    name <span class="op">=</span> <span class="st">'PP'</span>,</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    units <span class="op">=</span> <span class="st">'mm'</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="aplicación-de-máscara-solo-océano" class="level3">
+<h3 class="anchored" data-anchor-id="aplicación-de-máscara-solo-océano">6. Aplicación de máscara: solo océano</h3>
+<p>En este caso conservaremos únicamente los valores sobre <em>océano</em>, por lo que utilizamos:</p>
+<ul>
+<li><code>sea_is_one = False</code> (la tierra es 1, el océano 0 en LANDMASK),</li>
+<li><code>exclude_lakes = True</code> para evitar efectos de interpolación sobre lagos (p.&nbsp;ej., el Titicaca), donde WRF a veces genera valores no deseados.</li>
+</ul>
+<div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>ds_WRF[<span class="st">'U10_land'</span>] <span class="op">=</span> sc.apply_mask(</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    ds_WRF.U10,</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    ds_WRF.LANDMASK,</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    sea_is_one <span class="op">=</span> <span class="va">False</span>,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    lakemask <span class="op">=</span> ds_WRF.LAKEMASK,</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    exclude_lakes <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>ds_WRF[<span class="st">'V10_land'</span>] <span class="op">=</span> sc.apply_mask(</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    ds_WRF.V10,</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    ds_WRF.LANDMASK,</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>    sea_is_one <span class="op">=</span> <span class="va">False</span>,</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>    lakemask <span class="op">=</span> ds_WRF.LAKEMASK,</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>    exclude_lakes <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="agregación-mensual" class="level3">
+<h3 class="anchored" data-anchor-id="agregación-mensual">7. Agregación mensual</h3>
+<p>Utilizamos la función <code>aggregate_dmy</code> (del módulo <code>core.time_ops</code>) para calcular:</p>
+<ul>
+<li>Acumulado mensual de precipitación (<code>accum=['PP']</code>),</li>
+<li>Promedio mensual del viento a 10 m (<code>avg=['U10_land','V10_land']</code>).</li>
+</ul>
+<div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>ds_WRF_m <span class="op">=</span> sc.aggregate_dmy(</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    ds <span class="op">=</span> ds_WRF[[<span class="st">'PP'</span>,<span class="st">'U10_land'</span>,<span class="st">'V10_land'</span>]],</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    tiempo <span class="op">=</span> <span class="st">'ME'</span>,</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    accum <span class="op">=</span> [<span class="st">'PP'</span>],</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    avg <span class="op">=</span> [<span class="st">'U10_land'</span>,<span class="st">'V10_land'</span>],</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    mediana <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="mapa-mensual-precipitación-acumulada-viento" class="level3">
+<h3 class="anchored" data-anchor-id="mapa-mensual-precipitación-acumulada-viento">8. Mapa mensual: precipitación acumulada + viento</h3>
+<p>Finalmente, generamos un mapa mensual utilizando la función <code>map_1var_winds</code> del módulo: <code>scahpy.plots.maps</code></p>
+<p>Representamos la precipitación acumulada del mes y los vientos promedio (solo en superficie):</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>sc.map_1var_winds(</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    da <span class="op">=</span> ds_WRF_m.PP,</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    U <span class="op">=</span> ds_WRF_m.U10_land,</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    V <span class="op">=</span> ds_WRF_m.V10_land,</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    levels <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="dv">500</span>, <span class="dv">10</span>),</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    cmap <span class="op">=</span> <span class="st">'rain'</span>,</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    shapefile <span class="op">=</span> <span class="va">None</span>,</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    extent <span class="op">=</span> <span class="va">None</span>,</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    xticks <span class="op">=</span> <span class="va">None</span>,</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>    yticks <span class="op">=</span> <span class="va">None</span>,</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>    tick_step <span class="op">=</span> (<span class="dv">5</span>, <span class="dv">5</span>),</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>    draw_grid <span class="op">=</span> <span class="va">False</span>,</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>    time <span class="op">=</span> <span class="st">'2017-03'</span>,</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>    month <span class="op">=</span> <span class="va">None</span>,</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>    quiver_subsample <span class="op">=</span> <span class="dv">7</span>,</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>    quiverkey_speed <span class="op">=</span> <span class="fl">5.0</span>,</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>    title <span class="op">=</span> <span class="st">'Precipitation + Winds at 10m'</span>,</span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>    colorbar_label <span class="op">=</span> <span class="st">'m/s'</span>,</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>    output_path <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-06" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-06-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/fig_06.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-06-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3: ds_maps
+</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="nota-sobre-uso-de-memoria-y-rendimiento" class="level2">
+<h2 class="anchored" data-anchor-id="nota-sobre-uso-de-memoria-y-rendimiento">Nota sobre uso de memoria y rendimiento</h2>
+<p>Al trabajar con salidas WRF, especialmente cuando se leen <em>múltiples archivos</em>, es importante considerar el uso de memoria y el tipo de cálculos que se realizan. SCAHpy se apoya en <code>xarray</code> + <code>dask</code>, por lo que muchas operaciones se ejecutan de forma <em>perezosa</em> (lazy) hasta que se llama explícitamente a métodos como <code>.compute()</code> o <code>.persist()</code>.</p>
+<p>A continuación se presentan algunas recomendaciones prácticas:</p>
+<section id="cuántos-archivos-leer-de-golpe" class="level4">
+<h4 class="anchored" data-anchor-id="cuántos-archivos-leer-de-golpe">¿Cuántos archivos leer de golpe?</h4>
+<p>No existe un número único, ya que depende de:</p>
+<ul>
+<li>Tamaño de cada archivo WRF (número de niveles, variables, resolución espacial).</li>
+<li>Cantidad de memoria RAM disponible.</li>
+<li>Número de variables efectivamente cargadas (controlado con <code>drop_vars</code>).</li>
+</ul>
+<p>Como regla general:</p>
+<ul>
+<li><p>En un entorno de escritorio con memoria limitada, es más seguro:</p>
+<ul>
+<li><em>Leer por bloques de tiempo</em> (por ejemplo, uno o varios meses) en lugar de todo un período de varios años.</li>
+<li>Reducir el número de variables usando <code>drop_vars</code> antes de cualquier diagnóstico pesado.</li>
+</ul></li>
+<li><p>En un clúster o servidor con mayor memoria:</p>
+<ul>
+<li><p>Es razonable leer un año completo de simulación siempre que:</p>
+<ul>
+<li>Se trabaje con pocas variables clave.</li>
+<li>Se mantenga el procesamiento de forma perezosa (sin hacer <code>.compute()</code> sobre todo el dominio a cada paso).</li>
+</ul></li>
+</ul></li>
+</ul>
+<p>Si al ejecutar una operación el sistema empieza a usar <em>swap</em> o se vuelve muy lento, es un indicio de que conviene <em>dividir el problema en menos archivos o menor rango temporal</em>.</p>
+</section>
+<section id="cuándo-usar-.compute" class="level4">
+<h4 class="anchored" data-anchor-id="cuándo-usar-.compute">¿Cuándo usar <code>.compute()</code>?</h4>
+<p>Usa <code>.compute()</code> cuando:</p>
+<ul>
+<li><p>Ya has definido toda la cadena de operaciones y necesitas el resultado completo en memoria para:</p>
+<ul>
+<li>Graficar una figura concreta.</li>
+<li>Guardar un producto final relativamente pequeño (por ejemplo, un promedio mensual o climatología ya reducida en el tiempo).</li>
+<li>Inspeccionar numéricamente una variable (por ejemplo, <code>ds.isel(time=0).PP.values</code>).</li>
+</ul></li>
+</ul>
+<p>En general:</p>
+<ul>
+<li><p>Evita hacer <code>.compute()</code> sobre datasets muy grandes en etapas intermedias.</p></li>
+<li><p>Prefiere:</p>
+<ul>
+<li>Reducir primero dimensiones (e.g.&nbsp;promedios temporales, recortes espaciales).</li>
+<li>Luego aplicar <code>.compute()</code> sobre el resultado ya “resumido”.</li>
+</ul></li>
+</ul>
+</section>
+<section id="cuándo-usar-.persist" class="level4">
+<h4 class="anchored" data-anchor-id="cuándo-usar-.persist">¿Cuándo usar <code>.persist()</code>?</h4>
+<p><code>.persist()</code> es útil cuando:</p>
+<ul>
+<li>Has realizado un preprocesamiento costoso (por ejemplo, cálculo de varias variables diagnósticas, máscaras, cambio de calendario) que piensas reutilizar varias veces.</li>
+<li>Quieres mantener el dataset <em>en memoria distribuida</em> (en RAM) sin traer todo como <code>numpy</code>, pero sí evitando repetir los mismos cálculos una y otra vez.</li>
+</ul>
+<p>Ejemplo típico:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>ds_proc <span class="op">=</span> ds_WRF[[<span class="st">'PP'</span>, <span class="st">'U10_land'</span>, <span class="st">'V10_land'</span>]].persist()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>A partir de <code>ds_proc</code>, puedes:</p>
+<ul>
+<li>Calcular distintos agregados temporales (<code>aggregate_dmy</code>, promedios estacionales, etc.).</li>
+<li>Generar varias figuras sin recalcular toda la cadena de operaciones inicial.</li>
+</ul>
+<p>No es necesario usar <code>.persist()</code> si el cálculo es pequeño o si solo lo harás una vez; en esos casos, <code>.compute()</code> al final suele ser suficiente.</p>
+</section>
+<section id="recomendaciones-adicionales" class="level4">
+<h4 class="anchored" data-anchor-id="recomendaciones-adicionales">Recomendaciones adicionales</h4>
+<ul>
+<li><p><strong>Filtra pronto y filtra fuerte</strong>:</p>
+<ul>
+<li>Usa <code>drop_vars</code> al inicio para reducir la cantidad de variables.</li>
+<li>Recorta la región de interés (<code>.sel(lat=..., lon=...)</code>) antes de operaciones costosas.</li>
+</ul></li>
+<li><p><strong>Cuidado con los bucles explícitos en Python</strong>:</p>
+<ul>
+<li>Siempre que sea posible, deja que <code>xarray</code>/<code>dask</code> manejen los bucles ocultos sobre el tiempo o sobre otras dimensiones.</li>
+</ul></li>
+<li><p><strong>Prueba con un subconjunto</strong>:</p>
+<ul>
+<li><p>Antes de procesar todo el año, prueba con 2–3 archivos para verificar que:</p>
+<ul>
+<li>El flujo de trabajo funciona.</li>
+<li>El consumo de memoria es razonable.</li>
+</ul></li>
+</ul></li>
+</ul>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script>
+  function switchLang() {
+    const url = new URL(window.location.href);
+    let path = url.pathname;
+
+    // Si por alguna razón caemos en /SCAHpy/ a secas, manda al home en español
+    if (path === "/SCAHpy/" || path === "/SCAHpy") {
+      url.pathname = "/SCAHpy/es/";
+      window.location.href = url.toString();
+      return;
+    }
+
+    if (path.includes("/es/")) {
+      // ESPAÑOL → INGLÉS
+
+      let newPath;
+
+      // Caso especial: documentación de la API
+      if (path.includes("/es/api/")) {
+        // /SCAHpy/es/api/core.coords.html
+        // → /SCAHpy/en/api_en/core.coords_en.html
+        newPath = path
+          .replace("/es/api/", "/en/api_en/")
+          .replace(/\.html$/, "_en.html");
+      } else {
+        // Resto de páginas normales
+        newPath = path
+          .replace("/es/", "/en/")
+          .replace(/\.html$/, "_en.html");
+      }
+
+      url.pathname = newPath;
+      window.location.href = url.toString();
+      return;
+    }
+
+    if (path.includes("/en/")) {
+      // INGLÉS → ESPAÑOL
+
+      let newPath;
+
+      // Caso especial: documentación de la API
+      if (path.includes("/en/api_en/")) {
+        // /SCAHpy/en/api_en/core.coords_en.html
+        // → /SCAHpy/es/api/core.coords.html
+        newPath = path
+          .replace("/en/api_en/", "/es/api/")
+          .replace("_en.html", ".html");
+      } else {
+        // Resto de páginas normales
+        newPath = path
+          .replace("/en/", "/es/")
+          .replace("_en.html", ".html");
+      }
+
+      url.pathname = newPath;
+      window.location.href = url.toString();
+      return;
+    }
+
+    // Fallback: manda al home español
+    url.pathname = "/SCAHpy/es/";
+    window.location.href = url.toString();
+  }
+
+  // Ajustar el texto del botón según el idioma actual
+  window.addEventListener("DOMContentLoaded", () => {
+    const btn = document.getElementById("lang-switch-btn");
+    if (!btn) return;
+
+    const path = window.location.pathname;
+
+    if (path.includes("/es/")) {
+      btn.textContent = "English";
+    } else if (path.includes("/en/")) {
+      btn.textContent = "Español";
+    } else {
+      // Fallback genérico
+      btn.textContent = "Cambiar idioma";
+    }
+  });
+</script>
+
+
+<style>
+  .lang-switch {
+    position: fixed;
+    right: 1.25rem;
+    bottom: 1.25rem;
+    z-index: 2000;
+  }
+
+  .lang-switch button {
+    background-color: #ffffff;
+    border: 1px solid #0b3c7e;
+    color: #0b3c7e;
+    padding: 0.4rem 0.9rem;
+    border-radius: 999px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    white-space: nowrap;
+  }
+
+  .lang-switch button:hover {
+    background-color: #0b3c7e;
+    color: #ffffff;
+  }
+
+  @media (max-width: 768px) {
+    .lang-switch {
+      right: 0.75rem;
+      bottom: 0.75rem;
+    }
+
+    .lang-switch button {
+      font-size: 0.8rem;
+      padding: 0.35rem 0.75rem;
+    }
+  }
+</style>
+
+<div class="lang-switch">
+  <button id="lang-switch-btn" onclick="switchLang()">
+    Cambiar idioma
+  </button>
+</div>
+
+
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copiado");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copiado");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      return note.innerHTML;
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./02_use.html" class="pagination-link  aria-label=" uso"="">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Uso</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./03_tutorial_02.html" class="pagination-link" aria-label="Tutorial 2: Lectura de CROCO">
+        <span class="nav-page-text">Tutorial 2: Lectura de CROCO</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Copyright 2025, Fiorela Castillón</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
