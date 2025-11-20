@@ -123,6 +123,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#scahpy.components.atmos.wrf_diags.geop_height" id="toc-scahpy.components.atmos.wrf_diags.geop_height" class="nav-link" data-scroll-target="#scahpy.components.atmos.wrf_diags.geop_height">geop_height</a></li>
   <li><a href="#scahpy.components.atmos.wrf_diags.geopotential" id="toc-scahpy.components.atmos.wrf_diags.geopotential" class="nav-link" data-scroll-target="#scahpy.components.atmos.wrf_diags.geopotential">geopotential</a></li>
+  <li><a href="#scahpy.components.atmos.wrf_diags.precipitation" id="toc-scahpy.components.atmos.wrf_diags.precipitation" class="nav-link" data-scroll-target="#scahpy.components.atmos.wrf_diags.precipitation">precipitation</a></li>
   <li><a href="#scahpy.components.atmos.wrf_diags.pressure" id="toc-scahpy.components.atmos.wrf_diags.pressure" class="nav-link" data-scroll-target="#scahpy.components.atmos.wrf_diags.pressure">pressure</a></li>
   <li><a href="#scahpy.components.atmos.wrf_diags.rh" id="toc-scahpy.components.atmos.wrf_diags.rh" class="nav-link" data-scroll-target="#scahpy.components.atmos.wrf_diags.rh">rh</a></li>
   <li><a href="#scahpy.components.atmos.wrf_diags.t_air" id="toc-scahpy.components.atmos.wrf_diags.t_air" class="nav-link" data-scroll-target="#scahpy.components.atmos.wrf_diags.t_air">t_air</a></li>
@@ -165,22 +166,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>Compute total geopotential (Φ) from perturbation and base-state components.</td>
 </tr>
 <tr class="odd">
+<td><a href="#scahpy.components.atmos.wrf_diags.precipitation">precipitation</a></td>
+<td>Compute de-accumulated precipitation from WRF accumulated variables.</td>
+</tr>
+<tr class="even">
 <td><a href="#scahpy.components.atmos.wrf_diags.pressure">pressure</a></td>
 <td>Compute total atmospheric pressure from perturbation (P) and base-state (PB) components.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><a href="#scahpy.components.atmos.wrf_diags.rh">rh</a></td>
 <td>Compute relative humidity (%) from perturbation temperature (T),</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><a href="#scahpy.components.atmos.wrf_diags.t_air">t_air</a></td>
 <td>Compute absolute air temperature (T_air) from perturbation potential temperature (T)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><a href="#scahpy.components.atmos.wrf_diags.t_pot">t_pot</a></td>
 <td>Compute potential temperature (θ) from the WRF perturbation potential temperature.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><a href="#scahpy.components.atmos.wrf_diags.wind_speed">wind_speed</a></td>
 <td>Compute horizontal wind speed (m s⁻¹) from zonal (U) and meridional (V) components.</td>
 </tr>
@@ -327,14 +332,91 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table>
 </section>
 </section>
+<section id="scahpy.components.atmos.wrf_diags.precipitation" class="level3">
+<h3 class="anchored" data-anchor-id="scahpy.components.atmos.wrf_diags.precipitation">precipitation</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>components.atmos.wrf_diags.precipitation(<span class="op">*</span>acc_vars, name<span class="op">=</span><span class="st">'PP'</span>, units<span class="op">=</span><span class="st">'mm'</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Compute de-accumulated precipitation from WRF accumulated variables.</p>
+<p>WRF provides several accumulated precipitation components, such as: - RAINC : Accumulated precipitation from cumulus scheme (mm) - RAINNC : Accumulated precipitation from microphysics (mm) - RAINSH : Accumulated shallow convection precipitation (mm)</p>
+<section id="parameters-2" class="level4 doc-section doc-section-parameters">
+<h4 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters-2">Parameters</h4>
+<table class="table">
+<colgroup>
+<col style="width: 5%">
+<col style="width: 8%">
+<col style="width: 81%">
+<col style="width: 5%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>*acc_vars</td>
+<td>xr.DataArray</td>
+<td>One or more accumulated precipitation variables that share the same dimensions and coordinates (e.g., RAINC, RAINNC, RAINSH). Units are assumed to be millimeters (WRF default).</td>
+<td><code>()</code></td>
+</tr>
+<tr class="even">
+<td>name</td>
+<td>str</td>
+<td>Name for the output de-accumulated precipitation variable. Default is “PP”.</td>
+<td><code>'PP'</code></td>
+</tr>
+<tr class="odd">
+<td>units</td>
+<td>(mm, 'kg m-2')</td>
+<td>Output units. WRF precipitation is equivalent to mm or kg/m². Default is “mm”.</td>
+<td><code>"mm"</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="returns-2" class="level4 doc-section doc-section-returns">
+<h4 class="doc-section doc-section-returns anchored" data-anchor-id="returns-2">Returns</h4>
+<table class="table">
+<colgroup>
+<col style="width: 5%">
+<col style="width: 8%">
+<col style="width: 86%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td>xr.DataArray</td>
+<td>De-accumulated precipitation with metadata included. The first timestep is set to NaN because the accumulated difference is undefined.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="notes" class="level4 doc-section doc-section-notes">
+<h4 class="doc-section doc-section-notes anchored" data-anchor-id="notes">Notes</h4>
+<ul>
+<li>The time coordinate is preserved.</li>
+<li>The function assumes precipitation is monotonically increasing (WRF accumulation behavior).</li>
+<li>If one of the input arrays resets to zero (e.g., restart file), the user must manually handle the discontinuity.</li>
+</ul>
+</section>
+</section>
 <section id="scahpy.components.atmos.wrf_diags.pressure" class="level3">
 <h3 class="anchored" data-anchor-id="scahpy.components.atmos.wrf_diags.pressure">pressure</h3>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>components.atmos.wrf_diags.pressure(p, pb, units<span class="op">=</span><span class="st">'Pa'</span>, name<span class="op">=</span><span class="st">'Pressure'</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>components.atmos.wrf_diags.pressure(p, pb, units<span class="op">=</span><span class="st">'Pa'</span>, name<span class="op">=</span><span class="st">'Pressure'</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Compute total atmospheric pressure from perturbation (P) and base-state (PB) components.</p>
 <p>The WRF model outputs pressure as the sum of two fields: - <code>P</code>: perturbation pressure (Pa) - <code>PB</code>: base-state pressure (Pa)</p>
 <p>The total pressure is given by: P_total = P + PB</p>
-<section id="parameters-2" class="level4 doc-section doc-section-parameters">
-<h4 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters-2">Parameters</h4>
+<section id="parameters-3" class="level4 doc-section doc-section-parameters">
+<h4 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters-3">Parameters</h4>
 <table class="table">
 <colgroup>
 <col style="width: 8%">
@@ -378,8 +460,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 </section>
-<section id="returns-2" class="level4 doc-section doc-section-returns">
-<h4 class="doc-section doc-section-returns anchored" data-anchor-id="returns-2">Returns</h4>
+<section id="returns-3" class="level4 doc-section doc-section-returns">
+<h4 class="doc-section doc-section-returns anchored" data-anchor-id="returns-3">Returns</h4>
 <table class="table">
 <colgroup>
 <col style="width: 10%">
@@ -405,14 +487,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="scahpy.components.atmos.wrf_diags.rh" class="level3">
 <h3 class="anchored" data-anchor-id="scahpy.components.atmos.wrf_diags.rh">rh</h3>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>components.atmos.wrf_diags.rh(Tpert, P, PB, QVAPOR, <span class="op">*</span>, clip<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>components.atmos.wrf_diags.rh(Tpert, P, PB, QVAPOR, <span class="op">*</span>, clip<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Compute relative humidity (%) from perturbation temperature (T), pressure components (P, PB), and specific humidity (QVAPOR).</p>
 <p>Internally, the function calls <code>t_air()</code> to compute the absolute air temperature and then applies a Bolton-type formulation for saturation vapor pressure over water:</p>
 <pre><code>e_s(hPa) = 6.112 * exp(17.67 * (T - 273.15) / (T - 29.65))
 e(hPa)   = qv * p(hPa) / (0.622 + qv)
 RH(%)    = 100 * e / e_s</code></pre>
-<section id="parameters-3" class="level4 doc-section doc-section-parameters">
-<h4 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters-3">Parameters</h4>
+<section id="parameters-4" class="level4 doc-section doc-section-parameters">
+<h4 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters-4">Parameters</h4>
 <table class="table">
 <colgroup>
 <col style="width: 7%">
@@ -462,8 +544,8 @@ RH(%)    = 100 * e / e_s</code></pre>
 </tbody>
 </table>
 </section>
-<section id="returns-3" class="level4 doc-section doc-section-returns">
-<h4 class="doc-section doc-section-returns anchored" data-anchor-id="returns-3">Returns</h4>
+<section id="returns-4" class="level4 doc-section doc-section-returns">
+<h4 class="doc-section doc-section-returns anchored" data-anchor-id="returns-4">Returns</h4>
 <table class="table">
 <colgroup>
 <col style="width: 9%">
@@ -489,13 +571,13 @@ RH(%)    = 100 * e / e_s</code></pre>
 </section>
 <section id="scahpy.components.atmos.wrf_diags.t_air" class="level3">
 <h3 class="anchored" data-anchor-id="scahpy.components.atmos.wrf_diags.t_air">t_air</h3>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>components.atmos.wrf_diags.t_air(Tpert, P, PB, <span class="op">*</span>, celsius<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>components.atmos.wrf_diags.t_air(Tpert, P, PB, <span class="op">*</span>, celsius<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Compute absolute air temperature (T_air) from perturbation potential temperature (T) and total pressure using the Poisson equation.</p>
 <pre><code>θ = T + 300
 T_air = θ * (p / 1000) ** κ</code></pre>
 <p>where: κ = 0.286 (R_d / c_p)</p>
-<section id="parameters-4" class="level4 doc-section doc-section-parameters">
-<h4 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters-4">Parameters</h4>
+<section id="parameters-5" class="level4 doc-section doc-section-parameters">
+<h4 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters-5">Parameters</h4>
 <table class="table">
 <colgroup>
 <col style="width: 8%">
@@ -539,8 +621,8 @@ T_air = θ * (p / 1000) ** κ</code></pre>
 </tbody>
 </table>
 </section>
-<section id="returns-4" class="level4 doc-section doc-section-returns">
-<h4 class="doc-section doc-section-returns anchored" data-anchor-id="returns-4">Returns</h4>
+<section id="returns-5" class="level4 doc-section doc-section-returns">
+<h4 class="doc-section doc-section-returns anchored" data-anchor-id="returns-5">Returns</h4>
 <table class="table">
 <colgroup>
 <col style="width: 9%">
@@ -566,11 +648,11 @@ T_air = θ * (p / 1000) ** κ</code></pre>
 </section>
 <section id="scahpy.components.atmos.wrf_diags.t_pot" class="level3">
 <h3 class="anchored" data-anchor-id="scahpy.components.atmos.wrf_diags.t_pot">t_pot</h3>
-<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>components.atmos.wrf_diags.t_pot(Tpert, celsius<span class="op">=</span><span class="va">False</span>, name<span class="op">=</span><span class="st">'theta'</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>components.atmos.wrf_diags.t_pot(Tpert, celsius<span class="op">=</span><span class="va">False</span>, name<span class="op">=</span><span class="st">'theta'</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Compute potential temperature (θ) from the WRF perturbation potential temperature.</p>
 <p>In WRF outputs: θ = T + 300</p>
-<section id="parameters-5" class="level4 doc-section doc-section-parameters">
-<h4 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters-5">Parameters</h4>
+<section id="parameters-6" class="level4 doc-section doc-section-parameters">
+<h4 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters-6">Parameters</h4>
 <table class="table">
 <colgroup>
 <col style="width: 9%">
@@ -608,8 +690,8 @@ T_air = θ * (p / 1000) ** κ</code></pre>
 </tbody>
 </table>
 </section>
-<section id="returns-5" class="level4 doc-section doc-section-returns">
-<h4 class="doc-section doc-section-returns anchored" data-anchor-id="returns-5">Returns</h4>
+<section id="returns-6" class="level4 doc-section doc-section-returns">
+<h4 class="doc-section doc-section-returns anchored" data-anchor-id="returns-6">Returns</h4>
 <table class="table">
 <colgroup>
 <col style="width: 9%">
@@ -635,10 +717,10 @@ T_air = θ * (p / 1000) ** κ</code></pre>
 </section>
 <section id="scahpy.components.atmos.wrf_diags.wind_speed" class="level3">
 <h3 class="anchored" data-anchor-id="scahpy.components.atmos.wrf_diags.wind_speed">wind_speed</h3>
-<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>components.atmos.wrf_diags.wind_speed(u, v, name<span class="op">=</span><span class="st">'WSP'</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>components.atmos.wrf_diags.wind_speed(u, v, name<span class="op">=</span><span class="st">'WSP'</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Compute horizontal wind speed (m s⁻¹) from zonal (U) and meridional (V) components. sqrt(u² + v²)</p>
-<section id="parameters-6" class="level4 doc-section doc-section-parameters">
-<h4 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters-6">Parameters</h4>
+<section id="parameters-7" class="level4 doc-section doc-section-parameters">
+<h4 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters-7">Parameters</h4>
 <table class="table">
 <colgroup>
 <col style="width: 6%">
@@ -676,8 +758,8 @@ T_air = θ * (p / 1000) ** κ</code></pre>
 </tbody>
 </table>
 </section>
-<section id="returns-6" class="level4 doc-section doc-section-returns">
-<h4 class="doc-section doc-section-returns anchored" data-anchor-id="returns-6">Returns</h4>
+<section id="returns-7" class="level4 doc-section doc-section-returns">
+<h4 class="doc-section doc-section-returns anchored" data-anchor-id="returns-7">Returns</h4>
 <table class="table">
 <colgroup>
 <col style="width: 10%">

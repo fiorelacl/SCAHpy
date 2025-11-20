@@ -121,6 +121,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#functions" id="toc-functions" class="nav-link" data-scroll-target="#functions">Functions</a>
   <ul class="collapse">
+  <li><a href="#scahpy.core.time_ops.aggregate_dmy" id="toc-scahpy.core.time_ops.aggregate_dmy" class="nav-link" data-scroll-target="#scahpy.core.time_ops.aggregate_dmy">aggregate_dmy</a></li>
   <li><a href="#scahpy.core.time_ops.anomalies" id="toc-scahpy.core.time_ops.anomalies" class="nav-link" data-scroll-target="#scahpy.core.time_ops.anomalies">anomalies</a></li>
   <li><a href="#scahpy.core.time_ops.monthly_climatology" id="toc-scahpy.core.time_ops.monthly_climatology" class="nav-link" data-scroll-target="#scahpy.core.time_ops.monthly_climatology">monthly_climatology</a></li>
   <li><a href="#scahpy.core.time_ops.monthly_to_daily_climatology" id="toc-scahpy.core.time_ops.monthly_to_daily_climatology" class="nav-link" data-scroll-target="#scahpy.core.time_ops.monthly_to_daily_climatology">monthly_to_daily_climatology</a></li>
@@ -153,25 +154,130 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </thead>
 <tbody>
 <tr class="odd">
+<td><a href="#scahpy.core.time_ops.aggregate_dmy">aggregate_dmy</a></td>
+<td>Resample WRF hourly data to coarser time intervals using sum, mean, or median</td>
+</tr>
+<tr class="even">
 <td><a href="#scahpy.core.time_ops.anomalies">anomalies</a></td>
 <td>Compute anomalies relative to a provided climatology.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><a href="#scahpy.core.time_ops.monthly_climatology">monthly_climatology</a></td>
 <td>Compute a 12-month climatology using groupby on calendar months.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><a href="#scahpy.core.time_ops.monthly_to_daily_climatology">monthly_to_daily_climatology</a></td>
 <td>Upsample a monthly climatology to daily frequency for DataArray or Dataset.</td>
 </tr>
 </tbody>
 </table>
-<section id="scahpy.core.time_ops.anomalies" class="level3">
-<h3 class="anchored" data-anchor-id="scahpy.core.time_ops.anomalies">anomalies</h3>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>core.time_ops.anomalies(data, clim, <span class="op">*</span>, kind<span class="op">=</span><span class="st">'monthly'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Compute anomalies relative to a provided climatology.</p>
+<section id="scahpy.core.time_ops.aggregate_dmy" class="level3">
+<h3 class="anchored" data-anchor-id="scahpy.core.time_ops.aggregate_dmy">aggregate_dmy</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>core.time_ops.aggregate_dmy(ds, tiempo<span class="op">=</span><span class="va">None</span>, accum<span class="op">=</span><span class="va">None</span>, avg<span class="op">=</span><span class="va">None</span>, mediana<span class="op">=</span><span class="va">None</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Resample WRF hourly data to coarser time intervals using sum, mean, or median operations for selected variables.</p>
+<p>This function provides a flexible interface to resample a Dataset using any time frequency supported by xarray’s <code>.resample()</code> (e.g., “D” for daily, “M” for monthly, “6H” for 6-hourly). Different groups of variables may be aggregated with different operations like: sum, mean, or median.</p>
 <section id="parameters" class="level4 doc-section doc-section-parameters">
 <h4 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters">Parameters</h4>
+<table class="table">
+<colgroup>
+<col style="width: 4%">
+<col style="width: 5%">
+<col style="width: 84%">
+<col style="width: 5%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ds</td>
+<td>xr.Dataset</td>
+<td>Input Dataset containing time-dependent variables (typically hourly WRF outputs).</td>
+<td><em>required</em></td>
+</tr>
+<tr class="even">
+<td>tiempo</td>
+<td>str</td>
+<td>Resampling frequency string accepted by <code>Dataset.resample()</code>. Examples: “D” (daily), “M” (monthly), “3H” (3-hourly), “Y” (yearly). If None, the function will return an error message.</td>
+<td><code>None</code></td>
+</tr>
+<tr class="odd">
+<td>accum</td>
+<td>list of str</td>
+<td>List of variable names to aggregate using the sum over each resample interval. Useful for accumulated or flux-like variables.</td>
+<td><code>None</code></td>
+</tr>
+<tr class="even">
+<td>avg</td>
+<td>list of str</td>
+<td>List of variable names to aggregate using the mean.</td>
+<td><code>None</code></td>
+</tr>
+<tr class="odd">
+<td>mediana</td>
+<td>list of str</td>
+<td>List of variable names to aggregate using the median.</td>
+<td><code>None</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="returns" class="level4 doc-section doc-section-returns">
+<h4 class="doc-section doc-section-returns anchored" data-anchor-id="returns">Returns</h4>
+<table class="table">
+<colgroup>
+<col style="width: 4%">
+<col style="width: 6%">
+<col style="width: 88%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td>xr.Dataset</td>
+<td>Dataset containing the resampled variables merged together. The resulting Dataset includes only the variables specified in <code>accum</code>, <code>avg</code>, and <code>mediana</code>.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="notes" class="level4 doc-section doc-section-notes">
+<h4 class="doc-section doc-section-notes anchored" data-anchor-id="notes">Notes</h4>
+<ul>
+<li>If no variables are provided in <code>accum</code>, <code>avg</code>, or <code>mediana</code>, the function returns <code>None</code> with a warning message.</li>
+<li>The function relies on xarray’s <code>.resample()</code>, which requires the <code>time</code> coordinate to be properly formatted as a datetime64 index.</li>
+<li>Each aggregation type is applied only to the variables specified in its corresponding list.</li>
+</ul>
+</section>
+<section id="examples" class="level4 doc-section doc-section-examples">
+<h4 class="doc-section doc-section-examples anchored" data-anchor-id="examples">Examples</h4>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="co"># Daily sums of rainfall and daily means of temperature</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> ds_daily <span class="op">=</span> dmy_var(</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>...     ds,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>...     tiempo<span class="op">=</span><span class="st">"D"</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>...     accum<span class="op">=</span>[<span class="st">"RAINC"</span>, <span class="st">"RAINNC"</span>],</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>...     avg<span class="op">=</span>[<span class="st">"T2"</span>]</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>... )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> <span class="co"># Monthly means for several atmospheric variables</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;&gt;&gt;</span> ds_month <span class="op">=</span> dmy_var(ds, tiempo<span class="op">=</span><span class="st">"M"</span>, avg<span class="op">=</span>[<span class="st">"U10"</span>, <span class="st">"V10"</span>, <span class="st">"T2"</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="scahpy.core.time_ops.anomalies" class="level3">
+<h3 class="anchored" data-anchor-id="scahpy.core.time_ops.anomalies">anomalies</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>core.time_ops.anomalies(data, clim, <span class="op">*</span>, kind<span class="op">=</span><span class="st">'monthly'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Compute anomalies relative to a provided climatology.</p>
+<section id="parameters-1" class="level4 doc-section doc-section-parameters">
+<h4 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters-1">Parameters</h4>
 <table class="table">
 <colgroup>
 <col style="width: 6%">
@@ -209,8 +315,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 </section>
-<section id="returns" class="level4 doc-section doc-section-returns">
-<h4 class="doc-section doc-section-returns anchored" data-anchor-id="returns">Returns</h4>
+<section id="returns-1" class="level4 doc-section doc-section-returns">
+<h4 class="doc-section doc-section-returns anchored" data-anchor-id="returns-1">Returns</h4>
 <table class="table">
 <colgroup>
 <col style="width: 8%">
@@ -236,10 +342,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="scahpy.core.time_ops.monthly_climatology" class="level3">
 <h3 class="anchored" data-anchor-id="scahpy.core.time_ops.monthly_climatology">monthly_climatology</h3>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>core.time_ops.monthly_climatology(data, <span class="op">*</span>, calendar<span class="op">=</span><span class="va">None</span>, freq<span class="op">=</span><span class="st">'D'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>core.time_ops.monthly_climatology(data, <span class="op">*</span>, calendar<span class="op">=</span><span class="va">None</span>, freq<span class="op">=</span><span class="st">'D'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Compute a 12-month climatology using groupby on calendar months.</p>
-<section id="parameters-1" class="level4 doc-section doc-section-parameters">
-<h4 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters-1">Parameters</h4>
+<section id="parameters-2" class="level4 doc-section doc-section-parameters">
+<h4 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters-2">Parameters</h4>
 <table class="table">
 <colgroup>
 <col style="width: 4%">
@@ -277,8 +383,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 </section>
-<section id="returns-1" class="level4 doc-section doc-section-returns">
-<h4 class="doc-section doc-section-returns anchored" data-anchor-id="returns-1">Returns</h4>
+<section id="returns-2" class="level4 doc-section doc-section-returns">
+<h4 class="doc-section doc-section-returns anchored" data-anchor-id="returns-2">Returns</h4>
 <table class="table">
 <colgroup>
 <col style="width: 6%">
@@ -304,19 +410,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="scahpy.core.time_ops.monthly_to_daily_climatology" class="level3">
 <h3 class="anchored" data-anchor-id="scahpy.core.time_ops.monthly_to_daily_climatology">monthly_to_daily_climatology</h3>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>core.time_ops.monthly_to_daily_climatology(</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    data,</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">*</span>,</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    method<span class="op">=</span><span class="st">'harmonic'</span>,</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    harmonics<span class="op">=</span><span class="dv">2</span>,</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    target_year<span class="op">=</span><span class="va">None</span>,</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    start<span class="op">=</span><span class="va">None</span>,</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    end<span class="op">=</span><span class="va">None</span>,</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>core.time_ops.monthly_to_daily_climatology(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    data,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">*</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    method<span class="op">=</span><span class="st">'harmonic'</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    harmonics<span class="op">=</span><span class="dv">2</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    target_year<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    start<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    end<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Upsample a monthly climatology to daily frequency for DataArray or Dataset.</p>
 <p>Supports two methods: 1) <code>method='linear'</code> – time-based linear interpolation using pandas/xarray. 2) <code>method='harmonic'</code> – fit a seasonal cycle with a small set of harmonics (annual, semiannual, etc.) via least squares using NumPy only.</p>
-<section id="parameters-2" class="level4 doc-section doc-section-parameters">
-<h4 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters-2">Parameters</h4>
+<section id="parameters-3" class="level4 doc-section doc-section-parameters">
+<h4 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters-3">Parameters</h4>
 <table class="table">
 <colgroup>
 <col style="width: 9%">
@@ -372,8 +478,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 </section>
-<section id="returns-2" class="level4 doc-section doc-section-returns">
-<h4 class="doc-section doc-section-returns anchored" data-anchor-id="returns-2">Returns</h4>
+<section id="returns-3" class="level4 doc-section doc-section-returns">
+<h4 class="doc-section doc-section-returns anchored" data-anchor-id="returns-3">Returns</h4>
 <table class="table">
 <colgroup>
 <col style="width: 7%">

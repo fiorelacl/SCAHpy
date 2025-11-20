@@ -247,6 +247,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#applying-a-mask-to-extract-land-areas" id="toc-applying-a-mask-to-extract-land-areas" class="nav-link" data-scroll-target="#applying-a-mask-to-extract-land-areas">7. Applying a Mask to Extract Land Areas</a></li>
   <li><a href="#new-map-with-the-applied-mask" id="toc-new-map-with-the-applied-mask" class="nav-link" data-scroll-target="#new-map-with-the-applied-mask">8. New Map with the Applied Mask</a></li>
   </ul></li>
+  <li><a href="#reading-multiple-wrf-files" id="toc-reading-multiple-wrf-files" class="nav-link" data-scroll-target="#reading-multiple-wrf-files">Reading Multiple WRF Files</a>
+  <ul class="collapse">
+  <li><a href="#importing-packages-1" id="toc-importing-packages-1" class="nav-link" data-scroll-target="#importing-packages-1">1. Importing Packages</a></li>
+  <li><a href="#listing-wrf-files" id="toc-listing-wrf-files" class="nav-link" data-scroll-target="#listing-wrf-files">2. Listing WRF Files</a></li>
+  <li><a href="#selecting-variables" id="toc-selecting-variables" class="nav-link" data-scroll-target="#selecting-variables">3. Selecting Variables</a></li>
+  <li><a href="#reading-all-files-with-read_wrf" id="toc-reading-all-files-with-read_wrf" class="nav-link" data-scroll-target="#reading-all-files-with-read_wrf">4. Reading All Files with <code>read_wrf</code></a></li>
+  <li><a href="#computing-de-accumulated-precipitation" id="toc-computing-de-accumulated-precipitation" class="nav-link" data-scroll-target="#computing-de-accumulated-precipitation">5. Computing De-accumulated Precipitation</a></li>
+  <li><a href="#applying-a-mask-ocean-only" id="toc-applying-a-mask-ocean-only" class="nav-link" data-scroll-target="#applying-a-mask-ocean-only">6. Applying a Mask: Ocean Only</a></li>
+  <li><a href="#monthly-aggregation" id="toc-monthly-aggregation" class="nav-link" data-scroll-target="#monthly-aggregation">7. Monthly Aggregation</a></li>
+  <li><a href="#monthly-map-accumulated-precipitation-wind" id="toc-monthly-map-accumulated-precipitation-wind" class="nav-link" data-scroll-target="#monthly-map-accumulated-precipitation-wind">8. Monthly Map: Accumulated Precipitation + Wind</a></li>
+  </ul></li>
+  <li><a href="#notes-on-memory-usage-and-performance" id="toc-notes-on-memory-usage-and-performance" class="nav-link" data-scroll-target="#notes-on-memory-usage-and-performance">Notes on Memory Usage and Performance</a>
+  <ul class="collapse">
+  <li><a href="#how-many-files-should-be-read-at-once" id="toc-how-many-files-should-be-read-at-once" class="nav-link" data-scroll-target="#how-many-files-should-be-read-at-once">How many files should be read at once?</a></li>
+  <li><a href="#when-should-.compute-be-used" id="toc-when-should-.compute-be-used" class="nav-link" data-scroll-target="#when-should-.compute-be-used">When should <code>.compute()</code> be used?</a></li>
+  <li><a href="#when-should-.persist-be-used" id="toc-when-should-.persist-be-used" class="nav-link" data-scroll-target="#when-should-.persist-be-used">When should <code>.persist()</code> be used?</a></li>
+  <li><a href="#additional-recommendations" id="toc-additional-recommendations" class="nav-link" data-scroll-target="#additional-recommendations">Additional Recommendations</a></li>
+  </ul></li>
   </ul></li>
   </ul>
 </nav>
@@ -363,12 +381,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    colorbar_label <span class="op">=</span> <span class="st">'m/s'</span>,</span>
 <span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    output_path <span class="op">=</span> <span class="va">None</span></span>
 <span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-03" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<div id="fig-04" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-03-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div aria-describedby="fig-04-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="figs/fig_04.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-03-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-04-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;1: ds_maps
 </figcaption>
 </figure>
@@ -418,16 +436,229 @@ Figure&nbsp;1: ds_maps
 <span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    title <span class="op">=</span> <span class="st">'Wind Speed'</span>,</span>
 <span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    colorbar_label <span class="op">=</span> <span class="st">'m/s'</span></span>
 <span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-03" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<div id="fig-05" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-03-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div aria-describedby="fig-05-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="figs/fig_05.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-03-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-05-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2: ds_maps
 </figcaption>
 </figure>
 </div>
+</section>
+</section>
+<section id="reading-multiple-wrf-files" class="level2">
+<h2 class="anchored" data-anchor-id="reading-multiple-wrf-files">Reading Multiple WRF Files</h2>
+<p>In this section, we extend the previous procedure to work with <strong>multiple WRF files</strong> from the same simulation.</p>
+<section id="importing-packages-1" class="level3">
+<h3 class="anchored" data-anchor-id="importing-packages-1">1. Importing Packages</h3>
+<p>We start by importing the modules needed:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scahpy <span class="im">as</span> sc</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> glob</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="listing-wrf-files" class="level3">
+<h3 class="anchored" data-anchor-id="listing-wrf-files">2. Listing WRF Files</h3>
+<p>To read multiple files, we use <code>glob.glob</code>, which directly returns a sorted list of file paths. In this example, we filter all <code>wrfout</code> files from the year 2017:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>WRF_files <span class="op">=</span> <span class="bu">sorted</span>(glob.glob(<span class="st">"/data/users/fcastillon/COW_outs/diagnos/C2O5W4_SF2/wrf/wrfout_d01_2017*"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<p><em>Important:</em> Even when working with multiple files, the function <code>drop_vars</code> always requires a single file (<code>file0</code>) to identify the generic WRF metadata. Therefore, we use <code>WRF_files[0]</code>.</p>
+</blockquote>
+</section>
+<section id="selecting-variables" class="level3">
+<h3 class="anchored" data-anchor-id="selecting-variables">3. Selecting Variables</h3>
+<p>We select only the variables needed for this example:</p>
+<ul>
+<li><code>U10</code>, <code>V10</code>: 10 m wind components,</li>
+<li><code>RAINC</code>, <code>RAINNC</code>: accumulated convective and large-scale precipitation,</li>
+<li><code>LANDMASK</code>, <code>LAKEMASK</code>: geographic masks for later filtering.</li>
+</ul>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>vars_WRF <span class="op">=</span> sc.drop_vars(</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    WRF_files[<span class="dv">0</span>],</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    sel_vars<span class="op">=</span>[<span class="st">'LAKEMASK'</span>, <span class="st">'LANDMASK'</span>, <span class="st">'U10'</span>, <span class="st">'V10'</span>, <span class="st">'RAINC'</span>, <span class="st">'RAINNC'</span>]</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="reading-all-files-with-read_wrf" class="level3">
+<h3 class="anchored" data-anchor-id="reading-all-files-with-read_wrf">4. Reading All Files with <code>read_wrf</code></h3>
+<p>We read all files at once. The function automatically concatenates the time dimension and adjusts coordinates and metadata.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>ds_WRF <span class="op">=</span> sc.read_wrf(</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    WRF_files,</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    drop_vars <span class="op">=</span> vars_WRF</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="computing-de-accumulated-precipitation" class="level3">
+<h3 class="anchored" data-anchor-id="computing-de-accumulated-precipitation">5. Computing De-accumulated Precipitation</h3>
+<p>The variables <code>RAINC</code> and <code>RAINNC</code> are <strong>time-accumulated</strong>, so we use the <code>precipitation</code> function to compute total precipitation per time step:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>ds_WRF[<span class="st">'PP'</span>] <span class="op">=</span> sc.precipitation(</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    ds_WRF[<span class="st">"RAINC"</span>],</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    ds_WRF[<span class="st">"RAINNC"</span>],</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    name <span class="op">=</span> <span class="st">'PP'</span>,</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    units <span class="op">=</span> <span class="st">'mm'</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="applying-a-mask-ocean-only" class="level3">
+<h3 class="anchored" data-anchor-id="applying-a-mask-ocean-only">6. Applying a Mask: Ocean Only</h3>
+<p>In this case, we keep only <em>ocean</em> values, using:</p>
+<ul>
+<li><code>sea_is_one = False</code> (land is 1, ocean is 0 in LANDMASK),</li>
+<li><code>exclude_lakes = True</code> to avoid interpolation artifacts over lakes (e.g., Lake Titicaca), where WRF may generate undesirable values.</li>
+</ul>
+<div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>ds_WRF[<span class="st">'U10_land'</span>] <span class="op">=</span> sc.apply_mask(</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    ds_WRF.U10,</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    ds_WRF.LANDMASK,</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    sea_is_one <span class="op">=</span> <span class="va">False</span>,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    lakemask <span class="op">=</span> ds_WRF.LAKEMASK,</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    exclude_lakes <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>ds_WRF[<span class="st">'V10_land'</span>] <span class="op">=</span> sc.apply_mask(</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    ds_WRF.V10,</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    ds_WRF.LANDMASK,</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>    sea_is_one <span class="op">=</span> <span class="va">False</span>,</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>    lakemask <span class="op">=</span> ds_WRF.LAKEMASK,</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>    exclude_lakes <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="monthly-aggregation" class="level3">
+<h3 class="anchored" data-anchor-id="monthly-aggregation">7. Monthly Aggregation</h3>
+<p>We use the function <code>aggregate_dmy</code> (from the module <code>core.time_ops</code>) to compute:</p>
+<ul>
+<li>Monthly accumulated precipitation (<code>accum=['PP']</code>),</li>
+<li>Monthly mean 10 m winds (<code>avg=['U10_land','V10_land']</code>).</li>
+</ul>
+<div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>ds_WRF_m <span class="op">=</span> sc.aggregate_dmy(</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    ds <span class="op">=</span> ds_WRF[[<span class="st">'PP'</span>,<span class="st">'U10_land'</span>,<span class="st">'V10_land'</span>]],</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    tiempo <span class="op">=</span> <span class="st">'ME'</span>,</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    accum <span class="op">=</span> [<span class="st">'PP'</span>],</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    avg <span class="op">=</span> [<span class="st">'U10_land'</span>,<span class="st">'V10_land'</span>],</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    mediana <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="monthly-map-accumulated-precipitation-wind" class="level3">
+<h3 class="anchored" data-anchor-id="monthly-map-accumulated-precipitation-wind">8. Monthly Map: Accumulated Precipitation + Wind</h3>
+<p>Finally, we generate a monthly map using the function <code>map_1var_winds</code> from the <code>scahpy.plots.maps</code> module.</p>
+<p>We represent the accumulated precipitation for the month and the mean 10 m winds (surface level):</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>sc.map_1var_winds(</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    da <span class="op">=</span> ds_WRF_m.PP,</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    U <span class="op">=</span> ds_WRF_m.U10_land,</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    V <span class="op">=</span> ds_WRF_m.V10_land,</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    levels <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="dv">500</span>, <span class="dv">10</span>),</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    cmap <span class="op">=</span> <span class="st">'rain'</span>,</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    shapefile <span class="op">=</span> <span class="va">None</span>,</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    extent <span class="op">=</span> <span class="va">None</span>,</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    xticks <span class="op">=</span> <span class="va">None</span>,</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>    yticks <span class="op">=</span> <span class="va">None</span>,</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>    tick_step <span class="op">=</span> (<span class="dv">5</span>, <span class="dv">5</span>),</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>    draw_grid <span class="op">=</span> <span class="va">False</span>,</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>    time <span class="op">=</span> <span class="st">'2017-03'</span>,</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>    month <span class="op">=</span> <span class="va">None</span>,</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>    quiver_subsample <span class="op">=</span> <span class="dv">7</span>,</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>    quiverkey_speed <span class="op">=</span> <span class="fl">5.0</span>,</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>    title <span class="op">=</span> <span class="st">'Precipitation + Winds at 10m'</span>,</span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>    colorbar_label <span class="op">=</span> <span class="st">'m/s'</span>,</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>    output_path <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-06" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-06-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/fig_06.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-06-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: ds_maps
+</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="notes-on-memory-usage-and-performance" class="level2">
+<h2 class="anchored" data-anchor-id="notes-on-memory-usage-and-performance">Notes on Memory Usage and Performance</h2>
+<p>When working with WRF outputs—especially when reading <em>multiple files</em>—it is important to consider memory usage and the type of computations being performed. SCAHpy relies on <code>xarray</code> + <code>dask</code>, meaning that many operations are executed <em>lazily</em> until methods such as <code>.compute()</code> or <code>.persist()</code> are explicitly called.</p>
+<p>Below are some practical recommendations:</p>
+<section id="how-many-files-should-be-read-at-once" class="level3">
+<h3 class="anchored" data-anchor-id="how-many-files-should-be-read-at-once">How many files should be read at once?</h3>
+<p>There is no single correct number; it depends on:</p>
+<ul>
+<li>The size of each WRF file (number of levels, variables, spatial resolution).</li>
+<li>The amount of available RAM.</li>
+<li>The number of variables actually loaded (controlled via <code>drop_vars</code>).</li>
+</ul>
+<p>As a general rule:</p>
+<ul>
+<li><p>On a desktop environment with limited memory, it is safer to:</p>
+<ul>
+<li><em>Read data in time blocks</em> (e.g., one or several months) rather than an entire multi-year period.</li>
+<li>Reduce the number of variables using <code>drop_vars</code> before performing heavy diagnostics.</li>
+</ul></li>
+<li><p>On a cluster or high-memory server:</p>
+<ul>
+<li><p>It is reasonable to read an entire year of simulation as long as:</p>
+<ul>
+<li>Only essential variables are included.</li>
+<li>Processing remains lazy (avoid calling <code>.compute()</code> over the full domain at every step).</li>
+</ul></li>
+</ul></li>
+</ul>
+<p>If the system begins using <em>swap</em> or becomes noticeably slow during an operation, this is a clear sign that the workload should be <em>split into fewer files or a shorter time range</em>.</p>
+</section>
+<section id="when-should-.compute-be-used" class="level3">
+<h3 class="anchored" data-anchor-id="when-should-.compute-be-used">When should <code>.compute()</code> be used?</h3>
+<p>Use <code>.compute()</code> when:</p>
+<ul>
+<li><p>You have defined the full processing chain and need the complete result in memory in order to:</p>
+<ul>
+<li>Plot a specific figure.</li>
+<li>Save a final, relatively small product (e.g., a monthly mean or a climatology already reduced in time).</li>
+<li>Inspect numerical values directly (e.g., <code>ds.isel(time=0).PP.values</code>).</li>
+</ul></li>
+</ul>
+<p>In general:</p>
+<ul>
+<li><p>Avoid calling <code>.compute()</code> on very large datasets during intermediate processing steps.</p></li>
+<li><p>Prefer to:</p>
+<ul>
+<li>Reduce dimensions first (e.g., temporal means, spatial cropping).</li>
+<li>Apply <code>.compute()</code> only on the final, already “summarized” output.</li>
+</ul></li>
+</ul>
+</section>
+<section id="when-should-.persist-be-used" class="level3">
+<h3 class="anchored" data-anchor-id="when-should-.persist-be-used">When should <code>.persist()</code> be used?</h3>
+<p><code>.persist()</code> is helpful when:</p>
+<ul>
+<li>You have performed an expensive preprocessing step (e.g., computing several diagnostic variables, masks, or calendar adjustments) that you plan to reuse multiple times.</li>
+<li>You want to keep the dataset <em>in distributed memory</em> (in RAM) without converting everything to <code>numpy</code>, while still avoiding repeated recalculations.</li>
+</ul>
+<p>Typical example:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>ds_proc <span class="op">=</span> ds_WRF[[<span class="st">'PP'</span>, <span class="st">'U10_land'</span>, <span class="st">'V10_land'</span>]].persist()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>From <code>ds_proc</code> you can:</p>
+<ul>
+<li>Compute various temporal aggregates (<code>aggregate_dmy</code>, seasonal means, etc.).</li>
+<li>Generate multiple plots without recalculating the entire initial processing chain.</li>
+</ul>
+<p>There is no need to use <code>.persist()</code> if the computation is small or will only be done once; in those cases, a final <code>.compute()</code> is usually sufficient.</p>
+</section>
+<section id="additional-recommendations" class="level3">
+<h3 class="anchored" data-anchor-id="additional-recommendations">Additional Recommendations</h3>
+<ul>
+<li><p><strong>Filter early and filter aggressively</strong>:</p>
+<ul>
+<li>Use <code>drop_vars</code> at the beginning to reduce the number of variables.</li>
+<li>Crop the region of interest (<code>.sel(lat=..., lon=...)</code>) before applying expensive operations.</li>
+</ul></li>
+<li><p><strong>Avoid explicit Python loops</strong>:</p>
+<ul>
+<li>Whenever possible, let <code>xarray</code>/<code>dask</code> handle hidden loops over time or other dimensions.</li>
+</ul></li>
+<li><p><strong>Test with a subset</strong>:</p>
+<ul>
+<li><p>Before processing an entire year, test with 2–3 files to confirm that:</p>
+<ul>
+<li>The workflow functions correctly.</li>
+<li>Memory usage is reasonable.</li>
+</ul></li>
+</ul></li>
+</ul>
 
 
 </section>
