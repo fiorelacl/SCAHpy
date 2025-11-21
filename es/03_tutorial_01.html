@@ -190,7 +190,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03_tutorial_03.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Tutorial 3: Gráficos básicos</span></a>
+ <span class="menu-text">Tutorial 3: ENSO 2017</span></a>
   </div>
 </li>
       </ul>
@@ -286,7 +286,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Este flujo es ideal para comenzar a trabajar con las salidas de la componente atmosférica del modelo acoplado <em>IGP RESM-COW</em> o de cualquier simulación WRF compatible.</p>
 <section id="lectura-de-un-archivo-wrf" class="level2">
 <h2 class="anchored" data-anchor-id="lectura-de-un-archivo-wrf">Lectura de un archivo WRF</h2>
-<p>En esta primera parte comenzaremos trabajando con <strong>un solo archivo WRF</strong>, lo cual permite comprender la estructura básica del dataset y el uso de las funciones principales. Más adelante extenderemos estos conceptos para el caso de <strong>lecturas múltiples</strong>.</p>
+<p>En esta primera parte comenzaremos trabajando con <em>un solo archivo WRF</em>, lo cual permite comprender la estructura básica del dataset y el uso de las funciones principales. Más adelante extenderemos estos conceptos para el caso de <em>lecturas múltiples</em>.</p>
 <section id="importación-de-paquetes" class="level3">
 <h3 class="anchored" data-anchor-id="importación-de-paquetes">1. Importación de paquetes</h3>
 <p>Importamos los módulos necesarios para el manejo de rutas, lectura de archivos WRF y operaciones numéricas:</p>
@@ -298,9 +298,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="definición-del-archivo-wrf">2. Definición del archivo WRF</h3>
 <p>Las funciones de lectura de SCAHpy requieren que las rutas de los archivos se proporcionen como <em>lista de strings</em>. Existen dos formas de lograrlo:</p>
 <p><strong>a) Colocar manualmente el archivo entre corchetes:</strong></p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>file_name <span class="op">=</span> [<span class="st">'/data/users/fcastillon/COW_outs/diagnos/C2O5W4_SF2/wrf/wrfout_d01_2017-01-14_03:00:00'</span>]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>file_name <span class="op">=</span> [<span class="st">'/data/users/fcastillon/wrf/wrfout_d01_2017-01-14_03:00:00'</span>]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><strong>b) Utilizar <code>glob.glob</code>, que devuelve directamente una lista:</strong></p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>file_name <span class="op">=</span> glob.glob(<span class="st">'/data/users/fcastillon/COW_outs/diagnos/C2O5W4_SF2/wrf/wrfout_d01_2017-01-14_03:00:00'</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>file_name <span class="op">=</span> glob.glob(<span class="st">'/data/users/fcastillon/wrf/wrfout_d01_2017-01-14_03:00:00'</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Ambos métodos son equivalentes respecto al formato que necesita SCAHpy.</p>
 </section>
 <section id="selección-de-variables-con-drop_vars" class="level3">
@@ -457,7 +457,7 @@ Figura&nbsp;2: ds_maps
 <section id="listado-de-archivos-wrf" class="level3">
 <h3 class="anchored" data-anchor-id="listado-de-archivos-wrf">2. Listado de archivos WRF</h3>
 <p>Para leer múltiples archivos, utilizamos <code>glob.glob</code>, que retorna directamente una lista ordenada de rutas. En este ejemplo filtramos todos los <code>wrfout</code> del año 2017:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>WRF_files <span class="op">=</span> <span class="bu">sorted</span>(glob.glob(<span class="st">"/data/users/fcastillon/COW_outs/diagnos/C2O5W4_SF2/wrf/wrfout_d01_2017*"</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>WRF_files <span class="op">=</span> <span class="bu">sorted</span>(glob.glob(<span class="st">"/data/users/fcastillon/wrf/wrfout_d01_2017*"</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <blockquote class="blockquote">
 <p><em>Importante:</em> Aunque trabajemos con múltiples archivos, la función <code>drop_vars</code> siempre requiere un solo archivo (<code>file0</code>) para identificar la metadata genérica del WRF. Por ello, empleamos <code>WRF_files[0]</code>.</p>
 </blockquote>

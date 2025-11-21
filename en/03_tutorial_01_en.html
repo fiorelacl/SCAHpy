@@ -190,7 +190,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03_tutorial_03_en.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Tutorial 3: Basic Plots</span></a>
+ <span class="menu-text">Tutorial 3: ENSO 2017</span></a>
   </div>
 </li>
       </ul>
@@ -290,7 +290,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>This workflow is ideal for getting started with the atmospheric component outputs of the coupled <em>IGP RESM-COW</em> model, or with any compatible WRF simulation.</p>
 <section id="reading-a-wrf-file" class="level2">
 <h2 class="anchored" data-anchor-id="reading-a-wrf-file">Reading a WRF File</h2>
-<p>In this first section we begin by working with <strong>a single WRF file</strong>, which allows us to understand the dataset structure and the use of the main functions. Later, we will extend these concepts to the case of <strong>multiple-input reading</strong>.</p>
+<p>In this first section we begin by working with <em>a single WRF file</em>, which allows us to understand the dataset structure and the use of the main functions. Later, we will extend these concepts to the case of <em>multiple-input reading</em>.</p>
 <section id="importing-packages" class="level3">
 <h3 class="anchored" data-anchor-id="importing-packages">1. Importing Packages</h3>
 <p>We import the modules required for path handling, WRF file reading, and numerical operations:</p>
@@ -302,9 +302,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="defining-the-wrf-file">2. Defining the WRF File</h3>
 <p>SCAHpy’s reading functions require file paths to be provided as a <em>list of strings</em>. There are two ways to accomplish this:</p>
 <p><strong>a) Manually placing the file inside square brackets:</strong></p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>file_name <span class="op">=</span> [<span class="st">'/data/users/fcastillon/COW_outs/diagnos/C2O5W4_SF2/wrf/wrfout_d01_2017-01-14_03:00:00'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>file_name <span class="op">=</span> [<span class="st">'/data/users/fcastillon/wrf/wrfout_d01_2017-01-14_03:00:00'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><strong>b) Using <code>glob.glob</code>, which already returns a list:</strong></p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>file_name <span class="op">=</span> glob.glob(<span class="st">'/data/users/fcastillon/COW_outs/diagnos/C2O5W4_SF2/wrf/wrfout_d01_2017-01-14_03:00:00'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>file_name <span class="op">=</span> glob.glob(<span class="st">'/data/users/fcastillon/wrf/wrfout_d01_2017-01-14_03:00:00'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Both methods produce the correct format required by SCAHpy.</p>
 </section>
 <section id="selecting-variables-with-drop_vars" class="level3">
@@ -461,7 +461,7 @@ Figure&nbsp;2: ds_maps
 <section id="listing-wrf-files" class="level3">
 <h3 class="anchored" data-anchor-id="listing-wrf-files">2. Listing WRF Files</h3>
 <p>To read multiple files, we use <code>glob.glob</code>, which directly returns a sorted list of file paths. In this example, we filter all <code>wrfout</code> files from the year 2017:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>WRF_files <span class="op">=</span> <span class="bu">sorted</span>(glob.glob(<span class="st">"/data/users/fcastillon/COW_outs/diagnos/C2O5W4_SF2/wrf/wrfout_d01_2017*"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>WRF_files <span class="op">=</span> <span class="bu">sorted</span>(glob.glob(<span class="st">"/data/users/fcastillon/wrf/wrfout_d01_2017*"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <blockquote class="blockquote">
 <p><em>Important:</em> Even when working with multiple files, the function <code>drop_vars</code> always requires a single file (<code>file0</code>) to identify the generic WRF metadata. Therefore, we use <code>WRF_files[0]</code>.</p>
 </blockquote>

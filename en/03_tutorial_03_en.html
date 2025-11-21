@@ -20,40 +20,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -190,7 +156,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03_tutorial_03_en.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Tutorial 3: Basic Plots</span></a>
+ <span class="menu-text">Tutorial 3: ENSO 2017</span></a>
   </div>
 </li>
       </ul>
@@ -234,14 +200,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Contents</h2>
    
   <ul>
-  <li><a href="#pressure-levels-variables" id="toc-pressure-levels-variables" class="nav-link active" data-scroll-target="#pressure-levels-variables">Pressure levels variables</a>
-  <ul class="collapse">
-  <li><a href="#step-1-reading-wrf-data" id="toc-step-1-reading-wrf-data" class="nav-link" data-scroll-target="#step-1-reading-wrf-data">Step 1: Reading WRF Data</a></li>
-  <li><a href="#step-2-calculating-specific-humidity-and-total-pressure" id="toc-step-2-calculating-specific-humidity-and-total-pressure" class="nav-link" data-scroll-target="#step-2-calculating-specific-humidity-and-total-pressure">Step 2: Calculating Specific Humidity and Total pressure</a></li>
-  <li><a href="#step-3-aggregating-the-data" id="toc-step-3-aggregating-the-data" class="nav-link" data-scroll-target="#step-3-aggregating-the-data">Step 3: Aggregating the Data</a></li>
-  <li><a href="#step-4-interpolation-to-vertical-levels" id="toc-step-4-interpolation-to-vertical-levels" class="nav-link" data-scroll-target="#step-4-interpolation-to-vertical-levels">Step 4: Interpolation to vertical levels</a></li>
-  <li><a href="#step-5-plotting-precipitation-maps" id="toc-step-5-plotting-precipitation-maps" class="nav-link" data-scroll-target="#step-5-plotting-precipitation-maps">Step 5: Plotting Precipitation Maps</a></li>
-  </ul></li>
+  <li><a href="#tutorial-03-enso-2017" id="toc-tutorial-03-enso-2017" class="nav-link active" data-scroll-target="#tutorial-03-enso-2017">Tutorial 03: ENSO 2017</a></li>
   </ul>
 </nav>
     </div>
@@ -255,51 +214,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="pressure-levels-variables" class="level1 unnumbered">
-<h1 class="unnumbered">Pressure levels variables</h1>
-<p>In this tutorial, we will guide you through the process of analyzing multiple output dataset from the WRF (Weather Research and Forecasting) model and creating Cross section graphs featuring specific humidity and wind variables using the <code>scahpy</code> package. To begin, let’s import the <code>glob</code> package to manage files and paths, as well as the <code>scahpy</code> package.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scahpy <span class="im">import</span> <span class="op">*</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> glob</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<section id="step-1-reading-wrf-data" class="level2">
-<h2 class="anchored" data-anchor-id="step-1-reading-wrf-data">Step 1: Reading WRF Data</h2>
-<p>We initiate the process by listing all the files we want to read using the <code>glob</code> package and assigning them to the variable <code>list_files</code>.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>list_files <span class="op">=</span> <span class="bu">sorted</span>(glob.glob(<span class="st">'/data/datos/COW/OUT_DIAG_WRF/wrfouts/wrfout_d01_*'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Given the capability to specify excluded variables when reading netCDF files using the <code>drop_variables</code> argument (refer to xarray functions <code>open_dataset</code> and <code>open_mfdataset</code>), we utilize the <code>_drop_vars</code> function from the module <code>in_out</code>. This function takes the list of variables we require and generates a list containing all variables present in the output file, subsequently removing those we are not interested in (such as <em>‘P’, ‘PB’, ‘U’, ‘W’, ‘QVAPOR’</em>). For this purpose, we use the first file from our list of files, assigning it to the variable <code>dvars</code>.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dvars <span class="op">=</span> in_out._drop_vars(list_files[<span class="dv">0</span>], [<span class="st">'P'</span>, <span class="st">'PB'</span>, <span class="st">'U'</span>, <span class="st">'W'</span>, <span class="st">'QVAPOR'</span>], model<span class="op">=</span><span class="st">'wrf'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Subsequently, we utilize the <code>read_wrf_multi</code> function to selectively read the variables of interest. This function accepts the input path (<code>file_name</code> in this case), the list of variables to be excluded (<code>dvars</code>), any required time difference (e.g., <code>'5 hours'</code>), and the corresponding sign of the time difference (<code>-1</code> for negative, <code>1</code> for positive). The outcome is an <code>xarray.Dataset</code> containing longitude, latitude, bottom_top, time, and the specified variables. Optionally, you can designate a save path to export the netCDF.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> in_out.read_wrf_multi(list_files, dvars, <span class="st">'5 hours'</span>, <span class="op">-</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="step-2-calculating-specific-humidity-and-total-pressure" class="level2">
-<h2 class="anchored" data-anchor-id="step-2-calculating-specific-humidity-and-total-pressure">Step 2: Calculating Specific Humidity and Total pressure</h2>
-<p>In this step, we will utilize the <code>met_diag</code> module to calculate specific humidity (<code>calc_qe</code>), and total pressure (<code>calc_pres</code>). Whe have the option of the parameter <code>elim</code>that can be set to True or False in order to remove some variables used to calculate the final variable.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ds_lvl <span class="op">=</span> met_vars.calc_qe(ds, elim<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>ds_lvl <span class="op">=</span> met_vars.calc_pres(ds_lvl, elim<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>By running these commands, we ensure that our dataset <code>ds_lvl</code> now contains calculated specific humidity and total pressure, ready for further analysis or visualization.</p>
-</section>
-<section id="step-3-aggregating-the-data" class="level2">
-<h2 class="anchored" data-anchor-id="step-3-aggregating-the-data">Step 3: Aggregating the Data</h2>
-<p>Now, we’ll aggregate the data to operate on a daily time scale instead of hourly. To achieve this, we’ll utilize the <code>dmy_var</code> function from the <code>temp_scales</code> module. This function takes an <code>xarray.Dataset</code> as input, where we specify the desired time scale (e.g., ‘1D’ for daily, ‘ME’ for monthly, ‘YE’ for yearly). Additionally, we can specify which variables should be aggregated by sum, average, or median by providing lists for each aggregation method.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>dd <span class="op">=</span> temp_scales.dmy_var(ds_lvl, tiempo<span class="op">=</span><span class="st">'1D'</span>, accum<span class="op">=</span><span class="va">None</span>, avg<span class="op">=</span>[<span class="st">'Presion'</span>,<span class="st">'U'</span>,<span class="st">'W'</span>,<span class="st">'QE'</span>], mediana<span class="op">=</span><span class="va">None</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>By executing this code, we’ll have our data aggregated to a daily time scale, with variables averaged according to our specifications.</p>
-</section>
-<section id="step-4-interpolation-to-vertical-levels" class="level2">
-<h2 class="anchored" data-anchor-id="step-4-interpolation-to-vertical-levels">Step 4: Interpolation to vertical levels</h2>
-<p>We use the function<code>vert_levs</code> from <code>spatial_scales</code>module to interpolate the data to same pressure levels, when we do not specify the levels, by default the interpolation is to: 1000,975,950,925,900,850,800,700,600,500,400,300,200 hPa. The dataset <code>dd</code> should contain the total pressure and the variables we are interested in.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>dd2<span class="op">=</span>vert_levs(dd,[<span class="st">'U'</span>,<span class="st">'W'</span>,<span class="st">'QE'</span>],lvls<span class="op">=</span><span class="va">None</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="step-5-plotting-precipitation-maps" class="level2">
-<h2 class="anchored" data-anchor-id="step-5-plotting-precipitation-maps">Step 5: Plotting Precipitation Maps</h2>
-<p>Next, we’ll generate cross section plots with specific humidity contours and wind vectors using the <code>cross_section_xz</code> function from the <code>map_plots</code> module. This function takes the dataset with specific humidity, total pressure and wind components, humidity levels, exportation settings, output path, temporal scale (‘H’ for hourly, ‘D’ for daily, ‘M’ for monthly, ‘Y’ for yearly) and vector speed.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example usage</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>levs<span class="op">=</span>[<span class="dv">0</span>,<span class="fl">0.2</span>,<span class="fl">0.4</span>,<span class="fl">0.6</span>,<span class="fl">0.8</span>,<span class="dv">1</span>,<span class="fl">1.5</span>,<span class="dv">2</span>,<span class="fl">2.5</span>,<span class="dv">5</span>,<span class="fl">7.5</span>,<span class="dv">10</span>,<span class="dv">12</span>,<span class="dv">15</span>,<span class="dv">18</span>]</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>cmaps<span class="op">=</span>cmocean.tools.lighten(matplotlib.colormaps[<span class="st">'rainbow'</span>],<span class="fl">0.90</span>)<span class="co"># 1d</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>df<span class="op">=</span>dd2.sel(lat<span class="op">=-</span><span class="dv">5</span>,method<span class="op">=</span><span class="st">'nearest'</span>).sel(lon<span class="op">=</span><span class="bu">slice</span>(<span class="op">-</span><span class="dv">90</span>,<span class="op">-</span><span class="dv">80</span>),time<span class="op">=</span><span class="bu">slice</span>(<span class="st">'2023-03-10'</span>,<span class="st">'2023-03-13'</span>))</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'QE'</span>]<span class="op">=</span>df[<span class="st">'QE'</span>]<span class="op">*</span><span class="dv">1000</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>cross_section_xz(df,<span class="st">'QE'</span>,levs,cmaps,<span class="st">'QE'</span>,quiverkey_speed<span class="op">=</span><span class="dv">8</span>, output_path<span class="op">=</span><span class="va">None</span>, freq<span class="op">=</span><span class="st">'D'</span>,</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>                           save_maps<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="tutorial-03-enso-2017" class="level1">
+<h1>Tutorial 03: ENSO 2017</h1>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

@@ -190,7 +190,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03_tutorial_03.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Tutorial 3: Gráficos básicos</span></a>
+ <span class="menu-text">Tutorial 3: ENSO 2017</span></a>
   </div>
 </li>
       </ul>
@@ -234,31 +234,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Contenido</h2>
    
   <ul>
-  <li><a href="#tutorial-2-lectura-y-análisis-de-múltiples-archivos-wrf" id="toc-tutorial-2-lectura-y-análisis-de-múltiples-archivos-wrf" class="nav-link active" data-scroll-target="#tutorial-2-lectura-y-análisis-de-múltiples-archivos-wrf">Tutorial 2: Lectura y análisis de múltiples archivos WRF</a></li>
-  <li><a href="#importación-del-paquete" id="toc-importación-del-paquete" class="nav-link" data-scroll-target="#importación-del-paquete">1. Importación del paquete</a></li>
-  <li><a href="#lectura-de-múltiples-archivos-wrf" id="toc-lectura-de-múltiples-archivos-wrf" class="nav-link" data-scroll-target="#lectura-de-múltiples-archivos-wrf">2. Lectura de múltiples archivos WRF</a>
+  <li><a href="#tutorial-02-salidas-del-modelo-croco" id="toc-tutorial-02-salidas-del-modelo-croco" class="nav-link active" data-scroll-target="#tutorial-02-salidas-del-modelo-croco">Tutorial 02: Salidas del modelo CROCO</a>
   <ul class="collapse">
-  <li><a href="#listar-archivos" id="toc-listar-archivos" class="nav-link" data-scroll-target="#listar-archivos">2.1 Listar archivos</a></li>
-  <li><a href="#leer-todos-los-archivos-concatenados" id="toc-leer-todos-los-archivos-concatenados" class="nav-link" data-scroll-target="#leer-todos-los-archivos-concatenados">2.2 Leer todos los archivos concatenados</a></li>
-  </ul></li>
-  <li><a href="#cálculo-de-diagnósticos-precipitación-viento-y-sst" id="toc-cálculo-de-diagnósticos-precipitación-viento-y-sst" class="nav-link" data-scroll-target="#cálculo-de-diagnósticos-precipitación-viento-y-sst">3. Cálculo de diagnósticos (precipitación, viento y SST)</a>
+  <li><a href="#lectura-de-un-archivo-croco" id="toc-lectura-de-un-archivo-croco" class="nav-link" data-scroll-target="#lectura-de-un-archivo-croco">Lectura de un archivo CROCO</a>
   <ul class="collapse">
-  <li><a href="#precipitación-acumulada" id="toc-precipitación-acumulada" class="nav-link" data-scroll-target="#precipitación-acumulada">3.1 Precipitación acumulada</a></li>
-  <li><a href="#velocidad-del-viento-a-10-m" id="toc-velocidad-del-viento-a-10-m" class="nav-link" data-scroll-target="#velocidad-del-viento-a-10-m">3.2 Velocidad del viento a 10 m</a></li>
-  <li><a href="#sst-en-grados-celsius-si-existe" id="toc-sst-en-grados-celsius-si-existe" class="nav-link" data-scroll-target="#sst-en-grados-celsius-si-existe">3.3 SST en grados Celsius (si existe)</a></li>
+  <li><a href="#importación-de-paquetes" id="toc-importación-de-paquetes" class="nav-link" data-scroll-target="#importación-de-paquetes">1. Importación de paquetes</a></li>
+  <li><a href="#definición-del-archivo-croco" id="toc-definición-del-archivo-croco" class="nav-link" data-scroll-target="#definición-del-archivo-croco">2. Definición del archivo CROCO</a></li>
+  <li><a href="#selección-de-variables-con-drop_vars" id="toc-selección-de-variables-con-drop_vars" class="nav-link" data-scroll-target="#selección-de-variables-con-drop_vars">3. Selección de variables con <code>drop_vars</code></a></li>
+  <li><a href="#lectura-del-archivo-con-read_croco" id="toc-lectura-del-archivo-con-read_croco" class="nav-link" data-scroll-target="#lectura-del-archivo-con-read_croco">4. Lectura del archivo con <code>read_croco</code></a></li>
+  <li><a href="#aplicación-de-máscara-para-delimitar-continente" id="toc-aplicación-de-máscara-para-delimitar-continente" class="nav-link" data-scroll-target="#aplicación-de-máscara-para-delimitar-continente">5. Aplicación de máscara para delimitar continente</a></li>
+  <li><a href="#mapa-2d-sst-con-vectores-del-viento" id="toc-mapa-2d-sst-con-vectores-del-viento" class="nav-link" data-scroll-target="#mapa-2d-sst-con-vectores-del-viento">6. Mapa 2D: SST con vectores del viento</a></li>
+  <li><a href="#serie-de-tiempo" id="toc-serie-de-tiempo" class="nav-link" data-scroll-target="#serie-de-tiempo">7. Serie de Tiempo</a></li>
   </ul></li>
-  <li><a href="#agregación-temporal-diaria" id="toc-agregación-temporal-diaria" class="nav-link" data-scroll-target="#agregación-temporal-diaria">4. Agregación temporal (diaria)</a>
+  <li><a href="#lectura-de-múltiples-archivos-croco" id="toc-lectura-de-múltiples-archivos-croco" class="nav-link" data-scroll-target="#lectura-de-múltiples-archivos-croco">Lectura de múltiples archivos CROCO</a>
   <ul class="collapse">
-  <li><a href="#agrupar-por-día" id="toc-agrupar-por-día" class="nav-link" data-scroll-target="#agrupar-por-día">4.1 Agrupar por día</a></li>
+  <li><a href="#importación-de-paquetes-1" id="toc-importación-de-paquetes-1" class="nav-link" data-scroll-target="#importación-de-paquetes-1">1. Importación de paquetes</a></li>
   </ul></li>
-  <li><a href="#visualización-básica" id="toc-visualización-básica" class="nav-link" data-scroll-target="#visualización-básica">5. Visualización básica</a></li>
-  <li><a href="#visualización-usando-funciones-de-scahpy" id="toc-visualización-usando-funciones-de-scahpy" class="nav-link" data-scroll-target="#visualización-usando-funciones-de-scahpy">6. Visualización usando funciones de SCAHpy</a></li>
-  <li><a href="#tutorial-1-lectura-de-un-archivo-croco" id="toc-tutorial-1-lectura-de-un-archivo-croco" class="nav-link" data-scroll-target="#tutorial-1-lectura-de-un-archivo-croco">Tutorial 1: Lectura de un archivo CROCO</a></li>
-  <li><a href="#lectura-rápida-de-un-archivo-croco" id="toc-lectura-rápida-de-un-archivo-croco" class="nav-link" data-scroll-target="#lectura-rápida-de-un-archivo-croco">5. Lectura rápida de un archivo CROCO</a>
-  <ul class="collapse">
-  <li><a href="#definir-la-ruta-del-archivo-croco" id="toc-definir-la-ruta-del-archivo-croco" class="nav-link" data-scroll-target="#definir-la-ruta-del-archivo-croco">5.1 Definir la ruta del archivo CROCO</a></li>
   </ul></li>
-  <li><a href="#mapa-simple-de-sst-con-croco" id="toc-mapa-simple-de-sst-con-croco" class="nav-link" data-scroll-target="#mapa-simple-de-sst-con-croco">6. Mapa simple de SST con CROCO</a></li>
   </ul>
 </nav>
     </div>
@@ -272,198 +264,144 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="tutorial-2-lectura-y-análisis-de-múltiples-archivos-wrf" class="level1">
-<h1>Tutorial 2: Lectura y análisis de múltiples archivos WRF</h1>
+<section id="tutorial-02-salidas-del-modelo-croco" class="level1">
+<h1>Tutorial 02: Salidas del modelo CROCO</h1>
 <p>En este tutorial aprenderás a:</p>
 <ol type="1">
-<li>Leer <strong>varios archivos WRF</strong> (multi-tiempo) usando SCAHpy.<br>
+<li>Leer un único archivo o múltiples archivos del modelo <strong>CROCO</strong> usando SCAHpy.<br>
 </li>
-<li>Calcular precipitación total, viento 10 m y SST.<br>
+<li>Realizar diagnósticos básicos como obtener el gradiente de SST en superficie.<br>
 </li>
-<li>Agregar datos a escala diaria.<br>
-</li>
-<li>Realizar una visualización básica.</li>
+<li>Generar un mapa 2D, hovmoller y una serie de tiempo sencilla con variables oceanográficas.</li>
 </ol>
-<p>Este flujo es esencial para procesar días, meses o años de simulación del sistema <strong>IGP RESM-COW</strong>.</p>
-<hr>
-</section>
-<section id="importación-del-paquete" class="level1">
-<h1>1. Importación del paquete</h1>
+<p>Este flujo es ideal para comenzar a trabajar con las salidas de la componente oceánica del modelo acoplado <em>IGP RESM-COW</em> o de cualquier simulación CROCO compatible.</p>
+<section id="lectura-de-un-archivo-croco" class="level2">
+<h2 class="anchored" data-anchor-id="lectura-de-un-archivo-croco">Lectura de un archivo CROCO</h2>
+<p>En esta primera parte comenzaremos trabajando con <em>un solo archivo CROCO</em>, lo cual permite comprender la estructura básica del dataset y el uso de las funciones principales. Más adelante extenderemos estos conceptos para el caso de <em>lecturas múltiples</em>.</p>
+<section id="importación-de-paquetes" class="level3">
+<h3 class="anchored" data-anchor-id="importación-de-paquetes">1. Importación de paquetes</h3>
+<p>Importamos los módulos necesarios para el manejo de rutas, lectura de archivos CROCO y operaciones numéricas:</p>
 <p>Como en el tutorial anterior, importamos los módulos necesarios:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scahpy <span class="im">as</span> sph</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scahpy.components.atmos <span class="im">import</span> wrf_io, wrf_diags</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scahpy.components.core <span class="im">import</span> (</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    time_ops,</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    utils</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scahpy.components.plots <span class="im">import</span> maps</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> xarray <span class="im">as</span> xr</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> glob</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<hr>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scahpy <span class="im">as</span> sc</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> glob</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> xarray <span class="im">as</span> xr</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="lectura-de-múltiples-archivos-wrf" class="level1">
-<h1>2. Lectura de múltiples archivos WRF</h1>
-<section id="listar-archivos" class="level2">
-<h2 class="anchored" data-anchor-id="listar-archivos">2.1 Listar archivos</h2>
-<p>Como mencionaste, por ahora prefieres usar <code>glob</code>:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>list_files <span class="op">=</span> <span class="bu">sorted</span>(</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    glob.glob(<span class="st">"/data/datos/COW/OUT_DIAG_WRF/wrfouts/wrfout_d01_2023-03-*.nc"</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>list_files[:<span class="dv">3</span>]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Ejemplo de salida:</p>
-<pre><code>['wrfout_d01_2023-03-01_00:00:00',
- 'wrfout_d01_2023-03-01_03:00:00',
- 'wrfout_d01_2023-03-01_06:00:00',
- ...]</code></pre>
+<section id="definición-del-archivo-croco" class="level3">
+<h3 class="anchored" data-anchor-id="definición-del-archivo-croco">2. Definición del archivo CROCO</h3>
+<p>Las funciones de lectura de SCAHpy requieren que las rutas de los archivos se proporcionen como <em>lista de strings</em>. Existen dos formas de lograrlo:</p>
+<p><strong>a) Colocar manualmente el archivo entre corchetes:</strong></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>file_name <span class="op">=</span> [<span class="st">'/data/users/fcastillon/croco/croco_avg_Y2017M01.nc'</span>]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>b) Utilizar <code>glob.glob</code>, que devuelve directamente una lista:</strong></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>file_name <span class="op">=</span> glob.glob(<span class="st">'/data/users/fcastillon/croco/croco_avg_Y2017M01.nc'</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Ambos métodos son equivalentes respecto al formato que necesita SCAHpy.</p>
 </section>
-<section id="leer-todos-los-archivos-concatenados" class="level2">
-<h2 class="anchored" data-anchor-id="leer-todos-los-archivos-concatenados">2.2 Leer todos los archivos concatenados</h2>
-<p>Antes usabas:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> in_out.read_wrf_multi(...)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Ahora se reemplaza por <strong>una sola función moderna</strong>:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> wrf_io.read_wrf(</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    paths<span class="op">=</span>list_files,</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    drop_vars<span class="op">=</span>[<span class="st">"TKE"</span>],</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    time_offset_hours<span class="op">=-</span><span class="dv">5</span>      <span class="co"># convertir UTC → hora local Perú</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>ds</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>SCAHpy ahora:</p>
+<section id="selección-de-variables-con-drop_vars" class="level3">
+<h3 class="anchored" data-anchor-id="selección-de-variables-con-drop_vars">3. Selección de variables con <code>drop_vars</code></h3>
+<p>Para optimizar la lectura, podemos indicar qué variables excluir del archivo CROCO. Esto es especialmente útil en simulaciones pesadas o cuando se trabaja con múltiples archivos.</p>
+<p>La función <code>drop_vars</code> tiene un punto importante:</p>
+<blockquote class="blockquote">
+<p><strong>Siempre requiere un único archivo (<code>file0</code>), en formato string, aun cuando trabajemos con múltiples archivos.</strong> Esto se debe a que la función analiza la estructura y <em>metadata</em> típica del archivo CROCO para identificar las variables que deben excluirse.</p>
+</blockquote>
+<p>Por ello, incluso si <code>file_name</code> contiene más de un archivo, utilizamos:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>file_name[<span class="dv">0</span>]</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>En este ejemplo trabajaremos solo con cuatro variables: <code>mask_rho</code>, <code>temp</code>, <code>u</code> y <code>v</code>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>vars_croco <span class="op">=</span> sc.drop_vars(file_name[<span class="dv">0</span>],</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                          sel_vars <span class="op">=</span> [<span class="st">'temp'</span>,<span class="st">'mask_rho'</span>,<span class="st">'u'</span>,<span class="st">'v'</span>],</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                          model <span class="op">=</span> <span class="st">'CROCO'</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="lectura-del-archivo-con-read_croco" class="level3">
+<h3 class="anchored" data-anchor-id="lectura-del-archivo-con-read_croco">4. Lectura del archivo con <code>read_croco</code></h3>
+<p>A continuación, leemos el archivo usando la función <code>read_croco</code>, pasando las opciones principales:</p>
 <ul>
-<li>concatena el tiempo automáticamente,</li>
-<li>estandariza coordenadas (<code>lat</code>, <code>lon</code>),</li>
-<li>corrige tipos y atributos,</li>
-<li>maneja destaggering cuando corresponde.</li>
+<li><strong><code>drop_vars</code></strong>: variables a excluir (obtenidas previamente).</li>
+<li><strong><code>destag</code></strong>: si se requiere destaggering; en este ejemplo sí es necesario por los vectores de viento u y v.</li>
+<li><strong><code>save_path</code></strong>: ruta opcional para guardar el archivo procesado.</li>
 </ul>
-<hr>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ds_croco <span class="op">=</span> sc.read_croco(file_paths <span class="op">=</span> file_name,</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                         drop_vars <span class="op">=</span> vars_croco,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                         destag <span class="op">=</span> <span class="va">True</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                         save_path <span class="op">=</span> <span class="va">None</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
+<section id="aplicación-de-máscara-para-delimitar-continente" class="level3">
+<h3 class="anchored" data-anchor-id="aplicación-de-máscara-para-delimitar-continente">5. Aplicación de máscara para delimitar continente</h3>
+<p>Si deseamos graficar solo la zona <strong>oceánica</strong>, podemos usar <code>apply_mask</code>, que pertenece al módulo: <code>scahpy.core</code></p>
+<p>En este caso mantendremos únicamente el océano, por lo que usamos <code>sea_is_one = True</code> y pasamos la variable que tiene la máscara que es <code>mask_rho</code></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>ds_croco_mask <span class="op">=</span> sc.apply_mask(da <span class="op">=</span> ds_croco[[<span class="st">'temp'</span>,<span class="st">'u'</span>,<span class="st">'v'</span>]],</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                              mask <span class="op">=</span> ds_croco.mask_rho,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                              sea_is_one <span class="op">=</span> <span class="va">True</span>).isel(levels<span class="op">=-</span><span class="dv">1</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="cálculo-de-diagnósticos-precipitación-viento-y-sst" class="level1">
-<h1>3. Cálculo de diagnósticos (precipitación, viento y SST)</h1>
-<section id="precipitación-acumulada" class="level2">
-<h2 class="anchored" data-anchor-id="precipitación-acumulada">3.1 Precipitación acumulada</h2>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>pp <span class="op">=</span> ds[<span class="st">"RAINC"</span>] <span class="op">+</span> ds[<span class="st">"RAINNC"</span>]</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>pp.name <span class="op">=</span> <span class="st">"PP"</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="velocidad-del-viento-a-10-m" class="level2">
-<h2 class="anchored" data-anchor-id="velocidad-del-viento-a-10-m">3.2 Velocidad del viento a 10 m</h2>
-<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>wspd10 <span class="op">=</span> wrf_diags.wind_speed(ds[<span class="st">"U10"</span>], ds[<span class="st">"V10"</span>])</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>wspd10.name <span class="op">=</span> <span class="st">"wspd10"</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="sst-en-grados-celsius-si-existe" class="level2">
-<h2 class="anchored" data-anchor-id="sst-en-grados-celsius-si-existe">3.3 SST en grados Celsius (si existe)</h2>
-<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="st">"SSTSK"</span> <span class="kw">in</span> ds:</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    sst <span class="op">=</span> utils.to_celsius(ds[<span class="st">"SSTSK"</span>])</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    sst.name <span class="op">=</span> <span class="st">"SST_C"</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<hr>
-</section>
-</section>
-<section id="agregación-temporal-diaria" class="level1">
-<h1>4. Agregación temporal (diaria)</h1>
-<p>En tu versión antigua tenías:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>dd <span class="op">=</span> temp_scales.dmy_var(...)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Ahora se usa un flujo más simple y universal con <code>time_ops</code>:</p>
-<section id="agrupar-por-día" class="level2">
-<h2 class="anchored" data-anchor-id="agrupar-por-día">4.1 Agrupar por día</h2>
-<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Precipitación diaria (suma)</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>pp_daily <span class="op">=</span> pp.resample(time<span class="op">=</span><span class="st">"1D"</span>).<span class="bu">sum</span>()</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Viento diario (promedio)</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>wspd10_daily <span class="op">=</span> wspd10.resample(time<span class="op">=</span><span class="st">"1D"</span>).mean()</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># SST diaria (mediana)</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="st">"SSTSK"</span> <span class="kw">in</span> ds:</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    sst_daily <span class="op">=</span> sst.resample(time<span class="op">=</span><span class="st">"1D"</span>).median()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Agrupar así permite un control claro y reproducible.</p>
-<p>Puedes combinarlo en un solo Dataset:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>ds_daily <span class="op">=</span> xr.Dataset(</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>        <span class="st">"PP"</span>: pp_daily,</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">"wspd10"</span>: wspd10_daily,</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">"SST_C"</span>: sst_daily <span class="cf">if</span> <span class="st">"SSTSK"</span> <span class="kw">in</span> ds <span class="cf">else</span> <span class="va">None</span>,</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>ds_daily</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<hr>
-</section>
-</section>
-<section id="visualización-básica" class="level1">
-<h1>5. Visualización básica</h1>
-<p>Para trazar un día específico:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>day0 <span class="op">=</span> ds_daily.sel(time<span class="op">=</span><span class="st">"2023-03-01"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Mapa simple:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>day0[<span class="st">"PP"</span>].plot(</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">"lon"</span>, y<span class="op">=</span><span class="st">"lat"</span>,</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    cmap<span class="op">=</span><span class="st">"Blues"</span>,</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    cbar_kwargs<span class="op">=</span>{<span class="st">"label"</span>: <span class="st">"Precipitación diaria (mm)"</span>}</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Precipitación diaria – 1 marzo 2023 (WRF)"</span>)</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<hr>
-</section>
-<section id="visualización-usando-funciones-de-scahpy" class="level1">
-<h1>6. Visualización usando funciones de SCAHpy</h1>
-<p>Si deseas usar funciones de <code>components.plots</code>, por ejemplo para 1 variable:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>maps.map_1var(</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    ds<span class="op">=</span>ds_daily,</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    var_name<span class="op">=</span><span class="st">"PP"</span>,</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    time_index<span class="op">=</span><span class="dv">0</span>,</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    cmap<span class="op">=</span><span class="st">"Blues"</span>,</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="st">"Precipitación diaria acumulada"</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="tutorial-1-lectura-de-un-archivo-croco" class="level1">
-<h1>Tutorial 1: Lectura de un archivo CROCO</h1>
-</section>
-<section id="lectura-rápida-de-un-archivo-croco" class="level1">
-<h1>5. Lectura rápida de un archivo CROCO</h1>
-<p>Además de WRF, SCAHpy permite trabajar con salidas del modelo oceánico <strong>CROCO</strong>, utilizado en el componente marino del IGP RESM-COW.</p>
-<section id="definir-la-ruta-del-archivo-croco" class="level2">
-<h2 class="anchored" data-anchor-id="definir-la-ruta-del-archivo-croco">5.1 Definir la ruta del archivo CROCO</h2>
-<p>Como ejemplo:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>croco_file <span class="op">=</span> <span class="st">"/data/datos/COW/OUT_DIAG_CROCO/croco_avg_Y2000M01.nc"</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Nuevamente usaremos una lista, aunque solo haya un archivo:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>ds_croco <span class="op">=</span> croco_io.read_croco(</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    paths<span class="op">=</span>[croco_file],   <span class="co"># lista con un único archivo</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    destag<span class="op">=</span><span class="va">True</span>,          <span class="co"># pasar de grilla C a grilla centrada</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    keep_vertical<span class="op">=</span><span class="va">True</span>    <span class="co"># conservar niveles sigma</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>ds_croco</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>El resultado suele incluir:</p>
+<section id="mapa-2d-sst-con-vectores-del-viento" class="level3">
+<h3 class="anchored" data-anchor-id="mapa-2d-sst-con-vectores-del-viento">6. Mapa 2D: SST con vectores del viento</h3>
+<p>Como las variables son a distintos niveles verticales, al hacer <code>.isel(levels=-1)</code> seleccionamos el nivel más cercano a la superficie.</p>
 <ul>
-<li><code>time</code>: tiempos diarios o subdiarios,</li>
-<li><code>eta_rho</code>, <code>xi_rho</code> o equivalentes convertidos a <code>lat</code>, <code>lon</code>,</li>
-<li><code>s_rho</code> o niveles sigma,</li>
-<li>Variables oceánicas: <code>temp</code>, <code>salt</code>, <code>u</code>, <code>v</code>, etc.</li>
+<li><strong><code>da</code></strong>: variable escalar a graficar (temp).</li>
+<li><strong><code>U</code>, <code>V</code></strong>: componentes del viento.</li>
+<li><strong><code>levels</code></strong>: niveles del contorno.</li>
+<li><strong><code>cmap</code></strong>: paleta de colores.</li>
+<li><strong><code>quiver_subsample</code></strong>: frecuencia de muestreo para los vectores.</li>
+<li><strong><code>quiverkey_speed</code></strong>: escala de referencia.</li>
+<li><strong><code>time</code></strong>: tiempo a graficar.</li>
+<li><strong><code>output_path</code></strong>: ruta para guardar la figura (si se desea).</li>
 </ul>
-<hr>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>sc.map_1var_winds(da <span class="op">=</span> ds_croco_mask.temp,</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>                  U <span class="op">=</span> ds_croco_mask.u,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                  V <span class="op">=</span> ds_croco_mask.v,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>                  time <span class="op">=</span> <span class="st">'2017-01-14'</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>                  cmap <span class="op">=</span> <span class="st">'jet'</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>                  levels <span class="op">=</span> np.arange(<span class="dv">18</span>,<span class="dv">30</span>,<span class="dv">1</span>),</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>                  quiverkey_speed <span class="op">=</span> <span class="dv">1</span>,</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>                  title <span class="op">=</span> <span class="st">'Sea Surface Temperature'</span>,</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>                  colorbar_label <span class="op">=</span> <span class="st">'°C'</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-07" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-07-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/fig_07.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1: ds_maps
+</figcaption>
+</figure>
+</div>
+<p>Más detalles de cada parámetro, revisar la sección <a href="./04_API.html">Referencia de la API</a>.</p>
+</section>
+<section id="serie-de-tiempo" class="level3">
+<h3 class="anchored" data-anchor-id="serie-de-tiempo">7. Serie de Tiempo</h3>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>sc.ts_area_1var(da <span class="op">=</span> ds_croco_mask.temp,</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    lat_range <span class="op">=</span> (<span class="op">-</span><span class="dv">10</span>,<span class="dv">0</span>),</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    lon_range  <span class="op">=</span> (<span class="op">-</span><span class="dv">90</span>,<span class="op">-</span><span class="dv">80</span>),</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    label  <span class="op">=</span> <span class="st">'IGP RESM-COW'</span>,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    color <span class="op">=</span> <span class="st">'#1b9e77'</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    linestyle  <span class="op">=</span> <span class="st">'-'</span>,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    linewidth  <span class="op">=</span> <span class="fl">1.8</span>,</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    title  <span class="op">=</span> <span class="st">'Time Series at Niño 1+2'</span>,</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    ylabel  <span class="op">=</span> <span class="st">'SST °C'</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-08" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-08-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/fig_08.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-08-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2: ds_maps
+</figcaption>
+</figure>
+</div>
 </section>
 </section>
-<section id="mapa-simple-de-sst-con-croco" class="level1">
-<h1>6. Mapa simple de SST con CROCO</h1>
-<p>Suponiendo que la variable de temperatura se llama <code>temp</code> y que el último nivel vertical corresponde aproximadamente a la superficie:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>sst <span class="op">=</span> ds_croco[<span class="st">"temp"</span>].isel(s_rho<span class="op">=-</span><span class="dv">1</span>)  <span class="co"># último nivel = superficie</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>sst.name <span class="op">=</span> <span class="st">"SST"</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Tomamos, por ejemplo, el primer tiempo:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>sst.isel(time<span class="op">=</span><span class="dv">0</span>).plot(</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">"lon"</span>, y<span class="op">=</span><span class="st">"lat"</span>,</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    cmap<span class="op">=</span><span class="st">"viridis"</span>,</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    cbar_kwargs<span class="op">=</span>{<span class="st">"label"</span>: <span class="st">"SST (°C)"</span>}</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Temperatura superficial del mar – CROCO (archivo único)"</span>)</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>También puedes usar la función de SCAHpy:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>maps.map_1var(</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    ds<span class="op">=</span>ds_croco,</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    var_name<span class="op">=</span><span class="st">"temp"</span>,</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    time_index<span class="op">=</span><span class="dv">0</span>,</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    level_index<span class="op">=-</span><span class="dv">1</span>,    <span class="co"># superficie</span></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="st">"SST – CROCO (archivo único)"</span></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="lectura-de-múltiples-archivos-croco" class="level2">
+<h2 class="anchored" data-anchor-id="lectura-de-múltiples-archivos-croco">Lectura de múltiples archivos CROCO</h2>
+<p>En esta sección extenderemos el procedimiento anterior para trabajar con <strong>múltiples archivos CROCO</strong> correspondientes a una misma simulación.</p>
+<section id="importación-de-paquetes-1" class="level3">
+<h3 class="anchored" data-anchor-id="importación-de-paquetes-1">1. Importación de paquetes</h3>
+<p>Comenzamos importando los módulos necesarios:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scahpy <span class="im">as</span> sc</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> glob</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> xarray <span class="im">as</span> xr</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
+</section>
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -985,8 +923,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./03_tutorial_03.html" class="pagination-link" aria-label="Tutorial 3: Gráficos básicos">
-        <span class="nav-page-text">Tutorial 3: Gráficos básicos</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./03_tutorial_03.html" class="pagination-link" aria-label="Tutorial 3: ENSO 2017">
+        <span class="nav-page-text">Tutorial 3: ENSO 2017</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

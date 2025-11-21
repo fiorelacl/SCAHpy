@@ -190,7 +190,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03_tutorial_03_en.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Tutorial 3: Basic Plots</span></a>
+ <span class="menu-text">Tutorial 3: ENSO 2017</span></a>
   </div>
 </li>
       </ul>
@@ -234,12 +234,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Contents</h2>
    
   <ul>
-  <li><a href="#reading-multiple-file" id="toc-reading-multiple-file" class="nav-link active" data-scroll-target="#reading-multiple-file">Reading Multiple File</a>
+  <li><a href="#tutorial-02-croco-model-outputs" id="toc-tutorial-02-croco-model-outputs" class="nav-link active" data-scroll-target="#tutorial-02-croco-model-outputs">Tutorial 02: CROCO Model Outputs</a>
   <ul class="collapse">
-  <li><a href="#step-1-reading-wrf-data" id="toc-step-1-reading-wrf-data" class="nav-link" data-scroll-target="#step-1-reading-wrf-data">Step 1: Reading WRF Data</a></li>
-  <li><a href="#step-2-calculating-precipitation-and-wind-speed" id="toc-step-2-calculating-precipitation-and-wind-speed" class="nav-link" data-scroll-target="#step-2-calculating-precipitation-and-wind-speed">Step 2: Calculating Precipitation and Wind Speed</a></li>
-  <li><a href="#step-3-aggregating-the-data" id="toc-step-3-aggregating-the-data" class="nav-link" data-scroll-target="#step-3-aggregating-the-data">Step 3: Aggregating the Data</a></li>
-  <li><a href="#step-4-plotting-precipitation-maps" id="toc-step-4-plotting-precipitation-maps" class="nav-link" data-scroll-target="#step-4-plotting-precipitation-maps">Step 4: Plotting Precipitation Maps</a></li>
+  <li><a href="#reading-a-croco-file" id="toc-reading-a-croco-file" class="nav-link" data-scroll-target="#reading-a-croco-file">Reading a CROCO File</a>
+  <ul class="collapse">
+  <li><a href="#importing-packages" id="toc-importing-packages" class="nav-link" data-scroll-target="#importing-packages">1. Importing Packages</a></li>
+  <li><a href="#defining-the-croco-file" id="toc-defining-the-croco-file" class="nav-link" data-scroll-target="#defining-the-croco-file">2. Defining the CROCO File</a></li>
+  <li><a href="#selecting-variables-with-drop_vars" id="toc-selecting-variables-with-drop_vars" class="nav-link" data-scroll-target="#selecting-variables-with-drop_vars">3. Selecting Variables with <code>drop_vars</code></a></li>
+  <li><a href="#reading-the-file-with-read_croco" id="toc-reading-the-file-with-read_croco" class="nav-link" data-scroll-target="#reading-the-file-with-read_croco">4. Reading the File with <code>read_croco</code></a></li>
+  <li><a href="#applying-a-mask-to-extract-ocean-regions" id="toc-applying-a-mask-to-extract-ocean-regions" class="nav-link" data-scroll-target="#applying-a-mask-to-extract-ocean-regions">5. Applying a Mask to Extract Ocean Regions</a></li>
+  <li><a href="#d-map-sst-with-velocity-vectors" id="toc-d-map-sst-with-velocity-vectors" class="nav-link" data-scroll-target="#d-map-sst-with-velocity-vectors">6. 2D Map: SST with Velocity Vectors</a></li>
+  <li><a href="#time-series" id="toc-time-series" class="nav-link" data-scroll-target="#time-series">7. Time Series</a></li>
+  </ul></li>
+  <li><a href="#reading-multiple-croco-files" id="toc-reading-multiple-croco-files" class="nav-link" data-scroll-target="#reading-multiple-croco-files">Reading Multiple CROCO Files</a>
+  <ul class="collapse">
+  <li><a href="#importing-packages-1" id="toc-importing-packages-1" class="nav-link" data-scroll-target="#importing-packages-1">1. Importing Packages</a></li>
+  </ul></li>
   </ul></li>
   </ul>
 </nav>
@@ -254,47 +264,151 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="reading-multiple-file" class="level1 unnumbered">
-<h1 class="unnumbered">Reading Multiple File</h1>
-<p>In this tutorial, we will guide you through the process of analyzing multiple output dataset from the WRF (Weather Research and Forecasting) model and creating 2D maps featuring rainfall and wind variables using the <code>scahpy</code> package. To begin, let’s import the <code>glob</code> package to manage files and paths, as well as the <code>scahpy</code> package.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scahpy <span class="im">import</span> <span class="op">*</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> glob</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<section id="step-1-reading-wrf-data" class="level2">
-<h2 class="anchored" data-anchor-id="step-1-reading-wrf-data">Step 1: Reading WRF Data</h2>
-<p>We initiate the process by listing all the files we want to read using the <code>glob</code> package and assigning them to the variable <code>list_files</code>.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>list_files <span class="op">=</span> <span class="bu">sorted</span>(glob.glob(<span class="st">'/data/datos/COW/OUT_DIAG_WRF/wrfouts/wrfout_d01_*'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Given the capability to specify excluded variables when reading netCDF files using the <code>drop_variables</code> argument (refer to xarray functions <code>open_dataset</code> and <code>open_mfdataset</code>), we utilize the <code>_drop_vars</code> function from the module <code>in_out</code>. This function takes the list of variables we require and generates a list containing all variables present in the output file, subsequently removing those we are not interested in (such as <em>‘RAINC’, ‘RAINNC’, ‘RAINSH’, ‘U10’, ‘V10’, ‘SSTSK’</em>). For this purpose, we use the first file from our list of files, assigning it to the variable <code>dvars</code>.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dvars <span class="op">=</span> in_out._drop_vars(list_files[<span class="dv">0</span>], [<span class="st">'RAINC'</span>, <span class="st">'RAINNC'</span>, <span class="st">'RAINSH'</span>, <span class="st">'U10'</span>, <span class="st">'V10'</span>, <span class="st">'SSTSK'</span>], model<span class="op">=</span><span class="st">'wrf'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Subsequently, we utilize the <code>read_wrf_multi</code> function to selectively read the variables of interest. This function accepts the input path (<code>file_name</code> in this case), the list of variables to be excluded (<code>vars</code>), any required time difference (e.g., <code>'5 hours'</code>), and the corresponding sign of the time difference (<code>-1</code> for negative, <code>1</code> for positive). The outcome is an <code>xarray.Dataset</code> containing longitude, latitude, time, and the specified variables. Optionally, you can designate a save path to export the netCDF.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ds <span class="op">=</span> in_out.read_wrf_multi(list_files, dvars, <span class="st">'5 hours'</span>, <span class="op">-</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="tutorial-02-croco-model-outputs" class="level1">
+<h1>Tutorial 02: CROCO Model Outputs</h1>
+<p>In this tutorial, you will learn how to:</p>
+<ol type="1">
+<li>Read a single file or multiple files from the <strong>CROCO</strong> model using SCAHpy.</li>
+<li>Perform basic diagnostics such as computing the surface SST gradient.</li>
+<li>Generate a 2D map, a Hovmöller diagram, and a simple time series using oceanographic variables.</li>
+</ol>
+<p>This workflow is ideal for getting started with the oceanic component outputs of the coupled <em>IGP RESM-COW</em> model, or with any compatible CROCO simulation.</p>
+<section id="reading-a-croco-file" class="level2">
+<h2 class="anchored" data-anchor-id="reading-a-croco-file">Reading a CROCO File</h2>
+<p>In this first section we begin by working with <em>a single CROCO file</em>, which allows us to understand the basic structure of the dataset and the use of the main functions. Later, we will extend these concepts to the case of <em>multiple-file reading</em>.</p>
+<section id="importing-packages" class="level3">
+<h3 class="anchored" data-anchor-id="importing-packages">1. Importing Packages</h3>
+<p>We import the modules required for path handling, CROCO file reading, and numerical operations:</p>
+<p>As in the previous tutorial, we import the necessary modules:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scahpy <span class="im">as</span> sc</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> glob</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> xarray <span class="im">as</span> xr</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="step-2-calculating-precipitation-and-wind-speed" class="level2">
-<h2 class="anchored" data-anchor-id="step-2-calculating-precipitation-and-wind-speed">Step 2: Calculating Precipitation and Wind Speed</h2>
-<p>In this step, we will utilize the <code>met_vars</code> module to calculate precipitation (<code>calc_pp</code>), wind speed (<code>calc_wsp</code>), and convert sea surface temperature from Kelvin to Celsius (<code>calc_celsius</code>).</p>
-<p>The <code>calc_pp</code> function has an optional argument <code>vars_to_sum</code>, allowing users to specify which variables to sum to obtain total precipitation. If no variables are provided, it will default to summing the three variables: <code>RAINC</code>, <code>RAINNC</code>, and <code>RAINSH</code>.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ds_sfc <span class="op">=</span> met_vars.calc_pp(ds, vars_to_sum<span class="op">=</span>[<span class="st">'RAINC'</span>, <span class="st">'RAINNC'</span>, <span class="st">'RAINSH'</span>], elim<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>ds_sfc <span class="op">=</span> met_vars.calc_wsp(ds_sfc, elim<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>ds_sfc <span class="op">=</span> met_vars.calc_celsius(ds_sfc, <span class="st">'SSTSK'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>By running these commands, we ensure that our dataset <code>ds_sfc</code> now contains calculated precipitation, wind speed, and sea surface temperature in Celsius, ready for further analysis or visualization.</p>
+<section id="defining-the-croco-file" class="level3">
+<h3 class="anchored" data-anchor-id="defining-the-croco-file">2. Defining the CROCO File</h3>
+<p>SCAHpy’s reading functions require that file paths be provided as a <em>list of strings</em>. There are two ways to achieve this:</p>
+<p><strong>a) Manually placing the file inside brackets:</strong></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>file_name <span class="op">=</span> [<span class="st">'/data/users/fcastillon/croco/croco_avg_Y2017M01.nc'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>b) Using <code>glob.glob</code>, which directly returns a list:</strong></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>file_name <span class="op">=</span> glob.glob(<span class="st">'/data/users/fcastillon/croco/croco_avg_Y2017M01.nc'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Both methods produce the correct format required by SCAHpy.</p>
 </section>
-<section id="step-3-aggregating-the-data" class="level2">
-<h2 class="anchored" data-anchor-id="step-3-aggregating-the-data">Step 3: Aggregating the Data</h2>
-<p>Now, we’ll aggregate the data to operate on a daily time scale instead of hourly. To achieve this, we’ll utilize the <code>dmy_var</code> function from the <code>temp_scales</code> module. This function takes an <code>xarray.Dataset</code> as input, where we specify the desired time scale (e.g., ‘1D’ for daily, ‘ME’ for monthly, ‘YE’ for yearly). Additionally, we can specify which variables should be aggregated by sum, average, or median by providing lists for each aggregation method.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>dd <span class="op">=</span> temp_scales.dmy_var(ds_sfc, tiempo<span class="op">=</span><span class="st">'1D'</span>, accum<span class="op">=</span>[<span class="st">'PP'</span>], avg<span class="op">=</span>[<span class="st">'U10'</span>, <span class="st">'V10'</span>], mediana<span class="op">=</span>[<span class="st">'SSTSK'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>By executing this code, we’ll have our data aggregated to a daily time scale, with certain variables summed, averaged, or median-calculated according to our specifications.</p>
+<section id="selecting-variables-with-drop_vars" class="level3">
+<h3 class="anchored" data-anchor-id="selecting-variables-with-drop_vars">3. Selecting Variables with <code>drop_vars</code></h3>
+<p>To optimize reading performance, we can specify which variables to exclude from the CROCO file. This is especially useful in heavy simulations or when working with multiple files.</p>
+<p>The function <code>drop_vars</code> has one important point:</p>
+<blockquote class="blockquote">
+<p><strong>It always requires a single file (<code>file0</code>) in string format, even when working with multiple files.</strong> This is because the function analyzes the typical structure and metadata of a CROCO file to identify variables that should be excluded.</p>
+</blockquote>
+<p>Therefore, even if <code>file_name</code> contains more than one file, we use:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>file_name[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In this example, we will work with only four variables: <code>mask_rho</code>, <code>temp</code>, <code>u</code>, and <code>v</code>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>vars_croco <span class="op">=</span> sc.drop_vars(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    file_name[<span class="dv">0</span>],</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    sel_vars <span class="op">=</span> [<span class="st">'temp'</span>,<span class="st">'mask_rho'</span>,<span class="st">'u'</span>,<span class="st">'v'</span>],</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> <span class="st">'CROCO'</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="step-4-plotting-precipitation-maps" class="level2">
-<h2 class="anchored" data-anchor-id="step-4-plotting-precipitation-maps">Step 4: Plotting Precipitation Maps</h2>
-<p>Next, we’ll generate precipitation maps with SST contours and wind vectors using the <code>map_pp_uv10_sst</code> function from the <code>map_plots</code> module. This function takes the rainfall (PP) variable as input, followed by the dataset with SST and wind components, precipitation levels, SST contours, optional shapefile, exportation settings, output path, temporal scale (‘H’ for hourly, ‘D’ for daily, ‘M’ for monthly, ‘Y’ for yearly), vector speed, and plot extent ([x1, x2, y1, y2]).</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example usage</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>precipitation_levels <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">11</span>, <span class="dv">15</span>, <span class="dv">20</span>, <span class="dv">25</span>, <span class="dv">30</span>, <span class="dv">35</span>, <span class="dv">40</span>, <span class="dv">45</span>, <span class="dv">50</span>, <span class="dv">55</span>, <span class="dv">60</span>]</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>sst_contour_levels <span class="op">=</span> [<span class="dv">26</span>, <span class="dv">27</span>, <span class="dv">28</span>]</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>map_plots.map_pp_uv10_sst(ds_sfc[<span class="st">'PP'</span>], ds_sfc, precipitation_levels, sst_contour_levels, shapefile<span class="op">=</span><span class="va">None</span>, </span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>                           output_path<span class="op">=</span><span class="st">'.'</span>, save_maps<span class="op">=</span><span class="va">True</span>, freq<span class="op">=</span><span class="st">'H'</span>,</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>                           quiverkey_speed<span class="op">=</span><span class="dv">10</span>, extent<span class="op">=</span><span class="va">None</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="reading-the-file-with-read_croco" class="level3">
+<h3 class="anchored" data-anchor-id="reading-the-file-with-read_croco">4. Reading the File with <code>read_croco</code></h3>
+<p>Next, we read the file using the <code>read_croco</code> function, specifying the main options:</p>
+<ul>
+<li><strong><code>drop_vars</code></strong>: variables to exclude (obtained previously).</li>
+<li><strong><code>destag</code></strong>: whether destaggering is required; in this example it is necessary for the <code>u</code> and <code>v</code> velocity components.</li>
+<li><strong><code>save_path</code></strong>: optional path to save the processed file.</li>
+</ul>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ds_croco <span class="op">=</span> sc.read_croco(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    file_paths <span class="op">=</span> file_name,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    drop_vars <span class="op">=</span> vars_croco,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    destag <span class="op">=</span> <span class="va">True</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    save_path <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="applying-a-mask-to-extract-ocean-regions" class="level3">
+<h3 class="anchored" data-anchor-id="applying-a-mask-to-extract-ocean-regions">5. Applying a Mask to Extract Ocean Regions</h3>
+<p>If we want to plot only the <strong>oceanic</strong> region, we can use <code>apply_mask</code>, which belongs to the module <code>scahpy.core</code>.</p>
+<p>In this case we retain only ocean values, so we set <code>sea_is_one = True</code> and pass the grid mask variable <code>mask_rho</code>:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>ds_croco_mask <span class="op">=</span> sc.apply_mask(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    da <span class="op">=</span> ds_croco[[<span class="st">'temp'</span>,<span class="st">'u'</span>,<span class="st">'v'</span>]],</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    mask <span class="op">=</span> ds_croco.mask_rho,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    sea_is_one <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>).isel(levels<span class="op">=-</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="d-map-sst-with-velocity-vectors" class="level3">
+<h3 class="anchored" data-anchor-id="d-map-sst-with-velocity-vectors">6. 2D Map: SST with Velocity Vectors</h3>
+<p>Since the variables are defined on different vertical levels, <code>.isel(levels=-1)</code> selects the level closest to the surface.</p>
+<ul>
+<li><strong><code>da</code></strong>: scalar variable to plot (<code>temp</code>).</li>
+<li><strong><code>U</code>, <code>V</code></strong>: velocity components.</li>
+<li><strong><code>levels</code></strong>: contour levels.</li>
+<li><strong><code>cmap</code></strong>: color palette.</li>
+<li><strong><code>quiver_subsample</code></strong>: subsampling frequency for vectors.</li>
+<li><strong><code>quiverkey_speed</code></strong>: reference vector magnitude.</li>
+<li><strong><code>time</code></strong>: timestamp of the plot.</li>
+<li><strong><code>output_path</code></strong>: optional path to save the figure.</li>
+</ul>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>sc.map_1var_winds(</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    da <span class="op">=</span> ds_croco_mask.temp,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    U <span class="op">=</span> ds_croco_mask.u,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    V <span class="op">=</span> ds_croco_mask.v,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    time <span class="op">=</span> <span class="st">'2017-01-14'</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    cmap <span class="op">=</span> <span class="st">'jet'</span>,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    levels <span class="op">=</span> np.arange(<span class="dv">18</span>,<span class="dv">30</span>,<span class="dv">1</span>),</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    quiverkey_speed <span class="op">=</span> <span class="dv">1</span>,</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    title <span class="op">=</span> <span class="st">'Sea Surface Temperature'</span>,</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    colorbar_label <span class="op">=</span> <span class="st">'°C'</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-07" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-07-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/fig_07.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-07-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: ds_maps
+</figcaption>
+</figure>
+</div>
+<p>For more details on each parameter, see the <a href="04_API.qmd">API Reference</a>.</p>
+</section>
+<section id="time-series" class="level3">
+<h3 class="anchored" data-anchor-id="time-series">7. Time Series</h3>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>sc.ts_area_1var(</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    da <span class="op">=</span> ds_croco_mask.temp,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    lat_range <span class="op">=</span> (<span class="op">-</span><span class="dv">10</span>,<span class="dv">0</span>),</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    lon_range  <span class="op">=</span> (<span class="op">-</span><span class="dv">90</span>,<span class="op">-</span><span class="dv">80</span>),</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    label  <span class="op">=</span> <span class="st">'IGP RESM-COW'</span>,</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    color <span class="op">=</span> <span class="st">'#1b9e77'</span>,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    linestyle  <span class="op">=</span> <span class="st">'-'</span>,</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    linewidth  <span class="op">=</span> <span class="fl">1.8</span>,</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    title  <span class="op">=</span> <span class="st">'Time Series at Niño 1+2'</span>,</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    ylabel  <span class="op">=</span> <span class="st">'SST °C'</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-08" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-08-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="figs/fig_08.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:75.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-08-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: ds_maps
+</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="reading-multiple-croco-files" class="level2">
+<h2 class="anchored" data-anchor-id="reading-multiple-croco-files">Reading Multiple CROCO Files</h2>
+<p>In this section, we extend the previous procedure to work with <strong>multiple CROCO files</strong> belonging to the same simulation.</p>
+<section id="importing-packages-1" class="level3">
+<h3 class="anchored" data-anchor-id="importing-packages-1">1. Importing Packages</h3>
+<p>We begin by importing the required modules:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scahpy <span class="im">as</span> sc</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> glob</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> xarray <span class="im">as</span> xr</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
+</section>
 </section>
 </section>
 
@@ -817,8 +931,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./03_tutorial_03_en.html" class="pagination-link" aria-label="Tutorial 3: Basic Plots">
-        <span class="nav-page-text">Tutorial 3: Basic Plots</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./03_tutorial_03_en.html" class="pagination-link" aria-label="Tutorial 3: ENSO 2017">
+        <span class="nav-page-text">Tutorial 3: ENSO 2017</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
