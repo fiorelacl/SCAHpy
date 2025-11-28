@@ -152,7 +152,7 @@ sc.ts_area_1var(
 
 ## Reading Multiple CROCO Files
 
-In this section, we extend the previous procedure to work with **multiple CROCO files** belonging to the same simulation.
+In this section, we extend the workflow to process *multiple CROCO files* from a single simulation. The objective is to read all files from the year 2017, apply an ocean mask, compute basic diagnostics (such as surface kinetic energy), perform quick time-series inspections, and finally apply vertical interpolation from sigma coordinates to fixed z-levels in meters.
 
 ### 1. Importing Packages
 
@@ -164,3 +164,189 @@ import numpy as np
 import glob
 import xarray as xr
 ```
+
+### 2. Listing CROCO Files
+
+We list all available `croco_avg` files from the year 2017 in sorted order:
+
+```python
+CROCO_files = sorted(glob.glob("/data/users/fcastillon/COW_outs/diagnos/C2O5W4_SF2/croco/croco_avg_Y2017*.nc"))
+```
+
+### 3. Selecting Variables
+
+As in the WRF case, the function `drop_vars` requires *a single file* even when working with multiple files, in order to extract the generic NetCDF metadata.
+In this example, we select only:
+
+* `temp` → temperature
+* `u`, `v` → ocean velocity components
+* `mask_rho` → rho-grid mask
+
+```python
+vars_croco = sc.drop_vars(
+    CROCO_files[0],
+    sel_vars = ['temp', 'mask_rho', 'u', 'v'],
+    model = 'CROCO'
+)
+```
+
+### 4. Reading All CROCO Files
+
+We read all listed files. SCAHpy automatically concatenates the time dimension and normalizes spatial coordinates:
+
+```python
+ds_croco = sc.read_croco(CROCO_files, drop_vars=vars_croco)
+```
+
+### 5. Applying the Ocean Mask
+
+We apply the `mask_rho` field to retain only *ocean* values for the three variables `temp`, `u`, and `v`:
+
+```python
+ds_croco = sc.apply_mask(
+    ds_croco,
+    var_names=['temp', 'u', 'v'],
+    mask=ds_croco.mask_rho,
+    sea_is_one=True
+)
+```
+
+### 6. Surface Kinetic Energy Diagnostic
+
+Surface kinetic energy is computed from the horizontal velocity components. Since the ocean mask was already applied, there is no need to pass the `mask` parameter to this function:
+
+```python
+ds_croco['ke_sfc'] = sc.ke_sfc(
+    u=ds_croco.u,
+    v=ds_croco.v
+)
+```
+
+### 7. Quick Inspection: Point Time Series
+
+We can visualize the time series at a specific location (latitude −5°, longitude −85°) using the function `ts_point_1var`.
+We select the surface level (`levels = -1`):
+
+```python
+sc.ts_point_1var(
+    da = ds_croco.ke_sfc.isel(levels=-1),
+    lat = -5,
+    lon = -85
+)
+```
+
+![ds\_maps](figs/fig_09.png){#fig-09 fig-align="center" width="75%"}
+
+### 8. Daily-to-Monthly Aggregation
+
+We use `aggregate_dmy` to compute monthly means of `temp`, `u`, and `v`.
+We add `.load()` to fully materialize the results in memory, which is appropriate when the dataset will later be reused for plotting or saving.
+
+> **Is it appropriate to use `.load()` here?**
+> Yes. Since the monthly dataset is much smaller than the daily dataset and will be reused for time-series plots, loading it entirely is a suitable choice.
+
+```python
+ds_croco_m = sc.aggregate_dmy(
+    ds = ds_croco,
+    tiempo = 'ME',
+    accum = None,
+    avg = ['u', 'v', 'temp'],
+    mediana = None
+).load()
+```
+
+### 9. Regional Time Series over an Oceanic Area
+
+With the monthly data prepared, we generate a combined time series for `u` and `v` over the region:
+
+* latitudes: −10° to 0°
+* longitudes: −90° to −80°
+
+```python
+sc.ts_area_multi(
+    series = [
+        {"da": ds_croco_m.u.isel(levels=-1), "label": 'u at sfc', "color": 'red',  "linestyle": '--', "linewidth": 1.5},
+        {"da": ds_croco_m.v.isel(levels=-1), "label": 'v at sfc', "color": 'blue', "linestyle": '-',  "linewidth": 1.5}
+    ],
+    lat_range = (-10, 0),
+    lon_range = (-90, -80)
+)
+```
+
+![ds\_maps](figs/fig_10.png){#fig-10 fig-align="center" width="75%"}
+
+### 10. Preparing for Sigma–Z Interpolation
+
+To perform vertical interpolation, it is advisable to *load the data into memory*:
+
+```python
+ds_croco = ds_croco.load()
+```
+
+### 11. Sigma-to-Z Interpolation
+
+We use the function `crocointerp_sigma_to_z` to obtain vertical profiles from −200 m to the surface, every 20 m.
+
+#### a) Standard interpolation (producing `nan` where data are unavailable)
+
+```python
+ds_croco_int = sc.crocointerp_sigma_to_z(
+    ds = ds_croco,
+    var_names = ['temp'],
+    z_levels = np.arange(-200, 20, 20),
+    z_units = 'm',
+    sigma_dim = 'levels',
+    new_dim = 'z',
+    mask_outside = False
+)
+```
+
+#### b) Extrapolated interpolation (`nan_opt='none'`)
+
+This option avoids `nan` values by filling them using extrapolation:
+
+```python
+ds_croco_int2 = sc.crocointerp_sigma_to_z(
+    ds = ds_croco,
+    var_names = ['temp'],
+    z_levels = np.arange(-200, 20, 20),
+    z_units = 'm',
+    sigma_dim = 'levels',
+    new_dim = 'z',
+    mask_outside = False,
+    nan_opt = 'none'
+)
+```
+
+### 12. Sigma–Z Vertical Sections
+
+Finally, we generate vertical cross-sections along latitude −5°, comparing standard vs. extrapolated interpolation:
+
+```python
+sc.section_xz_1var(
+    ds_croco_int.temp.sel(lon=slice(-95, -78)),
+    lat = -5,
+    levels = np.arange(0, 25, 1),
+    cmap = 'jet',
+    time = '2017-01-01',
+    yinv = False
+)
+
+sc.section_xz_1var(
+    ds_croco_int2.temp.sel(lon=slice(-95, -78)),
+    lat = -5,
+    levels = np.arange(0, 25, 1),
+    cmap = 'jet',
+    time = '2017-01-01',
+    yinv = False
+)
+```
+
+::: {#fig-d1 layout-ncol=2}
+
+![nan\_opt='both'](figs/fig_11.png){#fig-11 fig-align="center" width="75%"}
+
+![nan\_opt='none'](figs/fig_12.png){#fig-12 fig-align="center" width="75%"}
+
+Vertical Section
+:::

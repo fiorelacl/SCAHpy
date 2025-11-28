@@ -138,7 +138,7 @@ sc.ts_area_1var(da = ds_croco_mask.temp,
 
 ## Lectura de múltiples archivos CROCO
 
-En esta sección extenderemos el procedimiento anterior para trabajar con **múltiples archivos CROCO** correspondientes a una misma simulación. 
+En esta sección ampliaremos el flujo de trabajo para procesar *múltiples archivos CROCO* provenientes de una misma simulación. El objetivo es leer todos los archivos del año 2017, aplicar una máscara oceánica, generar diagnósticos básicos (como energía cinética superficial), realizar inspecciones rápidas de series temporales y finalmente aplicar interpolación vertical desde coordenadas sigma hacia niveles en metros.
 
 ### 1. Importación de paquetes
 
@@ -150,3 +150,181 @@ import numpy as np
 import glob
 import xarray as xr
 ```
+
+### 2. Listado de archivos CROCO
+
+Listamos de forma ordenada todos los archivos `croco_avg` correspondientes al año 2017:
+
+```python
+CROCO_files = sorted(glob.glob("/data/users/fcastillon/COW_outs/diagnos/C2O5W4_SF2/croco/croco_avg_Y2017*.nc"))
+```
+### 3. Selección de variables
+
+Al igual que en el caso WRF, la función `drop_vars` requiere *un solo archivo*, incluso cuando trabajamos con múltiples, para obtener la metadata genérica del NetCDF.
+En este ejemplo seleccionaremos únicamente:
+
+* `temp` → temperatura
+* `u`, `v` → componentes de velocidad oceánica
+* `mask_rho` → máscara para rejilla rho
+
+```python
+vars_croco = sc.drop_vars(
+    CROCO_files[0],
+    sel_vars = ['temp', 'mask_rho', 'u', 'v'],
+    model = 'CROCO'
+)
+```
+
+### 4. Lectura de todos los archivos CROCO
+
+Leemos todos los archivos del listado. SCAHpy concatena automáticamente la dimensión temporal y normaliza las coordenadas espaciales:
+
+```python
+ds_croco = sc.read_croco(CROCO_files, drop_vars=vars_croco)
+```
+
+### 5. Aplicación de máscara oceánica
+
+Aplicamos la máscara `mask_rho` para conservar únicamente valores en *océano* para estas 3 variables: `temp`, `u` y `v`.
+
+```python
+ds_croco = sc.apply_mask(
+    ds_croco,
+    var_names=['temp', 'u', 'v'],
+    mask=ds_croco.mask_rho,
+    sea_is_one=True
+)
+```
+
+### 6. Diagnóstico de energía cinética superficial
+
+Se calcula la energía cinética en superficie a partir de las componentes horizontales.
+Como previamente ya se aplicó la máscara oceánica, no es necesario pasar el parámetro `mask` a la función:
+
+```python
+ds_croco['ke_sfc'] = sc.ke_sfc(
+    u=ds_croco.u,
+    v=ds_croco.v
+)
+```
+
+### 7. Inspección rápida: serie temporal en un punto
+
+Podemos visualizar la serie temporal en un punto específico (latitud −5°, longitud −85°) con la función `ts_point_1var`.
+Seleccionamos el nivel superficial (`levels = -1`):
+
+```python
+sc.ts_point_1var(
+    da = ds_croco.ke_sfc.isel(levels=-1),
+    lat = -5,
+    lon = -85
+)
+```
+![ds_maps](figs/fig_09.png){#fig-09 fig-align="center" width="75%"}
+
+### 8. Agregación diaria → mensual
+
+Usamos `aggregate_dmy` para generar promedios mensuales de `temp`, `u` y `v`.
+Agregamos `.load()` para materializar los resultados en memoria, lo cual es apropiado cuando posteriormente deseamos guardar el dataset o graficar varias veces los mismos valores.
+
+> **¿Está bien usar `.load()` aquí?**
+> Sí. Dado que el dataset mensual es mucho más pequeño que el diario y que planeamos reutilizarlo para series de tiempo, es adecuado cargarlo completamente.
+
+```python
+ds_croco_m = sc.aggregate_dmy( ds = ds_croco,
+                               tiempo = 'ME',
+                               accum = None,
+                               avg = ['u', 'v', 'temp'],
+                               mediana = None).load()
+```
+
+### 9. Serie temporal en un área oceánica
+
+Con los datos mensuales ya agregados, graficamos una serie temporal conjunta de `u` y `v` en la región comprendida entre:
+
+* latitudes: −10° a 0°
+* longitudes: −90° a −80°
+
+```python
+sc.ts_area_multi( series = [{"da": ds_croco_m.u.isel(levels=-1), "label": 'u at sfc', "color": 'red', "linestyle": '--', "linewidth": 1.5},
+                            {"da": ds_croco_m.v.isel(levels=-1), "label": 'v at sfc', "color": 'blue', "linestyle": '-', "linewidth": 1.5},],
+                  lat_range = (-10, 0),
+                  lon_range = (-90, -80))
+```
+![ds_maps](figs/fig_10.png){#fig-10 fig-align="center" width="75%"}
+
+
+### 10. Preparación para la interpolación sigma–z
+
+Para realizar la interpolación vertical es recomendable *cargar los datos en memoria*:
+
+```python
+ds_croco = ds_croco.load()
+```
+
+### 11. Interpolación sigma → niveles en metros
+
+Utilizamos la función `crocointerp_sigma_to_z` para obtener perfiles verticales desde −200 m hasta la superficie cada 20 m.
+
+#### a) Interpolación estándar (con `nan` donde no hay datos)
+
+```python
+ds_croco_int = sc.crocointerp_sigma_to_z(
+    ds = ds_croco,
+    var_names = ['temp'],
+    z_levels = np.arange(-200, 20, 20),
+    z_units = 'm',
+    sigma_dim = 'levels',
+    new_dim = 'z',
+    mask_outside = False
+)
+```
+
+#### b) Interpolación extrapolada (`nan_opt='none'`)
+
+Esta opción evita valores `nan` rellenando mediante extrapolación:
+
+```python
+ds_croco_int2 = sc.crocointerp_sigma_to_z(
+    ds = ds_croco,
+    var_names = ['temp'],
+    z_levels = np.arange(-200, 20, 20),
+    z_units = 'm',
+    sigma_dim = 'levels',
+    new_dim = 'z',
+    mask_outside = False,
+    nan_opt = 'none'
+)
+```
+
+### 12. Secciones verticales sigma–z
+
+Finalmente, generamos cortes verticales a lo largo de la latitud −5°, comparando interpolación estándar vs. extrapolada:
+
+```python
+sc.section_xz_1var(
+    ds_croco_int.temp.sel(lon=slice(-95, -78)),
+    lat = -5,
+    levels = np.arange(0, 25, 1),
+    cmap = 'jet',
+    time = '2017-01-01',
+    yinv = False
+)
+
+sc.section_xz_1var(
+    ds_croco_int2.temp.sel(lon=slice(-95, -78)),
+    lat = -5,
+    levels = np.arange(0, 25, 1),
+    cmap = 'jet',
+    time = '2017-01-01',
+    yinv = False
+)
+```
+::: {#fig-d1 layout-ncol=2}
+
+![nan_opt='both'](figs/fig_11.png){#fig-11 fig-align="center" width="75%"}
+
+![nan_opt='none'](figs/fig_12.png){#fig-12 fig-align="center" width="75%"}
+
+Sección Vertical
+:::
