@@ -194,7 +194,7 @@ def crocointerp_sigma_to_z(
     sigma_dim: str | None = None,      
     new_dim: str = "z",
     mask_outside: bool = True,
-    persist: bool = False,
+    nan_opt:str = 'both',
 ) -> xr.Dataset:
     """
     Interpolate CROCO variables from sigma levels to fixed z levels (meters).
@@ -213,13 +213,16 @@ def crocointerp_sigma_to_z(
     z_units : {'m','km'}, default 'm'
         Unidades de z_levels.
     sigma_dim : str or None
-        Nombre de la dimensión sigma; si None se infiere ('s_rho' o 's_w').
+        Nombre de la dimensión sigma; si None se infiere ('levels' o 's_w').
     new_dim : str, default 'z'
         Nombre de la nueva dimensión.
     mask_outside : bool, default True
         Enmascara con NaN los puntos fuera del rango vertical local.
-    persist : bool, default False
-        Llama .persist() en salidas (útil con Dask).
+    nan_opt : {"both", "left", "right", "none"}, default "both"
+        - "both": no extrapolation (NaN on both sides)
+        - "left": NaN on the left, extrapolate on the right
+        - "right": extrapolate on the left, NaN on the right
+        - "none": extrapolate on both sides
 
     Returns
     -------
@@ -252,6 +255,7 @@ def crocointerp_sigma_to_z(
             dim=sigma_dim,
             new_dim=new_dim,
             keep_attrs=True,
+            nan_opt=nan_opt,
         )
 
         if mask_outside:
@@ -266,9 +270,6 @@ def crocointerp_sigma_to_z(
         dai.attrs["interp_coord"] = "z"
         dai.attrs["levels_units"] = "m"
         dai.attrs["long_name"] = da.attrs.get("long_name", v) + " (interpolated to z)"
-
-        if persist:
-            dai = dai.persist()
 
         outs.append(dai.to_dataset())
 

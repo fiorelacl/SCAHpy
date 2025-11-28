@@ -109,6 +109,7 @@ def vert_levs(
     new_dim: str = "levels",
     mask_outside: bool = True,
     persist: bool = False,
+    nan_opt: str = 'both',
 ) -> xr.Dataset:
     """
     Interpolate WRF variables from model (sigma) levels to fixed
@@ -145,6 +146,11 @@ def vert_levs(
     persist : bool, default False
         If True, calls ``.persist()`` on output arrays (useful when working
         with Dask-backed datasets).
+    nan_opt : {"both", "left", "right", "none"}, default "both"
+        - "both": no extrapolation (NaN on both sides)
+        - "left": NaN on the left, extrapolate on the right
+        - "right": extrapolate on the left, NaN on the right
+        - "none": extrapolate on both sides
 
     Returns
     -------
@@ -186,6 +192,7 @@ def vert_levs(
             dim=vert_dim,
             new_dim=new_dim,
             keep_attrs=True,
+            nan_opt=nan_opt,
         )
 
         if mask_outside:

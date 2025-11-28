@@ -1,5 +1,5 @@
 # ===============================
-# pyproject.toml — SCAHpy v2.0.4
+# pyproject.toml — SCAHpy v2.0.7
 # ===============================
 
 [build-system]
@@ -8,7 +8,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "scahpy"
-version = "2.0.4"
+version = "2.0.7"
 description = "SCAHpy — System for Coupled Atmosphere–Hydrosphere Analysis in Python"
 readme = "README.md"
 authors = [{ name = "Fiorela Castillón Lucas", email = "fv.castillon@gmail.com" }]

@@ -1,6 +1,5 @@
 from __future__ import annotations
 from typing import Optional, Tuple, List, Dict
-import warnings
 import xarray as xr
 import matplotlib.pyplot as plt
 
@@ -89,7 +88,6 @@ def _sel_point_nearest(da_like: xr.DataArray, la: float, lo: float) -> xr.DataAr
     xr.DataArray
         Data at the nearest grid point to (la, lo).
     """
-    # Detach any lazy slice state (defensive; cheap shallow copy)
     da_tmp = da_like.copy(deep=False)
     try:
         out = da_tmp.sel(lat=la, method="nearest")
@@ -105,9 +103,6 @@ def ts_area_1var(
     *,
     lat_range: Optional[Tuple[float, float]] = None,
     lon_range: Optional[Tuple[float, float]] = None,
-
-    time=None,
-    month=None,
     resample: Optional[str] = None,
     label: str = "Series",
     color: str = "#1b9e77",
@@ -120,12 +115,6 @@ def ts_area_1var(
     """
     Plot a time series (or monthly climatological cycle) averaged over a lat–lon box.
 
-    Notes
-    -----
-    This function DOES NOT perform any temporal subsetting. It uses the full
-    series provided by the user. Any prior selection (e.g., time ranges,
-    month filtering, anomalies, climatologies) must be done upstream.
-
     Parameters
     ----------
     da : xr.DataArray
@@ -137,19 +126,7 @@ def ts_area_1var(
     label, color, linestyle, linewidth, title, ylabel, output_path : optional
         Plot styling and output controls.
 
-    Deprecated Parameters
-    ---------------------
-    time, month
-        Ignored. Kept for backward compatibility to avoid breaking old calls.
     """
-    if time is not None or month is not None:
-        warnings.warn(
-            "Parameters `time` and `month` are ignored in ts_area_1var(). "
-            "Provide the already-subset series upstream.",
-            DeprecationWarning,
-            stacklevel=2,
-        )
-
     set_style()
     s = _to_area_series(da, lat_range, lon_range)
     s = _apply_resample(s, resample=resample)
@@ -175,8 +152,6 @@ def ts_point_1var(
     *,
     lat: float | List[Tuple[float, float]] | List[float],
     lon: Optional[float] = None,
-    time=None,
-    month=None,
     resample: Optional[str] = None,
     labels: Optional[List[str]] = None,
     colors: Optional[List[str]] = None,
@@ -188,11 +163,6 @@ def ts_point_1var(
 ):
     """
     Plot one or multiple point series (time or monthly) from a DataArray.
-
-    Notes
-    -----
-    No temporal subsetting is performed here; the full input series is used.
-    To subset in time or compute climatologies/anomalies, do it upstream.
 
     Parameters
     ----------
@@ -208,19 +178,7 @@ def ts_point_1var(
     linewidth, title, ylabel, output_path : optional
         Plot styling and output controls.
 
-    Deprecated Parameters
-    ---------------------
-    time, month
-        Ignored. Kept for backward compatibility to avoid breaking old calls.
     """
-    if time is not None or month is not None:
-        warnings.warn(
-            "Parameters `time` and `month` are ignored in ts_point_1var(). "
-            "Provide the already-subset series upstream.",
-            DeprecationWarning,
-            stacklevel=2,
-        )
-
     set_style()
     fig, ax = plt.subplots(figsize=(16, 5))
 
@@ -282,8 +240,6 @@ def ts_area_multi(
     *,
     lat_range: Optional[Tuple[float, float]] = None,
     lon_range: Optional[Tuple[float, float]] = None,
-    time=None,
-    month=None,
     resample: Optional[str] = None,
     title: Optional[str] = None,
     ylabel: Optional[str] = None,
@@ -303,18 +259,7 @@ def ts_area_multi(
     title, ylabel, output_path : optional
         Plot styling and output controls.
 
-    Deprecated Parameters
-    ---------------------
-    time, month
-        Ignored. Kept for backward compatibility to avoid breaking old calls.
     """
-    if time is not None or month is not None:
-        warnings.warn(
-            "Parameters `time` and `month` are ignored in ts_area_multi(). "
-            "Provide the already-subset series upstream.",
-            DeprecationWarning,
-            stacklevel=2,
-        )
 
     set_style()
     fig, ax = plt.subplots(figsize=(18, 6))

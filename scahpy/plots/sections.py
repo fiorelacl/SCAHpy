@@ -13,7 +13,7 @@ from ._helpers import (
 def _get_zcoord(da: xr.DataArray,
                 candidates: Sequence[str] = ('level', 'levels', 'zlevel',
                                               'pressure','lev', 'bottom_top',
-                                              'bottom_top_stag')) -> str:
+                                              'bottom_top_stag','z')) -> str:
     """
     Return the name of the vertical coordinate from a set of common candidates.
 
@@ -41,6 +41,7 @@ def section_xz_1var(
     cmap: str = 'thermal',
     time=None,
     month=None,
+    yinv: bool = True,
     title: Optional[str] = None,
     colorbar_label: Optional[str] = None,
     output_path: Optional[str] = None,
@@ -94,7 +95,9 @@ def section_xz_1var(
     cb.set_label(label, labelpad=7)           
     cb.ax.tick_params(length=4, width=1.0, pad=2)
 
-    ax.invert_yaxis()
+    if yinv:
+        ax.invert_yaxis()
+
     ax.set_xlabel('Longitude (°)')
     ax.set_ylabel(zname)
     ax.set_title(title or f'X–Z section at lat={float(sec["lat"].values):.2f}')
@@ -110,6 +113,7 @@ def section_yz_1var(
     lon: float,
     levels: Iterable[float],
     cmap: str = 'thermal',
+    yinv: bool = True,
     time=None,
     month=None,
     title: Optional[str] = None,
@@ -157,7 +161,9 @@ def section_yz_1var(
     cb.set_label(label, labelpad=7)           
     cb.ax.tick_params(length=4, width=1.0, pad=2)
 
-    ax.invert_yaxis()
+    if yinv:
+        ax.invert_yaxis()
+
     ax.set_xlabel('Latitude (°)')
     ax.set_ylabel(zname)
     ax.set_title(title or f'Y–Z section at lon={float(sec["lon"].values):.2f}')
@@ -179,6 +185,7 @@ def section_xz_1var_winds(
     time=None,
     month=None,
     w_scale: float = 1000.0,
+    yinv: bool = True,
     quiver_density: int = 4,
     quiver_scale: float = 170.0,
     quiverkey_speed: float = 5.0,
@@ -253,11 +260,15 @@ def section_xz_1var_winds(
                   scale=quiver_scale, headwidth=4, headlength=4)
     ax.quiverkey(Q, 0.87, 1.02, quiverkey_speed, f'{quiverkey_speed} m/s',
                  labelpos='E', coordinates='axes', labelsep=0.05)
-
-    ax.invert_yaxis()
+    
+    if yinv:
+        ax.invert_yaxis()
+    
     ax.set_xlabel('Longitude (°)')
     ax.set_ylabel(zname)
     ax.set_title(title or f'X–Z section (lat={float(sec["lat"].values):.2f}) with winds (U,W)')
+
+
 
     maybe_save(fig, output_path)
     if output_path is None:
@@ -272,6 +283,7 @@ def section_yz_1var_winds(
     lon: float,
     levels: Iterable[float],
     cmap: str = 'thermal',
+    yinv: bool = True,
     time=None,
     month=None,
     w_scale: float = 1000.0,
@@ -341,8 +353,9 @@ def section_yz_1var_winds(
                   scale=quiver_scale, headwidth=4, headlength=4)
     ax.quiverkey(Q, 0.87, 1.02, quiverkey_speed, f'{quiverkey_speed} m/s',
                  labelpos='E', coordinates='axes', labelsep=0.05)
+    if yinv:
+        ax.invert_yaxis()
 
-    ax.invert_yaxis()
     ax.set_xlabel('Latitude (°)')
     ax.set_ylabel(zname)
     ax.set_title(title or f'Y–Z section (lon={float(sec["lon"].values):.2f}) with winds (V,W)')

@@ -11,7 +11,7 @@ atmosférica del modelo acoplado *IGP RESM-COW* o de cualquier simulación WRF c
 
 ## Lectura de un archivo WRF
 
-En esta primera parte comenzaremos trabajando con **un solo archivo WRF**, lo cual permite comprender la estructura básica del dataset y el uso de las funciones principales. Más adelante extenderemos estos conceptos para el caso de **lecturas múltiples**.
+En esta primera parte comenzaremos trabajando con *un solo archivo WRF*, lo cual permite comprender la estructura básica del dataset y el uso de las funciones principales. Más adelante extenderemos estos conceptos para el caso de *lecturas múltiples*.
 
 ### 1. Importación de paquetes
 
@@ -31,13 +31,13 @@ Existen dos formas de lograrlo:
 **a) Colocar manualmente el archivo entre corchetes:**
 
 ```python
-file_name = ['/data/users/fcastillon/COW_outs/diagnos/C2O5W4_SF2/wrf/wrfout_d01_2017-01-14_03:00:00']
+file_name = ['/data/users/fcastillon/wrf/wrfout_d01_2017-01-14_03:00:00']
 ```
 
 **b) Utilizar `glob.glob`, que devuelve directamente una lista:**
 
 ```python
-file_name = glob.glob('/data/users/fcastillon/COW_outs/diagnos/C2O5W4_SF2/wrf/wrfout_d01_2017-01-14_03:00:00')
+file_name = glob.glob('/data/users/fcastillon/wrf/wrfout_d01_2017-01-14_03:00:00')
 ```
 
 Ambos métodos son equivalentes respecto al formato que necesita SCAHpy.
@@ -213,7 +213,7 @@ Para leer múltiples archivos, utilizamos `glob.glob`, que retorna directamente 
 En este ejemplo filtramos todos los `wrfout` del año 2017:
 
 ```python
-WRF_files = sorted(glob.glob("/data/users/fcastillon/COW_outs/diagnos/C2O5W4_SF2/wrf/wrfout_d01_2017*"))
+WRF_files = sorted(glob.glob("/data/users/fcastillon/wrf/wrfout_d01_2017*"))
 ```
 
 > *Importante:* Aunque trabajemos con múltiples archivos, la función `drop_vars` siempre requiere un solo archivo (`file0`) para identificar la metadata genérica del WRF.

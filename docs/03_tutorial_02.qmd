@@ -1,251 +1,152 @@
-# Tutorial 2: Lectura y análisis de múltiples archivos WRF
+# Tutorial 02: Salidas del modelo CROCO
 
 En este tutorial aprenderás a:
 
-1. Leer **varios archivos WRF** (multi-tiempo) usando SCAHpy.  
-2. Calcular precipitación total, viento 10 m y SST.  
-3. Agregar datos a escala diaria.  
-4. Realizar una visualización básica.
+1. Leer un único archivo o múltiples archivos del modelo **CROCO** usando SCAHpy.  
+2. Realizar diagnósticos básicos como obtener el gradiente de SST en superficie.  
+3. Generar un mapa 2D, hovmoller y una serie de tiempo sencilla con variables oceanográficas.
 
-Este flujo es esencial para procesar días, meses o años de simulación del sistema **IGP RESM-COW**.
+Este flujo es ideal para comenzar a trabajar con las salidas de la componente
+oceánica del modelo acoplado *IGP RESM-COW* o de cualquier simulación CROCO compatible.
 
----
+## Lectura de un archivo CROCO
 
-# 1. Importación del paquete
+En esta primera parte comenzaremos trabajando con *un solo archivo CROCO*, lo cual permite comprender la estructura básica del dataset y el uso de las funciones principales. Más adelante extenderemos estos conceptos para el caso de *lecturas múltiples*.
+
+### 1. Importación de paquetes
+
+Importamos los módulos necesarios para el manejo de rutas, lectura de archivos CROCO y operaciones numéricas:
 
 Como en el tutorial anterior, importamos los módulos necesarios:
 
 ```python
-import scahpy as sph
-
-from scahpy.components.atmos import wrf_io, wrf_diags
-from scahpy.components.core import (
-    time_ops,
-    utils
-)
-from scahpy.components.plots import maps
-
-import xarray as xr
-import matplotlib.pyplot as plt
+import scahpy as sc
+import numpy as np
 import glob
-````
+import xarray as xr
+```
+### 2. Definición del archivo CROCO
 
----
+Las funciones de lectura de SCAHpy requieren que las rutas de los archivos se proporcionen como *lista de strings*.
+Existen dos formas de lograrlo:
 
-# 2. Lectura de múltiples archivos WRF
-
-## 2.1 Listar archivos
-
-Como mencionaste, por ahora prefieres usar `glob`:
+**a) Colocar manualmente el archivo entre corchetes:**
 
 ```python
-list_files = sorted(
-    glob.glob("/data/datos/COW/OUT_DIAG_WRF/wrfouts/wrfout_d01_2023-03-*.nc")
-)
-list_files[:3]
+file_name = ['/data/users/fcastillon/croco/croco_avg_Y2017M01.nc']
 ```
 
-Ejemplo de salida:
-
-```
-['wrfout_d01_2023-03-01_00:00:00',
- 'wrfout_d01_2023-03-01_03:00:00',
- 'wrfout_d01_2023-03-01_06:00:00',
- ...]
-```
-
-## 2.2 Leer todos los archivos concatenados
-
-Antes usabas:
+**b) Utilizar `glob.glob`, que devuelve directamente una lista:**
 
 ```python
-ds = in_out.read_wrf_multi(...)
+file_name = glob.glob('/data/users/fcastillon/croco/croco_avg_Y2017M01.nc')
 ```
 
-Ahora se reemplaza por **una sola función moderna**:
+Ambos métodos son equivalentes respecto al formato que necesita SCAHpy.
+
+### 3. Selección de variables con `drop_vars`
+
+Para optimizar la lectura, podemos indicar qué variables excluir del archivo CROCO. 
+Esto es especialmente útil en simulaciones pesadas o cuando se trabaja con múltiples archivos.
+
+La función `drop_vars` tiene un punto importante:
+
+> **Siempre requiere un único archivo (`file0`), en formato string, aun cuando trabajemos con múltiples archivos.**
+> Esto se debe a que la función analiza la estructura y *metadata* típica del archivo CROCO para identificar las variables que deben excluirse.
+
+Por ello, incluso si `file_name` contiene más de un archivo, utilizamos:
 
 ```python
-ds = wrf_io.read_wrf(
-    paths=list_files,
-    drop_vars=["TKE"],
-    time_offset_hours=-5      # convertir UTC → hora local Perú
-)
-ds
+file_name[0]
 ```
 
-SCAHpy ahora:
-
-* concatena el tiempo automáticamente,
-* estandariza coordenadas (`lat`, `lon`),
-* corrige tipos y atributos,
-* maneja destaggering cuando corresponde.
-
----
-
-# 3. Cálculo de diagnósticos (precipitación, viento y SST)
-
-## 3.1 Precipitación acumulada
+En este ejemplo trabajaremos solo con cuatro variables: `mask_rho`, `temp`, `u` y `v`.
 
 ```python
-pp = ds["RAINC"] + ds["RAINNC"]
-pp.name = "PP"
+vars_croco = sc.drop_vars(file_name[0],
+                          sel_vars = ['temp','mask_rho','u','v'],
+                          model = 'CROCO')
 ```
 
-## 3.2 Velocidad del viento a 10 m
+### 4. Lectura del archivo con `read_croco`
+
+A continuación, leemos el archivo usando la función `read_croco`, pasando las opciones principales:
+
+* **`drop_vars`**: variables a excluir (obtenidas previamente).
+* **`destag`**: si se requiere destaggering; en este ejemplo sí es necesario por los vectores de viento u y v.
+* **`save_path`**: ruta opcional para guardar el archivo procesado.
 
 ```python
-wspd10 = wrf_diags.wind_speed(ds["U10"], ds["V10"])
-wspd10.name = "wspd10"
+ds_croco = sc.read_croco(file_paths = file_name,
+                         drop_vars = vars_croco,
+                         destag = True,
+                         save_path = None)
+```
+### 5. Aplicación de máscara para delimitar continente
+
+Si deseamos graficar solo la zona **oceánica**, podemos usar `apply_mask`, que pertenece al módulo: `scahpy.core`
+
+En este caso mantendremos únicamente el océano, por lo que usamos `sea_is_one = True` y pasamos la variable que tiene la máscara que es `mask_rho`
+
+```python
+ds_croco_mask = sc.apply_mask(da = ds_croco[['temp','u','v']],
+                              mask = ds_croco.mask_rho,
+                              sea_is_one = True).isel(levels=-1)
 ```
 
-## 3.3 SST en grados Celsius (si existe)
+### 6. Mapa 2D: SST con vectores del viento
+Como las variables son a distintos niveles verticales, al hacer `.isel(levels=-1)` seleccionamos el nivel más cercano a la superficie.
+
+* **`da`**: variable escalar a graficar (temp).
+* **`U`, `V`**: componentes del viento.
+* **`levels`**: niveles del contorno.
+* **`cmap`**: paleta de colores.
+* **`quiver_subsample`**: frecuencia de muestreo para los vectores.
+* **`quiverkey_speed`**: escala de referencia.
+* **`time`**: tiempo a graficar.
+* **`output_path`**: ruta para guardar la figura (si se desea).
 
 ```python
-if "SSTSK" in ds:
-    sst = utils.to_celsius(ds["SSTSK"])
-    sst.name = "SST_C"
+sc.map_1var_winds(da = ds_croco_mask.temp,
+                  U = ds_croco_mask.u,
+                  V = ds_croco_mask.v,
+                  time = '2017-01-14',
+                  cmap = 'jet',
+                  levels = np.arange(18,30,1),
+                  quiverkey_speed = 1,
+                  title = 'Sea Surface Temperature',
+                  colorbar_label = '°C')
 ```
+![ds_maps](figs/fig_07.png){#fig-07 fig-align="center" width="75%"}
 
----
+Más detalles de cada parámetro, revisar la sección [Referencia de la API](04_API.qmd).
 
-# 4. Agregación temporal (diaria)
-
-En tu versión antigua tenías:
+### 7. Serie de Tiempo 
 
 ```python
-dd = temp_scales.dmy_var(...)
+sc.ts_area_1var(da = ds_croco_mask.temp,
+    lat_range = (-10,0),
+    lon_range  = (-90,-80),
+    label  = 'IGP RESM-COW',
+    color = '#1b9e77',
+    linestyle  = '-',
+    linewidth  = 1.8,
+    title  = 'Time Series at Niño 1+2',
+    ylabel  = 'SST °C')
 ```
+![ds_maps](figs/fig_08.png){#fig-08 fig-align="center" width="75%"}
 
-Ahora se usa un flujo más simple y universal con `time_ops`:
+## Lectura de múltiples archivos CROCO
 
-## 4.1 Agrupar por día
+En esta sección extenderemos el procedimiento anterior para trabajar con **múltiples archivos CROCO** correspondientes a una misma simulación. 
 
-```python
-# Precipitación diaria (suma)
-pp_daily = pp.resample(time="1D").sum()
+### 1. Importación de paquetes
 
-# Viento diario (promedio)
-wspd10_daily = wspd10.resample(time="1D").mean()
-
-# SST diaria (mediana)
-if "SSTSK" in ds:
-    sst_daily = sst.resample(time="1D").median()
-```
-
-Agrupar así permite un control claro y reproducible.
-
-Puedes combinarlo en un solo Dataset:
+Comenzamos importando los módulos necesarios:
 
 ```python
-ds_daily = xr.Dataset(
-    {
-        "PP": pp_daily,
-        "wspd10": wspd10_daily,
-        "SST_C": sst_daily if "SSTSK" in ds else None,
-    }
-)
-ds_daily
-```
-
----
-
-# 5. Visualización básica
-
-Para trazar un día específico:
-
-```python
-day0 = ds_daily.sel(time="2023-03-01")
-```
-
-Mapa simple:
-
-```python
-day0["PP"].plot(
-    x="lon", y="lat",
-    cmap="Blues",
-    cbar_kwargs={"label": "Precipitación diaria (mm)"}
-)
-plt.title("Precipitación diaria – 1 marzo 2023 (WRF)")
-plt.show()
-```
-
----
-
-# 6. Visualización usando funciones de SCAHpy
-
-Si deseas usar funciones de `components.plots`, por ejemplo para 1 variable:
-
-```python
-maps.map_1var(
-    ds=ds_daily,
-    var_name="PP",
-    time_index=0,
-    cmap="Blues",
-    title="Precipitación diaria acumulada"
-)
-```
-# Tutorial 1: Lectura de un archivo CROCO
-# 5. Lectura rápida de un archivo CROCO
-
-Además de WRF, SCAHpy permite trabajar con salidas del modelo oceánico **CROCO**, utilizado en el componente marino del IGP RESM-COW.
-
-## 5.1 Definir la ruta del archivo CROCO
-
-Como ejemplo:
-
-```python
-croco_file = "/data/datos/COW/OUT_DIAG_CROCO/croco_avg_Y2000M01.nc"
-```
-
-Nuevamente usaremos una lista, aunque solo haya un archivo:
-
-```python
-ds_croco = croco_io.read_croco(
-    paths=[croco_file],   # lista con un único archivo
-    destag=True,          # pasar de grilla C a grilla centrada
-    keep_vertical=True    # conservar niveles sigma
-)
-ds_croco
-```
-
-El resultado suele incluir:
-
-* `time`: tiempos diarios o subdiarios,
-* `eta_rho`, `xi_rho` o equivalentes convertidos a `lat`, `lon`,
-* `s_rho` o niveles sigma,
-* Variables oceánicas: `temp`, `salt`, `u`, `v`, etc.
-
----
-
-# 6. Mapa simple de SST con CROCO
-
-Suponiendo que la variable de temperatura se llama `temp` y que el último nivel vertical corresponde aproximadamente a la superficie:
-
-```python
-sst = ds_croco["temp"].isel(s_rho=-1)  # último nivel = superficie
-sst.name = "SST"
-```
-
-Tomamos, por ejemplo, el primer tiempo:
-
-```python
-sst.isel(time=0).plot(
-    x="lon", y="lat",
-    cmap="viridis",
-    cbar_kwargs={"label": "SST (°C)"}
-)
-plt.title("Temperatura superficial del mar – CROCO (archivo único)")
-plt.show()
-```
-
-También puedes usar la función de SCAHpy:
-
-```python
-maps.map_1var(
-    ds=ds_croco,
-    var_name="temp",
-    time_index=0,
-    level_index=-1,    # superficie
-    title="SST – CROCO (archivo único)"
-)
+import scahpy as sc
+import numpy as np
+import glob
+import xarray as xr
 ```

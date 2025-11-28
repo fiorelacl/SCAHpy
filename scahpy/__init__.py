@@ -1,12 +1,12 @@
 # SCAHpy: System for Coupled Atmosphere–Hydrosphere Analysis in Python
-# Copyright (C) 2025  Fiorela Castillón León
+# Copyright (C) 2025  Fiorela Castillón Lucas
 # Instituto Geofísico del Perú (IGP)
 #
 # This file is part of SCAHpy and is distributed under the terms of
 # the GNU General Public License v3.0 or later.
 # See the LICENSE file for details.
 
-__version__ = "2.0.4"
+__version__ = "2.0.7"
 
 """
 SCAHpy is a scientific Python package for the analysis and visualization

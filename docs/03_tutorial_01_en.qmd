@@ -10,7 +10,7 @@ This workflow is ideal for getting started with the atmospheric component output
 
 ## Reading a WRF File
 
-In this first section we begin by working with **a single WRF file**, which allows us to understand the dataset structure and the use of the main functions. Later, we will extend these concepts to the case of **multiple-input reading**.
+In this first section we begin by working with *a single WRF file*, which allows us to understand the dataset structure and the use of the main functions. Later, we will extend these concepts to the case of *multiple-input reading*.
 
 ### 1. Importing Packages
 
@@ -30,13 +30,13 @@ There are two ways to accomplish this:
 **a) Manually placing the file inside square brackets:**
 
 ```python
-file_name = ['/data/users/fcastillon/COW_outs/diagnos/C2O5W4_SF2/wrf/wrfout_d01_2017-01-14_03:00:00']
+file_name = ['/data/users/fcastillon/wrf/wrfout_d01_2017-01-14_03:00:00']
 ```
 
 **b) Using `glob.glob`, which already returns a list:**
 
 ```python
-file_name = glob.glob('/data/users/fcastillon/COW_outs/diagnos/C2O5W4_SF2/wrf/wrfout_d01_2017-01-14_03:00:00')
+file_name = glob.glob('/data/users/fcastillon/wrf/wrfout_d01_2017-01-14_03:00:00')
 ```
 
 Both methods produce the correct format required by SCAHpy.
@@ -212,7 +212,7 @@ To read multiple files, we use `glob.glob`, which directly returns a sorted list
 In this example, we filter all `wrfout` files from the year 2017:
 
 ```python
-WRF_files = sorted(glob.glob("/data/users/fcastillon/COW_outs/diagnos/C2O5W4_SF2/wrf/wrfout_d01_2017*"))
+WRF_files = sorted(glob.glob("/data/users/fcastillon/wrf/wrfout_d01_2017*"))
 ```
 
 > *Important:* Even when working with multiple files, the function `drop_vars` always requires a single file (`file0`) to identify the generic WRF metadata.

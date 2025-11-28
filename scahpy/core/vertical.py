@@ -7,6 +7,7 @@ def _interp1d_core(
     y: np.ndarray,
     x: np.ndarray,
     x_new: np.ndarray,
+    nan_opt:str = 'both',
 ) -> np.ndarray:
     """
     1D core interpolation routine using np.interp.
@@ -23,6 +24,12 @@ def _interp1d_core(
         Coordinates corresponding to `y`.
     x_new : np.ndarray
         New coordinate values where interpolation is desired.
+    nan_opt : {"both", "left", "right", "none"}, default "both"
+        - "both": no extrapolation (NaN on both sides)
+        - "left": NaN on the left, extrapolate on the right
+        - "right": extrapolate on the left, NaN on the right
+        - "none": extrapolate on both sides
+
 
     Returns
     -------
@@ -40,7 +47,19 @@ def _interp1d_core(
     y = np.asarray(y[order], dtype=np.float64)
     x_new = np.asarray(x_new, dtype=np.float64)
 
-    return np.interp(x_new, x, y, left=np.nan, right=np.nan)
+    if nan_opt == 'both':
+        return np.interp(x_new, x, y, left=np.nan, right=np.nan)
+    elif nan_opt == 'left':
+        return np.interp(x_new, x, y, left=np.nan)
+    elif nan_opt == 'right':
+        return np.interp(x_new, x, y, right=np.nan)
+    elif nan_opt == 'none':
+        return np.interp(x_new, x, y)
+    else:
+        raise ValueError(
+            f"Invalid int_opt='{nan_opt}'. "
+            "Valid options are: 'both', 'left', 'right', 'none'."
+        )    
 
 def _apply_interp(
     da: xr.DataArray,
@@ -51,6 +70,7 @@ def _apply_interp(
     *,
     keep_attrs: bool = True,
     allow_rechunk: bool = False,
+    nan_opt: str = "both",
 ) -> xr.DataArray:
     """
     Apply `_interp1d_core` along a given dimension of a DataArray.
@@ -72,6 +92,12 @@ def _apply_interp(
     allow_rechunk : bool, default=False
         If True, allows internal rechunking in `apply_ufunc`
           for Dask arrays.
+    nan_opt : {"both", "left", "right", "none"}, default "both"
+        Controls extrapolation behavior in `_interp1d_core`:
+        - "both": no extrapolation (NaN on both sides)
+        - "left": NaN on the left, extrapolate on the right
+        - "right": extrapolate on the left, NaN on the right
+        - "none": extrapolate on both sides
 
     Returns
     -------
@@ -111,6 +137,7 @@ def _apply_interp(
         dask="parallelized",
         output_dtypes=[np.result_type(da.dtype, np.float64)],
         dask_gufunc_kwargs=gufunc_kwargs,
+        kwargs={"int_opt": nan_opt},
     ).assign_coords({new_dim: target_levels})
 
     if keep_attrs:
@@ -118,7 +145,6 @@ def _apply_interp(
         out.name = _name
 
     return out
-
 
 def vertical_interp(
     da: xr.DataArray,
@@ -129,6 +155,7 @@ def vertical_interp(
     *,
     keep_attrs: bool = True,
     allow_rechunk: bool = False,
+    nan_opt: str = 'both',
 ) -> xr.DataArray:
     """
     Generic 1D interpolation along a given dimension.
@@ -160,6 +187,8 @@ def vertical_interp(
     allow_rechunk : bool, default=False
         If True, allows internal rechunking in `apply_ufunc` for
         Dask arrays.
+    nan_opt : {"both", "left", "right", "none"}, default "both"
+        Extrapolation behavior passed to `_interp1d_core`.
 
     Returns
     -------
@@ -176,6 +205,7 @@ def vertical_interp(
         new_dim=new_dim,
         keep_attrs=keep_attrs,
         allow_rechunk=allow_rechunk,
+        nan_opt=nan_opt,
     )
 
 
