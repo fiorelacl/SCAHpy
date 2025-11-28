@@ -206,7 +206,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    lakemask<span class="op">=</span><span class="va">None</span>,</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    exclude_lakes<span class="op">=</span><span class="va">True</span>,</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Apply a land–sea (and optionally lake) mask to the input variable.</p>
+<p>Apply a land–sea mask (and optionally a lake mask) to one or multiple variables.</p>
+<p>This function accepts either: - a single <code>xarray.DataArray</code> (returns a masked DataArray), or - an <code>xarray.Dataset</code> (applies the mask to selected data variables and returns a Dataset where other variables remain unchanged).</p>
+<p>Masking follows the convention determined by <code>sea_is_one</code>: - <code>sea_is_one=True</code> → mask==1 indicates ocean (ROMS/CROCO style) - <code>sea_is_one=False</code> → mask==1 indicates land (WRF style), so the mask is logically inverted.</p>
+<p>If a lake mask is provided with <code>exclude_lakes=True</code> (default), points classified as lakes (<code>lakemask==1</code>) are also set to NaN.</p>
 <section id="parameters" class="level4 doc-section doc-section-parameters">
 <h4 class="doc-section doc-section-parameters anchored" data-anchor-id="parameters">Parameters</h4>
 <table class="table">
@@ -238,18 +241,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td><em>required</em></td>
 </tr>
 <tr class="odd">
+<td>var_names</td>
+<td>hashable or iterable of hashable</td>
+<td>Only used when <code>da</code> is a Dataset. Names of data variables to mask. Other variables are left unchanged. If None, the mask is applied to all data variables.</td>
+<td><code>None</code></td>
+</tr>
+<tr class="even">
 <td>sea_is_one</td>
 <td>bool</td>
 <td>True → mask==1 means ocean (ROMS style). False → mask==1 means land (WRF style).</td>
 <td><code>True</code></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td>lakemask</td>
 <td>xr.DataArray</td>
 <td>Lake mask (1 = lake, 0 = not lake). If provided and <code>exclude_lakes=True</code>, those points will be masked (set to NaN).</td>
 <td><code>None</code></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>exclude_lakes</td>
 <td>bool</td>
 <td>If True and <code>lakemask</code> is available, mask out lakes as well.</td>
@@ -591,6 +600,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>Temperature in Kelvin.</td>
 <td><em>required</em></td>
 </tr>
+<tr class="even">
+<td>var_names</td>
+<td>hashable or iterable of hashable</td>
+<td>Only used when <code>temp</code> is a Dataset. Names of the data variables to convert. Other variables remain unchanged.</td>
+<td><code>None</code></td>
+</tr>
 </tbody>
 </table>
 </section>
@@ -703,6 +718,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>Temperature in Celsius.</td>
 <td><em>required</em></td>
 </tr>
+<tr class="even">
+<td>var_names</td>
+<td>hashable or iterable of hashable</td>
+<td>Only used when <code>temp</code> is a Dataset. Names of the data variables to convert. Other variables remain unchanged.</td>
+<td><code>None</code></td>
+</tr>
 </tbody>
 </table>
 </section>
@@ -710,9 +731,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h4 class="doc-section doc-section-returns anchored" data-anchor-id="returns-7">Returns</h4>
 <table class="table">
 <colgroup>
-<col style="width: 7%">
-<col style="width: 32%">
-<col style="width: 60%">
+<col style="width: 4%">
+<col style="width: 28%">
+<col style="width: 67%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -724,8 +745,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td></td>
-<td>float | np.ndarray | xr.DataArray</td>
-<td>Temperature in Kelvin, preserving attributes if input is DataArray.</td>
+<td>float | np.ndarray | xr.DataArray | xr.Dataset</td>
+<td>Temperature in Kelvin. For xarray objects, only the ‘units’ attribute is updated to ‘K’; other attributes are preserved.</td>
 </tr>
 </tbody>
 </table>

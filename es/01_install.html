@@ -243,11 +243,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#macos" id="toc-macos" class="nav-link" data-scroll-target="#macos"><strong>macOS:</strong></a></li>
   <li><a href="#linux" id="toc-linux" class="nav-link" data-scroll-target="#linux"><strong>Linux:</strong></a></li>
   </ul></li>
-  <li><a href="#usando-conda" id="toc-usando-conda" class="nav-link" data-scroll-target="#usando-conda"><strong>Usando Conda</strong></a>
-  <ul class="collapse">
-  <li><a href="#descargar-e-instalar-miniforge" id="toc-descargar-e-instalar-miniforge" class="nav-link" data-scroll-target="#descargar-e-instalar-miniforge">1. Descargar e instalar Miniforge</a></li>
-  <li><a href="#crear-un-nuevo-entorno-conda-e-instalar-scahpy" id="toc-crear-un-nuevo-entorno-conda-e-instalar-scahpy" class="nav-link" data-scroll-target="#crear-un-nuevo-entorno-conda-e-instalar-scahpy">2. Crear un nuevo entorno Conda e instalar SCAHpy</a></li>
-  </ul></li>
   <li><a href="#usando-mamba" id="toc-usando-mamba" class="nav-link" data-scroll-target="#usando-mamba"><strong>Usando Mamba</strong></a>
   <ul class="collapse">
   <li><a href="#descargar-e-instalar-mamba" id="toc-descargar-e-instalar-mamba" class="nav-link" data-scroll-target="#descargar-e-instalar-mamba">1. Descargar e instalar Mamba</a></li>
@@ -316,33 +311,6 @@ El paquete está desarrollado para funcionar sobre ecosistemas científicos mode
 <hr>
 </section>
 </section>
-<section id="usando-conda" class="level2">
-<h2 class="anchored" data-anchor-id="usando-conda"><strong>Usando Conda</strong></h2>
-<section id="descargar-e-instalar-miniforge" class="level3">
-<h3 class="anchored" data-anchor-id="descargar-e-instalar-miniforge">1. Descargar e instalar Miniforge</h3>
-<ul>
-<li><p>Antes de instalar <code>scahpy</code>, asegúrese de tener Conda instalado en su sistema. Miniforge es una distribución mínima de Conda que incluye las herramientas esenciales para la gestión de entornos y paquetes.</p></li>
-<li><p>Visite la página de <a href="https://github.com/conda-forge/miniforge">Miniforge en GitHub</a> y siga las instrucciones para descargar e instalar la versión adecuada para su sistema operativo.</p></li>
-</ul>
-</section>
-<section id="crear-un-nuevo-entorno-conda-e-instalar-scahpy" class="level3">
-<h3 class="anchored" data-anchor-id="crear-un-nuevo-entorno-conda-e-instalar-scahpy">2. Crear un nuevo entorno Conda e instalar SCAHpy</h3>
-<ul>
-<li><p>Una vez instalado Conda, puede crear un entorno nuevo específicamente para <code>scahpy</code> y sus dependencias. Para ello, se utiliza un archivo llamado <code>environment.yml</code>, que contiene la lista de paquetes y versiones requeridos para el correcto funcionamiento de <code>scahpy</code>.</p></li>
-<li><p>Descargue el archivo <code>environment.yml</code> desde el <a href="https://github.com/fiorelacl/SCAHpy/blob/4ec3cca0a13444411a0dcb28221f3ee982a2594b/environment.yml">repositorio de SCAHpy en GitHub</a>.</p></li>
-<li><p>Abra una terminal o consola y navegue al directorio donde se encuentra el archivo <code>environment.yml</code>.</p></li>
-<li><p>Ejecute el siguiente comando para crear un entorno Conda llamado <code>scahpy_env</code> e instalar todas las dependencias especificadas:</p></li>
-</ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> env create <span class="at">--file</span> environment.yml <span class="at">-n</span> scahpy_env</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<ul>
-<li><p>Este comando creará un entorno nuevo llamado <code>scahpy_env</code> e instalará todas las dependencias listadas en el archivo <code>environment.yml</code>.</p></li>
-<li><p>Una vez creado el entorno, actívelo con:</p></li>
-</ul>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate scahpy_env</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Después de esto, tendrá <code>scahpy</code> y todas sus dependencias instaladas y listas para usarse dentro de su entorno Conda.</p>
-<hr>
-</section>
-</section>
 <section id="usando-mamba" class="level2">
 <h2 class="anchored" data-anchor-id="usando-mamba"><strong>Usando Mamba</strong></h2>
 <section id="descargar-e-instalar-mamba" class="level3">
@@ -359,7 +327,7 @@ El paquete está desarrollado para funcionar sobre ecosistemas científicos mode
 <li><p>Descargue el archivo desde el <a href="https://github.com/fiorelacl/SCAHpy/blob/4ec3cca0a13444411a0dcb28221f3ee982a2594b/environment.yml">repositorio de SCAHpy en GitHub</a>.</p></li>
 <li><p>Desde la terminal, navegue al directorio donde está el archivo y ejecute:</p></li>
 </ul>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> env create <span class="at">--file</span> environment.yml <span class="at">-n</span> scahpy_env</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> env create <span class="at">--file</span> environment.yml <span class="at">-n</span> scahpy_env</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
 <li>Esto creará un entorno Conda llamado <code>scahpy_env</code> e instalará todos los paquetes necesarios.</li>
 </ul>
@@ -374,17 +342,17 @@ El paquete está desarrollado para funcionar sobre ecosistemas científicos mode
 <li><p>La forma más sencilla de instalar <code>scahpy</code> y sus dependencias con pip es creando un entorno virtual e instalando desde un archivo <code>requirements.txt</code>.</p></li>
 </ol>
 <p>En la terminal:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear un entorno virtual (opcional pero recomendado)</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> venv scahpy_env</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Activar el entorno virtual</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># En Windows:</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="ex">scahpy_env\Scripts\activate</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># En macOS/Linux:</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> scahpy_env/bin/activate</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Instalar scahpy y dependencias desde requirements.txt</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">-r</span> requirements.txt</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Crear un entorno virtual (opcional pero recomendado)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> venv scahpy_env</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Activar el entorno virtual</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># En Windows:</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="ex">scahpy_env\Scripts\activate</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># En macOS/Linux:</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> scahpy_env/bin/activate</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Instalar scahpy y dependencias desde requirements.txt</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">-r</span> requirements.txt</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>En este ejemplo, <code>requirements.txt</code> debe contener la lista de dependencias (incluyendo <code>scahpy</code>) con sus respectivas versiones. Este archivo debe proporcionarse o generarse previamente, puede tomar como referencia environment.yml previamente proporcionado.</p>
 
 

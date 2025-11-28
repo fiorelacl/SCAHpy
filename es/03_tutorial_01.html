@@ -395,7 +395,10 @@ Figura&nbsp;1: ds_maps
 <blockquote class="blockquote">
 <p>Aunque <code>LANDMASK</code> distingue mar y tierra, el modelo WRF puede <em>interpolar incorrectamente variables sobre lagos</em>, como el Lago Titicaca. Por ello, es recomendable <em>excluir lagos</em> al trabajar con máscaras.</p>
 </blockquote>
-<p>En este caso mantendremos únicamente superficie terrestre, por lo que usamos <code>sea_is_one = True</code> y <code>exclude_lakes = False</code>.</p>
+<p>En este caso mantendremos únicamente superficie terrestre, por lo que usamos <code>sea_is_one = True</code> y <code>exclude_lakes = False</code>. Se puede aplicar la máscara variable a variable (DataArray) o de manera grupal (Dataset)</p>
+<blockquote class="blockquote">
+<p>Ejemplo individual</p>
+</blockquote>
 <div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ds_wrf[<span class="st">'WSP_land'</span>] <span class="op">=</span> sc.apply_mask(</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    da <span class="op">=</span> ds_wrf.WSP,</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    mask <span class="op">=</span> ds_wrf.LANDMASK,</span>
@@ -419,19 +422,30 @@ Figura&nbsp;1: ds_maps
 <span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>    lakemask <span class="op">=</span> ds_wrf.LAKEMASK,</span>
 <span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>    exclude_lakes <span class="op">=</span> <span class="va">False</span></span>
 <span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<p>Ejemplo grupal</p>
+</blockquote>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>ds_wrf <span class="op">=</span> sc.apply_mask(</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    da <span class="op">=</span> ds_wrf,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    mask <span class="op">=</span> ds_wrf.LANDMASK,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">vars</span> <span class="op">=</span> [<span class="st">'WSP'</span>,<span class="st">'U10'</span>,<span class="st">'V10'</span>],</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    sea_is_one <span class="op">=</span> <span class="va">True</span>,</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    lakemask <span class="op">=</span> ds_wrf.LAKEMASK,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    exclude_lakes <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="nuevo-mapa-con-la-máscara-aplicada" class="level3">
 <h3 class="anchored" data-anchor-id="nuevo-mapa-con-la-máscara-aplicada">8. Nuevo mapa con la máscara aplicada</h3>
-<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>sc.map_1var_winds(</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    da <span class="op">=</span> ds_wrf.WSP_land,</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    U <span class="op">=</span> ds_wrf.U10_land,</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    V <span class="op">=</span> ds_wrf.V10_land,</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    levels <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="dv">11</span>, <span class="dv">1</span>),</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    cmap <span class="op">=</span> <span class="st">'rain'</span>,</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    time <span class="op">=</span> <span class="st">'2017-01-14T13'</span>,</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    title <span class="op">=</span> <span class="st">'Velocidad del Viento'</span>,</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    colorbar_label <span class="op">=</span> <span class="st">'m/s'</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>sc.map_1var_winds(</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    da <span class="op">=</span> ds_wrf.WSP_land,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    U <span class="op">=</span> ds_wrf.U10_land,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    V <span class="op">=</span> ds_wrf.V10_land,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    levels <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="dv">11</span>, <span class="dv">1</span>),</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    cmap <span class="op">=</span> <span class="st">'rain'</span>,</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    time <span class="op">=</span> <span class="st">'2017-01-14T13'</span>,</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    title <span class="op">=</span> <span class="st">'Velocidad del Viento'</span>,</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    colorbar_label <span class="op">=</span> <span class="st">'m/s'</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="fig-05" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-05-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -450,14 +464,14 @@ Figura&nbsp;2: ds_maps
 <section id="importación-de-paquetes-1" class="level3">
 <h3 class="anchored" data-anchor-id="importación-de-paquetes-1">1. Importación de paquetes</h3>
 <p>Comenzamos importando los módulos necesarios:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scahpy <span class="im">as</span> sc</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> glob</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scahpy <span class="im">as</span> sc</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> glob</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="listado-de-archivos-wrf" class="level3">
 <h3 class="anchored" data-anchor-id="listado-de-archivos-wrf">2. Listado de archivos WRF</h3>
 <p>Para leer múltiples archivos, utilizamos <code>glob.glob</code>, que retorna directamente una lista ordenada de rutas. En este ejemplo filtramos todos los <code>wrfout</code> del año 2017:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>WRF_files <span class="op">=</span> <span class="bu">sorted</span>(glob.glob(<span class="st">"/data/users/fcastillon/wrf/wrfout_d01_2017*"</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>WRF_files <span class="op">=</span> <span class="bu">sorted</span>(glob.glob(<span class="st">"/data/users/fcastillon/wrf/wrfout_d01_2017*"</span>))</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <blockquote class="blockquote">
 <p><em>Importante:</em> Aunque trabajemos con múltiples archivos, la función <code>drop_vars</code> siempre requiere un solo archivo (<code>file0</code>) para identificar la metadata genérica del WRF. Por ello, empleamos <code>WRF_files[0]</code>.</p>
 </blockquote>
@@ -470,28 +484,28 @@ Figura&nbsp;2: ds_maps
 <li><code>RAINC</code>, <code>RAINNC</code>: precipitación acumulada convectiva y de gran escala,</li>
 <li><code>LANDMASK</code>, <code>LAKEMASK</code>: máscaras geográficas para filtrado posterior.</li>
 </ul>
-<div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>vars_WRF <span class="op">=</span> sc.drop_vars(</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    WRF_files[<span class="dv">0</span>],</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    sel_vars<span class="op">=</span>[<span class="st">'LAKEMASK'</span>, <span class="st">'LANDMASK'</span>, <span class="st">'U10'</span>, <span class="st">'V10'</span>, <span class="st">'RAINC'</span>, <span class="st">'RAINNC'</span>]</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>vars_WRF <span class="op">=</span> sc.drop_vars(</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    WRF_files[<span class="dv">0</span>],</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    sel_vars<span class="op">=</span>[<span class="st">'LAKEMASK'</span>, <span class="st">'LANDMASK'</span>, <span class="st">'U10'</span>, <span class="st">'V10'</span>, <span class="st">'RAINC'</span>, <span class="st">'RAINNC'</span>]</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="lectura-de-todos-los-archivos-con-read_wrf" class="level3">
 <h3 class="anchored" data-anchor-id="lectura-de-todos-los-archivos-con-read_wrf">4. Lectura de todos los archivos con <code>read_wrf</code></h3>
 <p>Leemos todos los archivos al mismo tiempo. La función concatena automáticamente la dimensión temporal y ajusta coordenadas y metadatos.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>ds_WRF <span class="op">=</span> sc.read_wrf(</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    WRF_files,</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    drop_vars <span class="op">=</span> vars_WRF</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>ds_WRF <span class="op">=</span> sc.read_wrf(</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    WRF_files,</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    drop_vars <span class="op">=</span> vars_WRF</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="cálculo-de-la-precipitación-desacumulada" class="level3">
 <h3 class="anchored" data-anchor-id="cálculo-de-la-precipitación-desacumulada">5. Cálculo de la precipitación desacumulada</h3>
 <p>Las variables <code>RAINC</code> y <code>RAINNC</code> vienen <strong>acumuladas</strong> en el tiempo, por lo que utilizamos la función <code>precipitation</code> para obtener la precipitación total por paso temporal:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>ds_WRF[<span class="st">'PP'</span>] <span class="op">=</span> sc.precipitation(</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    ds_WRF[<span class="st">"RAINC"</span>],</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    ds_WRF[<span class="st">"RAINNC"</span>],</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    name <span class="op">=</span> <span class="st">'PP'</span>,</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    units <span class="op">=</span> <span class="st">'mm'</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>ds_WRF[<span class="st">'PP'</span>] <span class="op">=</span> sc.precipitation(</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    ds_WRF[<span class="st">"RAINC"</span>],</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    ds_WRF[<span class="st">"RAINNC"</span>],</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    name <span class="op">=</span> <span class="st">'PP'</span>,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    units <span class="op">=</span> <span class="st">'mm'</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="aplicación-de-máscara-solo-océano" class="level3">
 <h3 class="anchored" data-anchor-id="aplicación-de-máscara-solo-océano">6. Aplicación de máscara: solo océano</h3>
@@ -500,21 +514,21 @@ Figura&nbsp;2: ds_maps
 <li><code>sea_is_one = False</code> (la tierra es 1, el océano 0 en LANDMASK),</li>
 <li><code>exclude_lakes = True</code> para evitar efectos de interpolación sobre lagos (p.&nbsp;ej., el Titicaca), donde WRF a veces genera valores no deseados.</li>
 </ul>
-<div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>ds_WRF[<span class="st">'U10_land'</span>] <span class="op">=</span> sc.apply_mask(</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    ds_WRF.U10,</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    ds_WRF.LANDMASK,</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    sea_is_one <span class="op">=</span> <span class="va">False</span>,</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    lakemask <span class="op">=</span> ds_WRF.LAKEMASK,</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    exclude_lakes <span class="op">=</span> <span class="va">True</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>ds_WRF[<span class="st">'V10_land'</span>] <span class="op">=</span> sc.apply_mask(</span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    ds_WRF.V10,</span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    ds_WRF.LANDMASK,</span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>    sea_is_one <span class="op">=</span> <span class="va">False</span>,</span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>    lakemask <span class="op">=</span> ds_WRF.LAKEMASK,</span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>    exclude_lakes <span class="op">=</span> <span class="va">True</span></span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>ds_WRF[<span class="st">'U10_land'</span>] <span class="op">=</span> sc.apply_mask(</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    ds_WRF.U10,</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    ds_WRF.LANDMASK,</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    sea_is_one <span class="op">=</span> <span class="va">False</span>,</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    lakemask <span class="op">=</span> ds_WRF.LAKEMASK,</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    exclude_lakes <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>ds_WRF[<span class="st">'V10_land'</span>] <span class="op">=</span> sc.apply_mask(</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    ds_WRF.V10,</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>    ds_WRF.LANDMASK,</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>    sea_is_one <span class="op">=</span> <span class="va">False</span>,</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>    lakemask <span class="op">=</span> ds_WRF.LAKEMASK,</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>    exclude_lakes <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="agregación-mensual" class="level3">
 <h3 class="anchored" data-anchor-id="agregación-mensual">7. Agregación mensual</h3>
@@ -523,38 +537,38 @@ Figura&nbsp;2: ds_maps
 <li>Acumulado mensual de precipitación (<code>accum=['PP']</code>),</li>
 <li>Promedio mensual del viento a 10 m (<code>avg=['U10_land','V10_land']</code>).</li>
 </ul>
-<div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>ds_WRF_m <span class="op">=</span> sc.aggregate_dmy(</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    ds <span class="op">=</span> ds_WRF[[<span class="st">'PP'</span>,<span class="st">'U10_land'</span>,<span class="st">'V10_land'</span>]],</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    tiempo <span class="op">=</span> <span class="st">'ME'</span>,</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    accum <span class="op">=</span> [<span class="st">'PP'</span>],</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    avg <span class="op">=</span> [<span class="st">'U10_land'</span>,<span class="st">'V10_land'</span>],</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    mediana <span class="op">=</span> <span class="va">None</span></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>ds_WRF_m <span class="op">=</span> sc.aggregate_dmy(</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    ds <span class="op">=</span> ds_WRF[[<span class="st">'PP'</span>,<span class="st">'U10_land'</span>,<span class="st">'V10_land'</span>]],</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    tiempo <span class="op">=</span> <span class="st">'ME'</span>,</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    accum <span class="op">=</span> [<span class="st">'PP'</span>],</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    avg <span class="op">=</span> [<span class="st">'U10_land'</span>,<span class="st">'V10_land'</span>],</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    mediana <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="mapa-mensual-precipitación-acumulada-viento" class="level3">
 <h3 class="anchored" data-anchor-id="mapa-mensual-precipitación-acumulada-viento">8. Mapa mensual: precipitación acumulada + viento</h3>
 <p>Finalmente, generamos un mapa mensual utilizando la función <code>map_1var_winds</code> del módulo: <code>scahpy.plots.maps</code></p>
 <p>Representamos la precipitación acumulada del mes y los vientos promedio (solo en superficie):</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>sc.map_1var_winds(</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    da <span class="op">=</span> ds_WRF_m.PP,</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    U <span class="op">=</span> ds_WRF_m.U10_land,</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    V <span class="op">=</span> ds_WRF_m.V10_land,</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    levels <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="dv">500</span>, <span class="dv">10</span>),</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    cmap <span class="op">=</span> <span class="st">'rain'</span>,</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    shapefile <span class="op">=</span> <span class="va">None</span>,</span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    extent <span class="op">=</span> <span class="va">None</span>,</span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    xticks <span class="op">=</span> <span class="va">None</span>,</span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>    yticks <span class="op">=</span> <span class="va">None</span>,</span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>    tick_step <span class="op">=</span> (<span class="dv">5</span>, <span class="dv">5</span>),</span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>    draw_grid <span class="op">=</span> <span class="va">False</span>,</span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>    time <span class="op">=</span> <span class="st">'2017-03'</span>,</span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>    month <span class="op">=</span> <span class="va">None</span>,</span>
-<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>    quiver_subsample <span class="op">=</span> <span class="dv">7</span>,</span>
-<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>    quiverkey_speed <span class="op">=</span> <span class="fl">5.0</span>,</span>
-<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>    title <span class="op">=</span> <span class="st">'Precipitation + Winds at 10m'</span>,</span>
-<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>    colorbar_label <span class="op">=</span> <span class="st">'m/s'</span>,</span>
-<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>    output_path <span class="op">=</span> <span class="va">None</span></span>
-<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>sc.map_1var_winds(</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    da <span class="op">=</span> ds_WRF_m.PP,</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    U <span class="op">=</span> ds_WRF_m.U10_land,</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    V <span class="op">=</span> ds_WRF_m.V10_land,</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    levels <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="dv">500</span>, <span class="dv">10</span>),</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    cmap <span class="op">=</span> <span class="st">'rain'</span>,</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    shapefile <span class="op">=</span> <span class="va">None</span>,</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    extent <span class="op">=</span> <span class="va">None</span>,</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    xticks <span class="op">=</span> <span class="va">None</span>,</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>    yticks <span class="op">=</span> <span class="va">None</span>,</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>    tick_step <span class="op">=</span> (<span class="dv">5</span>, <span class="dv">5</span>),</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>    draw_grid <span class="op">=</span> <span class="va">False</span>,</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>    time <span class="op">=</span> <span class="st">'2017-03'</span>,</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>    month <span class="op">=</span> <span class="va">None</span>,</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>    quiver_subsample <span class="op">=</span> <span class="dv">7</span>,</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>    quiverkey_speed <span class="op">=</span> <span class="fl">5.0</span>,</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>    title <span class="op">=</span> <span class="st">'Precipitation + Winds at 10m'</span>,</span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>    colorbar_label <span class="op">=</span> <span class="st">'m/s'</span>,</span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>    output_path <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="fig-06" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-06-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -626,7 +640,7 @@ Figura&nbsp;3: ds_maps
 <li>Quieres mantener el dataset <em>en memoria distribuida</em> (en RAM) sin traer todo como <code>numpy</code>, pero sí evitando repetir los mismos cálculos una y otra vez.</li>
 </ul>
 <p>Ejemplo típico:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>ds_proc <span class="op">=</span> ds_WRF[[<span class="st">'PP'</span>, <span class="st">'U10_land'</span>, <span class="st">'V10_land'</span>]].persist()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>ds_proc <span class="op">=</span> ds_WRF[[<span class="st">'PP'</span>, <span class="st">'U10_land'</span>, <span class="st">'V10_land'</span>]].persist()</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>A partir de <code>ds_proc</code>, puedes:</p>
 <ul>
 <li>Calcular distintos agregados temporales (<code>aggregate_dmy</code>, promedios estacionales, etc.).</li>

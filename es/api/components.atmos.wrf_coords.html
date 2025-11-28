@@ -167,7 +167,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    new_dim<span class="op">=</span><span class="st">'levels'</span>,</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    mask_outside<span class="op">=</span><span class="va">True</span>,</span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    persist<span class="op">=</span><span class="va">False</span>,</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    nan_opt<span class="op">=</span><span class="st">'both'</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Interpolate WRF variables from model (sigma) levels to fixed pressure or height levels.</p>
 <p>This function performs a 1D vertical interpolation for one or more 3-D variables contained in a WRF dataset. The vertical coordinate can be total pressure (P + PB) or geopotential height ((PH + PHB)/g), and the interpolation is handled through <code>interp1d_along_dim</code> from <code>scahpy.core.vertical</code>.</p>
 <section id="parameters" class="level4 doc-section doc-section-parameters">
@@ -235,6 +236,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>bool</td>
 <td>If True, calls <code>.persist()</code> on output arrays (useful when working with Dask-backed datasets).</td>
 <td><code>False</code></td>
+</tr>
+<tr class="odd">
+<td>nan_opt</td>
+<td>(both, left, right, none)</td>
+<td>- “both”: no extrapolation (NaN on both sides) - “left”: NaN on the left, extrapolate on the right - “right”: extrapolate on the left, NaN on the right - “none”: extrapolate on both sides</td>
+<td><code>"both"</code></td>
 </tr>
 </tbody>
 </table>

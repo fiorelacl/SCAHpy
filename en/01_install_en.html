@@ -243,11 +243,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#macos" id="toc-macos" class="nav-link" data-scroll-target="#macos"><strong>macOS</strong></a></li>
   <li><a href="#linux" id="toc-linux" class="nav-link" data-scroll-target="#linux"><strong>Linux</strong></a></li>
   </ul></li>
-  <li><a href="#using-conda" id="toc-using-conda" class="nav-link" data-scroll-target="#using-conda"><strong>Using Conda</strong></a>
-  <ul class="collapse">
-  <li><a href="#download-and-install-miniforge" id="toc-download-and-install-miniforge" class="nav-link" data-scroll-target="#download-and-install-miniforge">1. Download and install Miniforge</a></li>
-  <li><a href="#create-a-new-conda-environment-and-install-scahpy" id="toc-create-a-new-conda-environment-and-install-scahpy" class="nav-link" data-scroll-target="#create-a-new-conda-environment-and-install-scahpy">2. Create a new Conda environment and install SCAHpy</a></li>
-  </ul></li>
   <li><a href="#using-mamba" id="toc-using-mamba" class="nav-link" data-scroll-target="#using-mamba"><strong>Using Mamba</strong></a>
   <ul class="collapse">
   <li><a href="#download-and-install-mamba" id="toc-download-and-install-mamba" class="nav-link" data-scroll-target="#download-and-install-mamba">1. Download and install Mamba</a></li>
@@ -313,33 +308,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <hr>
 </section>
 </section>
-<section id="using-conda" class="level2">
-<h2 class="anchored" data-anchor-id="using-conda"><strong>Using Conda</strong></h2>
-<section id="download-and-install-miniforge" class="level3">
-<h3 class="anchored" data-anchor-id="download-and-install-miniforge">1. Download and install Miniforge</h3>
-<ul>
-<li><p>Before installing <code>scahpy</code>, ensure that Conda is installed on your system. Miniforge is a minimal Conda distribution that includes the essential tools for environment and package management.</p></li>
-<li><p>Visit the <a href="https://github.com/conda-forge/miniforge">Miniforge GitHub page</a> and follow the instructions to download and install the version appropriate for your operating system.</p></li>
-</ul>
-</section>
-<section id="create-a-new-conda-environment-and-install-scahpy" class="level3">
-<h3 class="anchored" data-anchor-id="create-a-new-conda-environment-and-install-scahpy">2. Create a new Conda environment and install SCAHpy</h3>
-<ul>
-<li><p>Once Conda is installed, you can create a dedicated environment for <code>scahpy</code> and its dependencies. This is done using an <code>environment.yml</code> file, which contains the list of packages and versions required for SCAHpy.</p></li>
-<li><p>Download the <code>environment.yml</code> file from the <a href="https://github.com/fiorelacl/SCAHpy/blob/4ec3cca0a13444411a0dcb28221f3ee982a2594b/environment.yml">SCAHpy GitHub repository</a>.</p></li>
-<li><p>Open a terminal and navigate to the directory where the <code>environment.yml</code> file is located.</p></li>
-<li><p>Run the following command to create a Conda environment named <code>scahpy_env</code> and install all required dependencies:</p></li>
-</ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> env create <span class="at">--file</span> environment.yml <span class="at">-n</span> scahpy_env</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<ul>
-<li><p>This command will create the new environment and install all packages listed in <code>environment.yml</code>.</p></li>
-<li><p>Once created, activate the environment:</p></li>
-</ul>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate scahpy_env</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>After this, <code>scahpy</code> and all its dependencies will be installed and ready to use in your Conda environment.</p>
-<hr>
-</section>
-</section>
 <section id="using-mamba" class="level2">
 <h2 class="anchored" data-anchor-id="using-mamba"><strong>Using Mamba</strong></h2>
 <section id="download-and-install-mamba" class="level3">
@@ -356,7 +324,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>Download the file from the <a href="https://github.com/fiorelacl/SCAHpy/blob/4ec3cca0a13444411a0dcb28221f3ee982a2594b/environment.yml">SCAHpy GitHub repository</a>.</p></li>
 <li><p>From the terminal, navigate to the directory where the file is located and run:</p></li>
 </ul>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> env create <span class="at">--file</span> environment.yml <span class="at">-n</span> scahpy_env</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> env create <span class="at">--file</span> environment.yml <span class="at">-n</span> scahpy_env</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ul>
 <li>This will create a Conda environment called <code>scahpy_env</code> and install all necessary packages.</li>
 </ul>
@@ -371,17 +339,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>The simplest way to install <code>scahpy</code> and its dependencies using pip is to create a virtual environment and install the packages using a <code>requirements.txt</code> file.</p></li>
 </ol>
 <p>In the terminal:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a virtual environment (optional but recommended)</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> venv scahpy_env</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Activate the virtual environment</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># On Windows:</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="ex">scahpy_env\Scripts\activate</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># On macOS/Linux:</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> scahpy_env/bin/activate</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Install scahpy and dependencies from requirements.txt</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">-r</span> requirements.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a virtual environment (optional but recommended)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> venv scahpy_env</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Activate the virtual environment</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># On Windows:</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="ex">scahpy_env\Scripts\activate</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># On macOS/Linux:</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> scahpy_env/bin/activate</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Install scahpy and dependencies from requirements.txt</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install <span class="at">-r</span> requirements.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>In this example, <code>requirements.txt</code> should contain the list of dependencies—including <code>scahpy</code>—with their corresponding versions. This file must be created beforehand; you may use the previously provided environment.yml as reference.</p>
 
 
