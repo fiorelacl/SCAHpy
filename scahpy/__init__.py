@@ -6,7 +6,7 @@
 # the GNU General Public License v3.0 or later.
 # See the LICENSE file for details.
 
-__version__ = "2.0.7"
+__version__ = "2.0.9"
 
 """
 SCAHpy is a scientific Python package for the analysis and visualization

@@ -137,7 +137,7 @@ def _apply_interp(
         dask="parallelized",
         output_dtypes=[np.result_type(da.dtype, np.float64)],
         dask_gufunc_kwargs=gufunc_kwargs,
-        kwargs={"int_opt": nan_opt},
+        kwargs={"nan_opt": nan_opt},
     ).assign_coords({new_dim: target_levels})
 
     if keep_attrs:
