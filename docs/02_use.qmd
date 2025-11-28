@@ -17,7 +17,7 @@ El flujo conceptual es:
 
 ```text
 WRF / CROCO ──▶ Lectura ──▶ Diagnósticos ──▶ Visualización
-````
+```
 
 Este flujo busca facilitar el análisis reproducible, especialmente en entornos donde se manejan grandes volúmenes de datos, como las simulaciones multianuales del sistema *IGP RESM-COW*.
 
@@ -46,14 +46,14 @@ import scahpy
 
 scahpy.components.atmos.wrf_io.read_wrf()
 scahpy.read_wrf()
-````
+```
 también se puede abreviar el nombre del paquete
 
 ```python
 import scahpy as sc
 
 sc.read_wrf()
-````
+```
 ### Importación explícita (recomendada)
 
 Para una mayor claridad, especialmente en proyectos científicos y scripts reproducibles, se recomienda utilizar importaciones explícitas:
@@ -62,14 +62,14 @@ Para una mayor claridad, especialmente en proyectos científicos y scripts repro
 from scahpy import plots
 
 plots.map_1var_winds()
-````
+```
 O bien importar módulos específicos:
 
 ```python
 from scahpy.components.atmos import wrf_io, wrf_diags
 
 wrf_io.read_wrf()
-````
+```
 
 ### Importación de dependencias comunes
 

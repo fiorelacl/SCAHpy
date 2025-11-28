@@ -4,7 +4,7 @@ from typing import Union, Hashable, Iterable
 
 def to_kelvin(
     temp: float | np.ndarray | xr.DataArray | xr.Dataset,
-    vars: Hashable | Iterable[Hashable] | None = None,
+    var_names: Hashable | Iterable[Hashable] | None = None,
 ):
     """
     Convert temperature from Celsius to Kelvin.
@@ -13,7 +13,7 @@ def to_kelvin(
     ----------
     temp : float | np.ndarray | xr.DataArray | xr.Dataset
         Temperature in Celsius.
-    vars : hashable or iterable of hashable, optional
+    var_names : hashable or iterable of hashable, optional
         Only used when `temp` is a Dataset. Names of the data variables
         to convert. Other variables remain unchanged.
 
@@ -24,16 +24,16 @@ def to_kelvin(
         attribute is updated to 'K'; other attributes are preserved.
     """
     if isinstance(temp, xr.Dataset):
-        if vars is None:
+        if var_names is None:
             raise ValueError(
                 "When passing a Dataset, you must specify 'vars=[\"var1\", ...]'."
             )
 
-        if isinstance(vars, (str, bytes)) or not isinstance(vars, Iterable):
-            vars = [vars]
+        if isinstance(var_names, (str, bytes)) or not isinstance(var_names, Iterable):
+            var_names = [var_names]
 
         new_vars = {}
-        for v in vars:
+        for v in var_names:
             if v not in temp.data_vars:
                 raise KeyError(f"Variable '{v}' not found in Dataset.")
             da = temp[v]
@@ -54,7 +54,7 @@ def to_kelvin(
 
 def to_celsius(
     temp: float | np.ndarray | xr.DataArray | xr.Dataset,
-    vars: Hashable | Iterable[Hashable] | None = None,
+    var_names: Hashable | Iterable[Hashable] | None = None,
 ):
     """
     Convert temperature from Kelvin to Celsius.
@@ -63,7 +63,7 @@ def to_celsius(
     ----------
     temp : float | np.ndarray | xr.DataArray | xr.Dataset
         Temperature in Kelvin.
-    vars : hashable or iterable of hashable, optional
+    var_names : hashable or iterable of hashable, optional
         Only used when `temp` is a Dataset. Names of the data variables
         to convert. Other variables remain unchanged.
 
@@ -74,16 +74,16 @@ def to_celsius(
         attribute is updated to '°C'; other attributes are preserved.
     """
     if isinstance(temp, xr.Dataset):
-        if vars is None:
+        if var_names is None:
             raise ValueError(
                 "When passing a Dataset, you must specify 'vars=[\"var1\", ...]'."
             )
 
-        if isinstance(vars, (str, bytes)) or not isinstance(vars, Iterable):
-            vars = [vars]
+        if isinstance(var_names, (str, bytes)) or not isinstance(var_names, Iterable):
+            var_names = [var_names]
 
         new_vars = {}
-        for v in vars:
+        for v in var_names:
             if v not in temp.data_vars:
                 raise KeyError(f"Variable '{v}' not found in Dataset.")
             da = temp[v]
@@ -278,7 +278,7 @@ def apply_mask(
     da: Union[xr.DataArray, xr.Dataset],
     mask: xr.DataArray,
     *,
-    vars: Hashable | Iterable[Hashable] | None = None,
+    var_names: Hashable | Iterable[Hashable] | None = None,
     sea_is_one: bool = True,
     lakemask: xr.DataArray | None = None,
     exclude_lakes: bool = True,
@@ -306,7 +306,7 @@ def apply_mask(
         is applied only to the variables listed in ``vars``.
     mask : xr.DataArray
         Land–sea mask. Values should be 0/1.
-    vars : hashable or iterable of hashable, optional
+    var_names : hashable or iterable of hashable, optional
         Only used when ``da`` is a Dataset. Names of data variables to mask.
         Other variables are left unchanged. If None, the mask is applied to
         all data variables.
@@ -327,7 +327,6 @@ def apply_mask(
         selected variables are masked; the rest remain unchanged.
     """
 
-    # Construir máscara booleana
     m = mask.astype(bool)
 
     if not sea_is_one:
@@ -340,15 +339,15 @@ def apply_mask(
         return da.where(m)
 
     if isinstance(da, xr.Dataset):
-        if vars is None:
+        if var_names is None:
             var_list: list[Hashable] = list(da.data_vars)
         else:
-            if isinstance(vars, (str, bytes)):
-                var_list = [vars]
-            elif not isinstance(vars, Iterable):
-                var_list = [vars]
+            if isinstance(var_names, (str, bytes)):
+                var_list = [var_names]
+            elif not isinstance(var_names, Iterable):
+                var_list = [var_names]
             else:
-                var_list = list(vars)
+                var_list = list(var_names)
 
         missing = [v for v in var_list if v not in da.data_vars]
         if missing:

@@ -40,40 +40,6 @@ Para garantizar claridad y compatibilidad en todos los sistemas, considere lo si
 
 ---
 
-## **Usando Conda**
-
-### 1. Descargar e instalar Miniforge
-
-* Antes de instalar `scahpy`, asegúrese de tener Conda instalado en su sistema. Miniforge es una distribución mínima de Conda que incluye las herramientas esenciales para la gestión de entornos y paquetes.
-
-* Visite la página de [Miniforge en GitHub](https://github.com/conda-forge/miniforge) y siga las instrucciones para descargar e instalar la versión adecuada para su sistema operativo.
-
-### 2. Crear un nuevo entorno Conda e instalar SCAHpy
-
-* Una vez instalado Conda, puede crear un entorno nuevo específicamente para `scahpy` y sus dependencias. Para ello, se utiliza un archivo llamado `environment.yml`, que contiene la lista de paquetes y versiones requeridos para el correcto funcionamiento de `scahpy`.
-
-* Descargue el archivo `environment.yml` desde el [repositorio de SCAHpy en GitHub](https://github.com/fiorelacl/SCAHpy/blob/4ec3cca0a13444411a0dcb28221f3ee982a2594b/environment.yml).
-
-* Abra una terminal o consola y navegue al directorio donde se encuentra el archivo `environment.yml`.
-
-* Ejecute el siguiente comando para crear un entorno Conda llamado `scahpy_env` e instalar todas las dependencias especificadas:
-
-```bash
-conda env create --file environment.yml -n scahpy_env
-```
-
-* Este comando creará un entorno nuevo llamado `scahpy_env` e instalará todas las dependencias listadas en el archivo `environment.yml`.
-
-* Una vez creado el entorno, actívelo con:
-
-```bash
-conda activate scahpy_env
-```
-
-Después de esto, tendrá `scahpy` y todas sus dependencias instaladas y listas para usarse dentro de su entorno Conda.
-
----
-
 ## **Usando Mamba**
 
 ### 1. Descargar e instalar Mamba

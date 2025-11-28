@@ -149,6 +149,9 @@ Una nota importante:
 > Por ello, es recomendable *excluir lagos* al trabajar con máscaras.
 
 En este caso mantendremos únicamente superficie terrestre, por lo que usamos `sea_is_one = True` y `exclude_lakes = False`.
+Se puede aplicar la máscara variable a variable (DataArray) o de manera grupal (Dataset)
+
+> Ejemplo individual
 
 ```python
 ds_wrf['WSP_land'] = sc.apply_mask(
@@ -170,6 +173,19 @@ ds_wrf['U10_land'] = sc.apply_mask(
 ds_wrf['V10_land'] = sc.apply_mask(
     ds_wrf.V10,
     ds_wrf.LANDMASK,
+    sea_is_one = True,
+    lakemask = ds_wrf.LAKEMASK,
+    exclude_lakes = False
+)
+```
+
+> Ejemplo grupal
+
+```python
+ds_wrf = sc.apply_mask(
+    da = ds_wrf,
+    mask = ds_wrf.LANDMASK,
+    vars = ['WSP','U10','V10'],
     sea_is_one = True,
     lakemask = ds_wrf.LAKEMASK,
     exclude_lakes = False

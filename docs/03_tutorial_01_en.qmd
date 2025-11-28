@@ -147,7 +147,9 @@ An important note:
 > Although `LANDMASK` distinguishes land from ocean, WRF may *incorrectly interpolate variables over lake surfaces*, such as Lake Titicaca.
 > Therefore, it is advisable to *exclude lakes* when working with masks.
 
-In this example, we retain only land areas, so we use `sea_is_one = True` and `exclude_lakes = False`.
+In this example, we retain only land areas, so we use `sea_is_one = True` and `exclude_lakes = False`. We can apply the mask to an individual variable (DataArray) or multiple (Dataset)
+
+> Datarray example
 
 ```python
 ds_wrf['WSP_land'] = sc.apply_mask(
@@ -169,6 +171,19 @@ ds_wrf['U10_land'] = sc.apply_mask(
 ds_wrf['V10_land'] = sc.apply_mask(
     ds_wrf.V10,
     ds_wrf.LANDMASK,
+    sea_is_one = True,
+    lakemask = ds_wrf.LAKEMASK,
+    exclude_lakes = False
+)
+```
+
+> Dataset example
+
+```python
+ds_wrf = sc.apply_mask(
+    da = ds_wrf,
+    mask = ds_wrf.LANDMASK,
+    vars = ['WSP','U10','V10'],
     sea_is_one = True,
     lakemask = ds_wrf.LAKEMASK,
     exclude_lakes = False
